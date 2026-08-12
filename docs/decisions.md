@@ -50,8 +50,24 @@ Desde a `v0.2.6`, `sourceUri` é a base canônica da página. `processedUri` con
 
 O pipeline local usa uma ordem explícita: carregar fonte, aplicar crop/perspectiva salvo, remover bordas pretas, aplicar rotação do usuário e então aplicar filtro ou preparar OCR. Ausência de crop salvo significa página inteira, o que evita recortar de novo imagens já tratadas pelo scanner rápido.
 
-Essa decisão preserva a arquitetura atual, evita uma migração Room complexa nesta rodada e deixa `v0.3.0+` com uma base mais previsível para QA visual, thumbnails e eventuais melhorias de cache.
+Essa decisão preserva a arquitetura atual, evita uma migração Room artificial e deixa as próximas versões com uma base mais previsível para QA visual, thumbnails e melhorias de cache.
 
-## 10. Sem Firebase no MVP
+## 10. Migration nunca destrutiva
+
+Room exporta seu schema no repositório e abre sem `fallbackToDestructiveMigration`. Uma versão futura só pode alterar o schema com migration explícita e teste de preservação. Falhar de forma visível é preferível a apagar histórico.
+
+## 11. Ownership e deleção física
+
+Somente arquivos dentro dos namespaces canônicos do Scanora podem ser removidos automaticamente. Fotos externas e exports finais não pertencem ao lifecycle da página. Falhas físicas produzem resultado parcial e o worker tenta apenas orphan cleanup conservador.
+
+## 12. Dados documentais fora de backup automático
+
+Imagens, Room, OCR e preferências são excluídos de cloud backup e device transfer. A decisão evita que uma regra implícita mova documentos sensíveis para outra máquina/conta.
+
+## 13. FileProvider mínimo
+
+O provider expõe apenas subdiretórios de export necessários. Intents concedem leitura temporária, incluindo `ClipData`, e nunca oferecem a raiz de `filesDir` ou `cacheDir`.
+
+## 14. Sem Firebase no MVP
 
 Foi uma decisão consciente para manter o escopo honesto, offline e sem dependências de backend antes da hora.

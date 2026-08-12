@@ -1,292 +1,82 @@
 # Roadmap — Scanora
 
-Este roadmap prioriza estabilidade, usabilidade e qualidade real do fluxo de escaneamento antes de adicionar complexidade desnecessária.
+O roadmap começa pela confiabilidade dos documentos locais. Itens concluídos pertencem ao `CHANGELOG.md`; este arquivo mantém as próximas decisões e seus critérios.
 
-## Estratégia
+## Princípios
 
-1. manter o scanner rápido do Google como caminho principal
-2. preservar o fluxo manual como fallback editável e confiável
-3. polir performance, OCR, exportação e material público
+- scanner rápido do Google como fluxo principal e CameraX/manual como fallback editável;
+- `sourceUri` canônico, derivados descartáveis e processamento local por padrão;
+- evolução incremental, medida em aparelho mediano, sem backend ou biblioteca pesada por estética;
+- nenhuma promessa de IA/OCR substitui validação humana do documento.
 
-## Regras de evolução
+## v0.2.7 — Integridade e Privacidade
 
-- manter o package `com.soturine.scanora`
-- manter a modularização atual
-- evitar bibliotecas pesadas antes de estabilizar a base
-- preservar processamento local sempre que possível
-- não introduzir OpenCV, Koin ou PdfBox antes de existir necessidade real
+**Status:** entregue em 2026-08-12
 
----
+- Room sem migration destrutiva e schema versionado;
+- lifecycle de fontes privadas, derivados, temporários e exports;
+- deleção física com ownership e orphan cleanup conservador;
+- cache expirável com fallback para a fonte;
+- backup/device transfer desativados e FileProvider restrito;
+- importação parcial explícita com rollback;
+- captura manual serializada;
+- exportação fail-fast quando uma página não pode ser renderizada;
+- testes de integridade, CI, CodeQL, Dependabot e documentação normativa.
 
-## v0.1.4 — A Cura da Interface
+## v0.2.8 — Exportação robusta e pipeline de imagem
 
-**Status:** concluída em 2026-04-22
+**Objetivo:** reduzir picos de memória e tornar exports grandes previsíveis.
 
-**Objetivo:** estabilizar o fluxo manual atual e corrigir os problemas mais visíveis de preview, crop, filtros e responsividade.
+- extrair incrementalmente decode, transformação, filtros e armazenamento derivado da God Class;
+- decodificação amostrada por destino, budgets de bitmap e reciclagem de intermediários;
+- escrita de PDF/ZIP/imagens por streaming, sem documento inteiro em `ByteArrayOutputStream`;
+- page size e escala de PDF coerentes, cleanup de saída parcial e relatório por página;
+- golden tests sintéticos por histograma/geometria, evitando pixel-perfect frágil;
+- avaliar searchable PDF somente após pipeline e memória estabilizarem.
 
-### Entregue
+## v0.2.9 — OCR confiável e pesquisa
 
-- preview do crop corrigido para mostrar a página inteira
-- overlay do quadrilátero mapeado sobre a área real da imagem
-- handles maiores e mais responsivos para ajuste manual
-- sugestão inicial de cantos acionada automaticamente no fluxo manual
-- heurística local de detecção de cantos fortalecida sem depender de OpenCV
-- tela de filtros reorganizada com `Scaffold`, `TopAppBar` com voltar e CTA fixa
-- prévia de filtros em bitmap reduzido e processamento fora da main thread
-- redução do risco de ANR ao mover decode e pré-processamento para background
-- microcopy mais curta e fluxo visual mais direto
+**Objetivo:** tornar OCR local previsível, pesquisável e reutilizável.
 
-### Resultado esperado desta release
+- unificar preparação de OCR e lifecycle do `TextRecognizer`;
+- estados claros para modelo indisponível/primeiro uso;
+- persistir estrutura útil, engine e versão sem transformar erro de IA em verdade;
+- busca OCR local e avaliação de text layer para PDF;
+- benchmark de PP-OCR local apenas com dataset próprio/licenciado e ganho mensurável.
 
-- o usuário consegue ver a folha inteira antes de salvar o corte
-- os quatro pontos respondem melhor ao toque e deixam de parecer presos
-- a tela de filtros ficou mais clara para aplicar, girar e seguir
-- o editor trabalha com prévias leves sem bloquear a interface
+## v0.3.0 — QA e publicação pública
 
----
+- QA físico do fluxo principal, importação, deleção, OCR, export e compartilhamento;
+- acessibilidade, TalkBack, tamanhos de fonte e contraste;
+- screenshots reais e store listing final;
+- assinatura/release artifact, R8/minify e validação de atualização instalada;
+- smoke test de release e política de suporte.
 
-## v0.1.5 — O Salto de Qualidade
+## v0.3.1 — Performance percebida
 
-**Status:** concluída em 2026-04-22
+- medir cold start, jank, tempo de preview e consumo de memória;
+- thumbnails dedicadas e cache com limites;
+- Baseline Profiles/Macrobenchmark somente com benefício medido;
+- cancelamento e backpressure em trocas rápidas de página/filtro.
 
-**Objetivo:** consolidar o `ML Kit Document Scanner` como caminho rápido e confiável, sem remover o fluxo manual.
+## v0.3.2 — Detecção local aprendida
 
-### Entregue
+- comparar heurística atual com modelo LiteRT pequeno em folha, recibo, espiral, fundo poluído e perspectiva extrema;
+- medir precisão, falso positivo, latência, RAM, APK, bateria e aparelhos antigos;
+- manter ajuste manual e fallback conservador; adotar modelo só com ganho real.
 
-- `GmsDocumentScanner` integrado como CTA principal da Home
-- scanner rápido agora cria lote local e abre direto em revisão
-- captura manual preservada como fallback editável
-- sugestão inicial de crop fortalecida para imagens importadas e fluxo manual
-- prévia de filtros em duas etapas com cache, cancelamento de job e refinamento assíncrono
-- filtros revisados para reduzir página lavada, texto apagado e presets pouco úteis
-- revisão de lote simplificada com foco em páginas e ações principais
-- exportação reorganizada com scroll confiável, CTA fixa e compartilhamento mais claro
-- OCR local refinado com entrada melhor tratada e saída mais legível
+## v0.4.0 — Document intelligence opcional
 
-### Resultado esperado desta release
+- `MlKitOcrEngine` continua padrão local;
+- PaddleOCR pode ser experimento local após benchmark/licença;
+- DeepSeek/Docling/servidor entram apenas como engine remota opt-in, com aviso explícito antes de enviar qualquer página;
+- preservar imagem, engine, versão, saída bruta/estruturada e indicação de incerteza.
 
-- o fluxo rápido passou a ser o caminho mais direto na Home
-- a revisão do lote ficou menos poluída e mais previsível
-- a exportação sempre oferece um caminho claro até gerar e compartilhar arquivos
-- a prévia dos filtros ficou mais representativa sem bloquear a interface
-- OCR e histórico continuam funcionando no mesmo modelo local do MVP
+## v0.5.0+ — Candidatos, não compromisso
 
----
+- cofre privado com BiometricPrompt e threat model específico, sem prometer secure delete em flash;
+- sync opcional somente com conta, criptografia, conflitos, versionamento, delete propagation e nova política de privacidade.
 
-## v0.2.0 — A Experiência Premium
+## Referências a acompanhar
 
-**Status:** concluída em 2026-04-23
-
-**Objetivo:** polir qualidade perceptível do app, endurecer o caminho manual/importado e deixar OCR e exportação mais próximos de um scanner utilizável de verdade.
-
-### Entregue
-
-- heurística inicial de crop refeita para sair de um retângulo aberto demais e estimar um quadrilátero mais útil
-- filtros recalibrados para documento real, com menos página estourada, menos cinza artificial e prévia mais fiel
-- OCR passou a usar imagem preparada especificamente para leitura, em vez de depender só do filtro salvo na página
-- revisão de lote simplificada com foco na página em destaque, menos peso visual e ações mais diretas
-- exportação com pós-exporto mais claro: nome, tipo, tamanho, local salvo e ação para abrir o arquivo
-- arquivos exportados agora vão para `Downloads/Scanora` em Android 10+
-- cache leve em memória para previews e thumbnails, reduzindo custo visual em navegação
-- Home reforça o scanner rápido como caminho recomendado, mantendo manual e galeria como fallback claro
-
-### Resultado esperado desta release
-
-- auto crop manual/importado fica mais útil no primeiro palpite
-- filtros deixam de piorar documentos em vários cenários comuns
-- OCR fica menos poluído e mais prático para copiar texto
-- exportação deixa claro onde o arquivo foi salvo
-- o app transmite mais confiança no fluxo completo, da revisão ao pós-export
-
-### Observação desta rodada
-
-- as capturas oficiais em aparelho real seguem como fechamento natural de QA visual, mas não foram forçadas nesta máquina depois de instabilidade do emulador
-
----
-
-## v0.2.1 — Menos Ruído, Mais Confiança
-
-**Status:** concluída em 2026-04-23
-
-**Objetivo:** endurecer o fluxo manual/importado, deixar os filtros menos destrutivos e reduzir o peso visual das telas que ainda pareciam MVP configurável.
-
-### Entregue
-
-- auto crop manual/importado agora compara mais candidatos antes de escolher o quadrilátero inicial;
-- heurísticas de borda ficaram mais centradas na área útil da página, com menos influência de ruído nas extremidades;
-- editor ganhou botão de reajuste automático, overlay mais claro e handles mais confortáveis;
-- filtros foram recalibrados de novo para preservar melhor páginas pautadas, manuscrito e contraste de estudo;
-- revisão passou a esconder nome e tags até o momento em que o usuário realmente quiser editar;
-- exportação ficou mais dependente da escolha principal, com menos opções simultâneas e pós-export mais direto;
-- OCR foi reorganizado para leitura contínua e cópia mais rápida.
-
-### Resultado esperado desta release
-
-- o fluxo manual fica mais confiável como fallback real quando o scanner rápido não basta;
-- filtros deixam de piorar documentos em mais casos práticos de galeria e caderno;
-- revisão, OCR e exportação passam menos sensação de tela pesada e mais de ferramenta rápida;
-- o app se aproxima mais de um scanner utilizável no dia a dia sem inflar a arquitetura.
-
----
-
-## v0.2.2 — Scanner Rápido no Centro
-
-**Status:** concluída em 2026-04-24
-
-**Objetivo:** consolidar `Escanear rápido` como fluxo principal do Scanora, manter o manual como fallback editável e corrigir a dependência de URIs temporárias vindas do scanner, galeria ou CameraX.
-
-### Entregue
-
-- Home reorganizada com CTA principal único para `Escanear rápido`;
-- galeria continua habilitada pelo fluxo do Google quando o dispositivo oferece suporte;
-- manual/importação direta foram reposicionados em `Ajuste manual`;
-- imagens de entrada agora são copiadas para `filesDir/scan-sources` antes de criar o lote no histórico local;
-- scanner rápido cria lote com origem clara e abre direto na revisão;
-- tela manual deixou de mostrar atalho concorrente para o scanner guiado;
-- OCR ganhou botão forte `Copiar tudo`, feedback curto e blocos de leitura mais claros;
-- exportação ganhou feedback curto de sucesso mantendo qualidade visível apenas para PDF;
-- `escopo.md` da raiz passou a ser a referência principal de produto desta fase.
-
-### Resultado esperado desta release
-
-- o app deixa de parecer dividido entre dois fluxos principais;
-- importações e scans recentes continuam úteis mesmo depois que URIs temporárias deixam de existir;
-- revisão, OCR e exportação ficam mais coerentes com um fluxo rápido de scanner;
-- o fallback manual segue disponível sem tomar o lugar do scanner do Google.
-
----
-
-## v0.2.3 - Pos-scan que Parece Produto
-
-**Status:** concluida em 2026-04-24
-
-**Objetivo:** transformar OCR, revisao, exportacao e pos-exportacao em uma experiencia clara, util e menos tecnica.
-
-### Entregue
-
-- OCR passou a usar resultado estruturado em blocos e linhas do ML Kit, mantendo o texto completo persistido no historico;
-- tela de OCR ficou mais limpa, com `Copiar tudo` como acao principal e copia por bloco como acao secundaria;
-- exportacao agora comeca por `PDF` ou `Imagem`, abrindo qualidade apenas para PDF e JPG/PNG apenas para imagem;
-- pos-exportacao mostra nome, tipo, tamanho, local salvo, caminho quando disponivel, abrir e compartilhar por arquivo;
-- revisao colocou `Exportar lote` como CTA principal, reduziu texto de apoio e manteve nome/tags em disclosure progressivo;
-- documentacao publica e versao foram alinhadas para `0.2.3`.
-
-### Resultado esperado desta release
-
-- OCR deixa de parecer texto despejado e passa a ter leitura por blocos;
-- exportacao fica compreensivel para qualquer usuario antes e depois de salvar;
-- revisao parece ferramenta rapida de conferencia, nao formulario;
-- o scanner rapido continua sendo o fluxo principal e o manual segue como fallback editavel.
-
----
-
-## v0.2.4 — Minimalismo + Identidade Visual
-
-**Status:** concluída em 2026-04-25
-
-**Objetivo:** deixar o Scanora mais minimalista, direto e com identidade própria sem quebrar o scanner rápido, o fallback manual, OCR, exportação ou histórico.
-
-### Entregue
-
-- Home simplificada com `Escanear` como CTA principal absoluto;
-- escolha antecipada entre documento, recibo e caderno removida da Home;
-- scanner rápido usa modo universal e continua abrindo revisão após criar o lote local;
-- ajuste manual e importação direta ficaram como ações secundárias de fallback;
-- onboarding refeita em 3 telas visuais com raposa mascote;
-- novo ícone do launcher com a raposa escaneando documento;
-- splash passou a usar a nova identidade de forma discreta;
-- documentação pública, site e versão foram alinhados para `0.2.4`.
-
-### Resultado esperado desta release
-
-- o usuário não precisa decidir o tipo do documento antes de escanear;
-- a Home parece mais limpa, rápida e menos configurável;
-- o onboarding comunica o produto com menos texto e mais identidade;
-- a raposa aparece como marca do Scanora sem poluir as telas funcionais.
-
----
-
-## v0.2.5 — OCR manual confiável
-
-**Status:** concluída em 2026-04-25
-
-**Objetivo:** tornar o OCR do fluxo manual/importado mais útil, legível e copiável sem trocar a engine local nem refatorar o pipeline de imagem.
-
-### Entregue
-
-- pós-processamento puro de OCR em `core-common`, com ordenação por posição visual;
-- agrupamento de linhas próximas em parágrafos/trechos úteis;
-- redução de ruído pequeno e fragmentos claramente inúteis;
-- texto consolidado usado por `Copiar tudo`;
-- tela de OCR com alternância discreta entre `Trechos` e `Texto contínuo`;
-- estados mais curtos para carregando, vazio, leitura parcial e texto pronto;
-- preservação de bounding boxes do ML Kit em `core-data`;
-- indicação discreta de `OCR pronto` na revisão quando a página já tem texto salvo;
-- testes unitários para ordenação, agrupamento, ruído e consolidação.
-
-### Resultado esperado desta release
-
-- OCR manual/importado deixa de explodir em dezenas de cards pequenos;
-- o usuário consegue copiar uma versão mais útil do texto em um toque;
-- a tela de OCR fica mais parecida com ferramenta de revisão do que debug da engine;
-- a fase seguinte entregou o alinhamento entre preview, filtro, OCR e exportação no pipeline único.
-
----
-
-## v0.2.6 — Fidelidade da imagem e pipeline único
-
-**Status:** concluída em 2026-04-25
-
-**Objetivo:** alinhar preview, crop, filtros, OCR, revisão, exportação e compartilhamento sobre a mesma definição lógica de página.
-
-### Entregue
-
-- `sourceUri` tratado como base canônica e `processedUri` como derivado/cache visual;
-- chave pura do pipeline em `core-common`, versionando finalidade, crop, rotação, filtro e tamanho;
-- renderização local com ordem consistente: fonte, crop/perspectiva, rotação do usuário e filtro/OCR;
-- exportação rederivada da fonte canônica quando existe transformação local;
-- revisão da página selecionada usando prévia canônica e `ContentScale.Fit`;
-- invalidação de derivado visual e OCR quando crop, reestimativa, filtro ou rotação mudam;
-- testes unitários para normalização, chave de cache/pipeline e invalidação.
-
-### Resultado esperado desta release
-
-- revisão, filtros, OCR e exportação ficam mais coerentes entre si;
-- o arquivo final deixa de depender de thumbnail ou `processedUri` obsoleto;
-- scanner rápido continua como caminho principal sem crop local implícito;
-- o pipeline fica mais previsível para evoluções futuras.
-
----
-
-## Próximas fases
-
-### v0.3.0 — QA visual e material público
-
-- QA visual em aparelho real.
-- Capturas oficiais para README e site.
-- Ajustes finais de responsividade.
-- Revisão de microcopy.
-- Preparação de release pública mais apresentável.
-
-### v0.3.1 — Performance percebida
-
-- Avaliar Baseline Profiles.
-- Melhorar abertura fria.
-- Reduzir jank em navegação.
-- Melhorar cache de thumbnails.
-- Medir gargalos reais em aparelho mediano.
-
-### Candidatos para fases futuras
-
-- QA visual final em aparelho e publicação das capturas oficiais;
-- baseline profiles, benchmarks e tuning fino de performance;
-- presets mais avançados por tipo de documento em área posterior ao scan;
-- melhorias reais de PDF e compressão por lote;
-- criptografia local opcional para lotes sensíveis.
-
-### Itens que ficam para depois de estabilizar o básico
-
-- OpenCV;
-- Koin;
-- PdfBox;
-- pipeline premium de filtros próprios.
+FairScan, OSS Document Scanner, OpenScan, PaddleOCR e OCRmyPDF servem como referências de comportamento e benchmark, não como templates para cópia automática.

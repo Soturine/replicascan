@@ -8,12 +8,13 @@
 - construção de nomes de arquivo para exportação;
 - pós-processamento de OCR: ordenação visual, agrupamento em parágrafos, descarte de ruído e texto consolidado;
 - regras puras do pipeline de imagem: normalização de rotação/crop, chaves de preview/OCR/exportação, seleção de fonte derivada e invalidação de cache visual;
+- ownership/path traversal, importação parcial, rollback, orphan cleanup e captura não concorrente;
+- testes instrumentados de Room para CRUD/cascade/ordem, deleção física e export fail-fast;
 - teste instrumentado mínimo de inicialização da UI;
-- build `assembleDebug`, `testDebugUnitTest` e `lint` validados localmente na entrega `0.2.6`.
+- schemas Room versionados em `core-data/schemas`.
 
 ## O que ainda falta
 
-- testes de integração para repositórios Room;
 - cobertura mais forte do pipeline de imagem;
 - testes de navegação e fluxos completos com Compose;
 - cenários instrumentados para OCR e exportação;
@@ -58,6 +59,9 @@ Verificações principais:
 ./gradlew assembleDebug
 ./gradlew testDebugUnitTest
 ./gradlew lint
+./gradlew check
+./gradlew assembleRelease
+./gradlew assembleDebugAndroidTest
 ./gradlew connectedDebugAndroidTest
 ```
 

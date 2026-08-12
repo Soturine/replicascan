@@ -3,7 +3,7 @@
 ![Android](https://img.shields.io/badge/platform-Android-2E7D8C)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-23414B)
 ![Compose](https://img.shields.io/badge/Jetpack%20Compose-2026.03.00-DD8A2E)
-![Version](https://img.shields.io/badge/version-0.2.6-133942)
+![Version](https://img.shields.io/badge/version-0.2.7-133942)
 [![Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml)
 [![Deploy Pages](https://github.com/Soturine/scanora/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/pages.yml)
 
@@ -29,6 +29,10 @@ Site: https://soturine.github.io/scanora/
 - exportação em PDF, JPG e PNG com escolha progressiva entre PDF e Imagem;
 - pós-exportação com nome, tipo, tamanho, local salvo, abrir e compartilhar;
 - histórico local com título, tags, favoritos e busca.
+- banco sem migration destrutiva, schema versionado e lifecycle explícito dos arquivos privados;
+- importação parcial com contagem de falhas, rollback e preservação da ordem;
+- cache visual descartável com fallback para a fonte canônica;
+- backup automático desativado e compartilhamento restrito aos diretórios de export.
 
 ## Proposta de valor
 
@@ -64,6 +68,9 @@ Nesta rodada, o material público foi alinhado ao fluxo real do produto sem subs
 Referências técnicas:
 
 - [docs/architecture.md](docs/architecture.md)
+- [docs/current-state.md](docs/current-state.md)
+- [docs/data-lifecycle.md](docs/data-lifecycle.md)
+- [docs/threat-model.md](docs/threat-model.md)
 - [docs/decisions.md](docs/decisions.md)
 - [docs/setup.md](docs/setup.md)
 - [docs/testing.md](docs/testing.md)
@@ -83,7 +90,8 @@ Identidade do app:
 
 ## CI e Pages
 
-- O workflow [Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml) builda o projeto, roda lint e testes unitários.
+- O workflow [Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml) roda `check`, compila debug/release e valida o APK de testes instrumentados.
+- CodeQL analisa Java/Kotlin e o setup Gradle valida o wrapper; Dependabot acompanha Gradle e GitHub Actions.
 - O site público é publicado a partir de `site/`.
 - Para o GitHub Pages funcionar no repositório publicado, ative em `Settings > Pages > Source: GitHub Actions`.
 
@@ -92,12 +100,14 @@ Identidade do app:
 - processamento local por padrão;
 - OCR e filtros executados no dispositivo sempre que possível;
 - sem backend obrigatório, login ou sincronização no MVP.
+- scans, Room, OCR e preferências excluídos de cloud backup e device transfer automáticos;
+- excluir uma página ou lote remove os arquivos privados gerenciados, mas preserva fotos externas e exports do usuário.
 
 Política completa em [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
 
 ## Status
 
-`0.2.6` consolida a fidelidade da imagem: preview, filtros, OCR e exportação passam a derivar da mesma definição lógica de página, reduzindo risco de zoom, crop duplicado, rotação divergente ou arquivo final diferente da revisão. A próxima fase documentada é `0.3.0` para QA visual e material público.
+`0.2.7` consolida integridade e privacidade: histórico não usa fallback destrutivo, fontes privadas possuem lifecycle controlado, cache pode expirar sem inutilizar a página e importação/exportação deixam de esconder perda parcial. A próxima fase é `0.2.8`, focada em memória e exportação robusta.
 
 ## Contribuir
 

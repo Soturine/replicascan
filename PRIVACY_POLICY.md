@@ -1,55 +1,41 @@
 # Política de Privacidade do Scanora
 
-Última atualização: 2026-04-21
+Última atualização: 2026-08-12
 
-## Visão geral
+## Resumo
 
-Scanora foi projetado para funcionar com processamento local por padrão. O objetivo do app é permitir captura, revisão, OCR e exportação de documentos sem exigir envio obrigatório para servidores externos.
+O Scanora funciona localmente e não exige conta, login, sincronização ou backend. A versão `0.2.7` desativa cloud backup e transferência automática dos dados do app, além de restringir o compartilhamento aos arquivos que o usuário escolheu exportar.
 
 ## Dados processados
 
-O app pode processar localmente:
+O app pode manter no aparelho imagens capturadas ou importadas, crop/rotação/filtro, texto OCR, títulos, tags, favoritos, preferências e exports em PDF/JPG/PNG.
 
-- imagens capturadas pela câmera;
-- imagens importadas da galeria;
-- texto reconhecido por OCR;
-- metadados locais como título, tags, favoritos e datas.
+## Permissões e componentes
 
-## Onde os dados ficam
+- `CAMERA` é usada apenas na captura manual;
+- seleção de mídia usa os seletores da plataforma;
+- ML Kit Document Scanner, via Google Play services, oferece o scanner guiado;
+- ML Kit Text Recognition executa OCR no dispositivo;
+- não há analytics, tracking nem envio automático de documentos para servidor próprio ou OCR remoto.
 
-No MVP atual:
+## Armazenamento e backup
 
-- histórico, metadados e cópias locais das páginas ficam no armazenamento local do app;
-- imagens recebidas de scanner, galeria ou câmera podem ser copiadas para armazenamento interno para evitar dependência de URIs temporárias;
-- arquivos exportados são gerados localmente no dispositivo;
-- arquivos temporários de processamento podem existir no cache do app por tempo limitado;
-- uma rotina leve com `WorkManager` remove arquivos antigos de cache/exportação temporária.
+A fonte canônica de cada página fica na área privada do Scanora. Metadados e OCR ficam em Room; derivados ficam em cache regenerável. Arquivos, banco, preferências e armazenamento externo do app são excluídos das regras de cloud backup e device transfer, com `allowBackup` também desativado.
 
-## Permissões usadas
+O Scanora ainda não oferece backup próprio. Desinstalar ou limpar os dados do app pode remover o histórico privado.
 
-- `CAMERA`: necessária para a captura manual com CameraX.
+## Compartilhamento e exports
 
-Importação pela galeria usa o seletor moderno do Android/ML Kit quando aplicável e evita solicitar permissões amplas de armazenamento no MVP.
+Compartilhamento só começa após ação do usuário e concede leitura temporária por `content://`. O FileProvider não expõe fontes privadas, banco, preferências ou a raiz do cache.
 
-## OCR e scanner guiado
+Em Android 10+, exports finais são salvos em `Downloads/Scanora`. Esses arquivos passam a pertencer ao usuário: excluir o scan privado não apaga automaticamente um PDF/JPG/PNG já exportado.
 
-- O OCR usa ML Kit no dispositivo.
-- O scanner guiado usa ML Kit Document Scanner e pode depender de componentes do Google Play services para disponibilizar a experiência completa.
-- Mesmo quando bibliotecas do Google são usadas, o objetivo funcional do app continua sendo processar o conteúdo localmente no aparelho.
+## Retenção e exclusão
 
-## Compartilhamento e exportação
+Excluir página ou lote remove os registros e os arquivos privados gerenciados correspondentes. Fotos originais da galeria, conteúdo de outros providers e exports finais não são apagados. Derivados e temporários antigos podem ser removidos automaticamente; fontes órfãs só são removidas dentro do namespace gerenciado e após período de segurança.
 
-- O app exporta PDF, JPG e PNG localmente.
-- Quando você escolhe compartilhar, o arquivo selecionado é entregue ao app de destino por meio do mecanismo padrão de compartilhamento do Android.
-- O Scanora não faz upload obrigatório automático desses arquivos.
+Detalhes técnicos estão em [docs/data-lifecycle.md](docs/data-lifecycle.md) e [docs/threat-model.md](docs/threat-model.md).
 
-## O que o app não faz neste MVP
+## Contato
 
-- não exige login;
-- não cria perfil remoto;
-- não sincroniza com nuvem;
-- não envia documentos automaticamente a backend próprio.
-
-## Mudanças futuras
-
-Caso integrações futuras sejam adicionadas, como sync opcional, backup remoto ou analytics, esta política deverá ser atualizada antes da publicação da mudança.
+Para vulnerabilidades, siga `SECURITY.md` e não publique documentos ou dados pessoais em issues.

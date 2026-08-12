@@ -85,6 +85,18 @@ O foco é fazer bem o fluxo principal:
 - preserve comportamento estável em aparelho mediano
 - prefira melhorias locais, incrementais e verificáveis
 
+## Regras permanentes de integridade e privacidade
+- migrations Room de produção nunca podem usar fallback destrutivo
+- todo schema Room deve ser exportado e toda mudança de versão deve possuir migration testada
+- `sourceUri` é a fonte canônica persistente; derivados são cache regenerável
+- importação só persiste Room depois da cópia privada e deve fazer rollback se a persistência falhar
+- temporários ficam apenas em namespaces conhecidos e possuem cleanup conservador com grace period
+- excluir página ou scan deve controlar também os arquivos privados gerenciados, sem apagar URIs externas ou exports do usuário
+- dados documentais, banco, OCR e preferências devem permanecer excluídos de backup e device transfer automáticos
+- FileProvider deve expor somente subdiretórios de export necessários, com grant mínimo de leitura
+- importação e exportação nunca podem omitir páginas silenciosamente
+- release exige schema versionado, testes de integridade, `check`, lint e builds debug/release
+
 ## Regras para crop / imagem
 - priorize robustez sobre “mágica”
 - quando a confiança do auto crop for baixa, use fallback conservador

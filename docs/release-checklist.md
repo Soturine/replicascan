@@ -1,0 +1,42 @@
+# Checklist de release
+
+## Repositório e versão
+
+- [ ] `git status --short` limpo e branch correta;
+- [ ] `versionName`, `versionCode`, README, site e changelog alinhados;
+- [ ] tag ainda não existe e apontará para o HEAD publicado.
+
+## Integridade e privacidade
+
+- [ ] não existe destructive migration em produção;
+- [ ] schema Room foi exportado e mudanças possuem migration/teste;
+- [ ] deleção e rollback cobrem arquivos privados sem tocar em externos;
+- [ ] cache expirado possui fallback;
+- [ ] backup e device transfer seguem a política documentada;
+- [ ] FileProvider expõe apenas diretórios necessários;
+- [ ] diff não contém segredos, documentos reais ou binários inesperados.
+
+## Gates
+
+```bash
+./gradlew clean
+./gradlew testDebugUnitTest
+./gradlew lint
+./gradlew check
+./gradlew assembleDebug
+./gradlew assembleRelease
+./gradlew assembleDebugAndroidTest
+```
+
+- [ ] testes instrumentados/managed device executados quando houver ambiente;
+- [ ] smoke manual cobre captura, importação parcial, fallback, deleção, OCR, export e compartilhamento;
+- [ ] CI final concluiu sem findings ignorados.
+
+## Publicação
+
+- [ ] commits são pequenos e revisáveis;
+- [ ] `main` foi enviada sem force push;
+- [ ] HEAD remoto coincide com o local;
+- [ ] tag anotada foi enviada;
+- [ ] GitHub Release usa apenas garantias validadas;
+- [ ] APK/AAB só é anexado quando assinatura e validação do artefato estiverem definidas.

@@ -1,6 +1,6 @@
 # Escopo do Projeto
 
-O escopo operacional vigente fica em [`../escopo.md`](../escopo.md). Este arquivo em `planning/` mantém a visão estratégica do produto alinhada com a versão atual.
+Este arquivo é histórico. O estado operacional vigente fica em [`../docs/current-state.md`](../docs/current-state.md), o lifecycle em [`../docs/data-lifecycle.md`](../docs/data-lifecycle.md) e as próximas fases em [`../ROADMAP.md`](../ROADMAP.md).
 
 ## Visão geral
 

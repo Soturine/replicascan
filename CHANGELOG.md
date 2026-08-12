@@ -4,6 +4,39 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+## [0.2.7] - 2026-08-12
+
+### Security
+
+- Cloud backup e device transfer automáticos foram desativados com regras explícitas para arquivos, banco, preferências e armazenamento externo do app.
+- FileProvider passou a expor somente subdiretórios de export e compartilhamento concede apenas leitura temporária com `ClipData`.
+- Deleção de página/lote agora remove arquivos privados gerenciados sem apagar URIs externas nem exports do usuário.
+
+### Fixed
+
+- Room deixou de usar migration destrutiva; o schema 1 passou a ser exportado e versionado sem bump artificial.
+- Importação parcial preserva ordem, informa contagens e faz rollback das cópias se Room falhar.
+- Derivado ausente ou ilegível usa a fonte canônica e não mantém spinner infinito.
+- Captura manual bloqueia taps concorrentes e trata falha de binding sem bloquear a main thread.
+- PDF/JPG/PNG falham com página identificada em vez de reportar sucesso com conteúdo omitido.
+- Worker deixou de limpar um diretório de export inexistente e passou a atuar apenas em fontes órfãs, derivados e temporários gerenciados.
+
+### Changed
+
+- `ScanFileStore` centraliza importação, ownership, rollback, deleção e orphan cleanup.
+- Criação de lote saiu do filesystem do NavHost e usa resultado explícito de sucesso/falha.
+- CI executa `check`, builds debug/release e compila os testes instrumentados; wrapper validation, CodeQL e Dependabot foram adicionados.
+- Versão do app foi alinhada para `0.2.7` com `versionCode` 14.
+
+### Testing
+
+- Cobertura JVM para ownership, path traversal, importação parcial, rollback, orphan cleanup e gate de captura.
+- Testes instrumentados para CRUD/cascade/ordem Room, deleção física e exportação de página ilegível.
+
+### Documentation
+
+- Estado atual, lifecycle de dados, threat model, checklist de release, política de privacidade e roadmap foram alinhados à base real.
+
 ## [0.2.6] - 2026-04-25
 
 ### Added

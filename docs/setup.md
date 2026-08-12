@@ -35,7 +35,14 @@
 ```powershell
 $env:JAVA_HOME="C:\Users\rafael\AppData\Local\Programs\Microsoft\jdk-17.0.10.7-hotspot"
 $env:ANDROID_SDK_ROOT="C:\Users\rafael\AppData\Local\Android\Sdk"
-.\gradlew.bat assembleDebug testDebugUnitTest lint --no-daemon
+.\gradlew.bat clean
+.\gradlew.bat testDebugUnitTest
+.\gradlew.bat lint
+.\gradlew.bat check
+.\gradlew.bat assembleDebug
+.\gradlew.bat assembleRelease
+.\gradlew.bat assembleDebugAndroidTest
 ```
 
-- O build de linha de comando passou nesta máquina em `2026-04-25` com a versão `0.2.6`.
+- Os sete gates passaram nesta máquina em `2026-08-12` com a versão `0.2.7`.
+- Os APKs de teste instrumentado foram compilados; a execução em Android ficou pendente porque não havia dispositivo ou AVD disponível.

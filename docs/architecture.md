@@ -64,6 +64,10 @@ O app usa duas estratégias complementares:
 
 Antes de criar um lote no Room, imagens vindas do scanner rápido, galeria ou CameraX são copiadas para `filesDir/scan-sources`. Assim preview, filtros, OCR e exportação não dependem de URIs temporárias fornecidas por outro app ou pelo scanner do Google.
 
+Desde a `v0.2.7`, `ScanFileStore` faz a cópia atômica, valida o namespace gerenciado, executa rollback e remove fontes/derivados junto da deleção no repositório. O schema Room permanece na versão 1, agora exportada, e a configuração de produção não aceita migration destrutiva.
+
+Derivados em `cacheDir/processed` são descartáveis. O carregador visual tenta a fonte canônica quando o derivado falha e encerra em erro discreto se nenhuma entrada puder ser aberta. O worker usa grace period para fontes órfãs e nunca toca em export final do usuário.
+
 ## OCR
 
 O OCR local continua em ML Kit Text Recognition, mas a imagem enviada para reconhecimento não depende de thumbnail nem de `processedUri` salvo. A base atual deriva uma versão específica para leitura a partir de `sourceUri`, crop e rotação da página, preserva bounding boxes de blocos/linhas e aplica um pós-processamento puro em `core-common`.
@@ -73,6 +77,12 @@ Esse pós-processamento ordena linhas por posição visual, agrupa linhas próxi
 ## Exportação
 
 PDF, JPG e PNG continuam sendo gerados localmente. Em Android 10+ a saída vai para `Downloads/Scanora`, enquanto versões anteriores usam o armazenamento do app. Quando há crop, rotação, filtro ou cache processado, a exportação rederiva a página a partir de `sourceUri` em vez de usar `displayUri` como fonte final. A tela escolhe primeiro entre `PDF` e `Imagem`, mostra apenas opções relevantes ao formato atual e devolve metadados para a UI mostrar nome, tipo, tamanho, local salvo, abrir e compartilhar.
+
+Se uma página não puder ser renderizada, a exportação falha com índice/ID e não publica sucesso incompleto. A reforma de streaming e memória permanece planejada para `v0.2.8`.
+
+## Privacidade de plataforma
+
+Backup e device transfer automáticos são desativados em profundidade pelo Manifest e pelas regras de extração. O FileProvider publica apenas diretórios específicos de export, nunca `scan-sources`, banco, preferências ou raízes de armazenamento. Consulte [data-lifecycle.md](data-lifecycle.md) e [threat-model.md](threat-model.md).
 
 ## Dependências principais
 
