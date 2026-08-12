@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">Escanear. Organizar. Simplificar.</string>
+    <string name="onboarding_page_one_title">Escanee en solo unos pocos pasos</string>
+    <string name="onboarding_page_one_body">Apunta, captura y listo.</string>
+    <string name="onboarding_page_one_image_description">Fox escaneando un documento con el celular.</string>
+    <string name="onboarding_page_two_title">Revisar antes de guardar</string>
+    <string name="onboarding_page_two_body">Recorta, rota y mejora si es necesario.</string>
+    <string name="onboarding_page_two_image_description">Fox ajustando las esquinas de un documento.</string>
+    <string name="onboarding_page_three_title">Privacidad por defecto</string>
+    <string name="onboarding_page_three_body">Sus documentos se procesan en el dispositivo siempre que sea posible.</string>
+    <string name="onboarding_page_three_image_description">Fox protegiendo un documento con escudo.</string>
+    <string name="onboarding_next">Próximo</string>
+    <string name="onboarding_finish">para empezar</string>
+    <string name="draft_title_quick">documento escaneado</string>
+    <string name="draft_title_camera">Documento</string>
+    <string name="draft_title_import">Documento importado</string>
+    <string name="import_partial_result">Se han agregado las páginas %1$d de %2$d. No se pudo agregar %3$d.</string>
+    <string name="import_failed_result">No se pueden agregar las páginas seleccionadas.</string>
+    <string name="delete_partial_result">El documento se eliminó, pero los archivos privados %1$d aún están esperando ser limpiados.</string>
+    <string name="export_chooser_title">Compartir exportación de Scanora</string>
+</resources>

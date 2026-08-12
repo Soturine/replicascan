@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="editor_title">Editore</string>
+    <string name="editor_back">Torno indietro</string>
+    <string name="editor_crop_title">Regolare</string>
+    <string name="editor_crop_eyebrow">Taglio manuale</string>
+    <string name="editor_crop_heading">Inquadra l\'intera pagina</string>
+    <string name="editor_crop_helper">La sintonizzazione automatica funge da punto di partenza. Se necessario, trascina i quattro angoli finché non si chiude l\'area utile della pagina.</string>
+    <string name="editor_crop_caption">Trascina un angolo alla volta. Se l\'ipotesi iniziale non è corretta, utilizzare "Regola automaticamente".</string>
+    <string name="editor_crop_detecting">Ricerca negli angoli del documento…</string>
+    <string name="editor_reestimate_crop">Riaggiustare automaticamente</string>
+    <string name="editor_save_crop_continue">Salva taglia e segui</string>
+    <string name="editor_filter_title">Filtri</string>
+    <string name="editor_filter_eyebrow">Sguardo finale</string>
+    <string name="editor_filter_heading">Scegli la finitura della pagina</string>
+    <string name="editor_filter_helper">L\'anteprima si apre rapidamente e migliora in background. Il file finale continua a essere generato all\'esterno dell\'interfaccia.</string>
+    <string name="editor_filter_current">Attuale</string>
+    <string name="editor_filter_selected">Selezionato</string>
+    <string name="editor_filter_selected_current">Selezionato ora</string>
+    <string name="editor_filter_preview_label">Tocca per testare</string>
+    <string name="editor_filter_preview_loading">Aggiornamento dell\'anteprima…</string>
+    <string name="editor_filter_preview_refining">Perfezionamento dell\'anteprima in modo più chiaro…</string>
+    <string name="editor_filter_applying">Applicazione di elementi visivi alla pagina…</string>
+    <string name="editor_apply_visual">Applicare visivo</string>
+    <string name="editor_save_continue">Salva e continua</string>
+    <string name="editor_rotate">Ruota di 90°</string>
+    <string name="editor_review_title">Revisione</string>
+    <string name="editor_review_eyebrow">Lotto in fase di revisione</string>
+    <plurals name="editor_review_summary">
+        <item quantity="one">%1$d pagina nel lotto.</item>
+        <item quantity="other">%1$d pagine nel lotto.</item>
+    </plurals>
+    <string name="editor_review_helper">Nome e tag sono nei dettagli.</string>
+    <string name="editor_selected_page_eyebrow">Pagina di messa a fuoco</string>
+    <string name="editor_missing_page_title">Pagina non disponibile</string>
+    <string name="editor_missing_page_message">Seleziona un\'altra pagina o crea un nuovo batch.</string>
+    <string name="editor_document_name">Nome del documento</string>
+    <string name="editor_tags">Tag</string>
+    <string name="editor_tags_helper">Separare con una virgola per organizzare la cronologia in seguito.</string>
+    <string name="editor_edit_metadata">Dettagli del lotto</string>
+    <string name="editor_hide_metadata">Chiudi i dettagli</string>
+    <string name="editor_save_metadata">Salva informazioni</string>
+    <string name="editor_pages_eyebrow">Pagine</string>
+    <string name="editor_pages_section">Pagine batch</string>
+    <string name="editor_pages_supporting">Tocca una miniatura per cambiare la pagina messa a fuoco.</string>
+    <string name="editor_open_crop">Regolare</string>
+    <string name="editor_open_filters">Affina lo sguardo</string>
+    <string name="editor_delete_page">Elimina pagina</string>
+    <string name="editor_open_export">Esporta batch</string>
+    <string name="editor_page_title">Pagina %1$d</string>
+    <string name="editor_move_up">Vai su</string>
+    <string name="editor_move_down">Spostati giù</string>
+    <string name="editor_open_ocr">Apri l\'OCR</string>
+    <string name="editor_ocr_ready">Pronto per l\'OCR</string>
+</resources>

@@ -2,28 +2,12 @@ package com.soturine.scanora.core.common.model
 
 enum class DocumentFilterType(
     val storageKey: String,
-    val title: String,
 ) {
-    ORIGINAL_CORRECTED(
-        storageKey = "original_corrected",
-        title = "Original corrigido",
-    ),
-    DOCUMENT_BLACK_WHITE(
-        storageKey = "document_bw",
-        title = "Documento P&B",
-    ),
-    DOCUMENT_GRAY(
-        storageKey = "document_gray",
-        title = "Documento cinza",
-    ),
-    COLOR_ENHANCED(
-        storageKey = "color_enhanced",
-        title = "Colorido aprimorado",
-    ),
-    RECEIPT_HIGH_CONTRAST(
-        storageKey = "receipt_high_contrast",
-        title = "Recibo / Alto contraste",
-    );
+    ORIGINAL_CORRECTED("original_corrected"),
+    DOCUMENT_BLACK_WHITE("document_bw"),
+    DOCUMENT_GRAY("document_gray"),
+    COLOR_ENHANCED("color_enhanced"),
+    RECEIPT_HIGH_CONTRAST("receipt_high_contrast");
 
     companion object {
         fun fromStorageKey(value: String): DocumentFilterType =

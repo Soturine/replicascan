@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="export_title">Exportar</string>
+    <string name="export_back">Voltar</string>
+    <string name="export_eyebrow">Saída final</string>
+    <string name="export_missing_title">Nada para exportar</string>
+    <string name="export_missing_message">Abra um lote válido antes de gerar arquivos.</string>
+    <plurals name="export_summary">
+        <item quantity="one">%1$d página pronta para exportação.</item>
+        <item quantity="other">%1$d páginas prontas para exportação.</item>
+    </plurals>
+    <string name="export_local_notice">O Scanora gera tudo no próprio aparelho e mostra onde o arquivo foi salvo assim que terminar.</string>
+    <string name="export_format_eyebrow">Formato</string>
+    <string name="export_format_section">Como esse lote deve sair?</string>
+    <string name="export_format_supporting">Selecione como o lote deve sair do celular.</string>
+    <string name="export_kind_pdf">PDF</string>
+    <string name="export_kind_image">Imagem</string>
+    <string name="export_image_format_section">Tipo de imagem</string>
+    <string name="export_image_format_supporting">Escolha JPG para arquivo mais leve ou PNG para preservar mais detalhe.</string>
+    <string name="export_quality_eyebrow">Qualidade</string>
+    <string name="export_quality_section">Qualidade do PDF</string>
+    <string name="export_quality_supporting">A qualidade só aparece quando a saída selecionada é PDF.</string>
+    <string name="export_processing_message">Gerando arquivos no aparelho. Isso pode levar alguns segundos.</string>
+    <string name="export_action">Salvar arquivos</string>
+    <string name="export_action_pdf">Gerar PDF</string>
+    <string name="export_action_images">Salvar imagens</string>
+    <string name="export_ready_eyebrow">Arquivos prontos</string>
+    <string name="export_ready_title">Exportação concluída</string>
+    <plurals name="export_success_message">
+        <item quantity="one">%1$d arquivo pronto para abrir ou compartilhar.</item>
+        <item quantity="other">%1$d arquivos prontos para abrir ou compartilhar.</item>
+    </plurals>
+    <string name="export_success_snackbar_single">Arquivo salvo.</string>
+    <string name="export_success_snackbar_multiple">%1$d arquivos salvos.</string>
+    <string name="export_share_action">Compartilhar arquivos</string>
+    <string name="export_share_file_action">Compartilhar</string>
+    <string name="export_location_label">Salvo em: %1$s</string>
+    <string name="export_file_type">Tipo</string>
+    <string name="export_file_size">Tamanho</string>
+    <string name="export_file_location">Salvo em</string>
+    <string name="export_file_path">Caminho</string>
+    <string name="export_open_file_action">Abrir arquivo</string>
+    <string name="export_kind_pdf_description">Gera um arquivo único para arquivar, enviar ou imprimir.</string>
+    <string name="export_kind_image_description">Salva cada página como imagem independente.</string>
+</resources>

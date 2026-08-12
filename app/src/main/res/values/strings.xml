@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Scanora</string>
-    <string name="splash_title">Scanora</string>
-    <string name="splash_subtitle">Escaneie, revise e exporte com privacidade.</string>
-    <string name="onboarding_page_one_title">Escaneie em poucos passos</string>
-    <string name="onboarding_page_one_body">Use o scanner rápido para capturar ou importar documentos.</string>
-    <string name="onboarding_page_one_image_description">Raposa escaneando um documento com celular.</string>
-    <string name="onboarding_page_two_title">Revise antes de salvar</string>
-    <string name="onboarding_page_two_body">Ajuste corte, filtros e ordem das páginas quando precisar.</string>
-    <string name="onboarding_page_two_image_description">Raposa ajustando os cantos de um documento.</string>
-    <string name="onboarding_page_three_title">Privacidade por padrão</string>
-    <string name="onboarding_page_three_body">Seus scans ficam no aparelho sempre que possível.</string>
-    <string name="onboarding_page_three_image_description">Raposa protegendo um documento com escudo.</string>
-    <string name="onboarding_next">Próximo</string>
-    <string name="onboarding_finish">Começar</string>
-    <string name="import_partial_result">%1$d de %2$d páginas importadas. %3$d não puderam ser adicionadas.</string>
-    <string name="import_failed_result">Não foi possível adicionar as páginas selecionadas.</string>
-    <string name="delete_partial_result">O scan foi excluído, mas %1$d arquivo(s) privado(s) aguardam nova limpeza.</string>
+    <string name="app_name" translatable="false">Scanora</string>
+    <string name="splash_title" translatable="false">Scanora</string>
+    <string name="splash_subtitle">Scan. Organize. Simplify.</string>
+    <string name="onboarding_page_one_title">Scan in just a few steps</string>
+    <string name="onboarding_page_one_body">Point, capture, and you’re done.</string>
+    <string name="onboarding_page_one_image_description">Fox scanning a document with a phone.</string>
+    <string name="onboarding_page_two_title">Review before saving</string>
+    <string name="onboarding_page_two_body">Crop, rotate, and improve when needed.</string>
+    <string name="onboarding_page_two_image_description">Fox adjusting the corners of a document.</string>
+    <string name="onboarding_page_three_title">Privacy by default</string>
+    <string name="onboarding_page_three_body">Your documents are processed on your device whenever possible.</string>
+    <string name="onboarding_page_three_image_description">Fox protecting a document with a shield.</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_finish">Get started</string>
+    <string name="draft_title_quick">Scanned document</string>
+    <string name="draft_title_camera">Document</string>
+    <string name="draft_title_import">Imported document</string>
+    <string name="import_partial_result">%1$d of %2$d pages were added. %3$d could not be added.</string>
+    <string name="import_failed_result">The selected pages could not be added.</string>
+    <string name="delete_partial_result">The document was removed, but %1$d private files still need cleanup.</string>
+    <string name="export_chooser_title">Share Scanora export</string>
 </resources>

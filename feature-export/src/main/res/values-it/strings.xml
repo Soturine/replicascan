@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="export_title">Esportare</string>
+    <string name="export_back">Torno indietro</string>
+    <string name="export_eyebrow">Uscita finale</string>
+    <string name="export_missing_title">Niente da esportare</string>
+    <string name="export_missing_message">Aprire un batch valido prima di generare file.</string>
+    <plurals name="export_summary">
+        <item quantity="one">%1$d pagina pronta per l\'esportazione.</item>
+        <item quantity="other">%1$d pagine pronte per l\'esportazione.</item>
+    </plurals>
+    <string name="export_local_notice">Scanora genera tutto sul dispositivo stesso e mostra dove è stato salvato il file non appena è finito.</string>
+    <string name="export_format_eyebrow">Formato</string>
+    <string name="export_format_section">Come dovrebbe uscire questo lotto?</string>
+    <string name="export_format_supporting">Seleziona come il lotto deve lasciare il cellulare.</string>
+    <string name="export_kind_pdf">PDF</string>
+    <string name="export_kind_image">Immagine</string>
+    <string name="export_image_format_section">Tipo di immagine</string>
+    <string name="export_image_format_supporting">Scegli JPG per un file più leggero o PNG per preservare più dettagli.</string>
+    <string name="export_quality_eyebrow">Qualità</string>
+    <string name="export_quality_section">PDFQualità</string>
+    <string name="export_quality_supporting">La qualità viene visualizzata solo quando l\'output selezionato è PDF.</string>
+    <string name="export_processing_message">Generazione di file sul dispositivo. L\'operazione potrebbe richiedere alcuni secondi.</string>
+    <string name="export_action">Salva file</string>
+    <string name="export_action_pdf">Genera PDF</string>
+    <string name="export_action_images">Salva immagini</string>
+    <string name="export_ready_eyebrow">File pronti</string>
+    <string name="export_ready_title">Esportazione completata</string>
+    <plurals name="export_success_message">
+        <item quantity="one">%1$d file pronto per essere aperto o condiviso.</item>
+        <item quantity="other">%1$d file pronti per essere aperti o condivisi.</item>
+    </plurals>
+    <string name="export_success_snackbar_single">File salvato.</string>
+    <string name="export_success_snackbar_multiple">%1$d file salvati.</string>
+    <string name="export_share_action">Condividere file</string>
+    <string name="export_share_file_action">Da condividere</string>
+    <string name="export_location_label">Salvato in: %1$s</string>
+    <string name="export_file_type">Tipo</string>
+    <string name="export_file_size">Misurare</string>
+    <string name="export_file_location">Salvato in</string>
+    <string name="export_file_path">Sentiero</string>
+    <string name="export_open_file_action">Apri file</string>
+    <string name="export_kind_pdf_description">Crea un unico file da archiviare, inviare o stampare.</string>
+    <string name="export_kind_image_description">Salva ogni pagina come immagine separata.</string>
+</resources>

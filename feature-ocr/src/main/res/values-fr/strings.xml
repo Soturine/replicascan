@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ocr_title">OCR</string>
+    <string name="ocr_back">j\'y retourne</string>
+    <string name="ocr_eyebrow">Lecture locale</string>
+    <string name="ocr_missing_title">Page indisponible</string>
+    <string name="ocr_missing_message">Ouvrez une page valide pour reconnaître le texte.</string>
+    <string name="ocr_processing">Lecture de texte…</string>
+    <string name="ocr_processing_detail">Préparer la page et organiser le résultat.</string>
+    <string name="ocr_result_title">Texte prêt</string>
+    <plurals name="ocr_supporting">
+        <item quantity="one">%1$d extrait organisé.</item>
+        <item quantity="other">%1$d extraits organisés.</item>
+    </plurals>
+    <string name="ocr_weak_title">Lecture partielle</string>
+    <string name="ocr_weak_text">Nous avons trouvé peu de texte utile sur cette page.</string>
+    <string name="ocr_weak_hint">Si le résultat semble faible, ajustez le recadrage ou essayez le scanner rapide.</string>
+    <string name="ocr_empty_title">Aucun texte utile</string>
+    <string name="ocr_empty_text">Essayez d\'ajuster le recadrage, d\'améliorer la lumière ou d\'utiliser le scanner rapide.</string>
+    <string name="ocr_copy">Copier le texte</string>
+    <string name="ocr_copy_all">Copier tout</string>
+    <string name="ocr_copy_excerpt">Copier l\'extrait</string>
+    <string name="ocr_copy_success">Texte copié.</string>
+    <string name="ocr_retry">Lire à nouveau</string>
+    <string name="ocr_view_paragraphs">Extraits</string>
+    <string name="ocr_view_continuous">Texte continu</string>
+    <string name="ocr_paragraph_label">Extrait %1$d</string>
+    <string name="ocr_continuous_title">Texte consolidé</string>
+</resources>

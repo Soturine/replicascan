@@ -9,6 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -93,6 +95,7 @@ fun ScanoraNavHost(
                             mode = ScanMode.DOCUMENT,
                             uriValues = uris,
                             source = DraftSource.QUICK_SCAN,
+                            titlePrefix = resources.getString(R.string.draft_title_quick),
                         ).handle(
                             context = context,
                             onSuccess = { result ->
@@ -110,6 +113,7 @@ fun ScanoraNavHost(
                             mode = mode,
                             uriValues = uris,
                             source = DraftSource.MANUAL_IMPORT,
+                            titlePrefix = resources.getString(R.string.draft_title_import),
                         ).handle(context) { result ->
                             navController.navigate(ScanoraDestinations.crop(result.scanId, result.firstPageId))
                         }
@@ -140,6 +144,7 @@ fun ScanoraNavHost(
                             mode = mode,
                             uriValues = listOf(uri),
                             source = DraftSource.MANUAL_CAMERA,
+                            titlePrefix = resources.getString(R.string.draft_title_camera),
                         ).handle(context) { result ->
                             navController.navigate(ScanoraDestinations.crop(result.scanId, result.firstPageId))
                         }
@@ -359,6 +364,10 @@ fun ScanoraNavHost(
                 onPdfQualitySelected = settingsViewModel::setPdfQuality,
                 onResetOnboarding = settingsViewModel::resetOnboarding,
                 onOpenAbout = { navController.navigate(ScanoraDestinations.About) },
+                currentLanguageTag = AppCompatDelegate.getApplicationLocales().toLanguageTags(),
+                onLanguageSelected = { tag ->
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag))
+                },
             )
         }
         composable(ScanoraDestinations.About) {
@@ -430,7 +439,7 @@ private fun shareFiles(
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
     }
-    context.startActivity(Intent.createChooser(intent, "Compartilhar exportação"))
+    context.startActivity(Intent.createChooser(intent, context.getString(R.string.export_chooser_title)))
 }
 
 private fun openExportedFile(

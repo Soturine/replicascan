@@ -2,15 +2,22 @@ package com.soturine.scanora.core.common
 
 import com.google.common.truth.Truth.assertThat
 import com.soturine.scanora.core.common.usecase.FormatScanDateUseCase
+import com.soturine.scanora.core.common.util.DateFormatter
+import java.util.Locale
+import java.util.TimeZone
 import org.junit.Test
 
 class FormatScanDateUseCaseTest {
-    private val useCase = FormatScanDateUseCase()
-
     @Test
-    fun `deve formatar data em pt br`() {
-        val formatted = useCase(1_775_743_200_000L)
+    fun `formats date using the requested locale and time zone`() {
+        val timestamp = 1_775_743_200_000L
+        val zone = TimeZone.getTimeZone("America/Sao_Paulo")
+        val ptBr = FormatScanDateUseCase(DateFormatter(Locale.forLanguageTag("pt-BR"), zone))(timestamp)
+        val enUs = FormatScanDateUseCase(DateFormatter(Locale.US, zone))(timestamp)
 
-        assertThat(formatted).isEqualTo("09 abr 2026, 11:00")
+        assertThat(ptBr).contains("abr")
+        assertThat(ptBr).contains("11:00")
+        assertThat(enUs).contains("Apr")
+        assertThat(enUs).contains("11:00")
     }
 }

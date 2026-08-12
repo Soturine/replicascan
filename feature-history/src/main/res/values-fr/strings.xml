@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="history_title">Mes scans</string>
+    <string name="history_eyebrow">Histoire locale</string>
+    <string name="history_heading">Vos documents sauvegardés</string>
+    <string name="history_supporting">%1$d lot(s) trouvé(s) dans la recherche en cours.</string>
+    <string name="history_supporting_empty">Tout ce qui est enregistré localement apparaît ici avec une recherche par titre et balise.</string>
+    <string name="history_search_label">Rechercher des analyses</string>
+    <string name="history_search_placeholder">Titre, tag ou type de lot</string>
+    <string name="history_empty_title">Aucune analyse enregistrée pour l\'instant</string>
+    <string name="history_empty_message">Après examen ou exportation, vos lots apparaissent ici pour être rouverts, ajoutés aux favoris ou exportés à nouveau.</string>
+    <string name="history_subtitle">Page(s) %1$d • mise à jour sur %2$s</string>
+    <string name="history_badge_favorite">Préféré</string>
+    <string name="history_badge_draft">esquisser</string>
+    <string name="history_detail_missing_title">Analyse introuvable</string>
+    <string name="history_detail_missing_message">Ce lot a peut-être été supprimé ou n\'a pas encore été téléchargé.</string>
+    <string name="history_detail_eyebrow">Détails du lot</string>
+    <string name="history_detail_meta">Page(s) %1$d • dernière mise à jour sur %2$s</string>
+    <string name="history_detail_draft">Lot encore en projet</string>
+    <string name="history_detail_saved">Prêt à rouvrir, exporter ou ajouter aux favoris</string>
+    <string name="history_add_favorite">Marquer comme favori</string>
+    <string name="history_remove_favorite">Supprimer le favori</string>
+    <string name="history_open_review">Retour à l\'avis</string>
+    <string name="history_open_export">Exporter</string>
+    <string name="history_pages_eyebrow">Pages</string>
+    <string name="history_pages_section">aperçu du lot</string>
+    <string name="history_pages_supporting">Appuyez sur une page pour ouvrir le texte reconnu.</string>
+    <string name="history_page_title">Page %1$d</string>
+    <string name="history_page_overline">Aperçu prêt</string>
+    <string name="history_page_badge_ocr">ROC enregistré</string>
+    <string name="history_delete_scan">Supprimer cette analyse</string>
+</resources>

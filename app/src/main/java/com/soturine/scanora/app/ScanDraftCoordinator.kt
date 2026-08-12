@@ -3,19 +3,17 @@ package com.soturine.scanora.app
 import com.soturine.scanora.core.common.model.ScanMode
 import com.soturine.scanora.core.common.repository.ScanRepository
 import com.soturine.scanora.core.data.files.SourceFileStore
-import java.text.SimpleDateFormat
+import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
 import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
 
-enum class DraftSource(
-    val titlePrefix: String,
-) {
-    QUICK_SCAN("Scan rápido"),
-    MANUAL_CAMERA("Modo manual"),
-    MANUAL_IMPORT("Importação manual"),
+enum class DraftSource {
+    QUICK_SCAN,
+    MANUAL_CAMERA,
+    MANUAL_IMPORT,
 }
 
 sealed interface DraftCreationResult {
@@ -40,6 +38,7 @@ class ScanDraftCoordinator(
         mode: ScanMode,
         uriValues: List<String>,
         source: DraftSource,
+        titlePrefix: String,
     ): DraftCreationResult {
         if (uriValues.isEmpty()) return DraftCreationResult.Failure(0, 0)
         val importResult = fileStore.importSources(uriValues)
@@ -48,9 +47,9 @@ class ScanDraftCoordinator(
         }
 
         return try {
-            val formatter = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.forLanguageTag("pt-BR"))
+            val formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
             val created = scanRepository.createScan(
-                title = "${source.titlePrefix} ${formatter.format(Date())}",
+                title = "$titlePrefix ${formatter.format(Date())}",
                 mode = mode,
                 sourceUris = importResult.imported.map { it.stableUri },
             )

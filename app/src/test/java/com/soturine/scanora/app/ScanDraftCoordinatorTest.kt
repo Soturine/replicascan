@@ -33,6 +33,7 @@ class ScanDraftCoordinatorTest {
             ScanMode.DOCUMENT,
             listOf("one", "two", "three"),
             DraftSource.MANUAL_IMPORT,
+            "Imported document",
         )
 
         assertThat(repository.createdSourceUris).containsExactly("first", "third").inOrder()
@@ -50,6 +51,7 @@ class ScanDraftCoordinatorTest {
             ScanMode.DOCUMENT,
             listOf("one", "two"),
             DraftSource.QUICK_SCAN,
+            "Scanned document",
         )
 
         assertThat(fileStore.rolledBack).containsExactlyElementsIn(imported)

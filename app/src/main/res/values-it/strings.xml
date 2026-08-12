@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">Scansione. Organizzare. Semplificare.</string>
+    <string name="onboarding_page_one_title">Scansione in pochi passaggi</string>
+    <string name="onboarding_page_one_body">Inquadra, cattura e vai.</string>
+    <string name="onboarding_page_one_image_description">Fox che scansiona un documento con il cellulare.</string>
+    <string name="onboarding_page_two_title">Rivedi prima di salvare</string>
+    <string name="onboarding_page_two_body">Ritaglia, ruota e migliora se necessario.</string>
+    <string name="onboarding_page_two_image_description">Fox che aggiusta gli angoli di un documento.</string>
+    <string name="onboarding_page_three_title">Privacy per impostazione predefinita</string>
+    <string name="onboarding_page_three_body">I tuoi documenti vengono elaborati sul dispositivo quando possibile.</string>
+    <string name="onboarding_page_three_image_description">Volpe che protegge un documento con uno scudo.</string>
+    <string name="onboarding_next">Prossimo</string>
+    <string name="onboarding_finish">Per iniziare</string>
+    <string name="draft_title_quick">Documento scansionato</string>
+    <string name="draft_title_camera">Documento</string>
+    <string name="draft_title_import">Documento importato</string>
+    <string name="import_partial_result">Sono state aggiunte le pagine %1$d da %2$d. Impossibile aggiungere %3$d.</string>
+    <string name="import_failed_result">Impossibile aggiungere le pagine selezionate.</string>
+    <string name="delete_partial_result">Il documento è stato rimosso, ma i file privati ​​%1$d sono ancora in attesa di essere puliti.</string>
+    <string name="export_chooser_title">Condividi esportazione Scanora</string>
+</resources>

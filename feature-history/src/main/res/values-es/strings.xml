@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="history_title">Mis exploraciones</string>
+    <string name="history_eyebrow">Historia local</string>
+    <string name="history_heading">Tus documentos guardados</string>
+    <string name="history_supporting">Lote(s) %1$d encontrados en la búsqueda actual.</string>
+    <string name="history_supporting_empty">Todo lo guardado localmente aparece aquí con búsqueda por título y etiqueta.</string>
+    <string name="history_search_label">escaneos de búsqueda</string>
+    <string name="history_search_placeholder">Título, etiqueta o tipo de lote</string>
+    <string name="history_empty_title">Aún no se han guardado escaneos</string>
+    <string name="history_empty_message">Después de revisarlos o exportarlos, sus lotes aparecen aquí para volver a abrirlos, marcarlos como favoritos o exportarlos nuevamente.</string>
+    <string name="history_subtitle">Página(s) %1$d • actualizada en %2$s</string>
+    <string name="history_badge_favorite">Favorito</string>
+    <string name="history_badge_draft">bosquejo</string>
+    <string name="history_detail_missing_title">Escaneo no encontrado</string>
+    <string name="history_detail_missing_message">Es posible que este lote se haya eliminado o que aún no se haya subido.</string>
+    <string name="history_detail_eyebrow">Detalles del lote</string>
+    <string name="history_detail_meta">Página(s) %1$d • actualizada por última vez en %2$s</string>
+    <string name="history_detail_draft">Lote aún en borrador</string>
+    <string name="history_detail_saved">Listo para reabrir, exportar o marcar</string>
+    <string name="history_add_favorite">Marcar favorito</string>
+    <string name="history_remove_favorite">Eliminar favorito</string>
+    <string name="history_open_review">Volver a revisar</string>
+    <string name="history_open_export">Exportar</string>
+    <string name="history_pages_eyebrow">paginas</string>
+    <string name="history_pages_section">vista previa por lotes</string>
+    <string name="history_pages_supporting">Toque una página para abrir el texto reconocido.</string>
+    <string name="history_page_title">Página %1$d</string>
+    <string name="history_page_overline">Vista previa lista</string>
+    <string name="history_page_badge_ocr">OCR guardado</string>
+    <string name="history_delete_scan">Eliminar este escaneo</string>
+</resources>

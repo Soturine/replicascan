@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="camera_title">Captura</string>
+    <string name="camera_back">voy a volver</string>
+    <string name="camera_guided_scan">Escáner guiado</string>
+    <string name="camera_scanner_unavailable">El escáner guiado no está disponible en este dispositivo.</string>
+    <string name="camera_take_photo">Capturar foto</string>
+    <string name="camera_capture_failed">No se puede guardar la captura.</string>
+    <string name="camera_permission_title">Se requiere permiso de la cámara</string>
+    <string name="camera_permission_message">La cámara manual utiliza CameraX para capturar la página antes de modificarla y exportarla.</string>
+    <string name="camera_permission_action">Permitir cámara</string>
+</resources>

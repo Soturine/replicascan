@@ -38,5 +38,8 @@ jobs:
       - name: Grant Gradle permission
         run: chmod +x ./gradlew
 
+      - name: Verify localization catalogs
+        run: python tools/check_localization.py
+
       - name: Verify Android project
         run: ./gradlew check assembleDebug assembleRelease assembleDebugAndroidTest

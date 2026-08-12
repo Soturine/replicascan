@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="splash_subtitle">Escaneie. Organize. Simplifique.</string>
+    <string name="onboarding_page_one_title">Escaneie em poucos passos</string>
+    <string name="onboarding_page_one_body">Aponte, capture e pronto.</string>
+    <string name="onboarding_page_one_image_description">Raposa escaneando um documento com celular.</string>
+    <string name="onboarding_page_two_title">Revise antes de salvar</string>
+    <string name="onboarding_page_two_body">Corte, gire e melhore se precisar.</string>
+    <string name="onboarding_page_two_image_description">Raposa ajustando os cantos de um documento.</string>
+    <string name="onboarding_page_three_title">Privacidade por padrão</string>
+    <string name="onboarding_page_three_body">Seus documentos são processados no aparelho sempre que possível.</string>
+    <string name="onboarding_page_three_image_description">Raposa protegendo um documento com escudo.</string>
+    <string name="onboarding_next">Próximo</string>
+    <string name="onboarding_finish">Começar</string>
+    <string name="draft_title_quick">Documento escaneado</string>
+    <string name="draft_title_camera">Documento</string>
+    <string name="draft_title_import">Documento importado</string>
+    <string name="import_partial_result">%1$d de %2$d páginas foram adicionadas. %3$d não puderam ser adicionadas.</string>
+    <string name="import_failed_result">Não foi possível adicionar as páginas selecionadas.</string>
+    <string name="delete_partial_result">O documento foi removido, mas %1$d arquivos privados ainda aguardam limpeza.</string>
+    <string name="export_chooser_title">Compartilhar exportação do Scanora</string>
+</resources>

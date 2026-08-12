@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="history_title">Le mie scansioni</string>
+    <string name="history_eyebrow">Storia locale</string>
+    <string name="history_heading">I tuoi documenti salvati</string>
+    <string name="history_supporting">Lotti %1$d trovati nella ricerca corrente.</string>
+    <string name="history_supporting_empty">Tutto ciò che è salvato localmente appare qui con la ricerca per titolo e tag.</string>
+    <string name="history_search_label">Cerca scansioni</string>
+    <string name="history_search_placeholder">Titolo, tag o tipo di batch</string>
+    <string name="history_empty_title">Nessuna scansione ancora salvata</string>
+    <string name="history_empty_message">Dopo la revisione o l\'esportazione, i tuoi batch vengono visualizzati qui per riaprirli, aggiungerli ai preferiti o esportarli nuovamente.</string>
+    <string name="history_subtitle">Pagina(e) %1$d • aggiornata su %2$s</string>
+    <string name="history_badge_favorite">Preferito</string>
+    <string name="history_badge_draft">schizzo</string>
+    <string name="history_detail_missing_title">Scansione non trovata</string>
+    <string name="history_detail_missing_message">Questo batch potrebbe essere stato rimosso o non è stato ancora caricato.</string>
+    <string name="history_detail_eyebrow">Dettagli del lotto</string>
+    <string name="history_detail_meta">Pagina(e) %1$d • ultimo aggiornamento su %2$s</string>
+    <string name="history_detail_draft">Lotto ancora in bozza</string>
+    <string name="history_detail_saved">Pronto per riaprire, esportare o aggiungere ai segnalibri</string>
+    <string name="history_add_favorite">Segna come preferito</string>
+    <string name="history_remove_favorite">Rimuovi preferito</string>
+    <string name="history_open_review">Torna alla recensione</string>
+    <string name="history_open_export">Esportare</string>
+    <string name="history_pages_eyebrow">Pagine</string>
+    <string name="history_pages_section">anteprima del lotto</string>
+    <string name="history_pages_supporting">Tocca una pagina per aprire il testo riconosciuto.</string>
+    <string name="history_page_title">Pagina %1$d</string>
+    <string name="history_page_overline">Anteprima pronta</string>
+    <string name="history_page_badge_ocr">OCR salvato</string>
+    <string name="history_delete_scan">Elimina questa scansione</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">Balayage. Organiser. Simplifier.</string>
+    <string name="onboarding_page_one_title">Numérisez en quelques étapes seulement</string>
+    <string name="onboarding_page_one_body">Visez, capturez et partez.</string>
+    <string name="onboarding_page_one_image_description">Fox numérisant un document avec un téléphone portable.</string>
+    <string name="onboarding_page_two_title">Vérifier avant d\'enregistrer</string>
+    <string name="onboarding_page_two_body">Recadrez, faites pivoter et améliorez si vous en avez besoin.</string>
+    <string name="onboarding_page_two_image_description">Fox ajustant les coins d\'un document.</string>
+    <string name="onboarding_page_three_title">Confidentialité par défaut</string>
+    <string name="onboarding_page_three_body">Vos documents sont traités sur l\'appareil dans la mesure du possible.</string>
+    <string name="onboarding_page_three_image_description">Renard protégeant un document avec un bouclier.</string>
+    <string name="onboarding_next">Suivant</string>
+    <string name="onboarding_finish">Pour commencer</string>
+    <string name="draft_title_quick">Document numérisé</string>
+    <string name="draft_title_camera">Document</string>
+    <string name="draft_title_import">Document importé</string>
+    <string name="import_partial_result">Les pages %1$d à partir de %2$d ont été ajoutées. %3$d n\'a pas pu être ajouté.</string>
+    <string name="import_failed_result">Impossible d\'ajouter les pages sélectionnées.</string>
+    <string name="delete_partial_result">Le document a été supprimé, mais les fichiers privés %1$d sont toujours en attente de nettoyage.</string>
+    <string name="export_chooser_title">Partager l’exportation Scanora</string>
+</resources>

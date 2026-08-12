@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="export_title">Exporter</string>
+    <string name="export_back">j\'y retourne</string>
+    <string name="export_eyebrow">Sortie définitive</string>
+    <string name="export_missing_title">Rien à exporter</string>
+    <string name="export_missing_message">Ouvrez un lot valide avant de générer des fichiers.</string>
+    <plurals name="export_summary">
+        <item quantity="one">%1$d page prête à exporter.</item>
+        <item quantity="other">%1$d pages prêtes à exporter.</item>
+    </plurals>
+    <string name="export_local_notice">Scanora génère tout sur l\'appareil lui-même et affiche où le fichier a été enregistré dès qu\'il est terminé.</string>
+    <string name="export_format_eyebrow">Format</string>
+    <string name="export_format_section">Comment ce lot devrait-il sortir ?</string>
+    <string name="export_format_supporting">Sélectionnez la manière dont le lot doit quitter le téléphone portable.</string>
+    <string name="export_kind_pdf">PDF</string>
+    <string name="export_kind_image">Image</string>
+    <string name="export_image_format_section">Type d\'image</string>
+    <string name="export_image_format_supporting">Choisissez JPG pour un fichier plus léger ou PNG pour conserver plus de détails.</string>
+    <string name="export_quality_eyebrow">Qualité</string>
+    <string name="export_quality_section">Qualité PDF</string>
+    <string name="export_quality_supporting">La qualité n\'apparaît que lorsque la sortie sélectionnée est PDF.</string>
+    <string name="export_processing_message">Génération de fichiers sur l\'appareil. Cela peut prendre quelques secondes.</string>
+    <string name="export_action">Enregistrer des fichiers</string>
+    <string name="export_action_pdf">Générer un PDF</string>
+    <string name="export_action_images">Enregistrer des images</string>
+    <string name="export_ready_eyebrow">Fichiers prêts</string>
+    <string name="export_ready_title">Exportation terminée</string>
+    <plurals name="export_success_message">
+        <item quantity="one">%1$d fichier prêt à ouvrir ou partager.</item>
+        <item quantity="other">%1$d fichiers prêts à ouvrir ou partager.</item>
+    </plurals>
+    <string name="export_success_snackbar_single">Fichier enregistré.</string>
+    <string name="export_success_snackbar_multiple">Fichiers enregistrés %1$d.</string>
+    <string name="export_share_action">Partager des fichiers</string>
+    <string name="export_share_file_action">À partager</string>
+    <string name="export_location_label">Enregistré dans : %1$s</string>
+    <string name="export_file_type">Taper</string>
+    <string name="export_file_size">Taille</string>
+    <string name="export_file_location">Enregistré dans</string>
+    <string name="export_file_path">Chemin</string>
+    <string name="export_open_file_action">Ouvrir le fichier</string>
+    <string name="export_kind_pdf_description">Crée un fichier unique à archiver, envoyer ou imprimer.</string>
+    <string name="export_kind_image_description">Enregistre chaque page dans une image séparée.</string>
+</resources>

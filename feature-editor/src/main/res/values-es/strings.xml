@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="editor_title">Editor</string>
+    <string name="editor_back">voy a volver</string>
+    <string name="editor_crop_title">Ajustar</string>
+    <string name="editor_crop_eyebrow">Corte manual</string>
+    <string name="editor_crop_heading">Encuadre toda la página</string>
+    <string name="editor_crop_helper">El ajuste automático sirve como punto de partida. Si es necesario, arrastra las cuatro esquinas hasta que se cierre el área útil de la página.</string>
+    <string name="editor_crop_caption">Arrastra una esquina a la vez. Si la suposición inicial es mala, utilice "Reajustar automáticamente".</string>
+    <string name="editor_crop_detecting">Buscando en las esquinas del documento…</string>
+    <string name="editor_reestimate_crop">Reajustar automáticamente</string>
+    <string name="editor_save_crop_continue">Guardar cortar y seguir</string>
+    <string name="editor_filter_title">Filtros</string>
+    <string name="editor_filter_eyebrow">mirada final</string>
+    <string name="editor_filter_heading">Elige el final de la página</string>
+    <string name="editor_filter_helper">La vista previa se abre rápidamente y mejora en segundo plano. El archivo final continúa generándose fuera de la interfaz.</string>
+    <string name="editor_filter_current">Actual</string>
+    <string name="editor_filter_selected">Seleccionado</string>
+    <string name="editor_filter_selected_current">Seleccionado ahora</string>
+    <string name="editor_filter_preview_label">Toca para probar</string>
+    <string name="editor_filter_preview_loading">Actualizando la vista previa…</string>
+    <string name="editor_filter_preview_refining">Refinando la vista previa más claramente...</string>
+    <string name="editor_filter_applying">Aplicando imágenes a la página...</string>
+    <string name="editor_apply_visual">Aplicar visual</string>
+    <string name="editor_save_continue">Guardar y continuar</string>
+    <string name="editor_rotate">Girar 90°</string>
+    <string name="editor_review_title">Revisar</string>
+    <string name="editor_review_eyebrow">Lote en revisión</string>
+    <plurals name="editor_review_summary">
+        <item quantity="one">%1$d página en el lote.</item>
+        <item quantity="other">%1$d páginas en el lote.</item>
+    </plurals>
+    <string name="editor_review_helper">El nombre y las etiquetas están en los detalles.</string>
+    <string name="editor_selected_page_eyebrow">Página de enfoque</string>
+    <string name="editor_missing_page_title">Página no disponible</string>
+    <string name="editor_missing_page_message">Seleccione otra página o cree un nuevo lote.</string>
+    <string name="editor_document_name">Nombre del documento</string>
+    <string name="editor_tags">Etiquetas</string>
+    <string name="editor_tags_helper">Separar con coma para organizar el historial más adelante.</string>
+    <string name="editor_edit_metadata">Detalles del lote</string>
+    <string name="editor_hide_metadata">Cerrar detalles</string>
+    <string name="editor_save_metadata">Guardar información</string>
+    <string name="editor_pages_eyebrow">paginas</string>
+    <string name="editor_pages_section">Páginas por lotes</string>
+    <string name="editor_pages_supporting">Toque una miniatura para cambiar la página enfocada.</string>
+    <string name="editor_open_crop">Ajustar</string>
+    <string name="editor_open_filters">refinar la mirada</string>
+    <string name="editor_delete_page">Eliminar página</string>
+    <string name="editor_open_export">Exportar lote</string>
+    <string name="editor_page_title">Página %1$d</string>
+    <string name="editor_move_up">Subir</string>
+    <string name="editor_move_down">Bajar</string>
+    <string name="editor_open_ocr">Abrir OCR</string>
+    <string name="editor_ocr_ready">Listo para OCR</string>
+</resources>
