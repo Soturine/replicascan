@@ -29,6 +29,7 @@ import com.soturine.scanora.core.common.usecase.FormatScanDateUseCase
 import com.soturine.scanora.core.ui.component.EmptyStateCard
 import com.soturine.scanora.core.ui.component.PageThumbnailCard
 import com.soturine.scanora.core.ui.component.SectionHeader
+import com.soturine.scanora.core.ui.localizedTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,7 +96,7 @@ fun HistoryScreen(
                         ),
                         imageUri = scan.coverPage?.displayUri,
                         fallbackImageUri = scan.coverPage?.sourceUri,
-                        overline = scan.mode.title,
+                        overline = scan.mode.localizedTitle(),
                         badge = when {
                             scan.isFavorite -> stringResource(id = R.string.history_badge_favorite)
                             scan.isDraft -> stringResource(id = R.string.history_badge_draft)
@@ -222,7 +223,7 @@ fun ScanDetailScreen(
             items(scan.pages.sortedBy { it.index }, key = { it.id }) { page ->
                 PageThumbnailCard(
                     title = stringResource(id = R.string.history_page_title, page.index + 1),
-                    subtitle = page.filterType.title,
+                    subtitle = page.filterType.localizedTitle(),
                     imageUri = page.displayUri,
                     fallbackImageUri = page.sourceUri,
                     overline = stringResource(id = R.string.history_page_overline),

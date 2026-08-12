@@ -46,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.soturine.scanora.core.ui.localizedTitle
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import java.io.File
@@ -90,7 +91,7 @@ fun CameraCaptureScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title = { Text(text = state.mode.title) },
+                title = { Text(text = state.mode.localizedTitle()) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(

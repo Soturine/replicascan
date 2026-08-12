@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ui_module_name">Scanora Core UI</string>
+    <string name="mode_notebook">Notebook / School</string>
+    <string name="mode_notebook_description">For notes, boards, and study pages.</string>
+    <string name="mode_document">Document / Contract</string>
+    <string name="mode_document_description">Prioritizes alignment and readable text.</string>
+    <string name="mode_receipt">Receipt</string>
+    <string name="mode_receipt_description">Highlights small print and compact documents.</string>
+    <string name="filter_original">Corrected original</string>
+    <string name="filter_original_description">Keeps natural colors while correcting perspective.</string>
+    <string name="filter_bw">Black &amp; white document</string>
+    <string name="filter_bw_description">Crisp text for printing and archiving.</string>
+    <string name="filter_gray">Grayscale document</string>
+    <string name="filter_gray_description">Reduces color noise without harsh contrast.</string>
+    <string name="filter_color">Enhanced color</string>
+    <string name="filter_color_description">Improves color and clarity for notes and graphics.</string>
+    <string name="filter_receipt">Receipt / High contrast</string>
+    <string name="filter_receipt_description">Strengthens faint print on receipts.</string>
+    <string name="quality_compact">Compact</string>
+    <string name="quality_compact_description">Smaller file for quick sharing.</string>
+    <string name="quality_balanced">Balanced</string>
+    <string name="quality_balanced_description">Good balance between sharpness and size.</string>
+    <string name="quality_high">High quality</string>
+    <string name="quality_high_description">More detail with a larger file.</string>
+    <string name="mascot_processing">Processing on your device</string>
+    <string name="mascot_success">All done</string>
 </resources>

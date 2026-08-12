@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">Inizio</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">Scansione. Organizzare. Semplificare.</string>
+    <string name="home_greeting">Ciao!</string>
+    <string name="home_welcome">È bello vederti.</string>
+    <string name="home_start_hint">Tocca per iniziare.</string>
+    <string name="home_import_gallery_action">Importa dalla galleria</string>
+    <string name="home_hero_title">Scansiona senza preparare nulla.</string>
+    <string name="home_hero_subtitle">Lo scanner veloce rileva i bordi, accetta la galleria quando disponibile, quindi apre la revisione.</string>
+    <string name="home_quick_scan_action">Scansione</string>
+    <string name="home_manual_scan_action">Regolazione manuale</string>
+    <string name="home_import_action">Importare</string>
+    <string name="home_capture_helper">La regolazione manuale e l\'importazione diretta rimangono come fallback modificabili.</string>
+    <string name="home_quick_scan_unavailable">Lo scanner veloce non è disponibile su questo dispositivo.</string>
+    <string name="home_recent_section">Recente</string>
+    <string name="home_recent_empty_supporting">Le tue ultime scansioni vengono visualizzate qui.</string>
+    <string name="home_recent_open_all">Vedi tutto</string>
+    <string name="home_empty_title">La tua storia inizia qui</string>
+    <string name="home_empty_message">Utilizzare Scansione per creare il primo batch. La regolazione manuale è ancora disponibile quando ne hai bisogno.</string>
+    <string name="home_recent_updated_at">%1$s • aggiornato a %2$s</string>
+    <string name="home_history">Le mie scansioni</string>
+    <string name="home_settings">Impostazioni</string>
+    <string name="home_badge_favorite">Preferito</string>
+    <string name="home_badge_draft">schizzo</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="one">Lotto %1$d in sito storico.</item>
+        <item quantity="other">%1$d lotti nella storia locale.</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="one">Pagina %1$d</item>
+        <item quantity="other">pagine %1$d</item>
+    </plurals>
+</resources>

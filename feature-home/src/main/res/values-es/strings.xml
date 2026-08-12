@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">Comenzar</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">Escanear. Organizar. Simplificar.</string>
+    <string name="home_greeting">¡Hola!</string>
+    <string name="home_welcome">Es bueno verte.</string>
+    <string name="home_start_hint">Toque para comenzar.</string>
+    <string name="home_import_gallery_action">Importar desde la galería</string>
+    <string name="home_hero_title">Escanea sin preparar nada.</string>
+    <string name="home_hero_subtitle">El escáner rápido detecta bordes, acepta la galería cuando está disponible y luego abre la revisión.</string>
+    <string name="home_quick_scan_action">Escanear</string>
+    <string name="home_manual_scan_action">Ajuste manual</string>
+    <string name="home_import_action">Importar</string>
+    <string name="home_capture_helper">El ajuste manual y la importación directa siguen siendo opciones editables.</string>
+    <string name="home_quick_scan_unavailable">El escáner rápido no está disponible en este dispositivo.</string>
+    <string name="home_recent_section">Reciente</string>
+    <string name="home_recent_empty_supporting">Sus últimos escaneos aparecen aquí.</string>
+    <string name="home_recent_open_all">Ver todo</string>
+    <string name="home_empty_title">Tu historia comienza aquí</string>
+    <string name="home_empty_message">Utilice Escanear para crear el primer lote. El ajuste manual todavía está disponible cuando lo necesita.</string>
+    <string name="home_recent_updated_at">%1$s • actualizado a %2$s</string>
+    <string name="home_history">Mis exploraciones</string>
+    <string name="home_settings">Ajustes</string>
+    <string name="home_badge_favorite">Favorito</string>
+    <string name="home_badge_draft">bosquejo</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="one">Lote %1$d en sitio histórico.</item>
+        <item quantity="other">Lotes %1$d en la historia local.</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="one">Página %1$d</item>
+        <item quantity="other">Páginas %1$d</item>
+    </plurals>
+</resources>

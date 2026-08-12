@@ -34,12 +34,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import com.soturine.scanora.core.common.model.ExportFormat
 import com.soturine.scanora.core.common.model.ExportedFile
 import com.soturine.scanora.core.common.model.PdfQuality
+import com.soturine.scanora.core.ui.localizedDescription
+import com.soturine.scanora.core.ui.localizedTitle
 import com.soturine.scanora.core.ui.component.EmptyStateCard
 import com.soturine.scanora.core.ui.component.SectionHeader
+import com.soturine.scanora.core.ui.component.ScanoraMascot
+import com.soturine.scanora.core.ui.component.ScanoraMascotState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -106,20 +111,21 @@ fun ExportScreen(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
-                        Button(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = onExport,
-                            enabled = !state.isExporting,
-                        ) {
-                            Text(
-                                text = if (state.selectedFormat == ExportFormat.PDF) {
-                                    stringResource(id = R.string.export_action_pdf)
-                                } else {
-                                    stringResource(id = R.string.export_action_images)
-                                },
-                            )
-                        }
-                        if (state.exportedFiles.isNotEmpty()) {
+                        if (state.exportedFiles.isEmpty()) {
+                            Button(
+                                modifier = Modifier.fillMaxWidth(),
+                                onClick = onExport,
+                                enabled = !state.isExporting && state.scan.pages.isNotEmpty(),
+                            ) {
+                                Text(
+                                    text = if (state.selectedFormat == ExportFormat.PDF) {
+                                        stringResource(id = R.string.export_action_pdf)
+                                    } else {
+                                        stringResource(id = R.string.export_action_images)
+                                    },
+                                )
+                            }
+                        } else {
                             FilledTonalButton(
                                 modifier = Modifier.fillMaxWidth(),
                                 onClick = { onShare(state.exportedFiles) },
@@ -144,7 +150,37 @@ fun ExportScreen(
             )
         } else {
             val selectedKind = state.selectedFormat.exportKind()
-            LazyColumn(
+            if (state.isExporting) {
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(innerPadding).padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    ScanoraMascot(ScanoraMascotState.Processing, size = 220.dp, showLabel = true)
+                    Text(
+                        text = stringResource(R.string.export_processing_message),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            } else if (state.exportedFiles.isNotEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(innerPadding).padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    ScanoraMascot(ScanoraMascotState.Success, size = 220.dp)
+                    SectionHeader(
+                        eyebrow = stringResource(R.string.export_ready_eyebrow),
+                        title = stringResource(R.string.export_ready_title),
+                        supportingText = pluralStringResource(R.plurals.export_success_message, state.exportedFiles.size, state.exportedFiles.size),
+                    )
+                    FilledTonalButton(
+                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                        onClick = { onOpenFile(state.exportedFiles.first()) },
+                    ) { Text(stringResource(R.string.export_open_file_action)) }
+                }
+            } else LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
@@ -166,7 +202,7 @@ fun ExportScreen(
                             SectionHeader(
                                 eyebrow = stringResource(id = R.string.export_eyebrow),
                                 title = scan.title,
-                                supportingText = stringResource(id = R.string.export_summary, scan.pageCount),
+                                supportingText = pluralStringResource(R.plurals.export_summary, scan.pageCount, scan.pageCount),
                             )
                             Text(
                                 text = stringResource(id = R.string.export_local_notice),
@@ -276,64 +312,19 @@ fun ExportScreen(
                                     PdfQuality.entries.forEach { quality ->
                                         ExportChoiceButton(
                                             modifier = Modifier.weight(1f),
-                                            title = quality.title,
+                                            title = quality.localizedTitle(),
                                             selected = state.selectedQuality == quality,
                                             onClick = { onSelectQuality(quality) },
                                         )
                                     }
                                 }
                                 Text(
-                                    text = state.selectedQuality.description(),
+                                    text = state.selectedQuality.localizedDescription(),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
                         }
-                    }
-                }
-                if (state.exportedFiles.isNotEmpty()) {
-                    item {
-                        Card {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(18.dp),
-                                verticalArrangement = Arrangement.spacedBy(14.dp),
-                            ) {
-                                SectionHeader(
-                                    eyebrow = stringResource(id = R.string.export_ready_eyebrow),
-                                    title = stringResource(id = R.string.export_ready_title),
-                                    supportingText = stringResource(
-                                        id = R.string.export_success_message,
-                                        state.exportedFiles.size,
-                                    ),
-                                )
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                ) {
-                                    FilledTonalButton(
-                                        modifier = Modifier.weight(1f),
-                                        onClick = { onShare(state.exportedFiles) },
-                                    ) {
-                                        Text(text = stringResource(id = R.string.export_share_action))
-                                    }
-                                    FilledTonalButton(
-                                        modifier = Modifier.weight(1f),
-                                        onClick = { onOpenFile(state.exportedFiles.first()) },
-                                    ) {
-                                        Text(text = stringResource(id = R.string.export_open_file_action))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    items(state.exportedFiles, key = { it.uri }) { file ->
-                        ExportedFileCard(
-                            file = file,
-                            onOpen = { onOpenFile(file) },
-                            onShare = { onShare(listOf(file)) },
-                        )
                     }
                 }
             }
@@ -474,21 +465,16 @@ private fun ExportKind.title(): String = when (this) {
     ExportKind.IMAGE -> stringResource(id = R.string.export_kind_image)
 }
 
-private fun ExportKind.description(): String = when (this) {
-    ExportKind.PDF -> "Gera um arquivo único para arquivar, enviar ou imprimir."
-    ExportKind.IMAGE -> "Salva cada página como imagem independente."
-}
+@Composable
+private fun ExportKind.description(): String = stringResource(when (this) {
+    ExportKind.PDF -> R.string.export_kind_pdf_description
+    ExportKind.IMAGE -> R.string.export_kind_image_description
+})
 
 private fun ExportFormat.description(): String = when (this) {
     ExportFormat.PDF -> "Reúne o lote inteiro em um arquivo só, pronto para enviar ou arquivar."
     ExportFormat.JPG -> "Salva cada página como imagem leve e fácil de compartilhar."
     ExportFormat.PNG -> "Mantém mais detalhe por página quando a saída precisa ficar em imagem."
-}
-
-private fun PdfQuality.description(): String = when (this) {
-    PdfQuality.COMPACT -> "Arquivo menor para envio rápido."
-    PdfQuality.BALANCED -> "Equilíbrio entre nitidez e tamanho."
-    PdfQuality.HIGH -> "Mais definição para leitura fina e impressão."
 }
 
 private fun String.typeLabel(): String = when (this) {

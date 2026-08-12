@@ -52,6 +52,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.alpha
@@ -62,6 +63,8 @@ import com.soturine.scanora.core.common.model.ScanPage
 import com.soturine.scanora.core.ui.component.AsyncUriImage
 import com.soturine.scanora.core.ui.component.EmptyStateCard
 import com.soturine.scanora.core.ui.component.SectionHeader
+import com.soturine.scanora.core.ui.localizedDescription
+import com.soturine.scanora.core.ui.localizedTitle
 import kotlin.math.max
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -362,7 +365,7 @@ fun FilterScreen(
                                 text = if (state.isPreviewRefining && !state.isProcessing) {
                                     stringResource(id = R.string.editor_filter_preview_refining)
                                 } else {
-                                    selectedFilter.description()
+                                    selectedFilter.localizedDescription()
                                 },
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -374,7 +377,7 @@ fun FilterScreen(
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         itemsIndexed(DocumentFilterType.entries, key = { _, filter -> filter.storageKey }) { _, filter ->
                             FilterPresetCard(
-                                title = filter.title,
+                                title = filter.localizedTitle(),
                                 selected = selectedFilter == filter,
                                 current = page.filterType == filter,
                                 enabled = !state.isProcessing,
@@ -396,11 +399,11 @@ fun FilterScreen(
                             verticalArrangement = Arrangement.spacedBy(6.dp),
                         ) {
                             Text(
-                                text = selectedFilter.title,
+                                text = selectedFilter.localizedTitle(),
                                 style = MaterialTheme.typography.titleMedium,
                             )
                             Text(
-                                text = selectedFilter.description(),
+                                text = selectedFilter.localizedDescription(),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -556,7 +559,7 @@ fun ReviewScreen(
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                         Text(
-                            text = stringResource(id = R.string.editor_review_summary, orderedPages.size),
+                            text = pluralStringResource(R.plurals.editor_review_summary, orderedPages.size, orderedPages.size),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -764,7 +767,7 @@ private fun SelectedPageCard(
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        text = page.filterType.title,
+                        text = page.filterType.localizedTitle(),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -870,7 +873,7 @@ private fun ReviewPageStripItem(
                 style = MaterialTheme.typography.titleSmall,
             )
             Text(
-                text = page.filterType.title,
+                text = page.filterType.localizedTitle(),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -988,11 +991,3 @@ private fun defaultQuad(): DocumentQuad =
         bottomRight = PointValue(0.92f, 0.92f),
         bottomLeft = PointValue(0.08f, 0.92f),
     )
-
-private fun DocumentFilterType.description(): String = when (this) {
-    DocumentFilterType.ORIGINAL_CORRECTED -> "Mantém o papel mais natural, corrige a perspectiva e limpa sem exagero."
-    DocumentFilterType.DOCUMENT_BLACK_WHITE -> "Focado em texto e impressão, sem apagar o miolo da página."
-    DocumentFilterType.DOCUMENT_GRAY -> "Deixa a leitura mais confortável sem dar aspecto metálico ao documento."
-    DocumentFilterType.COLOR_ENHANCED -> "Preserva cor, marca-texto e caneta com contraste mais limpo."
-    DocumentFilterType.RECEIPT_HIGH_CONTRAST -> "Focado em recibos, notas térmicas e papéis mais apagados."
-}

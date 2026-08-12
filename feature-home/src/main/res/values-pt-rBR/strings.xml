@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">Início</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">Escaneie. Organize. Simplifique.</string>
+    <string name="home_greeting">Olá!</string>
+    <string name="home_welcome">Que bom ver você.</string>
+    <string name="home_start_hint">Toque para começar.</string>
+    <string name="home_import_gallery_action">Importar da galeria</string>
+    <string name="home_hero_title">Escaneie sem preparar nada.</string>
+    <string name="home_hero_subtitle">O scanner rápido detecta bordas, aceita galeria quando disponível e abre a revisão em seguida.</string>
+    <string name="home_quick_scan_action">Escanear</string>
+    <string name="home_manual_scan_action">Ajuste manual</string>
+    <string name="home_import_action">Importar</string>
+    <string name="home_capture_helper">Ajuste manual e importação direta ficam como fallback editável.</string>
+    <string name="home_quick_scan_unavailable">O scanner rápido não está disponível neste dispositivo.</string>
+    <string name="home_recent_section">Recentes</string>
+    <string name="home_recent_empty_supporting">Seus últimos scans aparecem aqui.</string>
+    <string name="home_recent_open_all">Ver todos</string>
+    <string name="home_empty_title">Seu histórico começa aqui</string>
+    <string name="home_empty_message">Use Escanear para criar o primeiro lote. O ajuste manual continua disponível quando precisar.</string>
+    <string name="home_recent_updated_at">%1$s • atualizado em %2$s</string>
+    <string name="home_history">Meus scans</string>
+    <string name="home_settings">Configurações</string>
+    <string name="home_badge_favorite">Favorito</string>
+    <string name="home_badge_draft">Rascunho</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="one">%1$d lote no histórico local.</item>
+        <item quantity="other">%1$d lotes no histórico local.</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="one">%1$d página</item>
+        <item quantity="other">%1$d páginas</item>
+    </plurals>
+</resources>

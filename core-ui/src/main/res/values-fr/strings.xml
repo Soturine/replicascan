@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mode_notebook">Cahier / Faculté</string>
+    <string name="mode_notebook_description">Pour les documents, tableaux et pages d’étude.</string>
+    <string name="mode_document">Document/Contrat</string>
+    <string name="mode_document_description">Donne la priorité à l’alignement et au texte lisible.</string>
+    <string name="mode_receipt">Reçu</string>
+    <string name="mode_receipt_description">Met en évidence les petits caractères et les documents compacts.</string>
+    <string name="filter_original">Original corrigé</string>
+    <string name="filter_original_description">Conserve les couleurs naturelles et corrige la perspective.</string>
+    <string name="filter_bw">Document N&amp;B</string>
+    <string name="filter_bw_description">Texte net pour l\'impression et l\'archivage.</string>
+    <string name="filter_gray">Document gris</string>
+    <string name="filter_gray_description">Réduit le bruit de couleur sans contraste agressif.</string>
+    <string name="filter_color">Couleur améliorée</string>
+    <string name="filter_color_description">Améliore les couleurs et la netteté des notes et des graphiques.</string>
+    <string name="filter_receipt">Reçu / Contraste élevé</string>
+    <string name="filter_receipt_description">Renforce les impressions faibles sur les reçus.</string>
+    <string name="quality_compact">Compact</string>
+    <string name="quality_compact_description">Fichier plus petit pour un partage rapide.</string>
+    <string name="quality_balanced">Équilibré</string>
+    <string name="quality_balanced_description">Bon équilibre entre netteté et taille.</string>
+    <string name="quality_high">Haute qualité</string>
+    <string name="quality_high_description">Plus de détails dans un fichier plus volumineux.</string>
+    <string name="mascot_processing">Traitement sur votre appareil</string>
+    <string name="mascot_success">Tout est prêt</string>
+</resources>

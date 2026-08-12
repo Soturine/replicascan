@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,6 +19,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -26,6 +31,8 @@ import com.soturine.scanora.core.common.model.PdfQuality
 import com.soturine.scanora.core.common.model.ScanMode
 import com.soturine.scanora.core.ui.component.OptionCard
 import com.soturine.scanora.core.ui.component.SectionHeader
+import com.soturine.scanora.core.ui.localizedDescription
+import com.soturine.scanora.core.ui.localizedTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,8 +43,11 @@ fun SettingsScreen(
     onPdfQualitySelected: (PdfQuality) -> Unit,
     onResetOnboarding: () -> Unit,
     onOpenAbout: () -> Unit,
+    currentLanguageTag: String = "",
+    onLanguageSelected: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
+    var showLanguageDialog by remember { mutableStateOf(false) }
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -75,13 +85,25 @@ fun SettingsScreen(
             }
 
             SettingsSection(
+                title = stringResource(R.string.settings_language_section),
+                supportingText = stringResource(R.string.settings_language_supporting),
+            ) {
+                OptionCard(
+                    title = languageLabel(currentLanguageTag),
+                    subtitle = stringResource(R.string.settings_language_supporting),
+                    selected = false,
+                    onClick = { showLanguageDialog = true },
+                )
+            }
+
+            SettingsSection(
                 title = stringResource(id = R.string.settings_default_mode_section),
                 supportingText = stringResource(id = R.string.settings_mode_supporting),
             ) {
                 ScanMode.entries.forEach { mode ->
                     OptionCard(
-                        title = mode.title,
-                        subtitle = mode.subtitle,
+                        title = mode.localizedTitle(),
+                        subtitle = mode.localizedDescription(),
                         selected = state.preferences.defaultScanMode == mode,
                         onClick = { onDefaultModeSelected(mode) },
                     )
@@ -94,8 +116,8 @@ fun SettingsScreen(
             ) {
                 PdfQuality.entries.forEach { quality ->
                     OptionCard(
-                        title = quality.title,
-                        subtitle = quality.description(),
+                        title = quality.localizedTitle(),
+                        subtitle = quality.localizedDescription(),
                         selected = state.preferences.defaultPdfQuality == quality,
                         onClick = { onPdfQualitySelected(quality) },
                     )
@@ -115,6 +137,24 @@ fun SettingsScreen(
                 Text(text = stringResource(id = R.string.settings_open_about))
             }
         }
+    }
+    if (showLanguageDialog) {
+        AlertDialog(
+            onDismissRequest = { showLanguageDialog = false },
+            title = { Text(stringResource(R.string.settings_language_section)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf("", "pt-BR", "en", "es", "fr", "it").forEach { tag ->
+                        OptionCard(
+                            title = languageLabel(tag),
+                            selected = currentLanguageTag == tag,
+                            onClick = { onLanguageSelected(tag); showLanguageDialog = false },
+                        )
+                    }
+                }
+            },
+            confirmButton = {},
+        )
     }
 }
 
@@ -182,20 +222,26 @@ private fun SettingsSection(
     }
 }
 
-private fun AppThemePreference.displayName(): String = when (this) {
-    AppThemePreference.SYSTEM -> "Seguir o sistema"
-    AppThemePreference.LIGHT -> "Sempre claro"
-    AppThemePreference.DARK -> "Sempre escuro"
-}
+@Composable
+private fun AppThemePreference.displayName(): String = stringResource(when (this) {
+    AppThemePreference.SYSTEM -> R.string.settings_theme_system
+    AppThemePreference.LIGHT -> R.string.settings_theme_light
+    AppThemePreference.DARK -> R.string.settings_theme_dark
+})
 
-private fun AppThemePreference.description(): String = when (this) {
-    AppThemePreference.SYSTEM -> "Usa automaticamente o tema ativo do Android."
-    AppThemePreference.LIGHT -> "Mantém o app claro mesmo quando o sistema estiver escuro."
-    AppThemePreference.DARK -> "Mantém o app escuro para leitura com menos brilho."
-}
+@Composable
+private fun AppThemePreference.description(): String = stringResource(when (this) {
+    AppThemePreference.SYSTEM -> R.string.settings_theme_system_description
+    AppThemePreference.LIGHT -> R.string.settings_theme_light_description
+    AppThemePreference.DARK -> R.string.settings_theme_dark_description
+})
 
-private fun PdfQuality.description(): String = when (this) {
-    PdfQuality.COMPACT -> "Arquivos menores para envio rápido."
-    PdfQuality.BALANCED -> "Equilíbrio entre nitidez e tamanho."
-    PdfQuality.HIGH -> "Mais definição para documentos sensíveis."
-}
+@Composable
+private fun languageLabel(tag: String): String = stringResource(when (tag) {
+    "pt-BR" -> R.string.settings_language_portuguese
+    "en" -> R.string.settings_language_english
+    "es" -> R.string.settings_language_spanish
+    "fr" -> R.string.settings_language_french
+    "it" -> R.string.settings_language_italian
+    else -> R.string.settings_language_system
+})

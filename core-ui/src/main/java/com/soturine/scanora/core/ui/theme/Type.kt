@@ -6,58 +6,24 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-val ScanoraTypography = Typography(
-    headlineLarge = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Bold,
-        fontSize = 34.sp,
-        lineHeight = 40.sp,
-        letterSpacing = (-0.5).sp,
-    ),
-    headlineMedium = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
-        lineHeight = 34.sp,
-        letterSpacing = (-0.25).sp,
-    ),
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-    ),
-    titleMedium = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp,
-        lineHeight = 22.sp,
-    ),
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 25.sp,
-    ),
-    bodyMedium = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
-        lineHeight = 22.sp,
-    ),
-    labelLarge = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
-        letterSpacing = 0.1.sp,
-    ),
-    labelMedium = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.3.sp,
-    ),
+private fun scanoraTextStyle(weight: FontWeight, size: Int, lineHeight: Int) = TextStyle(
+    fontFamily = FontFamily.SansSerif,
+    fontWeight = weight,
+    fontSize = size.sp,
+    lineHeight = lineHeight.sp,
 )
 
+val ScanoraTypography = Typography(
+    headlineLarge = scanoraTextStyle(FontWeight.Bold, 30, 36),
+    headlineMedium = scanoraTextStyle(FontWeight.Bold, 25, 31),
+    headlineSmall = scanoraTextStyle(FontWeight.SemiBold, 22, 28),
+    titleLarge = scanoraTextStyle(FontWeight.SemiBold, 21, 27),
+    titleMedium = scanoraTextStyle(FontWeight.SemiBold, 18, 24),
+    titleSmall = scanoraTextStyle(FontWeight.SemiBold, 16, 22),
+    bodyLarge = scanoraTextStyle(FontWeight.Normal, 17, 26),
+    bodyMedium = scanoraTextStyle(FontWeight.Normal, 15, 23),
+    bodySmall = scanoraTextStyle(FontWeight.Normal, 14, 20),
+    labelLarge = scanoraTextStyle(FontWeight.SemiBold, 16, 22),
+    labelMedium = scanoraTextStyle(FontWeight.Medium, 14, 19),
+    labelSmall = scanoraTextStyle(FontWeight.Medium, 12, 17),
+)

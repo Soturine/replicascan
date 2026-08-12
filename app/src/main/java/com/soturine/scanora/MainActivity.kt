@@ -1,8 +1,9 @@
 package com.soturine.scanora
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.soturine.scanora.app.RootViewModel
@@ -11,9 +12,10 @@ import com.soturine.scanora.core.ui.theme.ScanoraTheme
 import com.soturine.scanora.navigation.ScanoraNavHost
 import com.soturine.scanora.splash.SplashScreen
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         val container = (application as ScanoraApplication).container
         setContent {
             val rootViewModel: RootViewModel = androidx.lifecycle.viewmodel.compose.viewModel(

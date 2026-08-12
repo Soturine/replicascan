@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.soturine.scanora.core.ui.theme.ScanoraSizes
 
 @Composable
 fun OptionCard(
@@ -32,7 +36,9 @@ fun OptionCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
+            .sizeIn(minHeight = ScanoraSizes.minimumTouchTarget)
             .alpha(if (enabled) 1f else 0.58f)
+            .semantics { this.selected = selected }
             .clickable(
                 enabled = enabled,
                 onClick = onClick,

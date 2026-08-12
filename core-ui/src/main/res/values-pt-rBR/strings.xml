@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mode_notebook">Caderno / Faculdade</string><string name="mode_notebook_description">Para apostilas, quadros e páginas de estudo.</string>
+    <string name="mode_document">Documento / Contrato</string><string name="mode_document_description">Prioriza alinhamento e texto legível.</string>
+    <string name="mode_receipt">Recibo</string><string name="mode_receipt_description">Destaca letras pequenas e documentos compactos.</string>
+    <string name="filter_original">Original corrigido</string><string name="filter_original_description">Mantém as cores naturais e corrige a perspectiva.</string>
+    <string name="filter_bw">Documento P&amp;B</string><string name="filter_bw_description">Texto nítido para imprimir e arquivar.</string>
+    <string name="filter_gray">Documento cinza</string><string name="filter_gray_description">Reduz ruído de cor sem contraste agressivo.</string>
+    <string name="filter_color">Colorido aprimorado</string><string name="filter_color_description">Melhora cores e nitidez de anotações e gráficos.</string>
+    <string name="filter_receipt">Recibo / Alto contraste</string><string name="filter_receipt_description">Reforça impressões fracas em recibos.</string>
+    <string name="quality_compact">Compacto</string><string name="quality_compact_description">Arquivo menor para compartilhar rápido.</string>
+    <string name="quality_balanced">Equilibrado</string><string name="quality_balanced_description">Bom equilíbrio entre nitidez e tamanho.</string>
+    <string name="quality_high">Alta qualidade</string><string name="quality_high_description">Mais detalhes em um arquivo maior.</string>
+    <string name="mascot_processing">Processando no seu aparelho</string><string name="mascot_success">Tudo pronto</string>
+</resources>

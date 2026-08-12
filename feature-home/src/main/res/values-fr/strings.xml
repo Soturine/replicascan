@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">Commencer</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">Balayage. Organiser. Simplifier.</string>
+    <string name="home_greeting">Bonjour!</string>
+    <string name="home_welcome">Content de vous voir.</string>
+    <string name="home_start_hint">Appuyez pour commencer.</string>
+    <string name="home_import_gallery_action">Importer depuis la galerie</string>
+    <string name="home_hero_title">Scannez sans rien préparer.</string>
+    <string name="home_hero_subtitle">Le scanner rapide détecte les bords, accepte la galerie lorsqu\'elle est disponible, puis ouvre la revue.</string>
+    <string name="home_quick_scan_action">Balayage</string>
+    <string name="home_manual_scan_action">Réglage manuel</string>
+    <string name="home_import_action">Importer</string>
+    <string name="home_capture_helper">Le réglage manuel et l’importation directe restent des solutions de secours modifiables.</string>
+    <string name="home_quick_scan_unavailable">Le scanner rapide n\'est pas disponible sur cet appareil.</string>
+    <string name="home_recent_section">Récent</string>
+    <string name="home_recent_empty_supporting">Vos dernières analyses apparaissent ici.</string>
+    <string name="home_recent_open_all">Voir tout</string>
+    <string name="home_empty_title">Votre histoire commence ici</string>
+    <string name="home_empty_message">Utilisez Scan pour créer le premier lot. Le réglage manuel est toujours disponible lorsque vous en avez besoin.</string>
+    <string name="home_recent_updated_at">%1$s • mis à jour vers %2$s</string>
+    <string name="home_history">Mes scans</string>
+    <string name="home_settings">Paramètres</string>
+    <string name="home_badge_favorite">Préféré</string>
+    <string name="home_badge_draft">esquisser</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="one">Terrain %1$d dans site historique.</item>
+        <item quantity="other">Beaucoup de %1$d dans l’histoire locale.</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="one">Page %1$d</item>
+        <item quantity="other">Pages %1$d</item>
+    </plurals>
+</resources>

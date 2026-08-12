@@ -43,12 +43,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.soturine.scanora.core.common.model.OcrTextParagraph
 import com.soturine.scanora.core.common.model.OcrTextQuality
 import com.soturine.scanora.core.ui.component.AsyncUriImage
 import com.soturine.scanora.core.ui.component.EmptyStateCard
+import com.soturine.scanora.core.ui.component.ScanoraMascot
+import com.soturine.scanora.core.ui.component.ScanoraMascotState
 import kotlinx.coroutines.launch
 
 private enum class OcrViewMode {
@@ -71,7 +74,7 @@ fun OcrScreen(
     val copySuccessMessage = stringResource(id = R.string.ocr_copy_success)
     val readableText = remember(state.text) { state.text.trim() }
     val hasReadableText = readableText.isNotBlank()
-    var selectedView by rememberSaveable { mutableStateOf(OcrViewMode.Paragraphs) }
+    var selectedView by rememberSaveable { mutableStateOf(OcrViewMode.Continuous) }
 
     LaunchedEffect(state.errorMessage) {
         state.errorMessage?.let {
@@ -149,9 +152,7 @@ fun OcrScreen(
                 contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(14.dp),
             ) {
-                item {
-                    OcrHeaderCard(state = state)
-                }
+                item { OcrHeaderCard(state = state) }
                 if (state.quality == OcrTextQuality.WEAK && hasReadableText && !state.isLoading) {
                     item {
                         WeakOcrNotice()
@@ -213,7 +214,7 @@ private fun OcrHeaderCard(
         state.isLoading -> stringResource(id = R.string.ocr_processing_detail)
         state.quality == OcrTextQuality.EMPTY -> stringResource(id = R.string.ocr_empty_text)
         state.quality == OcrTextQuality.WEAK -> stringResource(id = R.string.ocr_weak_text)
-        else -> stringResource(id = R.string.ocr_supporting, state.paragraphs.size)
+        else -> pluralStringResource(R.plurals.ocr_supporting, state.paragraphs.size, state.paragraphs.size)
     }
 
     Card(
@@ -228,6 +229,13 @@ private fun OcrHeaderCard(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            if (state.isLoading) {
+                ScanoraMascot(
+                    state = ScanoraMascotState.Processing,
+                    modifier = Modifier.fillMaxWidth(),
+                    size = 132.dp,
+                )
+            }
             AsyncUriImage(
                 imageUri = state.previewImageUri ?: state.page?.displayUri.orEmpty(),
                 fallbackImageUri = state.page?.sourceUri,

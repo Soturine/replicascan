@@ -4,9 +4,10 @@ kotlin = "2.3.10"
 compileSdk = "36"
 minSdk = "24"
 targetSdk = "35"
-versionCode = "14"
-versionName = "0.2.7"
+versionCode = "15"
+versionName = "0.2.8"
 activity = "1.13.0"
+appcompat = "1.7.1"
 camera = "1.6.0"
 composeBom = "2026.03.00"
 coreKtx = "1.18.0"
@@ -26,6 +27,7 @@ truth = "1.4.5"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camera" }
 androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "camera" }
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camera" }
