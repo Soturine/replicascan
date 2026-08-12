@@ -78,7 +78,7 @@ Esse pós-processamento ordena linhas por posição visual, agrupa linhas próxi
 
 PDF, JPG e PNG continuam sendo gerados localmente. Em Android 10+ a saída vai para `Downloads/Scanora`, enquanto versões anteriores usam o armazenamento do app. Quando há crop, rotação, filtro ou cache processado, a exportação rederiva a página a partir de `sourceUri` em vez de usar `displayUri` como fonte final. A tela escolhe primeiro entre `PDF` e `Imagem`, mostra apenas opções relevantes ao formato atual e devolve metadados para a UI mostrar nome, tipo, tamanho, local salvo, abrir e compartilhar.
 
-Se uma página não puder ser renderizada, a exportação falha com índice/ID e não publica sucesso incompleto. A reforma de streaming e memória permanece planejada para `v0.2.8`.
+Se uma página não puder ser renderizada, a exportação falha com índice/ID e não publica sucesso incompleto. A reforma de streaming e memória permanece planejada para `v0.2.9`.
 
 ## Privacidade de plataforma
 

@@ -23,7 +23,19 @@ O roadmap começa pela confiabilidade dos documentos locais. Itens concluídos p
 - exportação fail-fast quando uma página não pode ser renderizada;
 - testes de integridade, CI, CodeQL, Dependabot e documentação normativa.
 
-## v0.2.8 — Exportação robusta e pipeline de imagem
+## v0.2.8 — Simples por Design
+
+**Status:** entregue em 2026-08-12
+
+- design system claro/escuro e fluxo visual inspirado no conceito Scanora;
+- Home, onboarding, editor, OCR, exportação, histórico e configurações mais diretos;
+- mascote dinâmica para boas-vindas, processamento e sucesso;
+- acessibilidade estrutural, edge-to-edge e layouts adaptativos;
+- English como fallback e cobertura completa de pt-BR, es, fr e it;
+- idioma automático e seleção por aplicativo com APIs oficiais;
+- gate de localização, plurais e formatação locale-aware.
+
+## v0.2.9 — Exportação robusta e pipeline de imagem
 
 **Objetivo:** reduzir picos de memória e tornar exports grandes previsíveis.
 
@@ -34,7 +46,7 @@ O roadmap começa pela confiabilidade dos documentos locais. Itens concluídos p
 - golden tests sintéticos por histograma/geometria, evitando pixel-perfect frágil;
 - avaliar searchable PDF somente após pipeline e memória estabilizarem.
 
-## v0.2.9 — OCR confiável e pesquisa
+## v0.3.0 — OCR confiável e document experience
 
 **Objetivo:** tornar OCR local previsível, pesquisável e reutilizável.
 
@@ -44,7 +56,7 @@ O roadmap começa pela confiabilidade dos documentos locais. Itens concluídos p
 - busca OCR local e avaliação de text layer para PDF;
 - benchmark de PP-OCR local apenas com dataset próprio/licenciado e ganho mensurável.
 
-## v0.3.0 — QA e publicação pública
+## v0.3.1 — QA e publicação pública
 
 - QA físico do fluxo principal, importação, deleção, OCR, export e compartilhamento;
 - acessibilidade, TalkBack, tamanhos de fonte e contraste;

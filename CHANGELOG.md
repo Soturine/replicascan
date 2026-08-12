@@ -4,6 +4,38 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+## [0.2.8] - 2026-08-12
+
+### Added
+
+- Interface completa em English, Português do Brasil, Español, Français e Italiano, com idioma automático e seletor oficial por aplicativo.
+- Novas ilustrações otimizadas da raposa para boas-vindas, processamento local e sucesso.
+- Gate de CI que verifica paridade de chaves, placeholders e traduções vazias nos nove catálogos de recursos.
+
+### Changed
+
+- Novo design system claro/escuro em creme, laranja, azul-marinho e teal, inspirado no conceito visual da release.
+- Home passou a destacar a raposa e uma única ação principal, com alternativas e recentes compactos.
+- OCR abre em texto contínuo, usa estado de processamento dedicado e prioriza a cópia com poucos toques.
+- Exportação separa configuração, processamento e sucesso; opções de PDF e imagem aparecem apenas quando relevantes.
+- Datas, horários, modos, filtros e qualidades agora respeitam o locale, sem texto de domínio fixo no Kotlin.
+- Orientação deixou de ser bloqueada e o conteúdo ganhou limites adaptativos, edge-to-edge e alvos de toque maiores.
+
+### Accessibility
+
+- Hierarquia tipográfica maior, componentes com mínimo de 48 dp, estados selecionados sem depender apenas de cor e movimento leve que segue a escala de animação do sistema.
+- Plurais reais substituem padrões como `página(s)` nos fluxos de revisão, OCR e exportação.
+
+### Fixed
+
+- Resultado da exportação não aparece mais misturado às opções de configuração.
+- Ações de exportação ficam indisponíveis para lotes sem páginas.
+
+### Testing
+
+- Compilação Kotlin e lint Android validados com os cinco idiomas e o novo LocaleConfig automático.
+- Versão alinhada para `0.2.8` com `versionCode` 15.
+
 ## [0.2.7] - 2026-08-12
 
 ### Security
