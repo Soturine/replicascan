@@ -375,7 +375,10 @@ class EditorViewModel(
     fun deleteCurrentPage() {
         val page = uiState.value.currentPage ?: return
         viewModelScope.launch {
-            scanRepository.deletePage(scanId, page.id)
+            val outcome = scanRepository.deletePage(scanId, page.id)
+            if (outcome.hasCleanupFailures) {
+                errorMessage.value = "A página foi excluída, mas um arquivo privado aguarda nova limpeza."
+            }
         }
     }
 

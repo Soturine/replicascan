@@ -39,6 +39,12 @@ interface ScanDao {
     @Query("SELECT * FROM pages WHERE scanId = :scanId ORDER BY pageIndex ASC")
     suspend fun getPages(scanId: String): List<PageEntity>
 
+    @Query("SELECT * FROM pages WHERE id = :pageId")
+    suspend fun getPage(pageId: String): PageEntity?
+
+    @Query("SELECT * FROM pages")
+    suspend fun getAllPages(): List<PageEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertScan(scan: ScanEntity)
 
@@ -56,5 +62,33 @@ interface ScanDao {
 
     @Query("UPDATE scans SET updatedAt = :updatedAt WHERE id = :scanId")
     suspend fun touchScan(scanId: String, updatedAt: Long)
+
+    @Query("UPDATE pages SET processedUri = NULL WHERE id = :pageId")
+    suspend fun clearProcessedUri(pageId: String)
+
+    @Transaction
+    suspend fun insertScanWithPages(
+        scan: ScanEntity,
+        pages: List<PageEntity>,
+    ) {
+        upsertScan(scan)
+        upsertPages(pages)
+    }
+
+    @Transaction
+    suspend fun deletePageAndReindex(
+        scanId: String,
+        pageId: String,
+        updatedAt: Long,
+    ) {
+        deletePage(pageId)
+        val remainingPages = getPages(scanId)
+        if (remainingPages.isEmpty()) {
+            deleteScan(scanId)
+        } else {
+            upsertPages(remainingPages.mapIndexed { index, entity -> entity.copy(pageIndex = index) })
+            touchScan(scanId, updatedAt)
+        }
+    }
 }
 

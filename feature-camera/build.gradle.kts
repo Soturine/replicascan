@@ -40,5 +40,8 @@ dependencies {
     implementation(libs.google.mlkit.document.scanner)
     implementation(libs.kotlinx.coroutines.android)
 
+    testImplementation(libs.junit4)
+    testImplementation(libs.truth)
+
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

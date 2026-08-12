@@ -9,6 +9,7 @@ import com.soturine.scanora.core.common.repository.ScanRepository
 import com.soturine.scanora.core.common.repository.UserPreferencesRepository
 import com.soturine.scanora.core.data.datastore.DefaultUserPreferencesRepository
 import com.soturine.scanora.core.data.export.DefaultExportRepository
+import com.soturine.scanora.core.data.files.ScanFileStore
 import com.soturine.scanora.core.data.image.DefaultDocumentProcessingRepository
 import com.soturine.scanora.core.data.local.ScanoraDatabase
 import com.soturine.scanora.core.data.ocr.DefaultOcrRepository
@@ -22,11 +23,18 @@ class AppContainer(
             context,
             ScanoraDatabase::class.java,
             "scanora.db",
-        ).fallbackToDestructiveMigration().build()
+        ).build()
+    }
+
+    val scanFileStore: ScanFileStore by lazy {
+        ScanFileStore(context)
     }
 
     val scanRepository: ScanRepository by lazy {
-        DefaultScanRepository(database.scanDao())
+        DefaultScanRepository(
+            scanDao = database.scanDao(),
+            fileStore = scanFileStore,
+        )
     }
 
     val userPreferencesRepository: UserPreferencesRepository by lazy {
@@ -35,6 +43,13 @@ class AppContainer(
 
     val documentProcessingRepository: DocumentProcessingRepository by lazy {
         DefaultDocumentProcessingRepository(context)
+    }
+
+    val scanDraftCoordinator: ScanDraftCoordinator by lazy {
+        ScanDraftCoordinator(
+            scanRepository = scanRepository,
+            fileStore = scanFileStore,
+        )
     }
 
     val exportRepository: ExportRepository by lazy {

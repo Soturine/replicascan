@@ -94,6 +94,7 @@ fun HistoryScreen(
                             dateFormatter(scan.updatedAt),
                         ),
                         imageUri = scan.coverPage?.displayUri,
+                        fallbackImageUri = scan.coverPage?.sourceUri,
                         overline = scan.mode.title,
                         badge = when {
                             scan.isFavorite -> stringResource(id = R.string.history_badge_favorite)
@@ -223,6 +224,7 @@ fun ScanDetailScreen(
                     title = stringResource(id = R.string.history_page_title, page.index + 1),
                     subtitle = page.filterType.title,
                     imageUri = page.displayUri,
+                    fallbackImageUri = page.sourceUri,
                     overline = stringResource(id = R.string.history_page_overline),
                     badge = if (page.ocrText.isNullOrBlank()) null else stringResource(id = R.string.history_page_badge_ocr),
                     onClick = { onOpenOcr(page.id) },

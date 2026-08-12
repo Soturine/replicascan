@@ -1,6 +1,8 @@
 package com.soturine.scanora.core.common.repository
 
 import com.soturine.scanora.core.common.model.ScanDocument
+import com.soturine.scanora.core.common.model.CreatedScan
+import com.soturine.scanora.core.common.model.DeletionOutcome
 import com.soturine.scanora.core.common.model.ScanPage
 import com.soturine.scanora.core.common.model.ScanMode
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +20,7 @@ interface ScanRepository {
         sourceUris: List<String>,
         tags: List<String> = emptyList(),
         isDraft: Boolean = true,
-    ): String
+    ): CreatedScan
 
     suspend fun addPage(scanId: String, sourceUri: String): String
 
@@ -26,7 +28,7 @@ interface ScanRepository {
 
     suspend fun updatePageOrder(scanId: String, orderedPageIds: List<String>)
 
-    suspend fun deletePage(scanId: String, pageId: String)
+    suspend fun deletePage(scanId: String, pageId: String): DeletionOutcome
 
     suspend fun renameScan(scanId: String, title: String)
 
@@ -38,6 +40,6 @@ interface ScanRepository {
 
     suspend fun markScanSaved(scanId: String)
 
-    suspend fun deleteScan(scanId: String)
+    suspend fun deleteScan(scanId: String): DeletionOutcome
 }
 

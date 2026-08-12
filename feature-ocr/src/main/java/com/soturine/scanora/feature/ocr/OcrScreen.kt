@@ -230,6 +230,7 @@ private fun OcrHeaderCard(
         ) {
             AsyncUriImage(
                 imageUri = state.previewImageUri ?: state.page?.displayUri.orEmpty(),
+                fallbackImageUri = state.page?.sourceUri,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(168.dp),

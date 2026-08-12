@@ -4,8 +4,8 @@ kotlin = "2.3.10"
 compileSdk = "36"
 minSdk = "24"
 targetSdk = "35"
-versionCode = "13"
-versionName = "0.2.6"
+versionCode = "14"
+versionName = "0.2.7"
 activity = "1.13.0"
 camera = "1.6.0"
 composeBom = "2026.03.00"
@@ -50,6 +50,7 @@ androidx-room-common = { module = "androidx.room:room-common", version.ref = "ro
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
 google-mlkit-document-scanner = { module = "com.google.android.gms:play-services-mlkit-document-scanner", version.ref = "mlkitDocScanner" }
 google-mlkit-text-recognition = { module = "com.google.android.gms:play-services-mlkit-text-recognition", version.ref = "mlkitTextRecognition" }
@@ -67,3 +68,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }
+androidx-room = { id = "androidx.room", version.ref = "room" }

@@ -36,6 +36,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -56,7 +57,7 @@ fun CameraCaptureScreen(
     onPermissionResult: (Boolean) -> Unit,
     onCapturedImage: (String) -> Unit,
     onBack: () -> Unit,
-    onCaptureStarted: () -> Unit,
+    onCaptureStarted: () -> Boolean,
     onCaptureFinished: () -> Unit,
     onError: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -113,6 +114,7 @@ fun CameraCaptureScreen(
                 CameraPreview(
                     imageCapture = imageCapture,
                     lifecycleOwner = lifecycleOwner,
+                    onError = { onError(captureFailedMessage) },
                     modifier = Modifier.fillMaxSize(),
                 )
 
@@ -125,8 +127,9 @@ fun CameraCaptureScreen(
                 ) {
                     FilledTonalIconButton(
                         modifier = Modifier.size(88.dp),
+                        enabled = !state.isCapturing,
                         onClick = {
-                            onCaptureStarted()
+                            if (!onCaptureStarted()) return@FilledTonalIconButton
                             capturePhoto(
                                 context = context,
                                 imageCapture = imageCapture,
@@ -184,22 +187,38 @@ fun CameraCaptureScreen(
 private fun CameraPreview(
     imageCapture: ImageCapture,
     lifecycleOwner: androidx.lifecycle.LifecycleOwner,
+    onError: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val previewView = remember { PreviewView(context) }
 
-    LaunchedEffect(lifecycleOwner, imageCapture) {
-        val cameraProvider = ProcessCameraProvider.getInstance(context).get()
-        val preview = Preview.Builder().build()
-        preview.setSurfaceProvider(previewView.surfaceProvider)
-        cameraProvider.unbindAll()
-        cameraProvider.bindToLifecycle(
-            lifecycleOwner,
-            CameraSelector.DEFAULT_BACK_CAMERA,
-            preview,
-            imageCapture,
+    DisposableEffect(lifecycleOwner, imageCapture) {
+        val providerFuture = ProcessCameraProvider.getInstance(context)
+        var boundProvider: ProcessCameraProvider? = null
+        providerFuture.addListener(
+            {
+                try {
+                    val cameraProvider = providerFuture.get()
+                    val preview = Preview.Builder().build()
+                    preview.setSurfaceProvider(previewView.surfaceProvider)
+                    cameraProvider.unbindAll()
+                    cameraProvider.bindToLifecycle(
+                        lifecycleOwner,
+                        CameraSelector.DEFAULT_BACK_CAMERA,
+                        preview,
+                        imageCapture,
+                    )
+                    boundProvider = cameraProvider
+                } catch (_: Exception) {
+                    onError()
+                }
+            },
+            ContextCompat.getMainExecutor(context),
         )
+        onDispose {
+            boundProvider?.unbind(imageCapture)
+        }
     }
 
     AndroidView(

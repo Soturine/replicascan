@@ -1,9 +1,12 @@
 package com.soturine.scanora.core.data.repository
 
+import com.soturine.scanora.core.common.model.CreatedScan
+import com.soturine.scanora.core.common.model.DeletionOutcome
 import com.soturine.scanora.core.common.model.ScanDocument
-import com.soturine.scanora.core.common.model.ScanPage
 import com.soturine.scanora.core.common.model.ScanMode
+import com.soturine.scanora.core.common.model.ScanPage
 import com.soturine.scanora.core.common.repository.ScanRepository
+import com.soturine.scanora.core.data.files.ScanFileStore
 import com.soturine.scanora.core.data.local.dao.ScanDao
 import com.soturine.scanora.core.data.local.entity.PageEntity
 import com.soturine.scanora.core.data.local.entity.ScanEntity
@@ -15,6 +18,7 @@ import kotlinx.coroutines.withContext
 
 class DefaultScanRepository(
     private val scanDao: ScanDao,
+    private val fileStore: ScanFileStore,
 ) : ScanRepository {
     override fun observeScans(query: String): Flow<List<ScanDocument>> =
         scanDao.observeScans(query.trim()).map { items ->
@@ -34,20 +38,18 @@ class DefaultScanRepository(
         sourceUris: List<String>,
         tags: List<String>,
         isDraft: Boolean,
-    ): String = withContext(Dispatchers.IO) {
+    ): CreatedScan = withContext(Dispatchers.IO) {
         val now = System.currentTimeMillis()
         val scanId = UUID.randomUUID().toString()
-        scanDao.upsertScan(
-            ScanEntity(
-                id = scanId,
-                title = title,
-                mode = mode.storageKey,
-                tags = tags.joinToString("|"),
-                isFavorite = false,
-                createdAt = now,
-                updatedAt = now,
-                isDraft = isDraft,
-            ),
+        val scan = ScanEntity(
+            id = scanId,
+            title = title,
+            mode = mode.storageKey,
+            tags = tags.joinToString("|"),
+            isFavorite = false,
+            createdAt = now,
+            updatedAt = now,
+            isDraft = isDraft,
         )
         val pages = sourceUris.mapIndexed { index, uri ->
             PageEntity(
@@ -62,8 +64,11 @@ class DefaultScanRepository(
                 ocrText = null,
             )
         }
-        scanDao.upsertPages(pages)
-        scanId
+        scanDao.insertScanWithPages(scan, pages)
+        CreatedScan(
+            scanId = scanId,
+            pageIds = pages.map(PageEntity::id),
+        )
     }
 
     override suspend fun addPage(scanId: String, sourceUri: String): String = withContext(Dispatchers.IO) {
@@ -108,19 +113,13 @@ class DefaultScanRepository(
         }
     }
 
-    override suspend fun deletePage(scanId: String, pageId: String) {
-        withContext(Dispatchers.IO) {
-            scanDao.deletePage(pageId)
-            val remainingPages = scanDao.getPages(scanId)
-            if (remainingPages.isEmpty()) {
-                scanDao.deleteScan(scanId)
-            } else {
-                scanDao.upsertPages(
-                    remainingPages.mapIndexed { index, entity -> entity.copy(pageIndex = index) },
-                )
-                scanDao.touchScan(scanId, System.currentTimeMillis())
-            }
-        }
+    override suspend fun deletePage(scanId: String, pageId: String): DeletionOutcome = withContext(Dispatchers.IO) {
+        val page = scanDao.getPage(pageId)
+            ?.takeIf { it.scanId == scanId }
+            ?: return@withContext DeletionOutcome(databaseDeleted = false)
+        scanDao.deletePageAndReindex(scanId, pageId, System.currentTimeMillis())
+        val cleanup = fileStore.deletePageFiles(page.sourceUri, page.processedUri)
+        cleanup.copy(databaseDeleted = true)
     }
 
     override suspend fun renameScan(scanId: String, title: String) {
@@ -167,10 +166,13 @@ class DefaultScanRepository(
         }
     }
 
-    override suspend fun deleteScan(scanId: String) {
-        withContext(Dispatchers.IO) {
-            scanDao.deleteScan(scanId)
-        }
+    override suspend fun deleteScan(scanId: String): DeletionOutcome = withContext(Dispatchers.IO) {
+        val pages = scanDao.getPages(scanId)
+        val existed = scanDao.getScanEntity(scanId) != null
+        if (!existed) return@withContext DeletionOutcome(databaseDeleted = false)
+        scanDao.deleteScan(scanId)
+        val cleanup = fileStore.deleteScanFiles(pages.map { it.sourceUri to it.processedUri })
+        cleanup.copy(databaseDeleted = true)
     }
 
     private suspend fun updateScan(

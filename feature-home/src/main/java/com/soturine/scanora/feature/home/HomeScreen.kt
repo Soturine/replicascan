@@ -270,6 +270,7 @@ fun HomeScreen(
                             dateFormatter(scan.updatedAt),
                         ),
                         imageUri = scan.coverPage?.displayUri,
+                        fallbackImageUri = scan.coverPage?.sourceUri,
                         badge = when {
                             scan.isFavorite -> stringResource(id = R.string.home_badge_favorite)
                             scan.isDraft -> stringResource(id = R.string.home_badge_draft)

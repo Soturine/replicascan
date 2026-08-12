@@ -21,6 +21,7 @@ import com.soturine.scanora.core.common.repository.DocumentProcessingRepository
 import com.soturine.scanora.core.common.repository.ExportRepository
 import java.io.ByteArrayOutputStream
 import java.io.File
+import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -34,47 +35,60 @@ class DefaultExportRepository(
         quality: PdfQuality,
     ): ExportedFile = withContext(Dispatchers.IO) {
         val document = PdfDocument()
-        scan.pages.sortedBy { it.index }.forEachIndexed { pageNumber, page ->
-            val bitmap = loadBitmap(page) ?: return@forEachIndexed
-            val compressed = compressForPdf(bitmap, quality)
-            val pageInfo = PdfDocument.PageInfo.Builder(
-                compressed.width,
-                compressed.height,
-                pageNumber + 1,
-            ).create()
-            val pdfPage = document.startPage(pageInfo)
-            pdfPage.canvas.drawBitmap(compressed, 0f, 0f, null)
-            document.finishPage(pdfPage)
-        }
+        try {
+            val pages = scan.pages.sortedBy { it.index }
+            require(pages.isNotEmpty()) { "O lote não possui páginas para exportar." }
+            pages.forEachIndexed { pageNumber, page ->
+                val bitmap = loadBitmap(page)
+                val compressed = compressForPdf(bitmap, quality)
+                val pageInfo = PdfDocument.PageInfo.Builder(
+                    compressed.width,
+                    compressed.height,
+                    pageNumber + 1,
+                ).create()
+                val pdfPage = document.startPage(pageInfo)
+                pdfPage.canvas.drawBitmap(compressed, 0f, 0f, null)
+                document.finishPage(pdfPage)
+            }
 
-        val displayName = fileNameBuilder.buildBaseName(scan.title, ExportFormat.PDF)
-        val bytes = ByteArrayOutputStream().use { output ->
-            document.writeTo(output)
-            output.toByteArray()
+            val displayName = fileNameBuilder.buildBaseName(scan.title, ExportFormat.PDF)
+            val bytes = ByteArrayOutputStream().use { output ->
+                document.writeTo(output)
+                output.toByteArray()
+            }
+            writeBytes(
+                displayName = displayName,
+                mimeType = ExportFormat.PDF.mimeType,
+                bytes = bytes,
+            )
+        } finally {
+            document.close()
         }
-        document.close()
-        writeBytes(
-            displayName = displayName,
-            mimeType = ExportFormat.PDF.mimeType,
-            bytes = bytes,
-        )
     }
 
     override suspend fun exportImages(
         scan: ScanDocument,
         format: ExportFormat,
     ): List<ExportedFile> = withContext(Dispatchers.IO) {
-        scan.pages.sortedBy { it.index }.mapNotNull { page ->
-            val bitmap = loadBitmap(page) ?: return@mapNotNull null
+        val pages = scan.pages.sortedBy { it.index }
+        require(pages.isNotEmpty()) { "O lote não possui páginas para exportar." }
+        val prepared = pages.map { page ->
+            val bitmap = loadBitmap(page)
             val displayName = fileNameBuilder.buildPageName(
                 title = scan.title,
                 pageIndex = page.index,
                 format = format,
             )
-            writeBytes(
+            PreparedImage(
                 displayName = displayName,
-                mimeType = format.mimeType,
                 bytes = bitmapToBytes(bitmap, format),
+            )
+        }
+        prepared.map { image ->
+            writeBytes(
+                displayName = image.displayName,
+                mimeType = format.mimeType,
+                bytes = image.bytes,
             )
         }
     }
@@ -103,23 +117,33 @@ class DefaultExportRepository(
             output.toByteArray()
         }
 
-    private suspend fun loadBitmap(page: ScanPage): Bitmap? {
-        val finalImageUri = if (page.requiresDerivedImage()) {
-            processingRepository.processPage(
-                sourceUri = page.sourceUri,
-                filterType = page.filterType,
-                quad = page.quad,
-                rotationDegrees = page.rotationDegrees,
-            )
-        } else {
-            page.canonicalUri
+    private suspend fun loadBitmap(page: ScanPage): Bitmap {
+        try {
+            val finalImageUri = if (page.requiresDerivedImage()) {
+                processingRepository.processPage(
+                    sourceUri = page.sourceUri,
+                    filterType = page.filterType,
+                    quad = page.quad,
+                    rotationDegrees = page.rotationDegrees,
+                )
+            } else {
+                page.canonicalUri
+            }
+            val uri = Uri.parse(finalImageUri)
+            val stream = when {
+                uri.scheme.isNullOrBlank() -> File(finalImageUri).inputStream()
+                uri.scheme == "file" -> File(uri.path.orEmpty()).inputStream()
+                else -> context.contentResolver.openInputStream(uri)
+            }
+            return stream?.use(BitmapFactory::decodeStream)
+                ?: throw ExportPageException(page.index, page.id)
+        } catch (exception: CancellationException) {
+            throw exception
+        } catch (exception: ExportPageException) {
+            throw exception
+        } catch (exception: Exception) {
+            throw ExportPageException(page.index, page.id, exception)
         }
-        val uri = Uri.parse(finalImageUri)
-        val stream = when {
-            uri.scheme.isNullOrBlank() -> File(finalImageUri).inputStream()
-            else -> context.contentResolver.openInputStream(uri)
-        }
-        return stream?.use(BitmapFactory::decodeStream)
     }
 
     private fun writeBytes(
@@ -198,4 +222,15 @@ class DefaultExportRepository(
             pathHint = file.absolutePath,
         )
     }
+
+    private data class PreparedImage(
+        val displayName: String,
+        val bytes: ByteArray,
+    )
 }
+
+class ExportPageException(
+    pageIndex: Int,
+    val pageId: String,
+    cause: Throwable? = null,
+) : IllegalStateException("Não foi possível exportar a página ${pageIndex + 1}.", cause)

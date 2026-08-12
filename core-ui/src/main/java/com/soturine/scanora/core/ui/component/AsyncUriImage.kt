@@ -10,7 +10,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.BrokenImage
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,6 +33,7 @@ import kotlinx.coroutines.withContext
 @Composable
 fun AsyncUriImage(
     imageUri: String?,
+    fallbackImageUri: String? = null,
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Fit,
     maxDimension: Int = 2048,
@@ -37,14 +41,28 @@ fun AsyncUriImage(
     onBitmapLoaded: ((IntSize) -> Unit)? = null,
 ) {
     val context = LocalContext.current
-    val bitmap by produceState<Bitmap?>(initialValue = null, key1 = imageUri, key2 = maxDimension) {
+    val loadState by produceState<ImageLoadState>(
+        initialValue = ImageLoadState.Loading,
+        key1 = imageUri,
+        key2 = fallbackImageUri,
+        key3 = maxDimension,
+    ) {
         value = withContext(Dispatchers.IO) {
-            imageUri?.let { decodeBitmapForPreview(context, it, maxDimension) }
+            val candidates = listOfNotNull(imageUri, fallbackImageUri)
+                .filter(String::isNotBlank)
+                .distinct()
+            candidates.forEachIndexed { index, candidate ->
+                val decoded = runCatching { decodeBitmapForPreview(context, candidate, maxDimension) }.getOrNull()
+                if (decoded != null) {
+                    return@withContext ImageLoadState.Success(decoded, usedFallback = index > 0)
+                }
+            }
+            ImageLoadState.Error
         }
     }
 
-    LaunchedEffect(bitmap, onBitmapLoaded) {
-        bitmap?.let { loaded ->
+    LaunchedEffect(loadState, onBitmapLoaded) {
+        (loadState as? ImageLoadState.Success)?.bitmap?.let { loaded ->
             onBitmapLoaded?.invoke(IntSize(loaded.width, loaded.height))
         }
     }
@@ -53,19 +71,34 @@ fun AsyncUriImage(
         modifier = modifier.background(MaterialTheme.colorScheme.surfaceVariant),
         contentAlignment = Alignment.Center,
     ) {
-        if (bitmap != null) {
-            Image(
-                bitmap = bitmap!!.asImageBitmap(),
+        when (val state = loadState) {
+            ImageLoadState.Loading -> CircularProgressIndicator()
+            ImageLoadState.Error -> Icon(
+                imageVector = Icons.Outlined.BrokenImage,
                 contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer { rotationZ = rotationDegrees },
-                contentScale = contentScale,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-        } else {
-            CircularProgressIndicator()
+            is ImageLoadState.Success -> {
+                Image(
+                    bitmap = state.bitmap.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .graphicsLayer { rotationZ = rotationDegrees },
+                    contentScale = contentScale,
+                )
+            }
         }
     }
+}
+
+private sealed interface ImageLoadState {
+    data object Loading : ImageLoadState
+    data object Error : ImageLoadState
+    data class Success(
+        val bitmap: Bitmap,
+        val usedFallback: Boolean,
+    ) : ImageLoadState
 }
 
 private fun decodeBitmapForPreview(

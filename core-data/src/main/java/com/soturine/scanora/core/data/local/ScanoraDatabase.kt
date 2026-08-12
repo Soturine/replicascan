@@ -12,7 +12,7 @@ import com.soturine.scanora.core.data.local.entity.ScanEntity
         PageEntity::class,
     ],
     version = 1,
-    exportSchema = false,
+    exportSchema = true,
 )
 abstract class ScanoraDatabase : RoomDatabase() {
     abstract fun scanDao(): ScanDao

@@ -14,4 +14,7 @@
     <string name="onboarding_page_three_image_description">Raposa protegendo um documento com escudo.</string>
     <string name="onboarding_next">Próximo</string>
     <string name="onboarding_finish">Começar</string>
+    <string name="import_partial_result">%1$d de %2$d páginas importadas. %3$d não puderam ser adicionadas.</string>
+    <string name="import_failed_result">Não foi possível adicionar as páginas selecionadas.</string>
+    <string name="delete_partial_result">O scan foi excluído, mas %1$d arquivo(s) privado(s) aguardam nova limpeza.</string>
 </resources>

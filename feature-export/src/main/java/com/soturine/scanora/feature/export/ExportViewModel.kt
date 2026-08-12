@@ -8,6 +8,7 @@ import com.soturine.scanora.core.common.repository.ExportRepository
 import com.soturine.scanora.core.common.repository.ScanRepository
 import com.soturine.scanora.core.common.repository.UserPreferencesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -79,23 +80,28 @@ class ExportViewModel(
             isExporting.value = true
             errorMessage.value = null
             exportedFiles.value = emptyList()
-            runCatching {
-                val files = if (uiState.value.selectedFormat == ExportFormat.PDF) {
-                    listOf(
-                        exportRepository.exportPdf(
-                            scan = scan,
-                            quality = uiState.value.selectedQuality,
-                        ),
-                    )
-                } else {
-                    exportRepository.exportImages(scan, uiState.value.selectedFormat)
+            try {
+                try {
+                    val files = if (uiState.value.selectedFormat == ExportFormat.PDF) {
+                        listOf(
+                            exportRepository.exportPdf(
+                                scan = scan,
+                                quality = uiState.value.selectedQuality,
+                            ),
+                        )
+                    } else {
+                        exportRepository.exportImages(scan, uiState.value.selectedFormat)
+                    }
+                    scanRepository.markScanSaved(scanId)
+                    exportedFiles.value = files
+                } catch (exception: CancellationException) {
+                    throw exception
+                } catch (throwable: Exception) {
+                    errorMessage.value = throwable.message ?: "Não foi possível exportar o lote."
                 }
-                scanRepository.markScanSaved(scanId)
-                exportedFiles.value = files
-            }.onFailure { throwable ->
-                errorMessage.value = throwable.message ?: "Não foi possível exportar o lote."
+            } finally {
+                isExporting.value = false
             }
-            isExporting.value = false
         }
     }
 

@@ -1,33 +1,41 @@
 package com.soturine.scanora.core.data.work
 
 import android.content.Context
+import androidx.room.Room
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import java.io.File
-import java.util.concurrent.TimeUnit
+import com.soturine.scanora.core.data.files.ScanFileStore
+import com.soturine.scanora.core.data.local.ScanoraDatabase
+import kotlin.coroutines.cancellation.CancellationException
 
 class CleanupExportsWorker(
     appContext: Context,
     workerParameters: WorkerParameters,
 ) : CoroutineWorker(appContext, workerParameters) {
     override suspend fun doWork(): Result {
-        val threshold = System.currentTimeMillis() - TimeUnit.HOURS.toMillis(48)
-        cleanupDirectory(File(applicationContext.cacheDir, "processed"), threshold)
-        cleanupDirectory(
-            File(applicationContext.getExternalFilesDir(android.os.Environment.DIRECTORY_DOCUMENTS), "exports"),
-            threshold,
-        )
-        return Result.success()
-    }
-
-    private fun cleanupDirectory(
-        directory: File?,
-        threshold: Long,
-    ) {
-        if (directory == null || !directory.exists()) return
-        directory.listFiles().orEmpty()
-            .filter { it.isFile && it.lastModified() < threshold }
-            .forEach(File::delete)
+        val database = Room.databaseBuilder(
+            applicationContext,
+            ScanoraDatabase::class.java,
+            "scanora.db",
+        ).build()
+        return try {
+            val pages = database.scanDao().getAllPages()
+            val referencedSources = pages.map { it.sourceUri }.toSet()
+            val fileStore = ScanFileStore(applicationContext)
+            val cleanup = fileStore.cleanupOrphans(referencedSources)
+            pages.forEach { page ->
+                if (fileStore.managedFileExists(page.processedUri) == false) {
+                    database.scanDao().clearProcessedUri(page.id)
+                }
+            }
+            if (cleanup.failedFileCount == 0) Result.success() else Result.retry()
+        } catch (exception: CancellationException) {
+            throw exception
+        } catch (_: Exception) {
+            Result.retry()
+        } finally {
+            database.close()
+        }
     }
 }
 

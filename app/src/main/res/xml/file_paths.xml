@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <cache-path
-        name="cache"
-        path="." />
+        name="shared_exports"
+        path="shared-exports/" />
     <files-path
-        name="files"
-        path="." />
+        name="legacy_internal_exports"
+        path="scanora-exports/" />
     <external-files-path
-        name="exports"
-        path="." />
+        name="legacy_external_exports"
+        path="Download/scanora-exports/" />
 </paths>

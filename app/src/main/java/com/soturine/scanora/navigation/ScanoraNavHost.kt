@@ -3,10 +3,12 @@ package com.soturine.scanora.navigation
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -17,7 +19,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.soturine.scanora.app.AppContainer
+import com.soturine.scanora.app.DraftCreationResult
+import com.soturine.scanora.app.DraftSource
 import com.soturine.scanora.app.RootViewModel
+import com.soturine.scanora.R
 import com.soturine.scanora.core.common.model.ExportedFile
 import com.soturine.scanora.core.common.model.ScanMode
 import com.soturine.scanora.feature.camera.CameraCaptureScreen
@@ -40,14 +45,7 @@ import com.soturine.scanora.feature.settings.AboutScreen
 import com.soturine.scanora.feature.settings.SettingsScreen
 import com.soturine.scanora.feature.settings.SettingsViewModel
 import com.soturine.scanora.onboarding.OnboardingScreen
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import java.util.UUID
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @Composable
 fun ScanoraNavHost(
@@ -55,6 +53,7 @@ fun ScanoraNavHost(
     rootViewModel: RootViewModel,
 ) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
     val rootState = rootViewModel.uiState.collectAsStateWithLifecycle()
@@ -90,15 +89,16 @@ fun ScanoraNavHost(
                 state = state.value,
                 onStartQuickScan = { uris ->
                     coroutineScope.launch {
-                        createDraftScan(
-                            context = context,
-                            container = container,
+                        container.scanDraftCoordinator.createDraft(
                             mode = ScanMode.DOCUMENT,
-                            uris = uris,
+                            uriValues = uris,
                             source = DraftSource.QUICK_SCAN,
-                        )?.let { (scanId, _) ->
-                            navController.navigate(ScanoraDestinations.review(scanId))
-                        }
+                        ).handle(
+                            context = context,
+                            onSuccess = { result ->
+                                navController.navigate(ScanoraDestinations.review(result.scanId))
+                            },
+                        )
                     }
                 },
                 onOpenManualCamera = { mode ->
@@ -106,14 +106,12 @@ fun ScanoraNavHost(
                 },
                 onImportImages = { mode, uris ->
                     coroutineScope.launch {
-                        createDraftScan(
-                            context = context,
-                            container = container,
+                        container.scanDraftCoordinator.createDraft(
                             mode = mode,
-                            uris = uris,
+                            uriValues = uris,
                             source = DraftSource.MANUAL_IMPORT,
-                        )?.let { (scanId, pageId) ->
-                            navController.navigate(ScanoraDestinations.crop(scanId, pageId))
+                        ).handle(context) { result ->
+                            navController.navigate(ScanoraDestinations.crop(result.scanId, result.firstPageId))
                         }
                     }
                 },
@@ -138,19 +136,17 @@ fun ScanoraNavHost(
                 onPermissionResult = cameraViewModel::onPermissionResult,
                 onCapturedImage = { uri ->
                     coroutineScope.launch {
-                        createDraftScan(
-                            context = context,
-                            container = container,
+                        container.scanDraftCoordinator.createDraft(
                             mode = mode,
-                            uris = listOf(uri),
+                            uriValues = listOf(uri),
                             source = DraftSource.MANUAL_CAMERA,
-                        )?.let { (scanId, pageId) ->
-                            navController.navigate(ScanoraDestinations.crop(scanId, pageId))
+                        ).handle(context) { result ->
+                            navController.navigate(ScanoraDestinations.crop(result.scanId, result.firstPageId))
                         }
                     }
                 },
                 onBack = { navController.popBackStack() },
-                onCaptureStarted = cameraViewModel::onCaptureStarted,
+                onCaptureStarted = cameraViewModel::tryStartCapture,
                 onCaptureFinished = cameraViewModel::onCaptureFinished,
                 onError = cameraViewModel::onError,
             )
@@ -284,8 +280,16 @@ fun ScanoraNavHost(
                 scan = state.value,
                 onToggleFavorite = detailViewModel::toggleFavorite,
                 onDeleteScan = {
-                    detailViewModel.deleteScan()
-                    navController.popBackStack()
+                    detailViewModel.deleteScan { outcome ->
+                        if (outcome.hasCleanupFailures) {
+                            Toast.makeText(
+                                context,
+                                resources.getString(R.string.delete_partial_result, outcome.failedFileCount),
+                                Toast.LENGTH_LONG,
+                            ).show()
+                        }
+                        navController.popBackStack()
+                    }
                 },
                 onOpenReview = { navController.navigate(ScanoraDestinations.review(scanId)) },
                 onOpenExport = { navController.navigate(ScanoraDestinations.export(scanId)) },
@@ -371,82 +375,30 @@ fun ScanoraNavHost(
     }
 }
 
-private enum class DraftSource(
-    val titlePrefix: String,
+private fun DraftCreationResult.handle(
+    context: Context,
+    onSuccess: (DraftCreationResult.Success) -> Unit,
 ) {
-    QUICK_SCAN("Scan rápido"),
-    MANUAL_CAMERA("Modo manual"),
-    MANUAL_IMPORT("Importação manual"),
-}
+    when (this) {
+        is DraftCreationResult.Success -> {
+            if (failureCount > 0) {
+                Toast.makeText(
+                    context,
+                    context.getString(
+                        R.string.import_partial_result,
+                        importedCount,
+                        importedCount + failureCount,
+                        failureCount,
+                    ),
+                    Toast.LENGTH_LONG,
+                ).show()
+            }
+            onSuccess(this)
+        }
 
-private suspend fun createDraftScan(
-    context: Context,
-    container: AppContainer,
-    mode: ScanMode,
-    uris: List<String>,
-    source: DraftSource,
-): Pair<String, String>? {
-    if (uris.isEmpty()) return null
-    val stableUris = persistSourceUris(context, uris)
-    if (stableUris.isEmpty()) return null
-    val formatter = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.forLanguageTag("pt-BR"))
-    val title = "${source.titlePrefix} ${formatter.format(Date())}"
-    val scanId = container.scanRepository.createScan(
-        title = title,
-        mode = mode,
-        sourceUris = stableUris,
-    )
-    val firstPageId = container.scanRepository.getScan(scanId)?.pages?.minByOrNull { it.index }?.id ?: return null
-    return scanId to firstPageId
-}
-
-private suspend fun persistSourceUris(
-    context: Context,
-    uris: List<String>,
-): List<String> = withContext(Dispatchers.IO) {
-    val directory = File(context.filesDir, "scan-sources").apply { mkdirs() }
-    uris.mapIndexedNotNull { index, uriValue ->
-        runCatching {
-            val sourceUri = Uri.parse(uriValue)
-            val extension = sourceUri.guessImageExtension(context, uriValue)
-            val file = File(
-                directory,
-                "source-${System.currentTimeMillis()}-$index-${UUID.randomUUID()}.$extension",
-            )
-            openSourceInputStream(context, sourceUri, uriValue)?.use { input ->
-                file.outputStream().use { output ->
-                    input.copyTo(output)
-                }
-            } ?: return@mapIndexedNotNull null
-            file.absolutePath
-        }.getOrNull()
-    }
-}
-
-private fun openSourceInputStream(
-    context: Context,
-    uri: Uri,
-    rawValue: String,
-) = when {
-    uri.scheme.isNullOrBlank() -> File(rawValue).inputStream()
-    uri.scheme == "file" -> File(uri.path.orEmpty()).inputStream()
-    else -> context.contentResolver.openInputStream(uri)
-}
-
-private fun Uri.guessImageExtension(
-    context: Context,
-    rawValue: String,
-): String {
-    val mimeType = runCatching { context.contentResolver.getType(this) }.getOrNull()
-    return when (mimeType) {
-        "image/png" -> "png"
-        "image/webp" -> "webp"
-        "image/heic" -> "heic"
-        "image/heif" -> "heif"
-        else -> File(path ?: rawValue).extension
-            .lowercase(Locale.ROOT)
-            .takeIf { it in setOf("jpg", "jpeg", "png", "webp", "heic", "heif") }
-            ?: "jpg"
+        is DraftCreationResult.Failure -> {
+            Toast.makeText(context, R.string.import_failed_result, Toast.LENGTH_LONG).show()
+        }
     }
 }
 
@@ -456,16 +408,25 @@ private fun shareFiles(
 ) {
     if (files.isEmpty()) return
     val uris = files.map { Uri.parse(it.uri) }
+    val sharedClipData = android.content.ClipData.newUri(
+        context.contentResolver,
+        "Scanora export",
+        uris.first(),
+    ).apply {
+        uris.drop(1).forEach { uri -> addItem(android.content.ClipData.Item(uri)) }
+    }
     val intent = if (uris.size == 1) {
         Intent(Intent.ACTION_SEND).apply {
             type = files.first().mimeType
             putExtra(Intent.EXTRA_STREAM, uris.first())
+            clipData = sharedClipData
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
     } else {
         Intent(Intent.ACTION_SEND_MULTIPLE).apply {
             type = files.first().mimeType
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
+            clipData = sharedClipData
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
     }

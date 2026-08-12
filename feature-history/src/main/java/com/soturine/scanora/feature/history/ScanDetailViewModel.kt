@@ -3,6 +3,7 @@ package com.soturine.scanora.feature.history
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soturine.scanora.core.common.model.ScanDocument
+import com.soturine.scanora.core.common.model.DeletionOutcome
 import com.soturine.scanora.core.common.repository.ScanRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -25,9 +26,9 @@ class ScanDetailViewModel(
         }
     }
 
-    fun deleteScan() {
+    fun deleteScan(onDeleted: (DeletionOutcome) -> Unit) {
         viewModelScope.launch {
-            scanRepository.deleteScan(scanId)
+            onDeleted(scanRepository.deleteScan(scanId))
         }
     }
 }

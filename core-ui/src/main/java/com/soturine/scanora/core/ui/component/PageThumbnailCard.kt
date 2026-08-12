@@ -24,6 +24,7 @@ fun PageThumbnailCard(
     title: String,
     subtitle: String,
     imageUri: String?,
+    fallbackImageUri: String? = null,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     overline: String? = null,
@@ -57,6 +58,7 @@ fun PageThumbnailCard(
         ) {
             AsyncUriImage(
                 imageUri = imageUri,
+                fallbackImageUri = fallbackImageUri,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(172.dp),

@@ -343,6 +343,7 @@ fun FilterScreen(
                             ) {
                                 AsyncUriImage(
                                     imageUri = state.previewImageUri ?: page.displayUri,
+                                    fallbackImageUri = page.sourceUri,
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Fit,
                                     maxDimension = previewLongSide,
@@ -781,6 +782,7 @@ private fun SelectedPageCard(
             }
             AsyncUriImage(
                 imageUri = imageUri,
+                fallbackImageUri = page.sourceUri,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(288.dp)
@@ -856,6 +858,7 @@ private fun ReviewPageStripItem(
         ) {
             AsyncUriImage(
                 imageUri = page.displayUri,
+                fallbackImageUri = page.sourceUri,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(148.dp),
