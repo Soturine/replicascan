@@ -7,6 +7,13 @@ on:
       - main
       - develop
 
+concurrency:
+  group: android-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,15 +32,11 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Setup Gradle and validate wrapper
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Grant Gradle permission
         run: chmod +x ./gradlew
 
-      - name: Lint
-        run: ./gradlew lint
-
-      - name: Unit tests
-        run: ./gradlew testDebugUnitTest
-
-      - name: Assemble debug
-        run: ./gradlew assembleDebug
-
+      - name: Verify Android project
+        run: ./gradlew check assembleDebug assembleRelease assembleDebugAndroidTest
