@@ -156,7 +156,7 @@ fun ExportScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    ScanoraMascot(ScanoraMascotState.Processing, size = 220.dp, showLabel = true)
+                    ScanoraMascot(ScanoraMascotState.Working, size = 220.dp, showLabel = true)
                     Text(
                         text = stringResource(R.string.export_processing_message),
                         style = MaterialTheme.typography.bodyLarge,

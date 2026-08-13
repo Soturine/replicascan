@@ -110,7 +110,7 @@ fun HomeScreen(
         val options = GmsDocumentScannerOptions.Builder()
             .setGalleryImportAllowed(true)
             .setPageLimit(12)
-            .setResultFormats(GmsDocumentScannerOptions.RESULT_FORMAT_JPEG, GmsDocumentScannerOptions.RESULT_FORMAT_PDF)
+            .setResultFormats(GmsDocumentScannerOptions.RESULT_FORMAT_JPEG)
             .setScannerMode(GmsDocumentScannerOptions.SCANNER_MODE_FULL)
             .build()
         GmsDocumentScanning.getClient(options).getStartScanIntent(activity)
@@ -177,10 +177,11 @@ fun HomeScreen(
                             Spacer(Modifier.width(10.dp))
                         },
                     )
-                    ScanoraSecondaryButton(
+    ScanoraSecondaryButton(
                         text = stringResource(R.string.home_manual_scan_action),
                         onClick = { onOpenManualCamera(state.manualMode) },
                         modifier = Modifier.fillMaxWidth(),
+                        icon = { Icon(Icons.Outlined.CameraAlt, null); Spacer(Modifier.width(10.dp)) },
                     )
                     ScanoraSecondaryButton(
                         text = stringResource(R.string.home_import_gallery_action),
@@ -189,6 +190,7 @@ fun HomeScreen(
                         },
                         modifier = Modifier.fillMaxWidth(),
                         outlined = true,
+                        icon = { Icon(Icons.Outlined.PhotoLibrary, null); Spacer(Modifier.width(10.dp)) },
                     )
                 }
             }

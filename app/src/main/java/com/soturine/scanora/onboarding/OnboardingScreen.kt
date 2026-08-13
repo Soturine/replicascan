@@ -1,6 +1,7 @@
 package com.soturine.scanora.onboarding
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,17 +10,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowForward
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -28,7 +33,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.soturine.scanora.R
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingScreen(
     onFinish: () -> Unit,
@@ -54,55 +61,49 @@ fun OnboardingScreen(
             imageDescriptionRes = R.string.onboarding_page_three_image_description,
         ),
     )
-    var currentPage by remember { mutableIntStateOf(0) }
-    val page = pages[currentPage]
+    val pagerState = rememberPagerState(pageCount = { pages.size })
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 20.dp),
+            .navigationBarsPadding()
+            .padding(horizontal = 24.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(22.dp),
     ) {
-        Box(
+        HorizontalPager(
+            state = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            contentAlignment = Alignment.Center,
         ) {
-            Image(
-                painter = painterResource(id = page.imageRes),
-                contentDescription = stringResource(id = page.imageDescriptionRes),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 430.dp),
-                contentScale = ContentScale.Fit,
-            )
-        }
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            Text(
-                text = stringResource(id = page.titleRes),
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onBackground,
-                textAlign = TextAlign.Center,
-            )
-            Text(
-                text = stringResource(id = page.bodyRes),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-            )
+            val page = pages[it]
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    Image(
+                        painter = painterResource(id = page.imageRes),
+                        contentDescription = stringResource(id = page.imageDescriptionRes),
+                        modifier = Modifier.fillMaxWidth().heightIn(max = 410.dp),
+                        contentScale = ContentScale.Fit,
+                    )
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(stringResource(page.titleRes), style = MaterialTheme.typography.headlineMedium, textAlign = TextAlign.Center)
+                    Text(stringResource(page.bodyRes), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+                }
+            }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             repeat(pages.size) { index ->
                 Surface(
-                    modifier = Modifier.size(if (index == currentPage) 22.dp else 10.dp, 10.dp),
+                    modifier = Modifier.size(if (index == pagerState.currentPage) 22.dp else 10.dp, 10.dp),
                     shape = CircleShape,
-                    color = if (index == currentPage) {
+                    color = if (index == pagerState.currentPage) {
                         MaterialTheme.colorScheme.primary
                     } else {
                         MaterialTheme.colorScheme.surfaceContainerHighest
@@ -111,17 +112,22 @@ fun OnboardingScreen(
             }
         }
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
             onClick = {
-                if (currentPage == pages.lastIndex) {
+                if (pagerState.currentPage == pages.lastIndex) {
                     onFinish()
                 } else {
-                    currentPage += 1
+                    scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
                 }
             },
         ) {
+            Icon(
+                imageVector = if (pagerState.currentPage == pages.lastIndex) Icons.Outlined.Check else Icons.AutoMirrored.Outlined.ArrowForward,
+                contentDescription = null,
+                modifier = Modifier.padding(end = 8.dp),
+            )
             Text(
-                text = if (currentPage == pages.lastIndex) {
+                text = if (pagerState.currentPage == pages.lastIndex) {
                     stringResource(id = R.string.onboarding_finish)
                 } else {
                     stringResource(id = R.string.onboarding_next)

@@ -231,7 +231,7 @@ private fun OcrHeaderCard(
         ) {
             if (state.isLoading) {
                 ScanoraMascot(
-                    state = ScanoraMascotState.Processing,
+                    state = ScanoraMascotState.Working,
                     modifier = Modifier.fillMaxWidth(),
                     size = 132.dp,
                 )

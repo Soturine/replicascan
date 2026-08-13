@@ -27,6 +27,7 @@ import com.soturine.scanora.core.ui.R
 enum class ScanoraMascotState(@DrawableRes internal val drawable: Int) {
     Welcome(R.drawable.scanora_mascot_welcome),
     Processing(R.drawable.scanora_mascot_processing),
+    Working(R.drawable.scanora_mascot_working),
     Success(R.drawable.scanora_mascot_success),
 }
 
@@ -47,7 +48,7 @@ fun ScanoraMascot(
         ),
         label = "mascotPhase",
     )
-    val animatedModifier = if (state == ScanoraMascotState.Processing) {
+    val animatedModifier = if (state == ScanoraMascotState.Processing || state == ScanoraMascotState.Working) {
         Modifier.graphicsLayer { translationY = (-3 + phase * 6).dp.toPx() }.scale(0.98f + phase * 0.02f)
     } else Modifier
 

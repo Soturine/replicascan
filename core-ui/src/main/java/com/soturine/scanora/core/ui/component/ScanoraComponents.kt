@@ -81,16 +81,19 @@ fun ScanoraSecondaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     outlined: Boolean = false,
+    icon: (@Composable () -> Unit)? = null,
 ) {
     val buttonModifier = modifier
         .heightIn(min = 52.dp)
         .sizeIn(minWidth = ScanoraSizes.minimumTouchTarget)
     if (outlined) {
         OutlinedButton(modifier = buttonModifier, enabled = enabled, onClick = onClick) {
+            icon?.invoke()
             Text(text = text)
         }
     } else {
         FilledTonalButton(modifier = buttonModifier, enabled = enabled, onClick = onClick) {
+            icon?.invoke()
             Text(text = text)
         }
     }
