@@ -26,6 +26,10 @@ interface ScanDao {
     fun observeScans(query: String): Flow<List<ScanWithPages>>
 
     @Transaction
+    @Query("SELECT * FROM scans ORDER BY updatedAt DESC LIMIT :limit")
+    fun observeRecentScans(limit: Int): Flow<List<ScanWithPages>>
+
+    @Transaction
     @Query("SELECT * FROM scans WHERE id = :scanId")
     fun observeScan(scanId: String): Flow<ScanWithPages?>
 
@@ -45,8 +49,11 @@ interface ScanDao {
     @Query("SELECT * FROM pages")
     suspend fun getAllPages(): List<PageEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertScan(scan: ScanEntity)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertScan(scan: ScanEntity)
+
+    @Update
+    suspend fun updateScan(scan: ScanEntity): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertPages(pages: List<PageEntity>)
@@ -71,7 +78,7 @@ interface ScanDao {
         scan: ScanEntity,
         pages: List<PageEntity>,
     ) {
-        upsertScan(scan)
+        insertScan(scan)
         upsertPages(pages)
     }
 

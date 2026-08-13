@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 interface ScanRepository {
     fun observeScans(query: String = ""): Flow<List<ScanDocument>>
 
+    fun observeRecentScans(limit: Int): Flow<List<ScanDocument>>
+
     fun observeScan(scanId: String): Flow<ScanDocument?>
 
     suspend fun getScan(scanId: String): ScanDocument?

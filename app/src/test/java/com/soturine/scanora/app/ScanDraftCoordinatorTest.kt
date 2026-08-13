@@ -77,6 +77,7 @@ class ScanDraftCoordinatorTest {
         var createdSourceUris = emptyList<String>()
 
         override fun observeScans(query: String): Flow<List<ScanDocument>> = emptyFlow()
+        override fun observeRecentScans(limit: Int): Flow<List<ScanDocument>> = emptyFlow()
         override fun observeScan(scanId: String): Flow<ScanDocument?> = emptyFlow()
         override suspend fun getScan(scanId: String): ScanDocument? = null
 

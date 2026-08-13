@@ -25,6 +25,9 @@ class DefaultScanRepository(
             items.map { it.asExternalModel() }
         }
 
+    override fun observeRecentScans(limit: Int): Flow<List<ScanDocument>> =
+        scanDao.observeRecentScans(limit.coerceAtLeast(1)).map { items -> items.map { it.asExternalModel() } }
+
     override fun observeScan(scanId: String): Flow<ScanDocument?> =
         scanDao.observeScan(scanId).map { item -> item?.asExternalModel() }
 
@@ -102,14 +105,19 @@ class DefaultScanRepository(
 
     override suspend fun updatePageOrder(scanId: String, orderedPageIds: List<String>) {
         withContext(Dispatchers.IO) {
-            val currentPages = scanDao.getPages(scanId).associateBy { it.id }
-            val reordered = orderedPageIds.mapIndexedNotNull { index, id ->
-                currentPages[id]?.copy(pageIndex = index)
+            val pages = scanDao.getPages(scanId)
+            val currentPages = pages.associateBy { it.id }
+            require(orderedPageIds.size == pages.size && orderedPageIds.toSet().size == pages.size) {
+                "Page order must contain every page exactly once."
             }
-            if (reordered.isNotEmpty()) {
-                scanDao.upsertPages(reordered)
-                scanDao.touchScan(scanId, System.currentTimeMillis())
+            require(orderedPageIds.toSet() == currentPages.keys) {
+                "Page order must be an exact permutation of the current pages."
             }
+            val reordered = orderedPageIds.mapIndexed { index, id ->
+                currentPages.getValue(id).copy(pageIndex = index)
+            }
+            scanDao.upsertPages(reordered)
+            scanDao.touchScan(scanId, System.currentTimeMillis())
         }
     }
 
@@ -181,7 +189,9 @@ class DefaultScanRepository(
     ) {
         withContext(Dispatchers.IO) {
             val entity = scanDao.getScanEntity(scanId) ?: return@withContext
-            scanDao.upsertScan(transform(entity))
+            check(scanDao.updateScan(transform(entity)) == 1) {
+                "Scan metadata update did not affect exactly one row."
+            }
         }
     }
 }

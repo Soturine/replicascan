@@ -1,11 +1,10 @@
 package com.soturine.scanora.core.data.work
 
 import android.content.Context
-import androidx.room.Room
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.soturine.scanora.core.data.files.ScanFileStore
-import com.soturine.scanora.core.data.local.ScanoraDatabase
+import com.soturine.scanora.core.data.local.ScanoraDatabaseFactory
 import kotlin.coroutines.cancellation.CancellationException
 
 class CleanupExportsWorker(
@@ -13,11 +12,7 @@ class CleanupExportsWorker(
     workerParameters: WorkerParameters,
 ) : CoroutineWorker(appContext, workerParameters) {
     override suspend fun doWork(): Result {
-        val database = Room.databaseBuilder(
-            applicationContext,
-            ScanoraDatabase::class.java,
-            "scanora.db",
-        ).build()
+        val database = ScanoraDatabaseFactory.create(applicationContext)
         return try {
             val pages = database.scanDao().getAllPages()
             val referencedSources = pages.map { it.sourceUri }.toSet()

@@ -72,25 +72,21 @@ class DefaultExportRepository(
     ): List<ExportedFile> = withContext(Dispatchers.IO) {
         val pages = scan.pages.sortedBy { it.index }
         require(pages.isNotEmpty()) { "O lote não possui páginas para exportar." }
-        val prepared = pages.map { page ->
+        val exported = mutableListOf<ExportedFile>()
+        pages.forEach { page ->
             val bitmap = loadBitmap(page)
             val displayName = fileNameBuilder.buildPageName(
                 title = scan.title,
                 pageIndex = page.index,
                 format = format,
             )
-            PreparedImage(
+            exported += writeBytes(
                 displayName = displayName,
+                mimeType = format.mimeType,
                 bytes = bitmapToBytes(bitmap, format),
             )
         }
-        prepared.map { image ->
-            writeBytes(
-                displayName = image.displayName,
-                mimeType = format.mimeType,
-                bytes = image.bytes,
-            )
-        }
+        exported
     }
 
     private fun compressForPdf(
@@ -223,10 +219,6 @@ class DefaultExportRepository(
         )
     }
 
-    private data class PreparedImage(
-        val displayName: String,
-        val bytes: ByteArray,
-    )
 }
 
 class ExportPageException(

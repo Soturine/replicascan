@@ -2,7 +2,6 @@ package com.soturine.scanora.core.data.image
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ColorMatrix
@@ -11,6 +10,8 @@ import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Rect
 import android.net.Uri
+import com.soturine.scanora.core.common.image.CanonicalImageDecoder
+import com.soturine.scanora.core.common.image.DocumentQuadValidator
 import com.soturine.scanora.core.common.model.DocumentFilterType
 import com.soturine.scanora.core.common.model.DocumentQuad
 import com.soturine.scanora.core.common.model.ImagePipelineSpec
@@ -30,6 +31,7 @@ import kotlinx.coroutines.withContext
 class DefaultDocumentProcessingRepository(
     private val context: Context,
 ) : DocumentProcessingRepository {
+    private val imageDecoder = CanonicalImageDecoder(context)
     override suspend fun estimateDocumentQuad(imageUri: String): DocumentQuad = withContext(Dispatchers.IO) {
         val bitmap = loadBitmap(imageUri, maxDimension = 1700) ?: return@withContext fallbackQuad()
         val width = bitmap.width
@@ -164,8 +166,9 @@ class DefaultDocumentProcessingRepository(
         maxDimension: Int,
     ): Bitmap {
         val bitmap = loadBitmap(sourceUri, maxDimension = maxDimension) ?: error("Não foi possível abrir a imagem.")
+        val normalizedQuad = quad?.coerceNormalized()?.takeIf { DocumentQuadValidator.isValidNormalized(it) } ?: fullPageQuad()
         val effectiveQuad = scaleQuadToBitmap(
-            quad = (quad ?: fullPageQuad()).coerceNormalized(),
+            quad = normalizedQuad,
             width = bitmap.width,
             height = bitmap.height,
         )
@@ -951,9 +954,8 @@ class DefaultDocumentProcessingRepository(
             0f, targetHeight.toFloat(),
         )
 
-        val matrix = Matrix().apply {
-            setPolyToPoly(source, 0, destination, 0, 4)
-        }
+        val matrix = Matrix()
+        check(matrix.setPolyToPoly(source, 0, destination, 0, 4)) { "Invalid crop geometry" }
         val output = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)
         canvas.drawColor(Color.WHITE)
@@ -1737,29 +1739,7 @@ class DefaultDocumentProcessingRepository(
     private fun loadBitmap(
         imageUri: String,
         maxDimension: Int,
-    ): Bitmap? {
-        val uri = Uri.parse(imageUri)
-        val decodeBounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        openInputStream(uri)?.use { stream ->
-            BitmapFactory.decodeStream(stream, null, decodeBounds)
-        }
-        val largestSide = max(decodeBounds.outWidth, decodeBounds.outHeight).coerceAtLeast(1)
-        val sampleSize = max(1, largestSide / maxDimension)
-        val options = BitmapFactory.Options().apply {
-            inSampleSize = sampleSize
-            inPreferredConfig = Bitmap.Config.ARGB_8888
-        }
-        return openInputStream(uri)?.use { stream ->
-            BitmapFactory.decodeStream(stream, null, options)
-        }
-    }
-
-    private fun openInputStream(uri: Uri) =
-        if (uri.scheme.isNullOrBlank()) {
-            File(uri.toString()).inputStream()
-        } else {
-            context.contentResolver.openInputStream(uri)
-        }
+    ): Bitmap? = imageDecoder.decode(imageUri, maxDimension)?.bitmap
 
     private fun fallbackQuad(): DocumentQuad =
         DocumentQuad(

@@ -14,13 +14,13 @@ class HomeViewModel(
     preferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
     val uiState: StateFlow<HomeUiState> = combine(
-        scanRepository.observeScans(),
+        scanRepository.observeRecentScans(limit = 5),
         preferencesRepository.preferences,
     ) { scans, preferences ->
         HomeUiState(
             isLoading = false,
             manualMode = preferences.defaultScanMode,
-            recentScans = scans.take(5),
+            recentScans = scans,
         )
     }.stateIn(
         scope = viewModelScope,

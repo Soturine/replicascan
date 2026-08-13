@@ -2,7 +2,6 @@ package com.soturine.scanora.core.ui.component
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.LruCache
 import androidx.compose.foundation.Image
@@ -25,6 +24,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntSize
+import com.soturine.scanora.core.common.image.CanonicalImageDecoder
 import java.io.File
 import kotlin.math.max
 import kotlinx.coroutines.Dispatchers
@@ -110,48 +110,9 @@ private fun decodeBitmapForPreview(
     val uri = Uri.parse(imageUri)
     val cacheKey = "$imageUri|$maxDimension|${cacheStamp(uri)}"
     previewCache.get(cacheKey)?.let { return it }
-    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-    openInputStream(context, uri)?.use { stream ->
-        BitmapFactory.decodeStream(stream, null, bounds)
-    }
-
-    val sampleSize = calculateInSampleSize(
-        width = bounds.outWidth,
-        height = bounds.outHeight,
-        maxDimension = maxDimension,
-    )
-    val options = BitmapFactory.Options().apply {
-        inSampleSize = sampleSize
-        inPreferredConfig = Bitmap.Config.ARGB_8888
-    }
-    return openInputStream(context, uri)?.use { stream ->
-        BitmapFactory.decodeStream(stream, null, options)
-    }?.also { decoded ->
+    return CanonicalImageDecoder(context).decode(imageUri, maxDimension)?.bitmap?.also { decoded ->
         previewCache.put(cacheKey, decoded)
     }
-}
-
-private fun calculateInSampleSize(
-    width: Int,
-    height: Int,
-    maxDimension: Int,
-): Int {
-    val largestSide = max(width, height).coerceAtLeast(1)
-    if (largestSide <= maxDimension) return 1
-
-    var sampleSize = 1
-    while (largestSide / sampleSize > maxDimension) {
-        sampleSize *= 2
-    }
-    return sampleSize
-}
-
-private fun openInputStream(
-    context: Context,
-    uri: Uri,
-) = when {
-    uri.scheme.isNullOrBlank() -> File(uri.toString()).inputStream()
-    else -> context.contentResolver.openInputStream(uri)
 }
 
 private fun cacheStamp(uri: Uri): String {

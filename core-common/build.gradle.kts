@@ -17,6 +17,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.exifinterface)
     implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.junit4)

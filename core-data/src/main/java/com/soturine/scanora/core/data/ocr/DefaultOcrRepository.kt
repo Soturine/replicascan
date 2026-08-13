@@ -2,20 +2,19 @@ package com.soturine.scanora.core.data.ocr
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Rect
-import android.net.Uri
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.soturine.scanora.core.common.image.CanonicalImageDecoder
+import com.soturine.scanora.core.common.image.ImagePurpose
 import com.soturine.scanora.core.common.model.OcrTextBlock
 import com.soturine.scanora.core.common.model.OcrTextBounds
 import com.soturine.scanora.core.common.model.OcrTextLine
 import com.soturine.scanora.core.common.model.OcrTextResult
 import com.soturine.scanora.core.common.repository.OcrRepository
-import java.io.File
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlinx.coroutines.Dispatchers
@@ -24,14 +23,17 @@ import kotlinx.coroutines.withContext
 class DefaultOcrRepository(
     private val context: Context,
 ) : OcrRepository {
+    private val imageDecoder = CanonicalImageDecoder(context)
+
     override suspend fun recognizeText(imageUri: String): OcrTextResult = withContext(Dispatchers.IO) {
-        val bitmap = loadBitmap(imageUri, maxDimension = 2600) ?: return@withContext OcrTextResult.Empty
-        val prepared = prepareForOcr(bitmap)
-        val inputImage = InputImage.fromBitmap(prepared, 0)
+        val bitmap = imageDecoder.decode(imageUri, ImagePurpose.OCR)?.bitmap ?: return@withContext OcrTextResult.Empty
+        val inputImage = InputImage.fromBitmap(bitmap, 0)
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-        val result = recognizer.process(inputImage).awaitResult()
-        recognizer.close()
-        formatRecognizedText(result)
+        try {
+            formatRecognizedText(recognizer.process(inputImage).awaitResult())
+        } finally {
+            recognizer.close()
+        }
     }
 
     private fun prepareForOcr(bitmap: Bitmap): Bitmap {
@@ -144,30 +146,4 @@ class DefaultOcrRepository(
         return 255
     }
 
-    private fun loadBitmap(
-        imageUri: String,
-        maxDimension: Int,
-    ): Bitmap? {
-        val uri = Uri.parse(imageUri)
-        val decodeBounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        openInputStream(uri)?.use { stream ->
-            BitmapFactory.decodeStream(stream, null, decodeBounds)
-        }
-        val largestSide = max(decodeBounds.outWidth, decodeBounds.outHeight).coerceAtLeast(1)
-        val sampleSize = max(1, largestSide / maxDimension)
-        val options = BitmapFactory.Options().apply {
-            inSampleSize = sampleSize
-            inPreferredConfig = Bitmap.Config.ARGB_8888
-        }
-        return openInputStream(uri)?.use { stream ->
-            BitmapFactory.decodeStream(stream, null, options)
-        }
-    }
-
-    private fun openInputStream(uri: Uri) =
-        if (uri.scheme.isNullOrBlank()) {
-            File(uri.toString()).inputStream()
-        } else {
-            context.contentResolver.openInputStream(uri)
-        }
 }
