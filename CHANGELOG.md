@@ -4,6 +4,30 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+## [0.2.9] - 2026-08-13
+
+### Added
+
+- Decoder canônico com EXIF, mirror, sampling e budgets.
+- Raposas PNG transparentes e onboarding arrastável com safe inset.
+
+### Changed
+
+- CTAs iconográficos e configurações compactas aproximam a UI do conceito.
+- OCR evita preprocessamento duplicado; imagens exportam sequencialmente.
+- Scanner rápido solicita só JPEG e target SDK avançou para 36.
+
+### Fixed
+
+- Metadata não usa mais `REPLACE` no pai com `CASCADE`, eliminando documentos com zero páginas.
+- Reordenação rejeita IDs ausentes, duplicados ou externos.
+- Preview, pipeline e OCR respeitam EXIF; “Próximo” não invade a barra Android.
+
+### Testing
+
+- Integridade Room cobre metadata/save com três páginas e ordens inválidas.
+- Versão `0.2.9`, `versionCode` 16 e `targetSdk` 36.
+
 ## [0.2.8] - 2026-08-12
 
 ### Added

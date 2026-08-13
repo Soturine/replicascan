@@ -3,14 +3,15 @@ agp = "9.1.1"
 kotlin = "2.3.10"
 compileSdk = "36"
 minSdk = "24"
-targetSdk = "35"
-versionCode = "15"
-versionName = "0.2.8"
+targetSdk = "36"
+versionCode = "16"
+versionName = "0.2.9"
 activity = "1.13.0"
 appcompat = "1.7.1"
 camera = "1.6.0"
 composeBom = "2026.03.00"
 coreKtx = "1.18.0"
+exifInterface = "1.4.2"
 datastore = "1.2.1"
 lifecycle = "2.10.0"
 navigation = "2.9.7"
@@ -42,6 +43,7 @@ androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-mani
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "exifInterface" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }

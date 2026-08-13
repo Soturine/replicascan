@@ -3,7 +3,7 @@
 ![Android](https://img.shields.io/badge/platform-Android-2E7D8C)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-23414B)
 ![Compose](https://img.shields.io/badge/Jetpack%20Compose-2026.03.00-DD8A2E)
-![Version](https://img.shields.io/badge/version-0.2.8-E95F0C)
+![Version](https://img.shields.io/badge/version-0.2.9-E95F0C)
 [![Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml)
 [![Deploy Pages](https://github.com/Soturine/scanora/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/pages.yml)
 
@@ -107,7 +107,7 @@ Política completa em [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
 
 ## Status
 
-`0.2.8` reconstrói a experiência sem trocar a base segura da `0.2.7`: visual claro/escuro mais acolhedor, uma ação principal por tela, raposa dinâmica nos estados certos, acessibilidade e interface completa em English, Português, Español, Français e Italiano. A próxima fase técnica é `0.2.9`, focada em memória e exportação robusta.
+`0.2.9` aproxima o produto do conceito e corrige a cadeia crítica: páginas sobrevivem a metadata/export, imagens passam por orientação EXIF canônica e o onboarding aceita swipe com PNGs transparentes.
 
 ## Contribuir
 

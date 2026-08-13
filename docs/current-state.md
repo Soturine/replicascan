@@ -1,6 +1,6 @@
 # Estado atual do Scanora
 
-O Scanora `0.2.8` é um scanner Android local-first. O fluxo principal abre o ML Kit Document Scanner; CameraX e o seletor de imagens permanecem como alternativas editáveis. Não há conta, backend, sincronização ou envio automático de documentos.
+O Scanora `0.2.9` é um scanner Android local-first. O fluxo principal abre o ML Kit Document Scanner; CameraX e o seletor de imagens permanecem como alternativas editáveis. Não há conta, backend, sincronização ou envio automático de documentos.
 
 ## Fluxo do produto
 
@@ -29,7 +29,7 @@ O Scanora `0.2.8` é um scanner Android local-first. O fluxo principal abre o ML
 ## Limitações atuais
 
 - auto crop local ainda perde para o scanner do Google em caderno com espiral, perspectiva extrema e fundo poluído;
-- exportação ainda usa buffers grandes e será reformada na `0.2.9`;
+- PDF ainda possui oportunidades de streaming e sizing; imagens já são processadas sequencialmente;
 - OCR não promete precisão perfeita, busca global ou PDF pesquisável;
 - testes instrumentados exigem emulador/aparelho e QA físico ainda está pendente;
 - minificação/R8 e assinatura de loja ainda não são gates de produção.

@@ -10,6 +10,7 @@
 - regras puras do pipeline de imagem: normalização de rotação/crop, chaves de preview/OCR/exportação, seleção de fonte derivada e invalidação de cache visual;
 - ownership/path traversal, importação parcial, rollback, orphan cleanup e captura não concorrente;
 - testes instrumentados de Room para CRUD/cascade/ordem, deleção física e export fail-fast;
+- regressão de metadata/save que preserva três páginas e valida reordenação estrita;
 - teste instrumentado mínimo de inicialização da UI;
 - schemas Room versionados em `core-data/schemas`.
 
