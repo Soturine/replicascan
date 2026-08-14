@@ -3,10 +3,13 @@ package com.soturine.scanora.feature.editor
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soturine.scanora.core.common.model.DocumentFilterType
+import com.soturine.scanora.core.common.model.DocumentDetectionResult
+import com.soturine.scanora.core.common.model.DocumentProfile
 import com.soturine.scanora.core.common.model.DocumentQuad
 import com.soturine.scanora.core.common.model.ImagePipelineSpec
 import com.soturine.scanora.core.common.model.PageRenderPurpose
 import com.soturine.scanora.core.common.model.ScanPage
+import com.soturine.scanora.core.common.model.ScanMode
 import com.soturine.scanora.core.common.model.requiresDerivedImage
 import com.soturine.scanora.core.common.model.withInvalidatedDerivedImage
 import com.soturine.scanora.core.common.repository.DocumentProcessingRepository
@@ -35,6 +38,7 @@ class EditorViewModel(
     private val isPreviewLoading = MutableStateFlow(false)
     private val isPreviewRefining = MutableStateFlow(false)
     private val previewImageUri = MutableStateFlow<String?>(null)
+    private val detectionResult = MutableStateFlow<DocumentDetectionResult?>(null)
     private val errorMessage = MutableStateFlow<String?>(null)
 
     private val previewCache = mutableMapOf<String, String>()
@@ -68,8 +72,9 @@ class EditorViewModel(
     val uiState: StateFlow<EditorUiState> = combine(
         baseState,
         previewImageUri,
+        detectionResult,
         errorMessage,
-    ) { base, previewUri, message ->
+    ) { base, previewUri, detection, message ->
         val resolvedPage = base.scan?.pages
             ?.sortedBy { it.index }
             ?.firstOrNull { it.id == base.pageId }
@@ -81,6 +86,7 @@ class EditorViewModel(
             isPreviewLoading = base.isPreviewLoading,
             isPreviewRefining = base.isPreviewRefining,
             previewImageUri = previewUri ?: resolvedPage?.displayUri,
+            detectionResult = detection,
             errorMessage = message,
         )
     }.stateIn(
@@ -95,6 +101,7 @@ class EditorViewModel(
         isPreviewLoading.value = false
         isPreviewRefining.value = false
         previewImageUri.value = null
+        detectionResult.value = null
         previewCache.clear()
     }
 
@@ -107,10 +114,14 @@ class EditorViewModel(
             isProcessing.value = true
             errorMessage.value = null
             runCatching {
-                val suggestedQuad = processingRepository.estimateDocumentQuad(page.sourceUri)
+                val detection = processingRepository.detectDocument(
+                    imageUri = page.sourceUri,
+                    profile = uiState.value.scan?.mode.toDocumentProfile(),
+                )
+                detectionResult.value = detection
                 scanRepository.updatePage(
                     scanId = scanId,
-                    page = page.copy(quad = suggestedQuad).withInvalidatedDerivedImage(),
+                    page = page.copy(quad = detection.quadOrFullPage()).withInvalidatedDerivedImage(),
                 )
             }.onFailure { throwable ->
                 if (throwable !is CancellationException) {
@@ -389,12 +400,16 @@ class EditorViewModel(
     private suspend fun ensureQuad(page: ScanPage): DocumentQuad {
         val existing = page.quad
         if (existing != null) return existing
-        val suggestedQuad = processingRepository.estimateDocumentQuad(page.sourceUri)
+        val detection = processingRepository.detectDocument(
+            imageUri = page.sourceUri,
+            profile = uiState.value.scan?.mode.toDocumentProfile(),
+        )
+        detectionResult.value = detection
         scanRepository.updatePage(
             scanId = scanId,
-            page = page.copy(quad = suggestedQuad).withInvalidatedDerivedImage(),
+            page = page.copy(quad = detection.quadOrFullPage()).withInvalidatedDerivedImage(),
         )
-        return suggestedQuad
+        return detection.quadOrFullPage()
     }
 
     private fun buildPreviewCacheKey(
@@ -407,4 +422,10 @@ class EditorViewModel(
         filterType = filterType,
         maxDimension = maxDimension,
     ).toString()
+}
+
+private fun ScanMode?.toDocumentProfile(): DocumentProfile = when (this) {
+    ScanMode.NOTEBOOK -> DocumentProfile.NOTEBOOK
+    ScanMode.RECEIPT -> DocumentProfile.RECEIPT
+    ScanMode.DOCUMENT, null -> DocumentProfile.GENERAL
 }

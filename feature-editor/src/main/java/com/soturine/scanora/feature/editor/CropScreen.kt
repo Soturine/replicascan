@@ -65,6 +65,8 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.alpha
 import com.soturine.scanora.core.common.model.DocumentFilterType
+import com.soturine.scanora.core.common.image.DocumentQuadValidator
+import com.soturine.scanora.core.common.model.DocumentDetectionConfidence
 import com.soturine.scanora.core.common.model.DocumentQuad
 import com.soturine.scanora.core.common.model.PointValue
 import com.soturine.scanora.core.common.model.ScanPage
@@ -93,6 +95,7 @@ fun CropScreen(
     var localQuad by remember(page?.id, page?.quad) {
         mutableStateOf(page?.quad ?: defaultQuad())
     }
+    val isQuadValid = DocumentQuadValidator.isValidNormalized(localQuad)
 
     LaunchedEffect(state.errorMessage) {
         state.errorMessage?.let {
@@ -151,7 +154,7 @@ fun CropScreen(
                             Button(
                                 modifier = Modifier.weight(1f),
                                 onClick = { onSaveQuadAndContinue(localQuad) },
-                                enabled = !state.isProcessing,
+                                enabled = !state.isProcessing && isQuadValid,
                             ) {
                                 Icon(Icons.Outlined.Check, contentDescription = null)
                                 Spacer(Modifier.width(8.dp))
@@ -186,6 +189,29 @@ fun CropScreen(
                     title = stringResource(id = R.string.editor_crop_heading),
                     supportingText = stringResource(id = R.string.editor_crop_helper),
                 )
+                state.detectionResult?.let { detection ->
+                    Surface(
+                        color = when (detection.confidence) {
+                            DocumentDetectionConfidence.HIGH -> MaterialTheme.colorScheme.primaryContainer
+                            DocumentDetectionConfidence.MEDIUM -> MaterialTheme.colorScheme.secondaryContainer
+                            DocumentDetectionConfidence.LOW,
+                            DocumentDetectionConfidence.NONE,
+                            -> MaterialTheme.colorScheme.errorContainer
+                        },
+                        shape = MaterialTheme.shapes.medium,
+                    ) {
+                        Text(
+                            text = when (detection.confidence) {
+                                DocumentDetectionConfidence.HIGH -> stringResource(R.string.editor_crop_detected)
+                                DocumentDetectionConfidence.MEDIUM -> stringResource(R.string.editor_crop_check)
+                                DocumentDetectionConfidence.LOW -> stringResource(R.string.editor_crop_adjust)
+                                DocumentDetectionConfidence.NONE -> stringResource(R.string.editor_crop_not_found)
+                            },
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                            style = MaterialTheme.typography.labelLarge,
+                        )
+                    }
+                }
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -213,6 +239,32 @@ fun CropScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                if (!isQuadValid) {
+                    Text(
+                        text = stringResource(R.string.editor_crop_invalid),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    OutlinedButton(
+                        modifier = Modifier.weight(1f),
+                        onClick = { localQuad = com.soturine.scanora.core.common.model.DocumentDetectionResult.FULL_PAGE_QUAD },
+                        enabled = !state.isProcessing,
+                    ) {
+                        Text(stringResource(R.string.editor_crop_use_full_page))
+                    }
+                    OutlinedButton(
+                        modifier = Modifier.weight(1f),
+                        onClick = { localQuad = page.quad ?: defaultQuad() },
+                        enabled = !state.isProcessing,
+                    ) {
+                        Text(stringResource(R.string.editor_crop_restore))
+                    }
+                }
             }
         }
     }

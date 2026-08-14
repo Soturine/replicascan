@@ -25,6 +25,11 @@ import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.soturine.scanora.core.common.model.DocumentQuad
@@ -41,6 +46,10 @@ fun QuadEditorOverlay(
     val strokeColor = MaterialTheme.colorScheme.tertiary
     val handleFill = MaterialTheme.colorScheme.surface
     val handleStroke = MaterialTheme.colorScheme.primary
+    val moveUp = stringResource(R.string.editor_corner_move_up)
+    val moveDown = stringResource(R.string.editor_corner_move_down)
+    val moveStart = stringResource(R.string.editor_corner_move_start)
+    val moveEnd = stringResource(R.string.editor_corner_move_end)
     var activeHandle by remember { mutableStateOf<HandleAnchor?>(null) }
 
     val topLeft = imageBounds.toOffset(quad.topLeft)
@@ -118,6 +127,8 @@ fun QuadEditorOverlay(
     }
 
     Handle(
+        label = stringResource(R.string.editor_corner_top_start),
+        actionLabels = listOf(moveUp, moveDown, moveStart, moveEnd),
         point = quad.topLeft,
         imageBounds = imageBounds,
         fillColor = handleFill,
@@ -129,6 +140,8 @@ fun QuadEditorOverlay(
         onMoved = { point -> onQuadChange(quad.copy(topLeft = point)) },
     )
     Handle(
+        label = stringResource(R.string.editor_corner_top_end),
+        actionLabels = listOf(moveUp, moveDown, moveStart, moveEnd),
         point = quad.topRight,
         imageBounds = imageBounds,
         fillColor = handleFill,
@@ -140,6 +153,8 @@ fun QuadEditorOverlay(
         onMoved = { point -> onQuadChange(quad.copy(topRight = point)) },
     )
     Handle(
+        label = stringResource(R.string.editor_corner_bottom_end),
+        actionLabels = listOf(moveUp, moveDown, moveStart, moveEnd),
         point = quad.bottomRight,
         imageBounds = imageBounds,
         fillColor = handleFill,
@@ -151,6 +166,8 @@ fun QuadEditorOverlay(
         onMoved = { point -> onQuadChange(quad.copy(bottomRight = point)) },
     )
     Handle(
+        label = stringResource(R.string.editor_corner_bottom_start),
+        actionLabels = listOf(moveUp, moveDown, moveStart, moveEnd),
         point = quad.bottomLeft,
         imageBounds = imageBounds,
         fillColor = handleFill,
@@ -165,6 +182,8 @@ fun QuadEditorOverlay(
 
 @Composable
 private fun Handle(
+    label: String,
+    actionLabels: List<String>,
     point: PointValue,
     imageBounds: Rect,
     fillColor: Color,
@@ -186,6 +205,27 @@ private fun Handle(
                 )
             }
             .size(touchTarget)
+            .semantics {
+                contentDescription = label
+                customActions = listOf(
+                    CustomAccessibilityAction(actionLabels[0]) {
+                        onMoved(latestPoint.copy(y = (latestPoint.y - ACCESSIBILITY_STEP).coerceAtLeast(0f)))
+                        true
+                    },
+                    CustomAccessibilityAction(actionLabels[1]) {
+                        onMoved(latestPoint.copy(y = (latestPoint.y + ACCESSIBILITY_STEP).coerceAtMost(1f)))
+                        true
+                    },
+                    CustomAccessibilityAction(actionLabels[2]) {
+                        onMoved(latestPoint.copy(x = (latestPoint.x - ACCESSIBILITY_STEP).coerceAtLeast(0f)))
+                        true
+                    },
+                    CustomAccessibilityAction(actionLabels[3]) {
+                        onMoved(latestPoint.copy(x = (latestPoint.x + ACCESSIBILITY_STEP).coerceAtMost(1f)))
+                        true
+                    },
+                )
+            }
             .pointerInput(imageBounds) {
                 var currentPoint = latestPoint
                 detectDragGestures(
@@ -235,6 +275,8 @@ private enum class HandleAnchor {
     BOTTOM_RIGHT,
     BOTTOM_LEFT,
 }
+
+private const val ACCESSIBILITY_STEP = 0.025f
 
 private fun Rect.toOffset(point: PointValue): Offset =
     Offset(

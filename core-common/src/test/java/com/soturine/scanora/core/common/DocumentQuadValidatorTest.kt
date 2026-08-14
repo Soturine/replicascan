@@ -2,11 +2,25 @@ package com.soturine.scanora.core.common
 
 import com.google.common.truth.Truth.assertThat
 import com.soturine.scanora.core.common.image.DocumentQuadValidator
+import com.soturine.scanora.core.common.image.DocumentQuadFailure
 import com.soturine.scanora.core.common.model.DocumentQuad
 import com.soturine.scanora.core.common.model.PointValue
 import org.junit.Test
 
 class DocumentQuadValidatorTest {
+
+    @Test
+    fun reportsSelfIntersectionInsteadOfAcceptingInvalidCrop() {
+        val bowTie = DocumentQuad(
+            topLeft = PointValue(0.1f, 0.1f),
+            topRight = PointValue(0.9f, 0.9f),
+            bottomRight = PointValue(0.9f, 0.1f),
+            bottomLeft = PointValue(0.1f, 0.9f),
+        )
+
+        assertThat(DocumentQuadValidator.validate(bowTie, 1f, 1f).failure)
+            .isEqualTo(DocumentQuadFailure.SELF_INTERSECTION)
+    }
     @Test fun acceptsConvexDocument() {
         assertThat(DocumentQuadValidator.isValidNormalized(quad(0.1f, 0.1f, 0.9f, 0.9f))).isTrue()
     }

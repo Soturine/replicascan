@@ -1,10 +1,18 @@
 package com.soturine.scanora.core.common.repository
 
 import com.soturine.scanora.core.common.model.DocumentFilterType
+import com.soturine.scanora.core.common.model.DocumentDetectionResult
+import com.soturine.scanora.core.common.model.DocumentProfile
 import com.soturine.scanora.core.common.model.DocumentQuad
 
 interface DocumentProcessingRepository {
-    suspend fun estimateDocumentQuad(imageUri: String): DocumentQuad
+    suspend fun detectDocument(
+        imageUri: String,
+        profile: DocumentProfile = DocumentProfile.GENERAL,
+    ): DocumentDetectionResult
+
+    suspend fun estimateDocumentQuad(imageUri: String): DocumentQuad =
+        detectDocument(imageUri).quadOrFullPage()
 
     suspend fun renderPreview(
         sourceUri: String,

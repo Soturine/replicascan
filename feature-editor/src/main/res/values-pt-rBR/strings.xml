@@ -52,4 +52,19 @@
     <string name="editor_move_down">Mover para baixo</string>
     <string name="editor_open_ocr">Abrir OCR</string>
     <string name="editor_ocr_ready">OCR pronto</string>
+    <string name="editor_crop_detected">Bordas encontradas</string>
+    <string name="editor_crop_check">Confira as bordas</string>
+    <string name="editor_crop_adjust">Ajuste os cantos</string>
+    <string name="editor_crop_not_found">Não encontramos as bordas</string>
+    <string name="editor_crop_use_full_page">Usar página inteira</string>
+    <string name="editor_crop_restore">Restaurar</string>
+    <string name="editor_crop_invalid">Mova os cantos até formar uma página válida.</string>
+    <string name="editor_corner_top_start">Canto superior inicial</string>
+    <string name="editor_corner_top_end">Canto superior final</string>
+    <string name="editor_corner_bottom_end">Canto inferior final</string>
+    <string name="editor_corner_bottom_start">Canto inferior inicial</string>
+    <string name="editor_corner_move_up">Mover canto para cima</string>
+    <string name="editor_corner_move_down">Mover canto para baixo</string>
+    <string name="editor_corner_move_start">Mover canto para o início</string>
+    <string name="editor_corner_move_end">Mover canto para o fim</string>
 </resources>

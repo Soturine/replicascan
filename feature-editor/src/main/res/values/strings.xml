@@ -52,4 +52,19 @@
     <string name="editor_move_down">Move down</string>
     <string name="editor_open_ocr">Open OCR</string>
     <string name="editor_ocr_ready">OCR ready</string>
+    <string name="editor_crop_detected">Borders found</string>
+    <string name="editor_crop_check">Check the borders</string>
+    <string name="editor_crop_adjust">Adjust the corners</string>
+    <string name="editor_crop_not_found">We couldn\'t find the borders</string>
+    <string name="editor_crop_use_full_page">Use full page</string>
+    <string name="editor_crop_restore">Restore</string>
+    <string name="editor_crop_invalid">Move the corners until they form a valid page.</string>
+    <string name="editor_corner_top_start">Top start corner</string>
+    <string name="editor_corner_top_end">Top end corner</string>
+    <string name="editor_corner_bottom_end">Bottom end corner</string>
+    <string name="editor_corner_bottom_start">Bottom start corner</string>
+    <string name="editor_corner_move_up">Move corner up</string>
+    <string name="editor_corner_move_down">Move corner down</string>
+    <string name="editor_corner_move_start">Move corner toward start</string>
+    <string name="editor_corner_move_end">Move corner toward end</string>
 </resources>

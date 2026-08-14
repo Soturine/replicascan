@@ -56,4 +56,19 @@
     <string name="editor_move_down">تحرك للأسفل</string>
     <string name="editor_open_ocr">افتح التعرف الضوئي على الحروف</string>
     <string name="editor_ocr_ready">التعرف الضوئي على الحروف جاهز</string>
+    <string name="editor_crop_detected">تم العثور على الحواف</string>
+    <string name="editor_crop_check">تحقق من الحواف</string>
+    <string name="editor_crop_adjust">اضبط الزوايا</string>
+    <string name="editor_crop_not_found">لم نتمكن من العثور على الحواف</string>
+    <string name="editor_crop_use_full_page">استخدام الصفحة بالكامل</string>
+    <string name="editor_crop_restore">استعادة</string>
+    <string name="editor_crop_invalid">حرّك الزوايا حتى تتكون صفحة صالحة.</string>
+    <string name="editor_corner_top_start">زاوية البداية العلوية</string>
+    <string name="editor_corner_top_end">زاوية النهاية العلوية</string>
+    <string name="editor_corner_bottom_end">زاوية النهاية السفلية</string>
+    <string name="editor_corner_bottom_start">زاوية البداية السفلية</string>
+    <string name="editor_corner_move_up">تحريك الزاوية للأعلى</string>
+    <string name="editor_corner_move_down">تحريك الزاوية للأسفل</string>
+    <string name="editor_corner_move_start">تحريك الزاوية نحو البداية</string>
+    <string name="editor_corner_move_end">تحريك الزاوية نحو النهاية</string>
 </resources>

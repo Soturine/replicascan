@@ -52,4 +52,19 @@
     <string name="editor_move_down">Descendre</string>
     <string name="editor_open_ocr">Ouvrir la ROC</string>
     <string name="editor_ocr_ready">Prêt pour l\'OCR</string>
+    <string name="editor_crop_detected">Bords détectés</string>
+    <string name="editor_crop_check">Vérifiez les bords</string>
+    <string name="editor_crop_adjust">Ajustez les coins</string>
+    <string name="editor_crop_not_found">Nous n\'avons pas trouvé les bords</string>
+    <string name="editor_crop_use_full_page">Utiliser toute la page</string>
+    <string name="editor_crop_restore">Restaurer</string>
+    <string name="editor_crop_invalid">Déplacez les coins pour former une page valide.</string>
+    <string name="editor_corner_top_start">Coin supérieur de début</string>
+    <string name="editor_corner_top_end">Coin supérieur de fin</string>
+    <string name="editor_corner_bottom_end">Coin inférieur de fin</string>
+    <string name="editor_corner_bottom_start">Coin inférieur de début</string>
+    <string name="editor_corner_move_up">Déplacer le coin vers le haut</string>
+    <string name="editor_corner_move_down">Déplacer le coin vers le bas</string>
+    <string name="editor_corner_move_start">Déplacer le coin vers le début</string>
+    <string name="editor_corner_move_end">Déplacer le coin vers la fin</string>
 </resources>

@@ -12,12 +12,17 @@ import android.graphics.Rect
 import android.net.Uri
 import com.soturine.scanora.core.common.image.CanonicalImageDecoder
 import com.soturine.scanora.core.common.image.DocumentQuadValidator
+import com.soturine.scanora.core.common.image.ImagePurpose
+import com.soturine.scanora.core.common.model.DocumentDetectionResult
 import com.soturine.scanora.core.common.model.DocumentFilterType
+import com.soturine.scanora.core.common.model.DocumentProfile
 import com.soturine.scanora.core.common.model.DocumentQuad
 import com.soturine.scanora.core.common.model.ImagePipelineSpec
 import com.soturine.scanora.core.common.model.PointValue
 import com.soturine.scanora.core.common.model.coerceNormalized
 import com.soturine.scanora.core.common.repository.DocumentProcessingRepository
+import com.soturine.scanora.core.data.image.detection.DocumentDetector
+import com.soturine.scanora.core.data.image.detection.HeuristicDocumentDetector
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.abs
@@ -30,48 +35,16 @@ import kotlinx.coroutines.withContext
 
 class DefaultDocumentProcessingRepository(
     private val context: Context,
+    private val documentDetector: DocumentDetector = HeuristicDocumentDetector(),
 ) : DocumentProcessingRepository {
     private val imageDecoder = CanonicalImageDecoder(context)
-    override suspend fun estimateDocumentQuad(imageUri: String): DocumentQuad = withContext(Dispatchers.IO) {
-        val bitmap = loadBitmap(imageUri, maxDimension = 1700) ?: return@withContext fallbackQuad()
-        val width = bitmap.width
-        val height = bitmap.height
-        val luma = smoothLuma(toLumaArray(bitmap), width, height)
-        val edgeMagnitude = sobelEdges(luma, width, height)
-        val averageEdge = edgeMagnitude.average().toFloat()
-        val strongThreshold = max(22f, averageEdge * 1.08f)
-        val denseThreshold = strongThreshold * 0.78f
-        val candidates = detectBoundsCandidates(
-            luma = luma,
-            edgeMagnitude = edgeMagnitude,
-            width = width,
-            height = height,
-            strongThreshold = strongThreshold,
-            denseThreshold = denseThreshold,
-        )
-
-        candidates
-            .map { candidateBounds ->
-                val quad = estimateQuadFromBounds(
-                    luma = luma,
-                    edgeMagnitude = edgeMagnitude,
-                    width = width,
-                    height = height,
-                    coarseBounds = candidateBounds,
-                    strongThreshold = strongThreshold,
-                ) ?: rectToNormalizedQuad(candidateBounds, width, height)
-                quad to scoreQuadCandidate(
-                    quad = quad,
-                    luma = luma,
-                    edgeMagnitude = edgeMagnitude,
-                    width = width,
-                    height = height,
-                    referenceThreshold = strongThreshold,
-                )
-            }
-            .maxByOrNull { it.second }
-            ?.first
-            ?: fallbackQuad()
+    override suspend fun detectDocument(
+        imageUri: String,
+        profile: DocumentProfile,
+    ): DocumentDetectionResult = withContext(Dispatchers.Default) {
+        val bitmap = imageDecoder.decode(imageUri, ImagePurpose.DETECTION)?.bitmap
+            ?: return@withContext DocumentDetectionResult.noDocument()
+        documentDetector.detect(bitmap, profile)
     }
 
     override suspend fun renderPreview(
