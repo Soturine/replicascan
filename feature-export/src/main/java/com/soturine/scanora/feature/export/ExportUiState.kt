@@ -4,6 +4,7 @@ import com.soturine.scanora.core.common.model.ExportedFile
 import com.soturine.scanora.core.common.model.ExportFormat
 import com.soturine.scanora.core.common.model.PdfQuality
 import com.soturine.scanora.core.common.model.ScanDocument
+import com.soturine.scanora.core.common.model.PdfPageSize
 
 data class ExportUiState(
     val scan: ScanDocument? = null,
@@ -12,5 +13,6 @@ data class ExportUiState(
     val isExporting: Boolean = false,
     val exportedFiles: List<ExportedFile> = emptyList(),
     val errorMessage: String? = null,
+    val selectedPageSize: PdfPageSize = PdfPageSize.AUTO,
 )
 

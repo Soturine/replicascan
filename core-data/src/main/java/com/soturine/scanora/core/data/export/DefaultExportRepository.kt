@@ -4,6 +4,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Build
@@ -11,17 +14,19 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
-import com.soturine.scanora.core.common.model.ExportedFile
 import com.soturine.scanora.core.common.model.ExportFormat
+import com.soturine.scanora.core.common.model.ExportedFile
+import com.soturine.scanora.core.common.model.PdfPageSize
 import com.soturine.scanora.core.common.model.PdfQuality
 import com.soturine.scanora.core.common.model.ScanDocument
 import com.soturine.scanora.core.common.model.ScanPage
 import com.soturine.scanora.core.common.model.requiresDerivedImage
 import com.soturine.scanora.core.common.repository.DocumentProcessingRepository
 import com.soturine.scanora.core.common.repository.ExportRepository
-import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.OutputStream
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.math.roundToInt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -33,95 +38,101 @@ class DefaultExportRepository(
     override suspend fun exportPdf(
         scan: ScanDocument,
         quality: PdfQuality,
+        pageSize: PdfPageSize,
     ): ExportedFile = withContext(Dispatchers.IO) {
+        val pages = scan.pages.sortedBy(ScanPage::index)
+        require(pages.isNotEmpty()) { "O lote não possui páginas para exportar." }
         val document = PdfDocument()
         try {
-            val pages = scan.pages.sortedBy { it.index }
-            require(pages.isNotEmpty()) { "O lote não possui páginas para exportar." }
             pages.forEachIndexed { pageNumber, page ->
                 val bitmap = loadBitmap(page)
-                val compressed = compressForPdf(bitmap, quality)
-                val pageInfo = PdfDocument.PageInfo.Builder(
-                    compressed.width,
-                    compressed.height,
-                    pageNumber + 1,
-                ).create()
-                val pdfPage = document.startPage(pageInfo)
-                pdfPage.canvas.drawBitmap(compressed, 0f, 0f, null)
-                document.finishPage(pdfPage)
+                try {
+                    val (width, height) = resolvePageDimensions(pageSize, bitmap)
+                    val pdfPage = document.startPage(PdfDocument.PageInfo.Builder(width, height, pageNumber + 1).create())
+                    // The text is drawn first and then visually covered by the opaque scan. It stays in
+                    // the PDF content stream for search/copy without changing the rendered document.
+                    drawSearchableText(pdfPage.canvas, page.ocrText.orEmpty(), width, height)
+                    pdfPage.canvas.drawBitmap(bitmap, null, RectF(0f, 0f, width.toFloat(), height.toFloat()), imagePaint(quality))
+                    document.finishPage(pdfPage)
+                } finally {
+                    bitmap.recycle()
+                }
             }
-
-            val displayName = fileNameBuilder.buildBaseName(scan.title, ExportFormat.PDF)
-            val bytes = ByteArrayOutputStream().use { output ->
-                document.writeTo(output)
-                output.toByteArray()
-            }
-            writeBytes(
-                displayName = displayName,
+            writeStream(
+                displayName = fileNameBuilder.buildBaseName(scan.title, ExportFormat.PDF),
                 mimeType = ExportFormat.PDF.mimeType,
-                bytes = bytes,
-            )
+                searchableTextIncluded = pages.any { !it.ocrText.isNullOrBlank() },
+            ) { output -> document.writeTo(output) }
         } finally {
             document.close()
         }
     }
 
-    override suspend fun exportImages(
-        scan: ScanDocument,
-        format: ExportFormat,
-    ): List<ExportedFile> = withContext(Dispatchers.IO) {
-        val pages = scan.pages.sortedBy { it.index }
-        require(pages.isNotEmpty()) { "O lote não possui páginas para exportar." }
-        val exported = mutableListOf<ExportedFile>()
-        pages.forEach { page ->
-            val bitmap = loadBitmap(page)
-            val displayName = fileNameBuilder.buildPageName(
-                title = scan.title,
-                pageIndex = page.index,
-                format = format,
-            )
-            exported += writeBytes(
-                displayName = displayName,
-                mimeType = format.mimeType,
-                bytes = bitmapToBytes(bitmap, format),
-            )
+    override suspend fun exportImages(scan: ScanDocument, format: ExportFormat): List<ExportedFile> =
+        withContext(Dispatchers.IO) {
+            require(format == ExportFormat.JPG || format == ExportFormat.PNG)
+            val pages = scan.pages.sortedBy(ScanPage::index)
+            require(pages.isNotEmpty()) { "O lote não possui páginas para exportar." }
+            val exported = mutableListOf<ExportedFile>()
+            try {
+                pages.forEach { page ->
+                    val bitmap = loadBitmap(page)
+                    try {
+                        exported += writeStream(
+                            displayName = fileNameBuilder.buildPageName(scan.title, page.index, format),
+                            mimeType = format.mimeType,
+                        ) { output ->
+                            check(
+                                bitmap.compress(
+                                    if (format == ExportFormat.PNG) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG,
+                                    92,
+                                    output,
+                                ),
+                            ) { "Não foi possível codificar a página ${page.index + 1}." }
+                        }
+                    } finally {
+                        bitmap.recycle()
+                    }
+                }
+                exported
+            } catch (throwable: Throwable) {
+                exported.forEach(::deleteExport)
+                throw throwable
+            }
         }
-        exported
+
+    private fun resolvePageDimensions(pageSize: PdfPageSize, bitmap: Bitmap): Pair<Int, Int> = when (pageSize) {
+        PdfPageSize.A4 -> if (bitmap.width >= bitmap.height) 842 to 595 else 595 to 842
+        PdfPageSize.LETTER -> if (bitmap.width >= bitmap.height) 792 to 612 else 612 to 792
+        PdfPageSize.AUTO -> {
+            val width = if (bitmap.width >= bitmap.height) 842 else 595
+            val height = (width * bitmap.height.toFloat() / bitmap.width).roundToInt().coerceIn(240, 1_440)
+            width to height
+        }
     }
 
-    private fun compressForPdf(
-        bitmap: Bitmap,
-        quality: PdfQuality,
-    ): Bitmap {
-        val bytes = ByteArrayOutputStream().use { output ->
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality.jpegQuality, output)
-            output.toByteArray()
-        }
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: bitmap
+    private fun imagePaint(quality: PdfQuality) = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
+        isDither = quality != PdfQuality.COMPACT
     }
 
-    private fun bitmapToBytes(
-        bitmap: Bitmap,
-        format: ExportFormat,
-    ): ByteArray =
-        ByteArrayOutputStream().use { output ->
-            bitmap.compress(
-                if (format == ExportFormat.PNG) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG,
-                92,
-                output,
-            )
-            output.toByteArray()
+    private fun drawSearchableText(canvas: android.graphics.Canvas, text: String, width: Int, height: Int) {
+        if (text.isBlank()) return
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.BLACK
+            textSize = 9f
         }
+        var y = 12f
+        text.lineSequence().flatMap { it.chunked(100).asSequence() }.forEach { line ->
+            canvas.drawText(line, 4f, y, paint)
+            y += 10f
+            if (y > height - 4f) y = 12f
+        }
+    }
 
     private suspend fun loadBitmap(page: ScanPage): Bitmap {
         try {
             val finalImageUri = if (page.requiresDerivedImage()) {
-                processingRepository.processPage(
-                    sourceUri = page.sourceUri,
-                    filterType = page.filterType,
-                    quad = page.quad,
-                    rotationDegrees = page.rotationDegrees,
-                )
+                processingRepository.processPage(page.sourceUri, page.filterType, page.quad, page.rotationDegrees)
             } else {
                 page.canonicalUri
             }
@@ -131,8 +142,7 @@ class DefaultExportRepository(
                 uri.scheme == "file" -> File(uri.path.orEmpty()).inputStream()
                 else -> context.contentResolver.openInputStream(uri)
             }
-            return stream?.use(BitmapFactory::decodeStream)
-                ?: throw ExportPageException(page.index, page.id)
+            return stream?.use(BitmapFactory::decodeStream) ?: throw ExportPageException(page.index, page.id)
         } catch (exception: CancellationException) {
             throw exception
         } catch (exception: ExportPageException) {
@@ -142,83 +152,73 @@ class DefaultExportRepository(
         }
     }
 
-    private fun writeBytes(
+    private fun writeStream(
         displayName: String,
         mimeType: String,
-        bytes: ByteArray,
-    ): ExportedFile {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            writeToDownloads(displayName, mimeType, bytes)
-        } else {
-            writeToAppStorage(displayName, mimeType, bytes)
-        }
+        searchableTextIncluded: Boolean = false,
+        writer: (OutputStream) -> Unit,
+    ): ExportedFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        writeToDownloads(displayName, mimeType, searchableTextIncluded, writer)
+    } else {
+        writeToAppStorage(displayName, mimeType, searchableTextIncluded, writer)
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun writeToDownloads(
         displayName: String,
         mimeType: String,
-        bytes: ByteArray,
+        searchableTextIncluded: Boolean,
+        writer: (OutputStream) -> Unit,
     ): ExportedFile {
         val resolver = context.contentResolver
         val relativePath = "${Environment.DIRECTORY_DOWNLOADS}/Scanora"
-        val values = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
-            put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
-            put(MediaStore.MediaColumns.RELATIVE_PATH, relativePath)
-            put(MediaStore.MediaColumns.IS_PENDING, 1)
-        }
-        val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
-            ?: error("Não foi possível preparar o arquivo para exportação.")
-
+        val uri = resolver.insert(
+            MediaStore.Downloads.EXTERNAL_CONTENT_URI,
+            ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
+                put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
+                put(MediaStore.MediaColumns.RELATIVE_PATH, relativePath)
+                put(MediaStore.MediaColumns.IS_PENDING, 1)
+            },
+        ) ?: error("Não foi possível preparar o arquivo para exportação.")
         try {
-            resolver.openOutputStream(uri)?.use { stream ->
-                stream.write(bytes)
-                stream.flush()
-            } ?: error("Não foi possível gravar o arquivo exportado.")
-
-            val publishedValues = ContentValues().apply {
-                put(MediaStore.MediaColumns.IS_PENDING, 0)
-            }
-            resolver.update(uri, publishedValues, null, null)
+            resolver.openOutputStream(uri, "w")?.use { output -> writer(output); output.flush() }
+                ?: error("Não foi possível gravar o arquivo exportado.")
+            resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0) }, null, null)
         } catch (throwable: Throwable) {
             resolver.delete(uri, null, null)
             throw throwable
         }
-
-        return ExportedFile(
-            displayName = displayName,
-            uri = uri.toString(),
-            mimeType = mimeType,
-            sizeBytes = bytes.size.toLong(),
-            locationLabel = "Downloads > Scanora",
-            pathHint = "Downloads/Scanora/$displayName",
-        )
+        val size = resolver.openAssetFileDescriptor(uri, "r")?.use { it.length }?.coerceAtLeast(0) ?: 0L
+        return ExportedFile(displayName, uri.toString(), mimeType, size, "Downloads > Scanora", "Downloads/Scanora/$displayName", searchableTextIncluded)
     }
 
     private fun writeToAppStorage(
         displayName: String,
         mimeType: String,
-        bytes: ByteArray,
+        searchableTextIncluded: Boolean,
+        writer: (OutputStream) -> Unit,
     ): ExportedFile {
         val baseDir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) ?: context.filesDir
         val exportDir = File(baseDir, "scanora-exports").apply { mkdirs() }
         val file = File(exportDir, displayName)
-        file.writeBytes(bytes)
+        try {
+            file.outputStream().use { output -> writer(output); output.flush() }
+        } catch (throwable: Throwable) {
+            file.delete()
+            throw throwable
+        }
         return ExportedFile(
-            displayName = displayName,
-            uri = FileProvider.getUriForFile(
-                context,
-                "${context.packageName}.fileprovider",
-                file,
-            ).toString(),
-            mimeType = mimeType,
-            sizeBytes = bytes.size.toLong(),
-            locationLabel = "Armazenamento do app > scanora-exports",
-            pathHint = file.absolutePath,
+            displayName, FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file).toString(),
+            mimeType, file.length(), "Armazenamento do app > scanora-exports", file.absolutePath, searchableTextIncluded,
         )
     }
 
+    private fun deleteExport(file: ExportedFile) {
+        val path = file.pathHint
+        if (path != null && File(path).isAbsolute) File(path).delete()
+        else runCatching { context.contentResolver.delete(Uri.parse(file.uri), null, null) }
+    }
 }
 
 class ExportPageException(

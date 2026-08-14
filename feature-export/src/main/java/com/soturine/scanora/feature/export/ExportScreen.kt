@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.soturine.scanora.core.common.model.ExportFormat
 import com.soturine.scanora.core.common.model.ExportedFile
 import com.soturine.scanora.core.common.model.PdfQuality
+import com.soturine.scanora.core.common.model.PdfPageSize
 import com.soturine.scanora.core.ui.localizedDescription
 import com.soturine.scanora.core.ui.localizedTitle
 import com.soturine.scanora.core.ui.component.EmptyStateCard
@@ -57,6 +58,7 @@ fun ExportScreen(
     state: ExportUiState,
     onSelectFormat: (ExportFormat) -> Unit,
     onSelectQuality: (PdfQuality) -> Unit,
+    onSelectPageSize: (PdfPageSize) -> Unit,
     onExport: () -> Unit,
     onShare: (List<ExportedFile>) -> Unit,
     onOpenFile: (ExportedFile) -> Unit,
@@ -179,6 +181,14 @@ fun ExportScreen(
                         title = stringResource(R.string.export_ready_title),
                         supportingText = pluralStringResource(R.plurals.export_success_message, state.exportedFiles.size, state.exportedFiles.size),
                     )
+                    if (state.exportedFiles.first().searchableTextIncluded) {
+                        Text(
+                            text = stringResource(R.string.export_searchable_pdf_ready),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(top = 8.dp),
+                        )
+                    }
                     FilledTonalButton(
                         modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                         onClick = { onOpenFile(state.exportedFiles.first()) },
@@ -331,6 +341,27 @@ fun ExportScreen(
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
+                                Text(
+                                    text = stringResource(R.string.export_page_size_section),
+                                    style = MaterialTheme.typography.titleSmall,
+                                )
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                ) {
+                                    PdfPageSize.entries.forEach { size ->
+                                        ExportChoiceButton(
+                                            modifier = Modifier.weight(1f),
+                                            title = when (size) {
+                                                PdfPageSize.AUTO -> stringResource(R.string.export_page_size_auto)
+                                                PdfPageSize.A4 -> "A4"
+                                                PdfPageSize.LETTER -> stringResource(R.string.export_page_size_letter)
+                                            },
+                                            selected = state.selectedPageSize == size,
+                                            onClick = { onSelectPageSize(size) },
+                                        )
+                                    }
+                                }
                             }
                         }
                     }

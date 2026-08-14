@@ -45,4 +45,8 @@
     <string name="export_type_pdf">PDF document</string>
     <string name="export_type_jpg">JPG image</string>
     <string name="export_type_png">PNG image</string>
+    <string name="export_page_size_section">Page size</string>
+    <string name="export_page_size_auto">Auto</string>
+    <string name="export_page_size_letter">Letter</string>
+    <string name="export_searchable_pdf_ready">Searchable text was included in the PDF.</string>
 </resources>

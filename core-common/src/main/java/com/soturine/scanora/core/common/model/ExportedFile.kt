@@ -7,4 +7,5 @@ data class ExportedFile(
     val sizeBytes: Long,
     val locationLabel: String,
     val pathHint: String? = null,
+    val searchableTextIncluded: Boolean = false,
 )

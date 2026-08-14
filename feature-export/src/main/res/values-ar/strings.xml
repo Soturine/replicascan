@@ -53,4 +53,8 @@
     <string name="export_type_pdf">وثائق PDF</string>
     <string name="export_type_jpg">صورة جبغ</string>
     <string name="export_type_png">صورة PNG</string>
+    <string name="export_page_size_section">حجم الصفحة</string>
+    <string name="export_page_size_auto">تلقائي</string>
+    <string name="export_page_size_letter">رسالة</string>
+    <string name="export_searchable_pdf_ready">يتضمن ملف PDF نصًا قابلاً للبحث.</string>
 </resources>

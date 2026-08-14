@@ -319,6 +319,7 @@ fun ScanoraNavHost(
                 state = state.value,
                 onSelectFormat = exportViewModel::selectFormat,
                 onSelectQuality = exportViewModel::selectQuality,
+                onSelectPageSize = exportViewModel::selectPageSize,
                 onExport = exportViewModel::export,
                 onShare = { files -> shareFiles(context, files) },
                 onOpenFile = { file -> openExportedFile(context, file) },

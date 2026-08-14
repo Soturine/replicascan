@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soturine.scanora.core.common.model.ExportFormat
 import com.soturine.scanora.core.common.model.PdfQuality
+import com.soturine.scanora.core.common.model.PdfPageSize
 import com.soturine.scanora.core.common.repository.ExportRepository
 import com.soturine.scanora.core.common.repository.ScanRepository
 import com.soturine.scanora.core.common.repository.UserPreferencesRepository
@@ -23,6 +24,7 @@ class ExportViewModel(
 ) : ViewModel() {
     private val selectedFormat = MutableStateFlow(ExportFormat.PDF)
     private val selectedQuality = MutableStateFlow<PdfQuality?>(null)
+    private val selectedPageSize = MutableStateFlow(PdfPageSize.AUTO)
     private val isExporting = MutableStateFlow(false)
     private val exportedFiles = MutableStateFlow(emptyList<com.soturine.scanora.core.common.model.ExportedFile>())
     private val errorMessage = MutableStateFlow<String?>(null)
@@ -30,8 +32,9 @@ class ExportViewModel(
     private val exportSelection = combine(
         selectedFormat,
         selectedQuality,
-    ) { format, qualityOverride ->
-        format to qualityOverride
+        selectedPageSize,
+    ) { format, qualityOverride, pageSize ->
+        Triple(format, qualityOverride, pageSize)
     }
 
     private val exportStatus = combine(
@@ -48,7 +51,7 @@ class ExportViewModel(
         exportSelection,
         exportStatus,
     ) { scan, preferences, selection, status ->
-        val (format, qualityOverride) = selection
+        val (format, qualityOverride, pageSize) = selection
         val (exporting, files, message) = status
         ExportUiState(
             scan = scan,
@@ -57,6 +60,7 @@ class ExportViewModel(
             isExporting = exporting,
             exportedFiles = files,
             errorMessage = message,
+            selectedPageSize = pageSize,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -74,6 +78,11 @@ class ExportViewModel(
         exportedFiles.value = emptyList()
     }
 
+    fun selectPageSize(pageSize: PdfPageSize) {
+        selectedPageSize.value = pageSize
+        exportedFiles.value = emptyList()
+    }
+
     fun export() {
         val scan = uiState.value.scan ?: return
         viewModelScope.launch {
@@ -87,6 +96,7 @@ class ExportViewModel(
                             exportRepository.exportPdf(
                                 scan = scan,
                                 quality = uiState.value.selectedQuality,
+                                pageSize = uiState.value.selectedPageSize,
                             ),
                         )
                     } else {

@@ -2,6 +2,12 @@ package com.soturine.scanora.core.data.export
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.pdf.PdfRenderer
+import android.net.Uri
+import android.os.Build
+import java.io.File
 import com.google.common.truth.Truth.assertThat
 import com.soturine.scanora.core.common.model.DocumentFilterType
 import com.soturine.scanora.core.common.model.DocumentQuad
@@ -16,6 +22,34 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DefaultExportRepositoryTest {
+    @Test
+    fun exportedPdfContainsSearchableOcrLayer() = runBlocking {
+        if (Build.VERSION.SDK_INT < 35) return@runBlocking
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val source = File(context.cacheDir, "searchable-source.png")
+        Bitmap.createBitmap(300, 400, Bitmap.Config.ARGB_8888).apply {
+            eraseColor(Color.WHITE)
+            source.outputStream().use { compress(Bitmap.CompressFormat.PNG, 100, it) }
+            recycle()
+        }
+        val page = ScanPage("page", "scan", 0, source.absolutePath, ocrText = "Invoice number 12345")
+        val scan = ScanDocument("scan", "Invoice", ScanMode.DOCUMENT, emptyList(), false, 1, 1, listOf(page), false)
+        val repository = DefaultExportRepository(context, PassthroughProcessingRepository)
+
+        val exported = repository.exportPdf(scan, PdfQuality.BALANCED)
+
+        context.contentResolver.openFileDescriptor(Uri.parse(exported.uri), "r")!!.use { descriptor ->
+            PdfRenderer(descriptor).use { renderer ->
+                renderer.openPage(0).use { pdfPage ->
+                    assertThat(pdfPage.searchText("Invoice")).isNotEmpty()
+                }
+            }
+        }
+        assertThat(exported.searchableTextIncluded).isTrue()
+        context.contentResolver.delete(Uri.parse(exported.uri), null, null)
+        source.delete()
+    }
+
     @Test
     fun unreadablePageFailsExportWithPageIdentity() = runBlocking {
         val repository = DefaultExportRepository(
