@@ -17,6 +17,7 @@ Recomendações:
 - use tags seguindo SemVer;
 - gere notas de release com base no `CHANGELOG.md`;
 - publique APK ou AAB apenas quando o pipeline de release estiver estabilizado.
+- quando um APK debug for anexado apenas para avaliação, identifique-o claramente como não assinado para loja e publique seu SHA-256.
 
 ## Play Store
 

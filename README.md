@@ -3,7 +3,7 @@
 ![Android](https://img.shields.io/badge/platform-Android-2E7D8C)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-23414B)
 ![Compose](https://img.shields.io/badge/Jetpack%20Compose-2026.03.00-DD8A2E)
-![Version](https://img.shields.io/badge/version-0.2.9-E95F0C)
+![Version](https://img.shields.io/badge/version-0.3.0-E95F0C)
 [![Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml)
 [![Deploy Pages](https://github.com/Soturine/scanora/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/pages.yml)
 
@@ -20,14 +20,15 @@ Site: https://soturine.github.io/scanora/
 - captura manual com `CameraX` e importação direta como fallback editável;
 - Home minimalista sem escolha obrigatória de tipo antes do scan;
 - onboarding arrastável, ícone do app e estados contextuais com a raposa mascote do Scanora;
-- interface em English, Português do Brasil, Español, Français, Italiano e العربية, com RTL real no árabe;
+- interface em 12 idiomas: English, Português do Brasil, Español, Français, Italiano, العربية, Deutsch, Bahasa Indonesia, हिन्दी, Türkçe, 日本語 e 한국어, com RTL real no árabe;
 - cópia das imagens de entrada para armazenamento interno antes de criar o lote local;
-- sugestão inicial de crop mais robusta para fotos inclinadas, galeria e fundos poluídos;
+- detector local de documento com perfis geral/caderno/recibo, confiança tipada, `NO_DOCUMENT` e fallback conservador;
 - reajuste automático do crop e editor manual mais confortável para acertos finos;
 - filtros locais recalibrados para documento, cinza, cor e recibo com menos risco de estourar a página;
 - pipeline de imagem unificado para preview, filtros, OCR e exportação derivarem da mesma página lógica;
-- OCR local com imagem preparada, trechos organizados, texto contínuo consolidado e `Copiar tudo` em destaque;
-- exportação em PDF, JPG e PNG com escolha progressiva entre PDF e Imagem;
+- OCR local por script (latino, devanágari, japonês e coreano), com readiness do modelo, estrutura, fingerprint e artefato persistido;
+- busca local por título, tags e OCR via Room FTS;
+- exportação em PDF pesquisável quando há OCR, JPG e PNG, com A4/Letter/Auto e escolha progressiva por formato;
 - pós-exportação com nome, tipo, tamanho, local salvo, abrir e compartilhar;
 - histórico local com título, tags, favoritos e busca.
 - banco sem migration destrutiva, schema versionado e lifecycle explícito dos arquivos privados;
@@ -91,7 +92,7 @@ Identidade do app:
 
 ## CI e Pages
 
-- O workflow [Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml) roda `check`, compila debug/release e valida o APK de testes instrumentados.
+- O workflow [Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml) roda `check`, compila debug/release e executa os testes instrumentados de Room, busca e PDF em emulador API 35.
 - CodeQL analisa Java/Kotlin e o setup Gradle valida o wrapper; Dependabot acompanha Gradle e GitHub Actions.
 - O site público é publicado a partir de `site/`.
 - Para o GitHub Pages funcionar no repositório publicado, ative em `Settings > Pages > Source: GitHub Actions`.
@@ -108,7 +109,7 @@ Política completa em [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
 
 ## Status
 
-`0.2.9` aproxima o produto do conceito e corrige a cadeia crítica: páginas sobrevivem a metadata/export, imagens passam por orientação EXIF canônica e a interface ganhou onboarding arrastável, contraste claro/escuro consistente e mascotes contextuais em PNG transparente.
+`0.3.0` transforma detecção, OCR, busca e exportação em um motor documental verificável: decisões de crop têm confiança explícita, OCR vira dado versionado e pesquisável, e o PDF pode carregar texto local sem alterar a aparência da página aprovada.
 
 ## Contribuir
 

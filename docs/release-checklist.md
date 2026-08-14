@@ -28,9 +28,9 @@
 ./gradlew assembleDebugAndroidTest
 ```
 
-- [ ] `python tools/check_localization.py` confirma paridade dos seis idiomas;
+- [ ] `python tools/check_localization.py` confirma chaves, plurais e placeholders nos 12 idiomas;
 - [ ] light/dark, landscape, fonte 200% e TalkBack foram revisados em aparelho ou emulador;
-- [ ] testes instrumentados/managed device executados quando houver ambiente;
+- [ ] `:core-data:connectedDebugAndroidTest` executado em API 35 para migration, FTS e PDF pesquisável;
 - [ ] smoke manual cobre captura, importação parcial, fallback, deleção, OCR, export e compartilhamento;
 - [ ] CI final concluiu sem findings ignorados.
 

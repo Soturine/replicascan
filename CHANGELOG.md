@@ -4,20 +4,33 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-14
+
 ### Added
 
+- Motor de detecção com resultado tipado, perfis geral/caderno/recibo, confiança, motivos de falha e `NO_DOCUMENT`.
+- Métricas deterministas para IoU, erro de cantos, falsos positivos e latência.
+- OCR por script para latino, devanágari, japonês e coreano, com readiness e artefatos estruturados persistidos.
+- Room FTS para pesquisa combinada em título, tags e OCR, com migration explícita 1→2.
+- PDF pesquisável quando existe OCR e seleção de página Auto, A4 ou Letter.
+- Alemão, indonésio, hindi, turco, japonês e coreano, totalizando 12 idiomas de interface.
 - Árabe como sexto idioma do app, com seleção por aplicativo e espelhamento RTL nativo.
 - Novas poses PNG transparentes da raposa para OCR, estado vazio e atenção/erro.
 - Teste instrumental do gesto horizontal entre páginas do onboarding.
 
 ### Changed
 
+- Crop informa confiança baixa/ausência de documento e mantém full-page apenas como ação explícita.
+- Exportação grava diretamente no destino, processa páginas sequencialmente e diferencia Compacto/Equilibrado/Alta qualidade por resolução.
+- Filtros ganharam comparação direta entre original corrigido e resultado.
 - Onboarding ganhou composição responsiva em card, safe insets, contraste explícito e CTA iconográfico.
 - Home, câmera, revisão, crop, filtros, OCR, histórico, configurações e exportação receberam hierarquia e ações mais próximas do conceito visual.
 - Estados de processamento e conclusão agora usam mascotes contextuais e animações leves que respeitam a escala do sistema.
 
 ### Fixed
 
+- Reordenação no Room deixou de depender de replace destrutivo e ganhou unicidade por índice.
+- Exportação de imagens remove saídas parciais se qualquer página falhar.
 - Cor de conteúdo raiz agora acompanha o tema, eliminando títulos escuros invisíveis no onboarding noturno.
 - Gerador de locales não sobrescreve mais o catálogo pt-BR ao criar um novo idioma.
 - Rótulos de seleção e tipos de exportação deixaram de ficar fixos em português no Kotlin.

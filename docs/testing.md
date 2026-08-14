@@ -5,11 +5,12 @@
 - validação de nomes de documentos;
 - formatação de datas em pt-BR;
 - busca por título e tags;
+- busca FTS por título, tags e OCR após migration 1→2;
 - construção de nomes de arquivo para exportação;
 - pós-processamento de OCR: ordenação visual, agrupamento em parágrafos, descarte de ruído e texto consolidado;
 - regras puras do pipeline de imagem: normalização de rotação/crop, chaves de preview/OCR/exportação, seleção de fonte derivada e invalidação de cache visual;
 - ownership/path traversal, importação parcial, rollback, orphan cleanup e captura não concorrente;
-- testes instrumentados de Room para CRUD/cascade/ordem, deleção física e export fail-fast;
+- testes instrumentados de Room para CRUD/cascade/ordem, migration, FTS, deleção física, export fail-fast e PDF pesquisável em API 35;
 - regressão de metadata/save que preserva três páginas e valida reordenação estrita;
 - teste instrumentado mínimo de inicialização da UI;
 - schemas Room versionados em `core-data/schemas`.
@@ -18,7 +19,7 @@
 
 - cobertura mais forte do pipeline de imagem;
 - testes de navegação e fluxos completos com Compose;
-- cenários instrumentados para OCR e exportação;
+- execução física da matriz completa de scripts OCR e leitores externos de PDF;
 - QA visual em aparelho real com publicação das capturas oficiais.
 
 ## Cenários de OCR para QA manual

@@ -51,12 +51,13 @@ O app usa duas estratégias complementares:
 
 - `ML Kit Document Scanner`
   Caminho principal de captura/importação rápida quando disponível, com experiência guiada e menor atrito.
-- Pipeline local em `DefaultDocumentProcessingRepository`
+- Pipeline local em `DefaultDocumentProcessingRepository` e `HeuristicDocumentDetector`
   Voltado para captura manual e importação da galeria, com:
   - `sourceUri` como fonte canônica da página;
   - `processedUri` tratado apenas como derivado/cache visual;
   - chave pura de pipeline em `core-common` para versionar finalidade, crop, rotação, filtro e tamanho de saída;
-  - estimativa heurística de quadrilátero por bordas, brilho e amostras laterais;
+  - candidatos de quadrilátero avaliados por geometria, contraste e perfil (`GENERAL`, `NOTEBOOK`, `RECEIPT`);
+  - resultado tipado com confiança, `NO_DOCUMENT` e fallback conservador sem fingir detecção bem-sucedida;
   - warp de perspectiva com `Matrix.setPolyToPoly`;
   - ordem consistente de transformação: fonte, crop/perspectiva, rotação do usuário e filtro ou preparação de OCR;
   - normalização local de iluminação;
@@ -66,21 +67,21 @@ O app usa duas estratégias complementares:
 
 Antes de criar um lote no Room, imagens vindas do scanner rápido, galeria ou CameraX são copiadas para `filesDir/scan-sources`. Assim preview, filtros, OCR e exportação não dependem de URIs temporárias fornecidas por outro app ou pelo scanner do Google.
 
-Desde a `v0.2.7`, `ScanFileStore` faz a cópia atômica, valida o namespace gerenciado, executa rollback e remove fontes/derivados junto da deleção no repositório. O schema Room permanece na versão 1, agora exportada, e a configuração de produção não aceita migration destrutiva.
+Desde a `v0.2.7`, `ScanFileStore` faz a cópia atômica, valida o namespace gerenciado, executa rollback e remove fontes/derivados junto da deleção no repositório. Na v0.3.0, o schema Room passou à versão 2 por migration explícita, com unicidade de ordem, artefatos OCR e tabela virtual FTS. A configuração de produção não aceita migration destrutiva.
 
 Derivados em `cacheDir/processed` são descartáveis. O carregador visual tenta a fonte canônica quando o derivado falha e encerra em erro discreto se nenhuma entrada puder ser aberta. O worker usa grace period para fontes órfãs e nunca toca em export final do usuário.
 
 ## OCR
 
-O OCR local continua em ML Kit Text Recognition, mas a imagem enviada para reconhecimento não depende de thumbnail nem de `processedUri` salvo. A base atual deriva uma versão específica para leitura a partir de `sourceUri`, crop e rotação da página, preserva bounding boxes de blocos/linhas e aplica um pós-processamento puro em `core-common`.
+O OCR local usa clientes reutilizáveis do ML Kit Text Recognition para escrita latina, devanágari, japonesa e coreana. A imagem enviada para reconhecimento não depende de thumbnail nem de `processedUri` salvo. A base deriva uma versão específica a partir de `sourceUri`, crop e rotação, registra engine/versão/script/readiness/fingerprint e preserva confiança e bounds de blocos, linhas e elementos.
 
-Esse pós-processamento ordena linhas por posição visual, agrupa linhas próximas em parágrafos, descarta ruídos pequenos quando são claramente inúteis e gera um texto consolidado para `Copiar tudo`. A UI de OCR não precisa renderizar o resultado bruto do ML Kit como experiência principal; ela consome trechos organizados, qualidade simples da leitura e o texto contínuo consolidado.
+Esse pós-processamento ordena linhas por posição visual, agrupa linhas próximas em parágrafos, descarta ruídos pequenos quando são claramente inúteis e gera texto consolidado. O artefato fica persistido por página e alimenta tanto `Copiar tudo` quanto a busca FTS. Idioma de interface e script OCR são decisões independentes.
 
 ## Exportação
 
-PDF, JPG e PNG continuam sendo gerados localmente. Em Android 10+ a saída vai para `Downloads/Scanora`, enquanto versões anteriores usam o armazenamento do app. Quando há crop, rotação, filtro ou cache processado, a exportação rederiva a página a partir de `sourceUri` em vez de usar `displayUri` como fonte final. A tela escolhe primeiro entre `PDF` e `Imagem`, mostra apenas opções relevantes ao formato atual e devolve metadados para a UI mostrar nome, tipo, tamanho, local salvo, abrir e compartilhar.
+PDF, JPG e PNG continuam sendo gerados localmente. Em Android 10+ a saída vai para `Downloads/Scanora`, enquanto versões anteriores usam o armazenamento do app. Quando há crop, rotação ou filtro, a exportação rederiva a página a partir de `sourceUri`. PDF aceita página automática, A4 ou Letter e inclui uma camada de texto pesquisável quando existe OCR persistido; a imagem opaca aprovada continua definindo a aparência visual.
 
-Se uma página não puder ser renderizada, a exportação falha com índice/ID e não publica sucesso incompleto. A exportação de imagens publica uma página por vez. O PDF seguirá recebendo sizing e streaming medidos.
+Se uma página não puder ser renderizada, a exportação falha com índice/ID e não publica sucesso incompleto. Imagens são escritas uma por vez e saídas parciais são removidas. O PDF escreve diretamente no destino, sem `ByteArrayOutputStream` ou roundtrip JPEG, e limita a resolução incorporada conforme a qualidade escolhida.
 
 ## Privacidade de plataforma
 

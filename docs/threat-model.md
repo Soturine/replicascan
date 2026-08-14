@@ -19,7 +19,7 @@ Este documento descreve proteções atuais, não uma certificação de seguranç
 | Cache expirado quebrar documento | fonte canônica separada e fallback visual | fonte corrompida ainda produz estado de erro |
 | URI ou nome malicioso | leitura por stream, nome UUID, extensão limitada e ownership por caminho canônico | provider externo pode ficar indisponível durante a importação |
 | Perda do histórico em upgrade | sem migration destrutiva; schema exportado | uma migration ausente impede abrir até correção, sem apagar dados |
-| Perda silenciosa de página | importação parcial reportada; export fail-fast identifica página | reforma de memória/streaming da exportação fica para `0.2.9` |
+| Perda silenciosa de página | importação parcial reportada; export fail-fast identifica página; imagens parciais são removidas | validar lotes grandes e interrupção por falta de espaço em aparelho real |
 | Conteúdo sensível em logs | código não registra OCR, bytes nem URIs completas | relatórios de crash de terceiros não fazem parte do app atual |
 
 ## Componentes Google
