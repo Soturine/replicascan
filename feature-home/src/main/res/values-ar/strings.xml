@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">يبدأ</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">مسح. تنظم. بسّط.</string>
+    <string name="home_greeting">مرحبًا!</string>
+    <string name="home_welcome">من الجيد رؤيتك.</string>
+    <string name="home_start_hint">انقر للبدء.</string>
+    <string name="home_import_gallery_action">استيراد من المعرض</string>
+    <string name="home_hero_title">المسح دون تحضير أي شيء.</string>
+    <string name="home_hero_subtitle">يكتشف الماسح الضوئي السريع الحواف، ويقبل المعرض عندما يكون متاحًا، ثم يفتح المراجعة.</string>
+    <string name="home_quick_scan_action">مسح</string>
+    <string name="home_manual_scan_action">التعديل اليدوي</string>
+    <string name="home_import_action">يستورد</string>
+    <string name="home_capture_helper">ويظل التعديل اليدوي والاستيراد المباشر كإجراء احتياطي قابل للتحرير.</string>
+    <string name="home_quick_scan_unavailable">الماسح الضوئي السريع غير متوفر على هذا الجهاز.</string>
+    <string name="home_recent_section">مؤخرًا</string>
+    <string name="home_recent_empty_supporting">تظهر أحدث عمليات الفحص هنا.</string>
+    <string name="home_recent_open_all">شاهد الكل</string>
+    <string name="home_empty_title">تاريخك يبدأ هنا</string>
+    <string name="home_empty_message">استخدم المسح الضوئي لإنشاء الدفعة الأولى. لا يزال التعديل اليدوي متاحًا عندما تحتاج إليه.</string>
+    <string name="home_recent_updated_at">%1$s • تم التحديث إلى %2$s</string>
+    <string name="home_history">عمليات المسح الخاصة بي</string>
+    <string name="home_settings">إعدادات</string>
+    <string name="home_badge_favorite">مفضل</string>
+    <string name="home_badge_draft">رسم</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="zero">لا توجد دفعات في السجل المحلي (%1$d).</item>
+        <item quantity="one">توجد دفعة واحدة في السجل المحلي (%1$d).</item>
+        <item quantity="two">توجد دفعتان في السجل المحلي (%1$d).</item>
+        <item quantity="few">توجد %1$d دفعات في السجل المحلي.</item>
+        <item quantity="many">توجد %1$d دفعة في السجل المحلي.</item>
+        <item quantity="other">توجد %1$d دفعة في السجل المحلي.</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="zero">لا صفحات (%1$d)</item>
+        <item quantity="one">صفحة واحدة (%1$d)</item>
+        <item quantity="two">صفحتان (%1$d)</item>
+        <item quantity="few">%1$d صفحات</item>
+        <item quantity="many">%1$d صفحة</item>
+        <item quantity="other">%1$d صفحة</item>
+    </plurals>
+</resources>

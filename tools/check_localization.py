@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = ["app", "core-ui", "feature-camera", "feature-editor", "feature-export", "feature-history", "feature-home", "feature-ocr", "feature-settings"]
-LOCALES = ["values", "values-pt-rBR", "values-es", "values-fr", "values-it"]
+LOCALES = ["values", "values-pt-rBR", "values-es", "values-fr", "values-it", "values-ar"]
 PLACEHOLDER = re.compile(r"%(?:\d+\$)?[dsf]")
 
 def catalog(path):
@@ -32,10 +32,11 @@ for module in MODULES:
             continue
         for key, values in entries.items():
             base_values = catalogs["values"][key]
-            base_tokens = sorted(token for value in base_values for token in PLACEHOLDER.findall(value))
-            locale_tokens = sorted(token for value in values for token in PLACEHOLDER.findall(value))
-            if base_tokens != locale_tokens:
-                errors.append(f"{module}/{locale}/{key}: placeholder mismatch {base_tokens} != {locale_tokens}")
+            base_tokens = sorted(set(token for value in base_values for token in PLACEHOLDER.findall(value)))
+            for value in values:
+                locale_tokens = sorted(set(PLACEHOLDER.findall(value)))
+                if base_tokens != locale_tokens:
+                    errors.append(f"{module}/{locale}/{key}: placeholder mismatch {base_tokens} != {locale_tokens}")
             if any(not value.strip() for value in values):
                 errors.append(f"{module}/{locale}/{key}: blank translation")
             if locale in {"values-fr", "values-it"} and any("'" in value.replace("\\'", "") for value in values):
@@ -44,4 +45,4 @@ for module in MODULES:
 if errors:
     print("\n".join(errors))
     sys.exit(1)
-print("Localization catalogs complete: 9 modules x 5 locales")
+print("Localization catalogs complete: 9 modules x 6 locales")

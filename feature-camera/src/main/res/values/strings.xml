@@ -9,4 +9,5 @@
     <string name="camera_permission_title">Camera permission required</string>
     <string name="camera_permission_message">Manual camera uses CameraX to capture the page before tweaking and exporting.</string>
     <string name="camera_permission_action">Allow camera</string>
+    <string name="camera_frame_hint">Fit the whole document inside the frame.</string>
 </resources>

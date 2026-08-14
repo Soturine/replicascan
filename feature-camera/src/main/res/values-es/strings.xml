@@ -9,4 +9,5 @@
     <string name="camera_permission_title">Se requiere permiso de la cámara</string>
     <string name="camera_permission_message">La cámara manual utiliza CameraX para capturar la página antes de modificarla y exportarla.</string>
     <string name="camera_permission_action">Permitir cámara</string>
+    <string name="camera_frame_hint">Encuadra todo el documento dentro del marco.</string>
 </resources>

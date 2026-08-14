@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="export_title">يصدّر</string>
+    <string name="export_back">سأعود</string>
+    <string name="export_eyebrow">الخروج النهائي</string>
+    <string name="export_missing_title">لا شيء للتصدير</string>
+    <string name="export_missing_message">افتح دفعة صالحة قبل إنشاء الملفات.</string>
+    <plurals name="export_summary">
+        <item quantity="zero">لا صفحات جاهزة للتصدير (%1$d).</item>
+        <item quantity="one">صفحة واحدة جاهزة للتصدير (%1$d).</item>
+        <item quantity="two">صفحتان جاهزتان للتصدير (%1$d).</item>
+        <item quantity="few">%1$d صفحات جاهزة للتصدير.</item>
+        <item quantity="many">%1$d صفحة جاهزة للتصدير.</item>
+        <item quantity="other">%1$d صفحة جاهزة للتصدير.</item>
+    </plurals>
+    <string name="export_local_notice">يقوم Scanora بإنشاء كل شيء على الجهاز نفسه ويظهر مكان حفظ الملف بمجرد الانتهاء منه.</string>
+    <string name="export_format_eyebrow">شكل</string>
+    <string name="export_format_section">كيف يجب أن تخرج هذه الدفعة؟</string>
+    <string name="export_format_supporting">حدد كيفية خروج الدفعة من الهاتف الخليوي.</string>
+    <string name="export_kind_pdf">PDF</string>
+    <string name="export_kind_image">صورة</string>
+    <string name="export_image_format_section">نوع الصورة</string>
+    <string name="export_image_format_supporting">اختر JPG لملف أخف أو PNG للحفاظ على مزيد من التفاصيل.</string>
+    <string name="export_quality_eyebrow">جودة</string>
+    <string name="export_quality_section">جودة PDF</string>
+    <string name="export_quality_supporting">تظهر الجودة فقط عندما يكون الإخراج المحدد PDF.</string>
+    <string name="export_processing_message">توليد الملفات على الجهاز . قد يستغرق هذا بضع ثوان.</string>
+    <string name="export_action">حفظ الملفات</string>
+    <string name="export_action_pdf">توليد قوات الدفاع الشعبي</string>
+    <string name="export_action_images">حفظ الصور</string>
+    <string name="export_ready_eyebrow">ملفات جاهزة</string>
+    <string name="export_ready_title">اكتمل التصدير</string>
+    <plurals name="export_success_message">
+        <item quantity="zero">لا ملفات جاهزة للفتح أو المشاركة (%1$d).</item>
+        <item quantity="one">ملف واحد جاهز للفتح أو المشاركة (%1$d).</item>
+        <item quantity="two">ملفان جاهزان للفتح أو المشاركة (%1$d).</item>
+        <item quantity="few">%1$d ملفات جاهزة للفتح أو المشاركة.</item>
+        <item quantity="many">%1$d ملفًا جاهزًا للفتح أو المشاركة.</item>
+        <item quantity="other">%1$d ملف جاهز للفتح أو المشاركة.</item>
+    </plurals>
+    <string name="export_success_snackbar_single">تم حفظ الملف.</string>
+    <string name="export_success_snackbar_multiple">%1$d الملفات المحفوظة.</string>
+    <string name="export_share_action">مشاركة الملفات</string>
+    <string name="export_share_file_action">للمشاركة</string>
+    <string name="export_location_label">تم الحفظ في: %1$s</string>
+    <string name="export_file_type">يكتب</string>
+    <string name="export_file_size">مقاس</string>
+    <string name="export_file_location">تم الحفظ في</string>
+    <string name="export_file_path">طريق</string>
+    <string name="export_open_file_action">افتح الملف</string>
+    <string name="export_kind_pdf_description">ينشئ ملفًا واحدًا للأرشفة أو الإرسال أو الطباعة.</string>
+    <string name="export_kind_image_description">يحفظ كل صفحة كصورة منفصلة.</string>
+    <string name="export_type_pdf">وثائق PDF</string>
+    <string name="export_type_jpg">صورة جبغ</string>
+    <string name="export_type_png">صورة PNG</string>
+</resources>

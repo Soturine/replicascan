@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mode_notebook">دفتر / الكلية</string>
+    <string name="mode_notebook_description">للنشرات والجداول وصفحات الدراسة.</string>
+    <string name="mode_document">الوثيقة/العقد</string>
+    <string name="mode_document_description">يعطي الأولوية للمحاذاة والنص القابل للقراءة.</string>
+    <string name="mode_receipt">إيصال</string>
+    <string name="mode_receipt_description">يسلط الضوء على الطباعة الصغيرة والمستندات المدمجة.</string>
+    <string name="filter_original">أصل مصحح</string>
+    <string name="filter_original_description">يحافظ على الألوان الطبيعية ويصحح المنظور.</string>
+    <string name="filter_bw">وثيقة بالأبيض والأسود</string>
+    <string name="filter_bw_description">نص حاد للطباعة والأرشفة.</string>
+    <string name="filter_gray">وثيقة رمادية</string>
+    <string name="filter_gray_description">يقلل من تشويش اللون دون تباين شديد.</string>
+    <string name="filter_color">اللون المحسن</string>
+    <string name="filter_color_description">يحسن الألوان وحدة الملاحظات والرسوم البيانية.</string>
+    <string name="filter_receipt">استلام / التباين العالي</string>
+    <string name="filter_receipt_description">يقوي المطبوعات الضعيفة على الإيصالات.</string>
+    <string name="quality_compact">مدمج</string>
+    <string name="quality_compact_description">ملف أصغر للمشاركة السريعة.</string>
+    <string name="quality_balanced">متوازن</string>
+    <string name="quality_balanced_description">توازن جيد بين الحدة والحجم.</string>
+    <string name="quality_high">جودة عالية</string>
+    <string name="quality_high_description">مزيد من التفاصيل في ملف أكبر.</string>
+    <string name="mascot_processing">المعالجة على جهازك</string>
+    <string name="mascot_success">كل شيء جاهز</string>
+    <string name="option_selected">مختارة</string>
+</resources>

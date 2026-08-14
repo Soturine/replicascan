@@ -42,4 +42,7 @@
     <string name="export_open_file_action">Ouvrir le fichier</string>
     <string name="export_kind_pdf_description">Crée un fichier unique à archiver, envoyer ou imprimer.</string>
     <string name="export_kind_image_description">Enregistre chaque page dans une image séparée.</string>
+    <string name="export_type_pdf">Document PDF</string>
+    <string name="export_type_jpg">Image JPG</string>
+    <string name="export_type_png">Image PNG</string>
 </resources>

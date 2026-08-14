@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.soturine.scanora.core.common.model.*
 import com.soturine.scanora.core.ui.component.ScanoraMascot
 import com.soturine.scanora.core.ui.component.ScanoraMascotState
+import com.soturine.scanora.core.ui.component.ScanoraPrimaryButton
+import com.soturine.scanora.core.ui.component.SectionHeader
 import com.soturine.scanora.core.ui.localizedTitle
 
 private enum class Picker { THEME, LANGUAGE, MODE, PDF }
@@ -40,6 +42,11 @@ fun SettingsScreen(
             Modifier.fillMaxSize().padding(inset).verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            SectionHeader(
+                eyebrow = stringResource(R.string.settings_eyebrow),
+                title = stringResource(R.string.settings_heading),
+                supportingText = stringResource(R.string.settings_supporting),
+            )
             Group(stringResource(R.string.settings_theme_section)) {
                 PreferenceRow(Icons.Outlined.Palette, stringResource(R.string.settings_theme_section), state.preferences.themePreference.label()) { picker = Picker.THEME }
                 PreferenceRow(Icons.Outlined.Language, stringResource(R.string.settings_language_section), languageLabel(currentLanguageTag)) { picker = Picker.LANGUAGE }
@@ -58,21 +65,31 @@ fun SettingsScreen(
     }
     when (picker) {
         Picker.THEME -> ChoiceDialog(stringResource(R.string.settings_theme_section), AppThemePreference.entries.map { it to it.label() }, state.preferences.themePreference, { onThemeSelected(it); picker = null }) { picker = null }
-        Picker.LANGUAGE -> ChoiceDialog(stringResource(R.string.settings_language_section), listOf("", "pt-BR", "en", "es", "fr", "it").map { it to languageLabel(it) }, currentLanguageTag, { onLanguageSelected(it); picker = null }) { picker = null }
+        Picker.LANGUAGE -> ChoiceDialog(stringResource(R.string.settings_language_section), listOf("", "pt-BR", "en", "es", "fr", "it", "ar").map { it to languageLabel(it) }, currentLanguageTag, { onLanguageSelected(it); picker = null }) { picker = null }
         Picker.MODE -> ChoiceDialog(stringResource(R.string.settings_default_mode_section), ScanMode.entries.map { it to it.localizedTitle() }, state.preferences.defaultScanMode, { onDefaultModeSelected(it); picker = null }) { picker = null }
         Picker.PDF -> ChoiceDialog(stringResource(R.string.settings_pdf_quality_section), PdfQuality.entries.map { it to it.localizedTitle() }, state.preferences.defaultPdfQuality, { onPdfQualitySelected(it); picker = null }) { picker = null }
         null -> Unit
     }
 }
 
-@Composable private fun Group(title: String, content: @Composable () -> Unit) = Column(Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
+@Composable private fun Group(title: String, content: @Composable () -> Unit) = Column(Modifier.fillMaxWidth().padding(bottom = 10.dp)) {
     Text(title, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(vertical = 8.dp))
-    content()
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.72f)),
+        tonalElevation = 1.dp,
+    ) {
+        Column { content() }
+    }
 }
 
 @Composable private fun PreferenceRow(icon: ImageVector, title: String, value: String?, onClick: () -> Unit) {
-    Row(Modifier.fillMaxWidth().clickable(onClick = onClick).padding(vertical = 14.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-        Icon(icon, null, tint = MaterialTheme.colorScheme.secondary)
+    Row(Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+        Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.secondaryContainer) {
+            Icon(icon, null, tint = MaterialTheme.colorScheme.onSecondaryContainer, modifier = Modifier.padding(9.dp).size(22.dp))
+        }
         Column(Modifier.weight(1f)) {
             Text(title, style = MaterialTheme.typography.titleMedium)
             value?.let { Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) }
@@ -85,7 +102,7 @@ fun SettingsScreen(
 @Composable private fun <T> ChoiceDialog(title: String, choices: List<Pair<T, String>>, selected: T, onSelect: (T) -> Unit, onDismiss: () -> Unit) {
     AlertDialog(onDismissRequest = onDismiss, title = { Text(title) }, text = { Column { choices.forEach { (choice, label) ->
         Row(Modifier.fillMaxWidth().clickable { onSelect(choice) }.padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-            RadioButton(selected = choice == selected, onClick = { onSelect(choice) }); Text(label, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(start = 8.dp))
+            RadioButton(selected = choice == selected, onClick = { onSelect(choice) }); Text(label, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(horizontal = 8.dp))
         }
     } } }, confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.ok)) } })
 }
@@ -93,10 +110,21 @@ fun SettingsScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable fun AboutScreen(onOpenPrivacyPolicy: () -> Unit, modifier: Modifier = Modifier) {
     Scaffold(modifier = modifier.fillMaxSize(), topBar = { TopAppBar(title = { Text(stringResource(R.string.settings_about_title)) }) }) { inset ->
-        Column(Modifier.fillMaxSize().padding(inset).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(18.dp)) {
+        Column(Modifier.fillMaxSize().padding(inset).verticalScroll(rememberScrollState()).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(18.dp)) {
             ScanoraMascot(ScanoraMascotState.Welcome, size = 180.dp)
-            Text(stringResource(R.string.settings_about_body), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Button(onClick = onOpenPrivacyPolicy, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.settings_open_privacy)) }
+            Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)) {
+                Text(
+                    stringResource(R.string.settings_about_body),
+                    modifier = Modifier.padding(20.dp),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            ScanoraPrimaryButton(
+                text = stringResource(R.string.settings_open_privacy),
+                onClick = onOpenPrivacyPolicy,
+                icon = { Icon(Icons.Outlined.OpenInNew, null); Spacer(Modifier.width(8.dp)) },
+            )
         }
     }
 }
@@ -106,5 +134,5 @@ fun SettingsScreen(
 })
 
 @Composable private fun languageLabel(tag: String): String = stringResource(when (tag) {
-    "pt-BR" -> R.string.settings_language_portuguese; "en" -> R.string.settings_language_english; "es" -> R.string.settings_language_spanish; "fr" -> R.string.settings_language_french; "it" -> R.string.settings_language_italian; else -> R.string.settings_language_system
+    "pt-BR" -> R.string.settings_language_portuguese; "en" -> R.string.settings_language_english; "es" -> R.string.settings_language_spanish; "fr" -> R.string.settings_language_french; "it" -> R.string.settings_language_italian; "ar" -> R.string.settings_language_arabic; else -> R.string.settings_language_system
 })

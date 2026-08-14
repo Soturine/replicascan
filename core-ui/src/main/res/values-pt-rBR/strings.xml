@@ -12,4 +12,5 @@
     <string name="quality_balanced">Equilibrado</string><string name="quality_balanced_description">Bom equilíbrio entre nitidez e tamanho.</string>
     <string name="quality_high">Alta qualidade</string><string name="quality_high_description">Mais detalhes em um arquivo maior.</string>
     <string name="mascot_processing">Processando no seu aparelho</string><string name="mascot_success">Tudo pronto</string>
+    <string name="option_selected">Selecionado</string>
 </resources>

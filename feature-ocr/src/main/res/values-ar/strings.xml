@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ocr_title">OCR</string>
+    <string name="ocr_back">سأعود</string>
+    <string name="ocr_eyebrow">القراءة المحلية</string>
+    <string name="ocr_missing_title">الصفحة غير متاحة</string>
+    <string name="ocr_missing_message">افتح صفحة صالحة للتعرف على النص.</string>
+    <string name="ocr_processing">قراءة النص…</string>
+    <string name="ocr_processing_detail">تحضير الصفحة وتنظيم النتيجة.</string>
+    <string name="ocr_result_title">نص جاهز</string>
+    <plurals name="ocr_supporting">
+        <item quantity="zero">لا مقاطع منظّمة (%1$d).</item>
+        <item quantity="one">مقطع واحد منظّم (%1$d).</item>
+        <item quantity="two">مقطعان منظّمان (%1$d).</item>
+        <item quantity="few">%1$d مقاطع منظّمة.</item>
+        <item quantity="many">%1$d مقطعًا منظّمًا.</item>
+        <item quantity="other">%1$d مقطع منظّم.</item>
+    </plurals>
+    <string name="ocr_weak_title">قراءة جزئية</string>
+    <string name="ocr_weak_text">لقد وجدنا القليل من النص المفيد في هذه الصفحة.</string>
+    <string name="ocr_weak_hint">إذا كانت النتيجة تبدو ضعيفة، فاضبط الاقتصاص أو جرب الماسح الضوئي السريع.</string>
+    <string name="ocr_empty_title">لا يوجد نص مفيد</string>
+    <string name="ocr_empty_text">حاول ضبط الاقتصاص أو تحسين الإضاءة أو استخدام الماسح الضوئي السريع.</string>
+    <string name="ocr_copy">نسخ النص</string>
+    <string name="ocr_copy_all">انسخ الكل</string>
+    <string name="ocr_copy_excerpt">نسخ مقتطف</string>
+    <string name="ocr_copy_success">تم نسخ النص.</string>
+    <string name="ocr_retry">اقرأ مرة أخرى</string>
+    <string name="ocr_view_paragraphs">مقتطفات</string>
+    <string name="ocr_view_continuous">نص مستمر</string>
+    <string name="ocr_paragraph_label">مقتطفات %1$d</string>
+    <string name="ocr_continuous_title">النص الموحد</string>
+</resources>

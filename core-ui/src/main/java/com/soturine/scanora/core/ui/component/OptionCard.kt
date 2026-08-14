@@ -21,6 +21,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.soturine.scanora.core.ui.R
 import com.soturine.scanora.core.ui.theme.ScanoraSizes
 
 @Composable
@@ -31,6 +33,7 @@ fun OptionCard(
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     badge: String? = null,
+    selectedLabel: String? = null,
     enabled: Boolean = true,
 ) {
     Card(
@@ -86,7 +89,7 @@ fun OptionCard(
                             modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
                         ) {
                             Text(
-                                text = badge ?: "Selecionado",
+                                text = badge ?: selectedLabel ?: stringResource(R.string.option_selected),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = if (selected) {
                                     MaterialTheme.colorScheme.onPrimaryContainer

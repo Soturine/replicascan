@@ -20,6 +20,7 @@
     <string name="settings_language_spanish">Español</string>
     <string name="settings_language_french">Français</string>
     <string name="settings_language_italian">Italiano</string>
+    <string name="settings_language_arabic">العربية</string>
     <string name="settings_default_mode_section">Standard manual mode</string>
     <string name="settings_mode_supporting">Used only in manual adjustment and direct import. The fast scanner remains universal.</string>
     <string name="settings_pdf_quality_section">Standard PDF quality</string>

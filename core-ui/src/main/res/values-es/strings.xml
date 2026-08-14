@@ -24,4 +24,5 @@
     <string name="quality_high_description">Más detalles en un archivo más grande.</string>
     <string name="mascot_processing">Procesamiento en su dispositivo</string>
     <string name="mascot_success">Todo listo</string>
+    <string name="option_selected">Seleccionado</string>
 </resources>

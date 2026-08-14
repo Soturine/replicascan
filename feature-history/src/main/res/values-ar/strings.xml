@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="history_title">عمليات المسح الخاصة بي</string>
+    <string name="history_eyebrow">التاريخ المحلي</string>
+    <string name="history_heading">المستندات المحفوظة الخاصة بك</string>
+    <string name="history_supporting">تم العثور على مجموعة (مجموعات) %1$d في البحث الحالي.</string>
+    <string name="history_supporting_empty">كل شيء تم حفظه محليًا يظهر هنا مع البحث حسب العنوان والعلامة.</string>
+    <string name="history_search_label">عمليات مسح البحث</string>
+    <string name="history_search_placeholder">العنوان أو العلامة أو نوع الدفعة</string>
+    <string name="history_empty_title">لم يتم حفظ أي عمليات مسح حتى الآن</string>
+    <string name="history_empty_message">بعد المراجعة أو التصدير، تظهر دفعاتك هنا لإعادة فتحها أو وضعها في المفضلة أو تصديرها مرة أخرى.</string>
+    <string name="history_subtitle">صفحة (صفحات) %1$d • تم التحديث على %2$s</string>
+    <string name="history_badge_favorite">مفضل</string>
+    <string name="history_badge_draft">رسم</string>
+    <string name="history_detail_missing_title">لم يتم العثور على المسح الضوئي</string>
+    <string name="history_detail_missing_message">ربما تمت إزالة هذه الدفعة أو لم يتم تحميلها بعد.</string>
+    <string name="history_detail_eyebrow">تفاصيل الكثير</string>
+    <string name="history_detail_meta">صفحة (صفحات) %1$d • تم آخر تحديث على %2$s</string>
+    <string name="history_detail_draft">الكثير لا يزال في المسودة</string>
+    <string name="history_detail_saved">جاهز لإعادة الفتح أو التصدير أو وضع إشارة مرجعية</string>
+    <string name="history_add_favorite">ضع علامة على المفضلة</string>
+    <string name="history_remove_favorite">إزالة المفضلة</string>
+    <string name="history_open_review">العودة إلى المراجعة</string>
+    <string name="history_open_export">يصدّر</string>
+    <string name="history_pages_eyebrow">الصفحات</string>
+    <string name="history_pages_section">معاينة الدفعة</string>
+    <string name="history_pages_supporting">اضغط على الصفحة لفتح النص الذي تم التعرف عليه.</string>
+    <string name="history_page_title">صفحة %1$d</string>
+    <string name="history_page_overline">المعاينة جاهزة</string>
+    <string name="history_page_badge_ocr">تم حفظ التعرف الضوئي على الحروف</string>
+    <string name="history_delete_scan">احذف هذا الفحص</string>
+</resources>

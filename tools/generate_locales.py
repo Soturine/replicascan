@@ -5,6 +5,7 @@ core-ui catalogs already use English as the unqualified fallback.
 """
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+import argparse
 import json
 import re
 import urllib.parse
@@ -13,7 +14,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = ["app", "core-ui", "feature-camera", "feature-editor", "feature-export", "feature-history", "feature-home", "feature-ocr", "feature-settings"]
-TARGETS = {"en": "values", "es": "values-es", "fr": "values-fr", "it": "values-it"}
+TARGETS = {"en": "values", "es": "values-es", "fr": "values-fr", "it": "values-it", "ar": "values-ar"}
 TOKEN = re.compile(r"%(?:\d+\$)?[dsf]")
 
 def translate(text: str, target: str) -> str:
@@ -48,20 +49,18 @@ def write(tree, path):
     tree.write(path, encoding="utf-8", xml_declaration=True)
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--language", choices=TARGETS, help="Generate only one target locale.")
+    args = parser.parse_args()
+    targets = {args.language: TARGETS[args.language]} if args.language else TARGETS
     for module in MODULES:
         base = ROOT / module / "src/main/res/values/strings.xml"
         if not base.exists(): continue
-        source_is_english = module in {"app", "core-ui"}
         pt = ROOT / module / "src/main/res/values-pt-rBR/strings.xml"
-        if source_is_english:
-            source = pt if pt.exists() else base
-        else:
-            source = base
-            write(ET.parse(source), pt)
+        source = pt if pt.exists() else base
         source_tree = ET.parse(source)
         source_nodes = all_text_nodes(source_tree.getroot())
-        for language, folder in TARGETS.items():
-            if language == "en" and source_is_english: continue
+        for language, folder in targets.items():
             tree = ET.parse(source)
             nodes = all_text_nodes(tree.getroot())
             with ThreadPoolExecutor(max_workers=10) as pool:

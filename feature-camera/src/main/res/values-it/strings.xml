@@ -9,4 +9,5 @@
     <string name="camera_permission_title">È richiesta l\'autorizzazione della fotocamera</string>
     <string name="camera_permission_message">La fotocamera manuale utilizza CameraX per acquisire la pagina prima di modificarla ed esportarla.</string>
     <string name="camera_permission_action">Consenti fotocamera</string>
+    <string name="camera_frame_hint">Inquadra l\'intero documento nella cornice.</string>
 </resources>

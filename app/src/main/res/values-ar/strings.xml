@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">مسح. تنظم. بسّط.</string>
+    <string name="onboarding_page_one_title">امسح مستندك بخطوات قليلة</string>
+    <string name="onboarding_page_one_body">وجّه الكاميرا، التقط الصورة، وانتهيت.</string>
+    <string name="onboarding_page_one_image_description">ثعلب يمسح مستندًا باستخدام الهاتف.</string>
+    <string name="onboarding_page_two_title">راجع قبل الحفظ</string>
+    <string name="onboarding_page_two_body">قصّ الصفحة ودوّرها وحسّنها عند الحاجة.</string>
+    <string name="onboarding_page_two_image_description">ثعلب يضبط زوايا المستند.</string>
+    <string name="onboarding_page_three_title">الخصوصية افتراضيًا</string>
+    <string name="onboarding_page_three_body">تتم معالجة مستنداتك على جهازك كلما أمكن.</string>
+    <string name="onboarding_page_three_image_description">ثعلب يحمي مستندًا بدرع.</string>
+    <string name="onboarding_next">التالي</string>
+    <string name="onboarding_finish">ابدأ</string>
+    <string name="draft_title_quick">الوثيقة الممسوحة ضوئيا</string>
+    <string name="draft_title_camera">وثيقة</string>
+    <string name="draft_title_import">وثيقة مستوردة</string>
+    <string name="import_partial_result">تمت إضافة %1$d من صفحات %2$d. لا يمكن إضافة %3$d.</string>
+    <string name="import_failed_result">غير قادر على إضافة الصفحات المحددة.</string>
+    <string name="delete_partial_result">تمت إزالة المستند، لكن ملفات %1$d الخاصة لا تزال في انتظار التنظيف.</string>
+    <string name="export_chooser_title">مشاركة تصدير سكانورا</string>
+</resources>

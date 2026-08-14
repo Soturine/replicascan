@@ -9,4 +9,5 @@
     <string name="camera_permission_title">Autorisation de la caméra requise</string>
     <string name="camera_permission_message">La caméra manuelle utilise CameraX pour capturer la page avant de la peaufiner et de l\'exporter.</string>
     <string name="camera_permission_action">Autoriser la caméra</string>
+    <string name="camera_frame_hint">Cadrez tout le document dans le repère.</string>
 </resources>
