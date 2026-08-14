@@ -5,11 +5,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.soturine.scanora.core.common.model.ScanMode
+import com.soturine.scanora.core.common.model.OcrTextResult
 import com.soturine.scanora.core.data.files.ManagedFilePolicy
 import com.soturine.scanora.core.data.files.ScanFileStore
 import com.soturine.scanora.core.data.local.ScanoraDatabase
 import java.io.File
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.first
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -97,6 +99,38 @@ class ScanRepositoryIntegrityTest {
         assertThat(repository.getScan(created.scanId)?.pages?.map { it.id })
             .containsExactlyElementsIn(created.pageIds)
             .inOrder()
+    }
+
+    @Test
+    fun reordersWithUniqueIndicesWithoutReplacingPages() = runBlocking {
+        val sources = List(3) { index -> managedSource("reorder-$index.jpg") }
+        val created = repository.createScan("Scan", ScanMode.DOCUMENT, sources.map(File::getPath))
+        val reversed = created.pageIds.reversed()
+
+        repository.updatePageOrder(created.scanId, reversed)
+
+        assertThat(repository.getScan(created.scanId)?.pages?.map { it.id })
+            .containsExactlyElementsIn(reversed)
+            .inOrder()
+    }
+
+    @Test
+    fun fullTextSearchFindsTitleTagAndPersistedOcr() = runBlocking {
+        val created = repository.createScan(
+            title = "Travel receipt",
+            mode = ScanMode.RECEIPT,
+            sourceUris = listOf(managedSource("search.jpg").path),
+            tags = listOf("tax|2026"),
+        )
+        repository.updatePageOcrArtifact(
+            created.scanId,
+            created.pageIds.single(),
+            OcrTextResult.fromPlainText("Coffee total 42"),
+        )
+
+        assertThat(repository.observeScans("Coffee").first().single().id).isEqualTo(created.scanId)
+        assertThat(repository.observeScans("Travel").first().single().id).isEqualTo(created.scanId)
+        assertThat(repository.observeScans("tax").first().single().id).isEqualTo(created.scanId)
     }
 
     private suspend fun assertFails(block: suspend () -> Unit) {

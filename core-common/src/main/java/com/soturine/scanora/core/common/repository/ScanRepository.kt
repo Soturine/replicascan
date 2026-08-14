@@ -6,6 +6,7 @@ import com.soturine.scanora.core.common.model.DeletionOutcome
 import com.soturine.scanora.core.common.model.ScanPage
 import com.soturine.scanora.core.common.model.ScanMode
 import kotlinx.coroutines.flow.Flow
+import com.soturine.scanora.core.common.model.OcrTextResult
 
 interface ScanRepository {
     fun observeScans(query: String = ""): Flow<List<ScanDocument>>
@@ -39,6 +40,10 @@ interface ScanRepository {
     suspend fun toggleFavorite(scanId: String)
 
     suspend fun updatePageOcr(scanId: String, pageId: String, text: String)
+
+    suspend fun updatePageOcrArtifact(scanId: String, pageId: String, result: OcrTextResult) {
+        updatePageOcr(scanId, pageId, result.fullText)
+    }
 
     suspend fun markScanSaved(scanId: String)
 

@@ -348,6 +348,7 @@ fun ScanoraNavHost(
             OcrScreen(
                 state = state.value,
                 onRecognizeAgain = ocrViewModel::recognize,
+                onScriptSelected = ocrViewModel::selectScript,
                 onBack = { navController.popBackStack() },
                 onClearMessage = ocrViewModel::clearMessage,
             )

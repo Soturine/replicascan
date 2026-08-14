@@ -17,6 +17,7 @@ import androidx.room.PrimaryKey
     ],
     indices = [
         Index(value = ["scanId"]),
+        Index(value = ["scanId", "pageIndex"], unique = true),
     ],
 )
 data class PageEntity(

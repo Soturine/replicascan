@@ -30,4 +30,10 @@
     <string name="ocr_view_continuous">نص مستمر</string>
     <string name="ocr_paragraph_label">مقتطفات %1$d</string>
     <string name="ocr_continuous_title">النص الموحد</string>
+    <string name="ocr_script_title">نظام كتابة المستند</string>
+    <string name="ocr_script_latin">لاتيني</string>
+    <string name="ocr_script_devanagari">ديفاناغاري</string>
+    <string name="ocr_script_japanese">ياباني</string>
+    <string name="ocr_script_korean">كوري</string>
+    <string name="ocr_model_pending">قد يحتاج النموذج المحلي المحدد إلى تنزيل أولي.</string>
 </resources>

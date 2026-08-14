@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -52,6 +54,8 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.soturine.scanora.core.common.model.OcrTextParagraph
 import com.soturine.scanora.core.common.model.OcrTextQuality
+import com.soturine.scanora.core.common.model.OcrScript
+import com.soturine.scanora.core.common.model.OcrModelReadiness
 import com.soturine.scanora.core.ui.component.AsyncUriImage
 import com.soturine.scanora.core.ui.component.EmptyStateCard
 import com.soturine.scanora.core.ui.component.ScanoraMascot
@@ -68,6 +72,7 @@ private enum class OcrViewMode {
 fun OcrScreen(
     state: OcrUiState,
     onRecognizeAgain: () -> Unit,
+    onScriptSelected: (OcrScript) -> Unit,
     onBack: () -> Unit,
     onClearMessage: () -> Unit,
     modifier: Modifier = Modifier,
@@ -162,6 +167,14 @@ fun OcrScreen(
                 verticalArrangement = Arrangement.spacedBy(14.dp),
             ) {
                 item { OcrHeaderCard(state = state) }
+                item {
+                    OcrScriptSelector(
+                        selected = state.script,
+                        readiness = state.modelReadiness,
+                        enabled = !state.isLoading,
+                        onSelected = onScriptSelected,
+                    )
+                }
                 if (state.quality == OcrTextQuality.WEAK && hasReadableText && !state.isLoading) {
                     item {
                         WeakOcrNotice()
@@ -205,6 +218,47 @@ fun OcrScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun OcrScriptSelector(
+    selected: OcrScript,
+    readiness: OcrModelReadiness,
+    enabled: Boolean,
+    onSelected: (OcrScript) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            text = stringResource(R.string.ocr_script_title),
+            style = MaterialTheme.typography.labelLarge,
+        )
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            items(OcrScript.entries) { script ->
+                FilterChip(
+                    selected = selected == script,
+                    onClick = { onSelected(script) },
+                    enabled = enabled,
+                    label = {
+                        Text(
+                            when (script) {
+                                OcrScript.LATIN -> stringResource(R.string.ocr_script_latin)
+                                OcrScript.DEVANAGARI -> stringResource(R.string.ocr_script_devanagari)
+                                OcrScript.JAPANESE -> stringResource(R.string.ocr_script_japanese)
+                                OcrScript.KOREAN -> stringResource(R.string.ocr_script_korean)
+                            },
+                        )
+                    },
+                )
+            }
+        }
+        if (readiness == OcrModelReadiness.DOWNLOAD_PENDING) {
+            Text(
+                text = stringResource(R.string.ocr_model_pending),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }

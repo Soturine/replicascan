@@ -27,6 +27,29 @@ data class OcrTextBounds(
 data class OcrTextLine(
     val text: String,
     val bounds: OcrTextBounds? = null,
+    val confidence: Float? = null,
+    val elements: List<OcrTextElement> = emptyList(),
+)
+
+data class OcrTextElement(
+    val text: String,
+    val bounds: OcrTextBounds? = null,
+    val confidence: Float? = null,
+)
+
+enum class OcrScript { LATIN, DEVANAGARI, JAPANESE, KOREAN }
+
+enum class OcrModelReadiness { READY, DOWNLOAD_PENDING, UNAVAILABLE }
+
+enum class OcrFailureReason { IMAGE_UNREADABLE, MODEL_NOT_READY, RECOGNITION_FAILED }
+
+data class OcrArtifactMetadata(
+    val script: OcrScript,
+    val engine: String,
+    val engineVersion: String,
+    val pipelineVersion: String,
+    val sourceFingerprint: String,
+    val createdAtEpochMillis: Long,
 )
 
 data class OcrTextBlock(
@@ -70,6 +93,7 @@ data class OcrTextResult(
     val blocks: List<OcrTextBlock>,
     val fallbackText: String = "",
     val processedText: OcrProcessedText = OcrTextPostProcessor.process(blocks, fallbackText),
+    val metadata: OcrArtifactMetadata? = null,
 ) {
     val fullText: String
         get() = processedText.consolidatedText.ifBlank { fallbackText.trim() }

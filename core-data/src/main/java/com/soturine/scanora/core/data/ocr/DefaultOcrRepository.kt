@@ -1,149 +1,112 @@
 package com.soturine.scanora.core.data.ocr
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.Rect
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.common.MlKitException
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
+import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions
+import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.soturine.scanora.core.common.image.CanonicalImageDecoder
 import com.soturine.scanora.core.common.image.ImagePurpose
+import com.soturine.scanora.core.common.model.OcrArtifactMetadata
+import com.soturine.scanora.core.common.model.OcrFailureReason
+import com.soturine.scanora.core.common.model.OcrModelReadiness
+import com.soturine.scanora.core.common.model.OcrScript
 import com.soturine.scanora.core.common.model.OcrTextBlock
 import com.soturine.scanora.core.common.model.OcrTextBounds
+import com.soturine.scanora.core.common.model.OcrTextElement
 import com.soturine.scanora.core.common.model.OcrTextLine
 import com.soturine.scanora.core.common.model.OcrTextResult
 import com.soturine.scanora.core.common.repository.OcrRepository
-import kotlin.math.max
-import kotlin.math.roundToInt
+import com.soturine.scanora.core.common.repository.OcrRequest
+import com.soturine.scanora.core.common.repository.OcrRecognitionException
+import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class DefaultOcrRepository(
-    private val context: Context,
-) : OcrRepository {
-    private val imageDecoder = CanonicalImageDecoder(context)
+class DefaultOcrRepository(context: Context) : OcrRepository, AutoCloseable {
+    private val imageDecoder = CanonicalImageDecoder(context.applicationContext)
+    private val readiness = ConcurrentHashMap<OcrScript, OcrModelReadiness>().apply {
+        OcrScript.entries.forEach { put(it, OcrModelReadiness.DOWNLOAD_PENDING) }
+    }
+    private val recognizerClients: Map<OcrScript, TextRecognizer> by lazy {
+        mapOf(
+            OcrScript.LATIN to TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS),
+            OcrScript.DEVANAGARI to TextRecognition.getClient(DevanagariTextRecognizerOptions.Builder().build()),
+            OcrScript.JAPANESE to TextRecognition.getClient(JapaneseTextRecognizerOptions.Builder().build()),
+            OcrScript.KOREAN to TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build()),
+        )
+    }
 
-    override suspend fun recognizeText(imageUri: String): OcrTextResult = withContext(Dispatchers.IO) {
-        val bitmap = imageDecoder.decode(imageUri, ImagePurpose.OCR)?.bitmap ?: return@withContext OcrTextResult.Empty
-        val inputImage = InputImage.fromBitmap(bitmap, 0)
-        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    override suspend fun recognize(request: OcrRequest): OcrTextResult = withContext(Dispatchers.IO) {
+        val decoded = imageDecoder.decode(request.imageUri, ImagePurpose.OCR)
+            ?: throw OcrRecognitionException(OcrFailureReason.IMAGE_UNREADABLE)
         try {
-            formatRecognizedText(recognizer.process(inputImage).awaitResult())
-        } finally {
-            recognizer.close()
+            val recognized = recognizerClients.getValue(request.script)
+                .process(InputImage.fromBitmap(decoded.bitmap, 0))
+                .awaitResult()
+            readiness[request.script] = OcrModelReadiness.READY
+            formatRecognizedText(recognized, request)
+        } catch (exception: MlKitException) {
+            val reason = if (exception.errorCode == 14) {
+                readiness[request.script] = OcrModelReadiness.DOWNLOAD_PENDING
+                OcrFailureReason.MODEL_NOT_READY
+            } else {
+                OcrFailureReason.RECOGNITION_FAILED
+            }
+            throw OcrRecognitionException(reason, exception)
         }
     }
 
-    private fun prepareForOcr(bitmap: Bitmap): Bitmap {
-        val grayscale = toGrayscale(bitmap)
-        val background = createBackgroundLuma(grayscale)
-        val width = grayscale.width
-        val height = grayscale.height
-        val source = IntArray(width * height)
-        grayscale.getPixels(source, 0, width, 0, 0, width, height)
-        val balanced = IntArray(source.size)
+    override suspend fun modelReadiness(script: OcrScript): OcrModelReadiness =
+        readiness[script] ?: OcrModelReadiness.UNAVAILABLE
 
-        for (index in source.indices) {
-            val baseValue = Color.red(source[index])
-            val backgroundGray = background[index].coerceAtLeast(36)
-            val scale = (1f + ((232 - backgroundGray) / 255f) * 0.34f).coerceIn(0.86f, 1.16f)
-            val corrected = (baseValue * scale).roundToInt().coerceIn(0, 255)
-            balanced[index] = Color.rgb(corrected, corrected, corrected)
-        }
-
-        val luma = IntArray(balanced.size) { index -> Color.red(balanced[index]) }
-        val lower = percentile(luma, 0.06f)
-        val upper = percentile(luma, 0.992f).coerceAtLeast(lower + 24)
-        val output = IntArray(balanced.size)
-
-        for (index in balanced.indices) {
-            val value = Color.red(balanced[index])
-            val stretched = (((value - lower) * 255f) / (upper - lower)).roundToInt().coerceIn(0, 255)
-            output[index] = Color.rgb(stretched, stretched, stretched)
-        }
-
-        return Bitmap.createBitmap(output, width, height, Bitmap.Config.ARGB_8888)
+    override fun close() {
+        recognizerClients.values.forEach(TextRecognizer::close)
     }
 
-    private fun formatRecognizedText(result: Text): OcrTextResult {
-        val blocks = result.textBlocks
-            .mapNotNull { block ->
-                val lines = block.lines
-                    .mapNotNull { line ->
-                        line.text.trim()
-                            .takeIf(String::isNotBlank)
-                            ?.let { text ->
-                                OcrTextLine(
-                                    text = text,
-                                    bounds = line.boundingBox?.toOcrTextBounds(),
-                                )
-                            }
+    private fun formatRecognizedText(result: Text, request: OcrRequest): OcrTextResult {
+        val blocks = result.textBlocks.mapNotNull { block ->
+            val lines = block.lines.mapNotNull { line ->
+                line.text.trim().takeIf(String::isNotBlank)?.let { text ->
+                    val elements = line.elements.mapNotNull { element ->
+                        element.text.trim().takeIf(String::isNotBlank)?.let { value ->
+                            OcrTextElement(value, element.boundingBox?.toOcrTextBounds(), element.confidence)
+                        }
                     }
-                lines.takeIf { it.isNotEmpty() }?.let { recognizedLines ->
-                    OcrTextBlock(
-                        lines = recognizedLines,
-                        bounds = block.boundingBox?.toOcrTextBounds(),
+                    OcrTextLine(
+                        text = text,
+                        bounds = line.boundingBox?.toOcrTextBounds(),
+                        confidence = elements.mapNotNull(OcrTextElement::confidence).averageOrNull(),
+                        elements = elements,
                     )
                 }
             }
+            lines.takeIf(List<OcrTextLine>::isNotEmpty)?.let {
+                OcrTextBlock(it, block.boundingBox?.toOcrTextBounds())
+            }
+        }
         return OcrTextResult(
             blocks = blocks,
             fallbackText = result.text.trim(),
+            metadata = OcrArtifactMetadata(
+                script = request.script,
+                engine = "ml-kit-text-recognition-v2",
+                engineVersion = if (request.script == OcrScript.LATIN) "19.0.1" else "16.0.1",
+                pipelineVersion = request.pipelineVersion,
+                sourceFingerprint = request.sourceFingerprint,
+                createdAtEpochMillis = System.currentTimeMillis(),
+            ),
         )
     }
 
-    private fun Rect.toOcrTextBounds(): OcrTextBounds =
-        OcrTextBounds(
-            left = left,
-            top = top,
-            right = right,
-            bottom = bottom,
-        )
+    private fun Rect.toOcrTextBounds() = OcrTextBounds(left, top, right, bottom)
 
-    private fun toGrayscale(bitmap: Bitmap): Bitmap {
-        val width = bitmap.width
-        val height = bitmap.height
-        val source = IntArray(width * height)
-        bitmap.getPixels(source, 0, width, 0, 0, width, height)
-        val output = IntArray(source.size)
-        for (index in source.indices) {
-            val color = source[index]
-            val gray = (0.299f * Color.red(color) + 0.587f * Color.green(color) + 0.114f * Color.blue(color))
-                .roundToInt()
-                .coerceIn(0, 255)
-            output[index] = Color.rgb(gray, gray, gray)
-        }
-        return Bitmap.createBitmap(output, width, height, Bitmap.Config.ARGB_8888)
-    }
-
-    private fun createBackgroundLuma(bitmap: Bitmap): IntArray {
-        val small = Bitmap.createScaledBitmap(
-            bitmap,
-            max(bitmap.width / 14, 1),
-            max(bitmap.height / 14, 1),
-            true,
-        )
-        val blurred = Bitmap.createScaledBitmap(small, bitmap.width, bitmap.height, true)
-        val pixels = IntArray(blurred.width * blurred.height)
-        blurred.getPixels(pixels, 0, blurred.width, 0, 0, blurred.width, blurred.height)
-        return IntArray(pixels.size) { index -> Color.red(pixels[index]) }
-    }
-
-    private fun percentile(
-        values: IntArray,
-        fraction: Float,
-    ): Int {
-        val histogram = IntArray(256)
-        values.forEach { histogram[it.coerceIn(0, 255)]++ }
-        val target = (values.size * fraction.coerceIn(0f, 1f)).roundToInt()
-        var seen = 0
-        histogram.forEachIndexed { index, count ->
-            seen += count
-            if (seen >= target) return index
-        }
-        return 255
-    }
-
+    private fun List<Float>.averageOrNull(): Float? =
+        if (isEmpty()) null else average().toFloat()
 }

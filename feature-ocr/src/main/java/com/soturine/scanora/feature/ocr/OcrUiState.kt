@@ -3,6 +3,8 @@ package com.soturine.scanora.feature.ocr
 import com.soturine.scanora.core.common.model.OcrTextParagraph
 import com.soturine.scanora.core.common.model.OcrTextQuality
 import com.soturine.scanora.core.common.model.ScanPage
+import com.soturine.scanora.core.common.model.OcrScript
+import com.soturine.scanora.core.common.model.OcrModelReadiness
 
 data class OcrUiState(
     val page: ScanPage? = null,
@@ -13,5 +15,7 @@ data class OcrUiState(
     val discardedNoiseCount: Int = 0,
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
+    val script: OcrScript = OcrScript.LATIN,
+    val modelReadiness: OcrModelReadiness = OcrModelReadiness.DOWNLOAD_PENDING,
 )
 

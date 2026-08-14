@@ -26,4 +26,10 @@
     <string name="ocr_view_continuous">Texto continuo</string>
     <string name="ocr_paragraph_label">Extracto %1$d</string>
     <string name="ocr_continuous_title">Texto consolidado</string>
+    <string name="ocr_script_title">Escritura del documento</string>
+    <string name="ocr_script_latin">Latina</string>
+    <string name="ocr_script_devanagari">Devanagari</string>
+    <string name="ocr_script_japanese">Japonés</string>
+    <string name="ocr_script_korean">Coreano</string>
+    <string name="ocr_model_pending">El modelo local seleccionado puede necesitar una descarga inicial.</string>
 </resources>

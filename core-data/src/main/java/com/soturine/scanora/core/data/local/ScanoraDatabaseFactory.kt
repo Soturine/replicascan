@@ -8,5 +8,5 @@ object ScanoraDatabaseFactory {
         context.applicationContext,
         ScanoraDatabase::class.java,
         "scanora.db",
-    ).build()
+    ).addMigrations(MIGRATION_1_2).build()
 }

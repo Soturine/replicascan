@@ -9,7 +9,7 @@ interface DocumentProcessingRepository {
     suspend fun detectDocument(
         imageUri: String,
         profile: DocumentProfile = DocumentProfile.GENERAL,
-    ): DocumentDetectionResult
+    ): DocumentDetectionResult = DocumentDetectionResult.noDocument()
 
     suspend fun estimateDocumentQuad(imageUri: String): DocumentQuad =
         detectDocument(imageUri).quadOrFullPage()
