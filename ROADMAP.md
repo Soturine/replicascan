@@ -11,7 +11,8 @@ O roadmap segue: **integridade → imagem canônica → detecção → geometria
 - OCR canônico sem preprocess duplicado;
 - imagens exportadas uma página por vez;
 - onboarding com swipe, safe insets e raposas PNG animadas;
-- UI creme/laranja/navy/teal e Settings compacta;
+- UI creme/laranja/navy/teal, Settings compacta e estados contextuais de processamento;
+- seis idiomas, incluindo árabe com layout RTL;
 - JPEG apenas no scanner rápido; `targetSdk 36`.
 
 ## v0.3.0 — OCR as Document Data
@@ -23,7 +24,7 @@ O roadmap segue: **integridade → imagem canônica → detecção → geometria
 ## v0.3.1 — Product & Play Store Hardening
 
 - QA físico/upgrade, Android 16, TalkBack, font 200%, landscape/tablet;
-- localization QA, R8, AAB assinado, Data Safety e store listing.
+- revisão linguística nativa do árabe, R8, AAB assinado, Data Safety e store listing.
 
 ## v0.3.2 — Measured Performance
 

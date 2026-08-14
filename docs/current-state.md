@@ -10,6 +10,14 @@ O Scanora `0.2.9` é um scanner Android local-first. O fluxo principal abre o ML
 4. OCR usa ML Kit Text Recognition no aparelho e salva o texto consolidado da página.
 5. PDF, JPG e PNG são rederivados da fonte e das transformações aprovadas.
 
+## Experiência e idiomas
+
+- o tema claro/escuro compartilha a mesma hierarquia em creme, laranja, navy e teal;
+- o onboarding aceita toque e gesto horizontal, respeita safe insets e usa três poses próprias da raposa;
+- OCR, processamento, sucesso, estado vazio e atenção usam mascotes contextuais em PNG transparente;
+- os nove módulos possuem catálogos completos para inglês, pt-BR, espanhol, francês, italiano e árabe;
+- o árabe usa `supportsRtl`, ícones direcionais espelháveis e alinhamento lógico do Compose.
+
 ## Persistência
 
 - `sourceUri` aponta para a fonte canônica privada em `filesDir/scan-sources`.
@@ -32,4 +40,5 @@ O Scanora `0.2.9` é um scanner Android local-first. O fluxo principal abre o ML
 - PDF ainda possui oportunidades de streaming e sizing; imagens já são processadas sequencialmente;
 - OCR não promete precisão perfeita, busca global ou PDF pesquisável;
 - testes instrumentados exigem emulador/aparelho e QA físico ainda está pendente;
+- a tradução árabe está funcional e completa, mas ainda requer revisão linguística nativa antes de publicação em loja;
 - minificação/R8 e assinatura de loja ainda não são gates de produção.

@@ -19,7 +19,8 @@ Site: https://soturine.github.io/scanora/
 - importação de galeria pelo fluxo do Google quando suportada;
 - captura manual com `CameraX` e importação direta como fallback editável;
 - Home minimalista sem escolha obrigatória de tipo antes do scan;
-- onboarding e ícone do app com a raposa mascote do Scanora;
+- onboarding arrastável, ícone do app e estados contextuais com a raposa mascote do Scanora;
+- interface em English, Português do Brasil, Español, Français, Italiano e العربية, com RTL real no árabe;
 - cópia das imagens de entrada para armazenamento interno antes de criar o lote local;
 - sugestão inicial de crop mais robusta para fotos inclinadas, galeria e fundos poluídos;
 - reajuste automático do crop e editor manual mais confortável para acertos finos;
@@ -107,7 +108,7 @@ Política completa em [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
 
 ## Status
 
-`0.2.9` aproxima o produto do conceito e corrige a cadeia crítica: páginas sobrevivem a metadata/export, imagens passam por orientação EXIF canônica e o onboarding aceita swipe com PNGs transparentes.
+`0.2.9` aproxima o produto do conceito e corrige a cadeia crítica: páginas sobrevivem a metadata/export, imagens passam por orientação EXIF canônica e a interface ganhou onboarding arrastável, contraste claro/escuro consistente e mascotes contextuais em PNG transparente.
 
 ## Contribuir
 

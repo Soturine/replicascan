@@ -4,6 +4,24 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+### Added
+
+- Árabe como sexto idioma do app, com seleção por aplicativo e espelhamento RTL nativo.
+- Novas poses PNG transparentes da raposa para OCR, estado vazio e atenção/erro.
+- Teste instrumental do gesto horizontal entre páginas do onboarding.
+
+### Changed
+
+- Onboarding ganhou composição responsiva em card, safe insets, contraste explícito e CTA iconográfico.
+- Home, câmera, revisão, crop, filtros, OCR, histórico, configurações e exportação receberam hierarquia e ações mais próximas do conceito visual.
+- Estados de processamento e conclusão agora usam mascotes contextuais e animações leves que respeitam a escala do sistema.
+
+### Fixed
+
+- Cor de conteúdo raiz agora acompanha o tema, eliminando títulos escuros invisíveis no onboarding noturno.
+- Gerador de locales não sobrescreve mais o catálogo pt-BR ao criar um novo idioma.
+- Rótulos de seleção e tipos de exportação deixaram de ficar fixos em português no Kotlin.
+
 ## [0.2.9] - 2026-08-13
 
 ### Added
