@@ -65,6 +65,7 @@ class ScanRepositoryIntegrityTest {
         assertThat(external.exists()).isTrue()
         assertThat(outcome.skippedExternalCount).isEqualTo(1)
         external.delete()
+        Unit
     }
 
     @Test
