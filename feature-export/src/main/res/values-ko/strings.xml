@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="export_title">내보내다</string>
+    <string name="export_back">돌아가려면</string>
+    <string name="export_eyebrow">최종 출구</string>
+    <string name="export_missing_title">내보낼 항목이 없습니다.</string>
+    <string name="export_missing_message">파일을 생성하기 전에 유효한 배치를 엽니다.</string>
+    <plurals name="export_summary">
+        <item quantity="one">%1$d 페이지 내보내기 준비가 완료되었습니다.</item>
+        <item quantity="other">%1$d 페이지를 내보낼 준비가 되었습니다.</item>
+    </plurals>
+    <string name="export_local_notice">Scanora는 장치 자체에서 모든 것을 생성하고 완료되는 즉시 파일이 저장된 위치를 표시합니다.</string>
+    <string name="export_format_eyebrow">체재</string>
+    <string name="export_format_section">이 배치는 어떻게 나와야합니까?</string>
+    <string name="export_format_supporting">배치가 휴대폰에서 나가는 방법을 선택합니다.</string>
+    <string name="export_kind_pdf">PDF</string>
+    <string name="export_kind_image">영상</string>
+    <string name="export_image_format_section">이미지 유형</string>
+    <string name="export_image_format_supporting">더 가벼운 파일을 원하면 JPG를 선택하고 더 많은 세부 사항을 보존하려면 PNG를 선택하세요.</string>
+    <string name="export_quality_eyebrow">품질</string>
+    <string name="export_quality_section">PDF 품질</string>
+    <string name="export_quality_supporting">품질은 선택한 출력이 PDF인 경우에만 나타납니다.</string>
+    <string name="export_processing_message">장치에서 파일을 생성하는 중입니다. 이 작업은 몇 초 정도 걸릴 수 있습니다.</string>
+    <string name="export_action">파일 저장</string>
+    <string name="export_action_pdf">PDF 생성</string>
+    <string name="export_action_images">이미지 저장</string>
+    <string name="export_ready_eyebrow">준비된 파일</string>
+    <string name="export_ready_title">내보내기 완료</string>
+    <plurals name="export_success_message">
+        <item quantity="one">%1$d 파일을 열거나 공유할 준비가 되었습니다.</item>
+        <item quantity="other">%1$d 파일을 열거나 공유할 준비가 되었습니다.</item>
+    </plurals>
+    <string name="export_success_snackbar_single">파일이 저장되었습니다.</string>
+    <string name="export_success_snackbar_multiple">%1$d 저장된 파일.</string>
+    <string name="export_share_action">파일 공유</string>
+    <string name="export_share_file_action">공유하려면</string>
+    <string name="export_location_label">저장 위치: %1$s</string>
+    <string name="export_file_type">유형</string>
+    <string name="export_file_size">크기</string>
+    <string name="export_file_location">다음에 저장됨</string>
+    <string name="export_file_path">길</string>
+    <string name="export_open_file_action">파일 열기</string>
+    <string name="export_kind_pdf_description">보관, 전송 또는 인쇄할 단일 파일을 생성합니다.</string>
+    <string name="export_kind_image_description">각 페이지를 독립적인 이미지로 저장합니다.</string>
+    <string name="export_type_pdf">PDF 문서</string>
+    <string name="export_type_jpg">JPG 이미지</string>
+    <string name="export_type_png">PNG 이미지</string>
+    <string name="export_page_size_section">페이지 크기</string>
+    <string name="export_page_size_auto">오토매틱</string>
+    <string name="export_page_size_letter">편지</string>
+    <string name="export_searchable_pdf_ready">PDF에는 검색 가능한 텍스트가 포함되어 있습니다.</string>
+</resources>

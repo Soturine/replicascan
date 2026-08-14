@@ -21,6 +21,9 @@
     <string name="editor_filter_preview_loading">Aggiornamento dell\'anteprima…</string>
     <string name="editor_filter_preview_refining">Perfezionamento dell\'anteprima in modo più chiaro…</string>
     <string name="editor_filter_applying">Applicazione di elementi visivi alla pagina…</string>
+    <string name="editor_filter_show_original">Vedi originale</string>
+    <string name="editor_filter_show_result">Vedi risultato</string>
+    <string name="editor_filter_comparing_original">Anteprima originale corretta</string>
     <string name="editor_apply_visual">Applicare visivo</string>
     <string name="editor_save_continue">Salva e continua</string>
     <string name="editor_rotate">Ruota di 90°</string>

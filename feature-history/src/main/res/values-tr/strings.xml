@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="history_title">Taramalarım</string>
+    <string name="history_eyebrow">Yerel tarih</string>
+    <string name="history_heading">Kaydedilen belgeleriniz</string>
+    <string name="history_supporting">Mevcut aramada %1$d lot(lar)ı bulundu.</string>
+    <string name="history_supporting_empty">Yerel olarak kaydedilen her şey, başlığa ve etikete göre aramayla burada görünür.</string>
+    <string name="history_search_label">Taramalarda ara</string>
+    <string name="history_search_placeholder">Başlık, etiket veya toplu iş türü</string>
+    <string name="history_empty_title">Henüz kaydedilen tarama yok</string>
+    <string name="history_empty_message">İnceleme veya dışa aktarma işleminden sonra gruplarınız yeniden açılmak, favorilere eklemek veya yeniden dışa aktarmak için burada görünür.</string>
+    <string name="history_subtitle">%1$d sayfa(lar)ı • %2$s\'de güncellendi</string>
+    <string name="history_badge_favorite">Favori</string>
+    <string name="history_badge_draft">Eskiz</string>
+    <string name="history_detail_missing_title">Tarama bulunamadı</string>
+    <string name="history_detail_missing_message">Bu grup kaldırılmış veya henüz yüklenmemiş olabilir.</string>
+    <string name="history_detail_eyebrow">Parti detayı</string>
+    <string name="history_detail_meta">%1$d sayfa(lar)ı • en son %2$s tarihinde güncellendi</string>
+    <string name="history_detail_draft">Lot hâlâ taslakta</string>
+    <string name="history_detail_saved">Yeniden açmaya, dışa aktarmaya veya yer imlerine eklemeye hazır</string>
+    <string name="history_add_favorite">Favori olarak işaretle</string>
+    <string name="history_remove_favorite">Favoriyi kaldır</string>
+    <string name="history_open_review">İncelemeye geri dön</string>
+    <string name="history_open_export">İhracat</string>
+    <string name="history_pages_eyebrow">Sayfalar</string>
+    <string name="history_pages_section">Toplu önizleme</string>
+    <string name="history_pages_supporting">Tanınan metni açmak için bir sayfaya dokunun.</string>
+    <string name="history_page_title">Sayfa %1$d</string>
+    <string name="history_page_overline">Önizleme hazır</string>
+    <string name="history_page_badge_ocr">OCR kaydedildi</string>
+    <string name="history_delete_scan">Bu taramayı sil</string>
+</resources>

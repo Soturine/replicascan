@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">Scan. Organisieren. Vereinfachen.</string>
+    <string name="onboarding_page_one_title">Scannen Sie in nur wenigen Schritten</string>
+    <string name="onboarding_page_one_body">Zielen, erfassen und loslegen.</string>
+    <string name="onboarding_page_one_image_description">Fuchs scannt ein Dokument mit dem Handy.</string>
+    <string name="onboarding_page_two_title">Vor dem Speichern überprüfen</string>
+    <string name="onboarding_page_two_body">Bei Bedarf zuschneiden, drehen und verbessern.</string>
+    <string name="onboarding_page_two_image_description">Fox passt die Ecken eines Dokuments an.</string>
+    <string name="onboarding_page_three_title">Datenschutz standardmäßig</string>
+    <string name="onboarding_page_three_body">Ihre Dokumente werden nach Möglichkeit auf dem Gerät verarbeitet.</string>
+    <string name="onboarding_page_three_image_description">Fuchs schützt ein Dokument mit Schild.</string>
+    <string name="onboarding_next">Nächste</string>
+    <string name="onboarding_finish">Um zu beginnen</string>
+    <string name="draft_title_quick">Gescanntes Dokument</string>
+    <string name="draft_title_camera">Dokumentieren</string>
+    <string name="draft_title_import">Importiertes Dokument</string>
+    <string name="import_partial_result">%1$d von %2$d-Seiten wurden hinzugefügt. %3$d konnte nicht hinzugefügt werden.</string>
+    <string name="import_failed_result">Ausgewählte Seiten können nicht hinzugefügt werden.</string>
+    <string name="delete_partial_result">Das Dokument wurde entfernt, aber die privaten %1$d-Dateien warten noch auf die Bereinigung.</string>
+    <string name="export_chooser_title">Teilen Sie den Scanora-Export</string>
+</resources>

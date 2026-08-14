@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">Tara. Organize edin. Basitleştirin.</string>
+    <string name="onboarding_page_one_title">Yalnızca birkaç adımda tarayın</string>
+    <string name="onboarding_page_one_body">Nişan alın, yakalayın ve gidin.</string>
+    <string name="onboarding_page_one_image_description">Fox cep telefonuyla bir belgeyi tarıyor.</string>
+    <string name="onboarding_page_two_title">Kaydetmeden önce inceleyin</string>
+    <string name="onboarding_page_two_body">Gerekirse kırpın, döndürün ve iyileştirin.</string>
+    <string name="onboarding_page_two_image_description">Fox bir belgenin köşelerini ayarlıyor.</string>
+    <string name="onboarding_page_three_title">Varsayılan olarak gizlilik</string>
+    <string name="onboarding_page_three_body">Belgeleriniz mümkün olduğunca cihazda işlenir.</string>
+    <string name="onboarding_page_three_image_description">Fox bir belgeyi kalkanla koruyor.</string>
+    <string name="onboarding_next">Sonraki</string>
+    <string name="onboarding_finish">Başlamak için</string>
+    <string name="draft_title_quick">Taranan belge</string>
+    <string name="draft_title_camera">Belge</string>
+    <string name="draft_title_import">İçe aktarılan belge</string>
+    <string name="import_partial_result">%2$d sayfalarından %1$d eklendi. %3$d eklenemedi.</string>
+    <string name="import_failed_result">Seçilen sayfalar eklenemiyor.</string>
+    <string name="delete_partial_result">Belge kaldırıldı ancak %1$d özel dosyaları hâlâ temizlenmeyi bekliyor.</string>
+    <string name="export_chooser_title">Scanora ihracatını paylaşın</string>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">Başlangıç</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">Tara. Organize edin. Basitleştirin.</string>
+    <string name="home_greeting">Merhaba!</string>
+    <string name="home_welcome">Seni görmek güzel.</string>
+    <string name="home_start_hint">Başlamak için dokunun.</string>
+    <string name="home_import_gallery_action">Galeriden içe aktar</string>
+    <string name="home_hero_title">Hiçbir şey hazırlamadan tarayın.</string>
+    <string name="home_hero_subtitle">Hızlı tarayıcı kenarları algılar, mevcut olduğunda galeriyi kabul eder ve ardından incelemeyi açar.</string>
+    <string name="home_quick_scan_action">Tara</string>
+    <string name="home_manual_scan_action">Manuel ayar</string>
+    <string name="home_import_action">İçe aktarmak</string>
+    <string name="home_capture_helper">Manuel ayarlama ve doğrudan içe aktarma, düzenlenebilir bir geri dönüş olarak kalır.</string>
+    <string name="home_quick_scan_unavailable">Hızlı tarayıcı bu cihazda mevcut değil.</string>
+    <string name="home_recent_section">Son</string>
+    <string name="home_recent_empty_supporting">En son taramalarınız burada görünür.</string>
+    <string name="home_recent_open_all">Tümünü gör</string>
+    <string name="home_empty_title">Geçmişiniz burada başlıyor</string>
+    <string name="home_empty_message">İlk grubu oluşturmak için Tara\'yı kullanın. İhtiyacınız olduğunda manuel ayarlama hala mevcuttur.</string>
+    <string name="home_recent_updated_at">%1$s • %2$s\'ye güncellendi</string>
+    <string name="home_history">Taramalarım</string>
+    <string name="home_settings">Ayarlar</string>
+    <string name="home_badge_favorite">Favori</string>
+    <string name="home_badge_draft">Eskiz</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="one">Tarihi alanda %1$d arsası.</item>
+        <item quantity="other">%1$d yerel tarihte çok şey var.</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="one">%1$d sayfası</item>
+        <item quantity="other">%1$d sayfaları</item>
+    </plurals>
+</resources>

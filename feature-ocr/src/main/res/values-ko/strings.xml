@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ocr_title">OCR</string>
+    <string name="ocr_back">돌아가려면</string>
+    <string name="ocr_eyebrow">지역 독서</string>
+    <string name="ocr_missing_title">페이지를 사용할 수 없음</string>
+    <string name="ocr_missing_message">텍스트를 인식할 수 있는 유효한 페이지를 엽니다.</string>
+    <string name="ocr_processing">텍스트를 읽는 중…</string>
+    <string name="ocr_processing_detail">페이지를 준비하고 결과를 정리합니다.</string>
+    <string name="ocr_result_title">준비된 텍스트</string>
+    <plurals name="ocr_supporting">
+        <item quantity="one">%1$d 발췌 정리.</item>
+        <item quantity="other">%1$d는 발췌 내용을 정리했습니다.</item>
+    </plurals>
+    <string name="ocr_weak_title">부분 읽기</string>
+    <string name="ocr_weak_text">이 페이지에서 유용한 텍스트를 거의 찾지 못했습니다.</string>
+    <string name="ocr_weak_hint">결과가 약해 보인다면 자르기를 조정하거나 빠른 스캐너를 사용해 보세요.</string>
+    <string name="ocr_empty_title">유용한 텍스트가 없습니다.</string>
+    <string name="ocr_empty_text">자르기를 조정하거나 조명을 개선하거나 빠른 스캐너를 사용해 보세요.</string>
+    <string name="ocr_copy">텍스트 복사</string>
+    <string name="ocr_copy_all">모두 복사</string>
+    <string name="ocr_copy_excerpt">발췌 복사</string>
+    <string name="ocr_copy_success">텍스트가 복사되었습니다.</string>
+    <string name="ocr_retry">다시 읽어보세요</string>
+    <string name="ocr_view_paragraphs">발췌</string>
+    <string name="ocr_view_continuous">연속 텍스트</string>
+    <string name="ocr_paragraph_label">%1$d 발췌</string>
+    <string name="ocr_continuous_title">통합된 텍스트</string>
+    <string name="ocr_script_title">문서작성</string>
+    <string name="ocr_script_latin">라틴어</string>
+    <string name="ocr_script_devanagari">데바나가리 문자</string>
+    <string name="ocr_script_japanese">일본어</string>
+    <string name="ocr_script_korean">한국인</string>
+    <string name="ocr_model_pending">선택한 로컬 템플릿에는 초기 다운로드가 필요할 수 있습니다.</string>
+</resources>

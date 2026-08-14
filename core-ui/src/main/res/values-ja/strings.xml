@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mode_notebook">ノート/教員</string>
+    <string name="mode_notebook_description">配布資料、表、学習ページ用。</string>
+    <string name="mode_document">文書/契約書</string>
+    <string name="mode_document_description">配置と読みやすいテキストを優先します。</string>
+    <string name="mode_receipt">レシート</string>
+    <string name="mode_receipt_description">小さな文字やコンパクトな文書を強調表示します。</string>
+    <string name="filter_original">修正されたオリジナル</string>
+    <string name="filter_original_description">自然な色を維持し、遠近感を補正します。</string>
+    <string name="filter_bw">白黒ドキュメント</string>
+    <string name="filter_bw_description">印刷やアーカイブ用に鮮明なテキスト。</string>
+    <string name="filter_gray">グレーの文書</string>
+    <string name="filter_gray_description">コントラストを強めずにカラーノイズを低減します。</string>
+    <string name="filter_color">強化されたカラー</string>
+    <string name="filter_color_description">メモやグラフの色と鮮明さが向上します。</string>
+    <string name="filter_receipt">レシート/ハイコントラスト</string>
+    <string name="filter_receipt_description">レシートの弱い印刷を強化します。</string>
+    <string name="quality_compact">コンパクト</string>
+    <string name="quality_compact_description">迅速な共有のための小さなファイル。</string>
+    <string name="quality_balanced">バランスの取れた</string>
+    <string name="quality_balanced_description">切れ味と大きさのバランスが良い。</string>
+    <string name="quality_high">高品質</string>
+    <string name="quality_high_description">詳細については、大きなファイルをご覧ください。</string>
+    <string name="mascot_processing">デバイス上での処理</string>
+    <string name="mascot_success">準備完了</string>
+    <string name="option_selected">選択済み</string>
+</resources>

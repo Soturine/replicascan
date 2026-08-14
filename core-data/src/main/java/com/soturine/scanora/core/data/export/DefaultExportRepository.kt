@@ -46,15 +46,18 @@ class DefaultExportRepository(
         try {
             pages.forEachIndexed { pageNumber, page ->
                 val bitmap = loadBitmap(page)
+                var renderBitmap: Bitmap? = null
                 try {
                     val (width, height) = resolvePageDimensions(pageSize, bitmap)
+                    renderBitmap = scaleForPdf(bitmap, quality)
                     val pdfPage = document.startPage(PdfDocument.PageInfo.Builder(width, height, pageNumber + 1).create())
                     // The text is drawn first and then visually covered by the opaque scan. It stays in
                     // the PDF content stream for search/copy without changing the rendered document.
                     drawSearchableText(pdfPage.canvas, page.ocrText.orEmpty(), width, height)
-                    pdfPage.canvas.drawBitmap(bitmap, null, RectF(0f, 0f, width.toFloat(), height.toFloat()), imagePaint(quality))
+                    pdfPage.canvas.drawBitmap(renderBitmap, null, RectF(0f, 0f, width.toFloat(), height.toFloat()), imagePaint(quality))
                     document.finishPage(pdfPage)
                 } finally {
+                    if (renderBitmap !== bitmap) renderBitmap?.recycle()
                     bitmap.recycle()
                 }
             }
@@ -113,6 +116,23 @@ class DefaultExportRepository(
 
     private fun imagePaint(quality: PdfQuality) = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
         isDither = quality != PdfQuality.COMPACT
+    }
+
+    private fun scaleForPdf(bitmap: Bitmap, quality: PdfQuality): Bitmap {
+        val maximumLongSide = when (quality) {
+            PdfQuality.COMPACT -> 1_600
+            PdfQuality.BALANCED -> 2_400
+            PdfQuality.HIGH -> 3_600
+        }
+        val longSide = maxOf(bitmap.width, bitmap.height)
+        if (longSide <= maximumLongSide) return bitmap
+        val scale = maximumLongSide.toFloat() / longSide
+        return Bitmap.createScaledBitmap(
+            bitmap,
+            (bitmap.width * scale).roundToInt().coerceAtLeast(1),
+            (bitmap.height * scale).roundToInt().coerceAtLeast(1),
+            true,
+        )
     }
 
     private fun drawSearchableText(canvas: android.graphics.Canvas, text: String, width: Int, height: Int) {

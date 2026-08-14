@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">始める</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">スキャン。整理する。簡素化します。</string>
+    <string name="home_greeting">こんにちは！</string>
+    <string name="home_welcome">会えてうれしいです。</string>
+    <string name="home_start_hint">タップして開始します。</string>
+    <string name="home_import_gallery_action">ギャラリーからインポート</string>
+    <string name="home_hero_title">何も準備せずにスキャンしてください。</string>
+    <string name="home_hero_subtitle">高速スキャナはエッジを検出し、利用可能な場合はギャラリーを受け入れ、レビューを開きます。</string>
+    <string name="home_quick_scan_action">スキャン</string>
+    <string name="home_manual_scan_action">手動調整</string>
+    <string name="home_import_action">輸入</string>
+    <string name="home_capture_helper">手動調整と直接インポートは編集可能なフォールバックとして残ります。</string>
+    <string name="home_quick_scan_unavailable">このデバイスでは高速スキャナーを使用できません。</string>
+    <string name="home_recent_section">最近の</string>
+    <string name="home_recent_empty_supporting">最新のスキャンがここに表示されます。</string>
+    <string name="home_recent_open_all">全て見る</string>
+    <string name="home_empty_title">あなたの歴史はここから始まります</string>
+    <string name="home_empty_message">スキャンを使用して最初のバッチを作成します。必要に応じて手動調整も可能です。</string>
+    <string name="home_recent_updated_at">%1$s • %2$s に更新されました</string>
+    <string name="home_history">私のスキャン</string>
+    <string name="home_settings">設定</string>
+    <string name="home_badge_favorite">お気に入り</string>
+    <string name="home_badge_draft">スケッチ</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="one">史跡内の%1$dロット。</item>
+        <item quantity="other">地元の歴史には%1$dがたくさんあります。</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="one">%1$dページ</item>
+        <item quantity="other">%1$dページ</item>
+    </plurals>
+</resources>

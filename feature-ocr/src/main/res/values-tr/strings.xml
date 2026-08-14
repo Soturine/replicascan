@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ocr_title">OCR</string>
+    <string name="ocr_back">Geri dönmek için</string>
+    <string name="ocr_eyebrow">Yerel okuma</string>
+    <string name="ocr_missing_title">Sayfa kullanılamıyor</string>
+    <string name="ocr_missing_message">Metni tanımak için geçerli bir sayfa açın.</string>
+    <string name="ocr_processing">Metin okunuyor…</string>
+    <string name="ocr_processing_detail">Sayfanın hazırlanması ve sonucun düzenlenmesi.</string>
+    <string name="ocr_result_title">Hazır metin</string>
+    <plurals name="ocr_supporting">
+        <item quantity="one">%1$d düzenlenmiş alıntı.</item>
+        <item quantity="other">%1$d alıntıları düzenledi.</item>
+    </plurals>
+    <string name="ocr_weak_title">Kısmi okuma</string>
+    <string name="ocr_weak_text">Bu sayfada çok az yararlı metin bulduk.</string>
+    <string name="ocr_weak_hint">Sonuç zayıf görünüyorsa kırpmayı ayarlayın veya hızlı tarayıcıyı deneyin.</string>
+    <string name="ocr_empty_title">Yararlı metin yok</string>
+    <string name="ocr_empty_text">Kırpmayı ayarlamayı, ışığı iyileştirmeyi veya hızlı tarayıcıyı kullanmayı deneyin.</string>
+    <string name="ocr_copy">Metni kopyala</string>
+    <string name="ocr_copy_all">Tümünü kopyala</string>
+    <string name="ocr_copy_excerpt">Alıntıyı kopyala</string>
+    <string name="ocr_copy_success">Metin kopyalandı.</string>
+    <string name="ocr_retry">Tekrar oku</string>
+    <string name="ocr_view_paragraphs">Alıntılar</string>
+    <string name="ocr_view_continuous">Sürekli metin</string>
+    <string name="ocr_paragraph_label">Alıntı %1$d</string>
+    <string name="ocr_continuous_title">Birleştirilmiş metin</string>
+    <string name="ocr_script_title">Belge yazımı</string>
+    <string name="ocr_script_latin">Latince</string>
+    <string name="ocr_script_devanagari">Devanagari</string>
+    <string name="ocr_script_japanese">Japonca</string>
+    <string name="ocr_script_korean">Korece</string>
+    <string name="ocr_model_pending">Seçilen yerel şablonun ilk indirilmesi gerekebilir.</string>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">Awal</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">Pindai. Mengatur. Menyederhanakan.</string>
+    <string name="home_greeting">Halo!</string>
+    <string name="home_welcome">Senang bertemu denganmu.</string>
+    <string name="home_start_hint">Ketuk untuk memulai.</string>
+    <string name="home_import_gallery_action">Impor dari galeri</string>
+    <string name="home_hero_title">Pindai tanpa menyiapkan apa pun.</string>
+    <string name="home_hero_subtitle">Pemindai cepat mendeteksi tepian, menerima galeri bila tersedia, dan kemudian membuka tinjauan.</string>
+    <string name="home_quick_scan_action">Pindai</string>
+    <string name="home_manual_scan_action">Penyesuaian manual</string>
+    <string name="home_import_action">Impor</string>
+    <string name="home_capture_helper">Penyesuaian manual dan impor langsung tetap menjadi cadangan yang dapat diedit.</string>
+    <string name="home_quick_scan_unavailable">Pemindai cepat tidak tersedia di perangkat ini.</string>
+    <string name="home_recent_section">Terkini</string>
+    <string name="home_recent_empty_supporting">Pemindaian terbaru Anda muncul di sini.</string>
+    <string name="home_recent_open_all">Lihat semuanya</string>
+    <string name="home_empty_title">Sejarah Anda dimulai di sini</string>
+    <string name="home_empty_message">Gunakan Pindai untuk membuat batch pertama. Penyesuaian manual masih tersedia saat Anda membutuhkannya.</string>
+    <string name="home_recent_updated_at">%1$s • diperbarui menjadi %2$s</string>
+    <string name="home_history">Hasil pindaian saya</string>
+    <string name="home_settings">Pengaturan</string>
+    <string name="home_badge_favorite">Favorit</string>
+    <string name="home_badge_draft">Sketsa</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="one">%1$d banyak di situs bersejarah.</item>
+        <item quantity="other">%1$d banyak dalam sejarah lokal.</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="one">halaman %1$d</item>
+        <item quantity="other">halaman %1$d</item>
+    </plurals>
+</resources>

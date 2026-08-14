@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ocr_title">OCR</string>
+    <string name="ocr_back">Untuk kembali</string>
+    <string name="ocr_eyebrow">Bacaan lokal</string>
+    <string name="ocr_missing_title">Halaman tidak tersedia</string>
+    <string name="ocr_missing_message">Buka halaman yang valid untuk mengenali teks.</string>
+    <string name="ocr_processing">Membaca teks…</string>
+    <string name="ocr_processing_detail">Mempersiapkan halaman dan mengatur hasilnya.</string>
+    <string name="ocr_result_title">Teks siap</string>
+    <plurals name="ocr_supporting">
+        <item quantity="one">%1$d mengatur kutipan.</item>
+        <item quantity="other">%1$d mengatur kutipan.</item>
+    </plurals>
+    <string name="ocr_weak_title">Membaca sebagian</string>
+    <string name="ocr_weak_text">Kami menemukan sedikit teks berguna di halaman ini.</string>
+    <string name="ocr_weak_hint">Jika hasilnya tampak lemah, sesuaikan pemotongan atau coba pemindai cepat.</string>
+    <string name="ocr_empty_title">Tidak ada teks yang berguna</string>
+    <string name="ocr_empty_text">Coba sesuaikan pemotongan, tingkatkan pencahayaan, atau gunakan pemindai cepat.</string>
+    <string name="ocr_copy">Salin teks</string>
+    <string name="ocr_copy_all">Salin semua</string>
+    <string name="ocr_copy_excerpt">Salin kutipan</string>
+    <string name="ocr_copy_success">Teks disalin.</string>
+    <string name="ocr_retry">Baca lagi</string>
+    <string name="ocr_view_paragraphs">Kutipan</string>
+    <string name="ocr_view_continuous">Teks berkelanjutan</string>
+    <string name="ocr_paragraph_label">Kutipan %1$d</string>
+    <string name="ocr_continuous_title">Teks gabungan</string>
+    <string name="ocr_script_title">Penulisan dokumen</string>
+    <string name="ocr_script_latin">Latin</string>
+    <string name="ocr_script_devanagari">Dewanagari</string>
+    <string name="ocr_script_japanese">Jepang</string>
+    <string name="ocr_script_korean">Korea</string>
+    <string name="ocr_model_pending">Templat lokal yang dipilih mungkin memerlukan pengunduhan awal.</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="history_title">Hasil pindaian saya</string>
+    <string name="history_eyebrow">Sejarah lokal</string>
+    <string name="history_heading">Dokumen Anda yang disimpan</string>
+    <string name="history_supporting">%1$d lot ditemukan dalam pencarian saat ini.</string>
+    <string name="history_supporting_empty">Segala sesuatu yang disimpan secara lokal muncul di sini dengan pencarian berdasarkan judul dan tag.</string>
+    <string name="history_search_label">Pindaian pencarian</string>
+    <string name="history_search_placeholder">Judul, tag, atau jenis kumpulan</string>
+    <string name="history_empty_title">Belum ada pindaian yang disimpan</string>
+    <string name="history_empty_message">Setelah ditinjau atau diekspor, kumpulan Anda muncul di sini untuk dibuka kembali, difavoritkan, atau diekspor lagi.</string>
+    <string name="history_subtitle">Halaman %1$d • diperbarui pada %2$s</string>
+    <string name="history_badge_favorite">Favorit</string>
+    <string name="history_badge_draft">Sketsa</string>
+    <string name="history_detail_missing_title">Pemindaian tidak ditemukan</string>
+    <string name="history_detail_missing_message">Kumpulan ini mungkin telah dihapus atau belum diunggah.</string>
+    <string name="history_detail_eyebrow">Banyak detailnya</string>
+    <string name="history_detail_meta">Halaman %1$d • terakhir diperbarui pada %2$s</string>
+    <string name="history_detail_draft">Banyak yang masih dalam draft</string>
+    <string name="history_detail_saved">Siap untuk dibuka kembali, diekspor atau dibookmark</string>
+    <string name="history_add_favorite">Tandai favorit</string>
+    <string name="history_remove_favorite">Hapus favorit</string>
+    <string name="history_open_review">Kembali ke ulasan</string>
+    <string name="history_open_export">Ekspor</string>
+    <string name="history_pages_eyebrow">Halaman</string>
+    <string name="history_pages_section">Pratinjau kumpulan</string>
+    <string name="history_pages_supporting">Ketuk halaman untuk membuka teks yang dikenali.</string>
+    <string name="history_page_title">Halaman %1$d</string>
+    <string name="history_page_overline">Pratinjau siap</string>
+    <string name="history_page_badge_ocr">OCR disimpan</string>
+    <string name="history_delete_scan">Hapus pemindaian ini</string>
+</resources>

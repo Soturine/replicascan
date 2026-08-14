@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">スキャン。整理する。簡素化します。</string>
+    <string name="onboarding_page_one_title">わずか数ステップでスキャン</string>
+    <string name="onboarding_page_one_body">ポイントして、キャプチャして、ゴー。</string>
+    <string name="onboarding_page_one_image_description">携帯電話で書類をスキャンするフォックス。</string>
+    <string name="onboarding_page_two_title">保存する前に確認してください</string>
+    <string name="onboarding_page_two_body">必要に応じて、切り取ったり、回転したり、改善したりできます。</string>
+    <string name="onboarding_page_two_image_description">書類の角を調整するフォックス。</string>
+    <string name="onboarding_page_three_title">デフォルトでのプライバシー</string>
+    <string name="onboarding_page_three_body">ドキュメントは可能な限りデバイス上で処理されます。</string>
+    <string name="onboarding_page_three_image_description">盾で書類を守るキツネ​​。</string>
+    <string name="onboarding_next">次</string>
+    <string name="onboarding_finish">始めるには</string>
+    <string name="draft_title_quick">スキャンした文書</string>
+    <string name="draft_title_camera">書類</string>
+    <string name="draft_title_import">インポートされたドキュメント</string>
+    <string name="import_partial_result">%2$dから%1$dのページを追加しました。 %3$dを追加できませんでした。</string>
+    <string name="import_failed_result">選択したページを追加できません。</string>
+    <string name="delete_partial_result">ドキュメントは削除されましたが、%1$d プライベート ファイルはまだクリーンアップを待っています。</string>
+    <string name="export_chooser_title">Scanora エクスポートを共有する</string>
+</resources>

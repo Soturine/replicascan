@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="history_title">내 스캔</string>
+    <string name="history_eyebrow">지역 역사</string>
+    <string name="history_heading">저장된 문서</string>
+    <string name="history_supporting">현재 검색에서 %1$d 로트를 찾았습니다.</string>
+    <string name="history_supporting_empty">제목과 태그로 검색하면 로컬에 저장된 모든 내용이 여기에 표시됩니다.</string>
+    <string name="history_search_label">스캔 검색</string>
+    <string name="history_search_placeholder">제목, 태그 또는 배치 유형</string>
+    <string name="history_empty_title">아직 저장된 스캔이 없습니다.</string>
+    <string name="history_empty_message">검토하거나 내보낸 후 배치가 여기에 표시되어 다시 열거나 즐겨찾기에 추가하거나 다시 내보낼 수 있습니다.</string>
+    <string name="history_subtitle">%1$d 페이지 • %2$s에서 업데이트됨</string>
+    <string name="history_badge_favorite">가장 좋아하는</string>
+    <string name="history_badge_draft">스케치</string>
+    <string name="history_detail_missing_title">스캔을 찾을 수 없습니다</string>
+    <string name="history_detail_missing_message">이 배치는 제거되었거나 아직 업로드되지 않았을 수 있습니다.</string>
+    <string name="history_detail_eyebrow">로트 세부정보</string>
+    <string name="history_detail_meta">%1$d 페이지 • %2$s에 마지막으로 업데이트됨</string>
+    <string name="history_detail_draft">아직 초안인 경우가 많음</string>
+    <string name="history_detail_saved">다시 열거나 내보내거나 북마크할 준비가 되었습니다.</string>
+    <string name="history_add_favorite">즐겨찾기로 표시</string>
+    <string name="history_remove_favorite">즐겨찾기 삭제</string>
+    <string name="history_open_review">리뷰로 돌아가기</string>
+    <string name="history_open_export">내보내다</string>
+    <string name="history_pages_eyebrow">페이지</string>
+    <string name="history_pages_section">일괄 미리보기</string>
+    <string name="history_pages_supporting">페이지를 탭하면 인식된 텍스트가 열립니다.</string>
+    <string name="history_page_title">페이지 %1$d</string>
+    <string name="history_page_overline">미리보기 준비됨</string>
+    <string name="history_page_badge_ocr">OCR이 저장되었습니다</string>
+    <string name="history_delete_scan">이 스캔 삭제</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="camera_title">포착</string>
+    <string name="camera_back">돌아가려면</string>
+    <string name="camera_guided_scan">가이드 스캐너</string>
+    <string name="camera_scanner_unavailable">이 장치에서는 가이드 스캐너를 사용할 수 없습니다.</string>
+    <string name="camera_take_photo">사진 캡처</string>
+    <string name="camera_capture_failed">캡처를 저장할 수 없습니다.</string>
+    <string name="camera_permission_title">카메라 권한이 필요합니다</string>
+    <string name="camera_permission_message">수동 카메라는 조정 및 내보내기 전에 CameraX를 사용하여 페이지를 캡처합니다.</string>
+    <string name="camera_permission_action">카메라 허용</string>
+    <string name="camera_frame_hint">전체 문서를 프레임 안에 넣습니다.</string>
+</resources>

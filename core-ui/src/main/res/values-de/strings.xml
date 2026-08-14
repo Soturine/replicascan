@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mode_notebook">Notizbuch / Fakultät</string>
+    <string name="mode_notebook_description">Für Handouts, Tabellen und Lernseiten.</string>
+    <string name="mode_document">Dokument/Vertrag</string>
+    <string name="mode_document_description">Priorisiert Ausrichtung und lesbaren Text.</string>
+    <string name="mode_receipt">Quittung</string>
+    <string name="mode_receipt_description">Hebt kleingedruckte und kompakte Dokumente hervor.</string>
+    <string name="filter_original">Korrigiertes Original</string>
+    <string name="filter_original_description">Behält natürliche Farben bei und korrigiert die Perspektive.</string>
+    <string name="filter_bw">Schwarzweißdokument</string>
+    <string name="filter_bw_description">Scharfer Text zum Drucken und Archivieren.</string>
+    <string name="filter_gray">Graues Dokument</string>
+    <string name="filter_gray_description">Reduziert Farbrauschen ohne aggressiven Kontrast.</string>
+    <string name="filter_color">Verbesserte Farbe</string>
+    <string name="filter_color_description">Verbessert Farben und Schärfe von Notizen und Grafiken.</string>
+    <string name="filter_receipt">Empfang / Hoher Kontrast</string>
+    <string name="filter_receipt_description">Verstärkt schwache Ausdrucke auf Belegen.</string>
+    <string name="quality_compact">Kompakt</string>
+    <string name="quality_compact_description">Kleinere Datei zum schnellen Teilen.</string>
+    <string name="quality_balanced">Ausgewogen</string>
+    <string name="quality_balanced_description">Gute Balance zwischen Schärfe und Größe.</string>
+    <string name="quality_high">Hohe Qualität</string>
+    <string name="quality_high_description">Weitere Details in einer größeren Datei.</string>
+    <string name="mascot_processing">Verarbeitung auf Ihrem Gerät</string>
+    <string name="mascot_success">Alles bereit</string>
+    <string name="option_selected">Ausgewählt</string>
+</resources>

@@ -287,7 +287,13 @@ fun FilterScreen(
     var selectedFilter by remember(page?.id, page?.filterType) {
         mutableStateOf(page?.filterType ?: DocumentFilterType.ORIGINAL_CORRECTED)
     }
+    var showingOriginal by remember(page?.id, selectedFilter) { mutableStateOf(false) }
     var previewLongSide by remember(page?.id) { mutableIntStateOf(1500) }
+    val previewFilter = if (showingOriginal) {
+        DocumentFilterType.ORIGINAL_CORRECTED
+    } else {
+        selectedFilter
+    }
 
     LaunchedEffect(state.errorMessage) {
         state.errorMessage?.let {
@@ -296,9 +302,9 @@ fun FilterScreen(
         }
     }
 
-    LaunchedEffect(page?.id, selectedFilter, previewLongSide) {
+    LaunchedEffect(page?.id, previewFilter, previewLongSide) {
         if (page != null) {
-            onRequestPreview(selectedFilter, previewLongSide)
+            onRequestPreview(previewFilter, previewLongSide)
         }
     }
 
@@ -426,6 +432,24 @@ fun FilterScreen(
                                     contentScale = ContentScale.Fit,
                                     maxDimension = previewLongSide,
                                 )
+                                if (selectedFilter != DocumentFilterType.ORIGINAL_CORRECTED && !state.isProcessing) {
+                                    FilledTonalButton(
+                                        modifier = Modifier
+                                            .align(Alignment.TopEnd)
+                                            .padding(8.dp),
+                                        onClick = { showingOriginal = !showingOriginal },
+                                    ) {
+                                        Icon(Icons.Outlined.Tune, contentDescription = null)
+                                        Spacer(Modifier.width(6.dp))
+                                        Text(
+                                            if (showingOriginal) {
+                                                stringResource(R.string.editor_filter_show_result)
+                                            } else {
+                                                stringResource(R.string.editor_filter_show_original)
+                                            },
+                                        )
+                                    }
+                                }
                                 if (state.isPreviewLoading || state.isProcessing) {
                                     PreviewProgressOverlay(
                                         text = if (state.isProcessing) {
@@ -437,7 +461,9 @@ fun FilterScreen(
                                 }
                             }
                             Text(
-                                text = if (state.isPreviewRefining && !state.isProcessing) {
+                                text = if (showingOriginal) {
+                                    stringResource(R.string.editor_filter_comparing_original)
+                                } else if (state.isPreviewRefining && !state.isProcessing) {
                                     stringResource(id = R.string.editor_filter_preview_refining)
                                 } else {
                                     selectedFilter.localizedDescription()
@@ -456,7 +482,10 @@ fun FilterScreen(
                                 selected = selectedFilter == filter,
                                 current = page.filterType == filter,
                                 enabled = !state.isProcessing,
-                                onClick = { selectedFilter = filter },
+                                onClick = {
+                                    showingOriginal = false
+                                    selectedFilter = filter
+                                },
                             )
                         }
                     }

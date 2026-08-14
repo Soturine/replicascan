@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_eyebrow">Tercihler</string>
+    <string name="settings_heading">Scanora\'yı beğeninize göre ayarlayın</string>
+    <string name="settings_supporting">Buradaki her şey yerel kalır: tema, manuel geri dönüş ve dışa aktarma tercihleri.</string>
+    <string name="settings_theme_section">Tema</string>
+    <string name="settings_theme_supporting">Arayüzün günlük olarak nasıl görünmesi gerektiğini tanımlayın.</string>
+    <string name="settings_theme_system">Sistemi takip edin</string>
+    <string name="settings_theme_system_description">Android\'in aktif temasını otomatik olarak kullanır.</string>
+    <string name="settings_theme_light">Her zaman temiz</string>
+    <string name="settings_theme_light_description">Sistem karanlık olduğunda bile uygulamayı net tutar.</string>
+    <string name="settings_theme_dark">Her zaman karanlık</string>
+    <string name="settings_theme_dark_description">Daha az parlaklıkla okumak için uygulamayı karanlık tutar.</string>
+    <string name="settings_language_section">Dil</string>
+    <string name="settings_language_supporting">Sistemi takip edin veya Scanora dilini seçin.</string>
+    <string name="settings_language_system">Sistem</string>
+    <string name="settings_language_portuguese">Portekizce</string>
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_spanish">Español</string>
+    <string name="settings_language_french">Français</string>
+    <string name="settings_language_italian">Italiano</string>
+    <string name="settings_default_mode_section">Standart manuel mod</string>
+    <string name="settings_mode_supporting">Yalnızca manuel ayarlama ve doğrudan içe aktarmada kullanılır. Hızlı tarayıcı evrensel olmaya devam ediyor.</string>
+    <string name="settings_pdf_quality_section">Standart PDF kalitesi</string>
+    <string name="settings_pdf_supporting">Bu tercih, dışa aktarma ekranının temeli olarak kullanılır.</string>
+    <string name="settings_reset_onboarding">Tekrar katılıma bakın</string>
+    <string name="settings_open_about">Uygulama hakkında</string>
+    <string name="settings_about_title">Scanora Hakkında</string>
+    <string name="settings_about_body">Scanora, yerel işlemeye, cihaz üzerinde OCR\'ye ve PDF, JPG ve PNG\'ye net bir şekilde dışa aktarmaya odaklanan bir Android belge tarayıcısıdır. Teklif, minimum sürtünmeyle ve ana akış için bir arka uç gerektirmeden yakalama aşamasından son dosyaya geçmektir.</string>
+    <string name="settings_open_privacy">Gizlilik politikasını aç</string>
+    <string name="settings_language_arabic">العربية</string>
+    <string name="settings_language_german">Deutsch</string>
+    <string name="settings_language_indonesian">Bahasa Indonesia</string>
+    <string name="settings_language_hindi">हिन्दी</string>
+    <string name="settings_language_turkish">Türkçe</string>
+    <string name="settings_language_japanese">日本語</string>
+    <string name="settings_language_korean">한국어</string>
+</resources>

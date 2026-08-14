@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">Pindai. Mengatur. Menyederhanakan.</string>
+    <string name="onboarding_page_one_title">Pindai hanya dalam beberapa langkah</string>
+    <string name="onboarding_page_one_body">Tunjuk, tangkap, dan pergi.</string>
+    <string name="onboarding_page_one_image_description">Fox memindai dokumen dengan ponsel.</string>
+    <string name="onboarding_page_two_title">Tinjau sebelum menyimpan</string>
+    <string name="onboarding_page_two_body">Pangkas, putar, dan tingkatkan jika perlu.</string>
+    <string name="onboarding_page_two_image_description">Fox menyesuaikan sudut-sudut dokumen.</string>
+    <string name="onboarding_page_three_title">Privasi secara default</string>
+    <string name="onboarding_page_three_body">Dokumen Anda diproses di perangkat bila memungkinkan.</string>
+    <string name="onboarding_page_three_image_description">Fox melindungi dokumen dengan perisai.</string>
+    <string name="onboarding_next">Berikutnya</string>
+    <string name="onboarding_finish">Untuk memulai</string>
+    <string name="draft_title_quick">Dokumen yang dipindai</string>
+    <string name="draft_title_camera">Dokumen</string>
+    <string name="draft_title_import">Dokumen yang diimpor</string>
+    <string name="import_partial_result">%1$d dari halaman %2$d telah ditambahkan. %3$d tidak dapat ditambahkan.</string>
+    <string name="import_failed_result">Tidak dapat menambahkan halaman yang dipilih.</string>
+    <string name="delete_partial_result">Dokumen telah dihapus, namun file pribadi %1$d masih menunggu pembersihan.</string>
+    <string name="export_chooser_title">Bagikan ekspor Scanora</string>
+</resources>

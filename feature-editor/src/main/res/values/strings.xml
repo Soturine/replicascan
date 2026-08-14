@@ -21,6 +21,9 @@
     <string name="editor_filter_preview_loading">Updating the preview…</string>
     <string name="editor_filter_preview_refining">Refining the preview more clearly…</string>
     <string name="editor_filter_applying">Applying visuals to the page…</string>
+    <string name="editor_filter_show_original">Show original</string>
+    <string name="editor_filter_show_result">Show result</string>
+    <string name="editor_filter_comparing_original">Original corrected preview</string>
     <string name="editor_apply_visual">Apply visual</string>
     <string name="editor_save_continue">Save and continue</string>
     <string name="editor_rotate">Rotate 90°</string>

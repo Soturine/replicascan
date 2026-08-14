@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ocr_title">OCR</string>
+    <string name="ocr_back">戻るには</string>
+    <string name="ocr_eyebrow">ローカル読み取り</string>
+    <string name="ocr_missing_title">ページが利用できません</string>
+    <string name="ocr_missing_message">テキストを認識するには有効なページを開いてください。</string>
+    <string name="ocr_processing">テキストを読んでいます…</string>
+    <string name="ocr_processing_detail">ページを準備し、結果を整理します。</string>
+    <string name="ocr_result_title">準備完了のテキスト</string>
+    <plurals name="ocr_supporting">
+        <item quantity="one">%1$d整理抜粋。</item>
+        <item quantity="other">%1$d の抜粋を整理しました。</item>
+    </plurals>
+    <string name="ocr_weak_title">部分的な読み取り</string>
+    <string name="ocr_weak_text">このページには有用なテキストがほとんど見つかりませんでした。</string>
+    <string name="ocr_weak_hint">結果が弱いと思われる場合は、トリミングを調整するか、高速スキャナーを試してください。</string>
+    <string name="ocr_empty_title">有用なテキストはありません</string>
+    <string name="ocr_empty_text">トリミングを調整したり、光を改善したり、高速スキャナーを使用したりしてみてください。</string>
+    <string name="ocr_copy">テキストをコピーする</string>
+    <string name="ocr_copy_all">すべてコピー</string>
+    <string name="ocr_copy_excerpt">抜粋のコピー</string>
+    <string name="ocr_copy_success">テキストがコピーされました。</string>
+    <string name="ocr_retry">もう一度読む</string>
+    <string name="ocr_view_paragraphs">抜粋</string>
+    <string name="ocr_view_continuous">連続テキスト</string>
+    <string name="ocr_paragraph_label">抜粋 %1$d</string>
+    <string name="ocr_continuous_title">統合されたテキスト</string>
+    <string name="ocr_script_title">文書作成</string>
+    <string name="ocr_script_latin">ラテン</string>
+    <string name="ocr_script_devanagari">デヴァナーガリー</string>
+    <string name="ocr_script_japanese">日本語</string>
+    <string name="ocr_script_korean">韓国人</string>
+    <string name="ocr_model_pending">選択したローカル テンプレートには、最初のダウンロードが必要な場合があります。</string>
+</resources>

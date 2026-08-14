@@ -65,7 +65,13 @@ fun SettingsScreen(
     }
     when (picker) {
         Picker.THEME -> ChoiceDialog(stringResource(R.string.settings_theme_section), AppThemePreference.entries.map { it to it.label() }, state.preferences.themePreference, { onThemeSelected(it); picker = null }) { picker = null }
-        Picker.LANGUAGE -> ChoiceDialog(stringResource(R.string.settings_language_section), listOf("", "pt-BR", "en", "es", "fr", "it", "ar").map { it to languageLabel(it) }, currentLanguageTag, { onLanguageSelected(it); picker = null }) { picker = null }
+        Picker.LANGUAGE -> ChoiceDialog(
+            stringResource(R.string.settings_language_section),
+            listOf("", "pt-BR", "en", "es", "fr", "it", "ar", "de", "id", "hi", "tr", "ja", "ko")
+                .map { it to languageLabel(it) },
+            currentLanguageTag,
+            { onLanguageSelected(it); picker = null },
+        ) { picker = null }
         Picker.MODE -> ChoiceDialog(stringResource(R.string.settings_default_mode_section), ScanMode.entries.map { it to it.localizedTitle() }, state.preferences.defaultScanMode, { onDefaultModeSelected(it); picker = null }) { picker = null }
         Picker.PDF -> ChoiceDialog(stringResource(R.string.settings_pdf_quality_section), PdfQuality.entries.map { it to it.localizedTitle() }, state.preferences.defaultPdfQuality, { onPdfQualitySelected(it); picker = null }) { picker = null }
         null -> Unit
@@ -134,5 +140,17 @@ fun SettingsScreen(
 })
 
 @Composable private fun languageLabel(tag: String): String = stringResource(when (tag) {
-    "pt-BR" -> R.string.settings_language_portuguese; "en" -> R.string.settings_language_english; "es" -> R.string.settings_language_spanish; "fr" -> R.string.settings_language_french; "it" -> R.string.settings_language_italian; "ar" -> R.string.settings_language_arabic; else -> R.string.settings_language_system
+    "pt-BR" -> R.string.settings_language_portuguese
+    "en" -> R.string.settings_language_english
+    "es" -> R.string.settings_language_spanish
+    "fr" -> R.string.settings_language_french
+    "it" -> R.string.settings_language_italian
+    "ar" -> R.string.settings_language_arabic
+    "de" -> R.string.settings_language_german
+    "id" -> R.string.settings_language_indonesian
+    "hi" -> R.string.settings_language_hindi
+    "tr" -> R.string.settings_language_turkish
+    "ja" -> R.string.settings_language_japanese
+    "ko" -> R.string.settings_language_korean
+    else -> R.string.settings_language_system
 })

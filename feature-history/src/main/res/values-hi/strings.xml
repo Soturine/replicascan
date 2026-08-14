@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="history_title">मेरे स्कैन</string>
+    <string name="history_eyebrow">स्थानीय इतिहास</string>
+    <string name="history_heading">आपके सहेजे गए दस्तावेज़</string>
+    <string name="history_supporting">वर्तमान खोज में %1$d लॉट मिला।</string>
+    <string name="history_supporting_empty">स्थानीय रूप से सहेजी गई हर चीज़ यहां शीर्षक और टैग द्वारा खोज के साथ दिखाई देती है।</string>
+    <string name="history_search_label">स्कैन खोजें</string>
+    <string name="history_search_placeholder">शीर्षक, टैग या बैच प्रकार</string>
+    <string name="history_empty_title">अभी तक कोई स्कैन सहेजा नहीं गया</string>
+    <string name="history_empty_message">समीक्षा या निर्यात के बाद, आपके बैच फिर से खोलने, पसंदीदा बनाने या फिर से निर्यात करने के लिए यहां दिखाई देंगे।</string>
+    <string name="history_subtitle">%1$d पेज • %2$s पर अपडेट किया गया</string>
+    <string name="history_badge_favorite">पसंदीदा</string>
+    <string name="history_badge_draft">रेखाचित्र</string>
+    <string name="history_detail_missing_title">स्कैन नहीं मिला</string>
+    <string name="history_detail_missing_message">हो सकता है कि यह बैच हटा दिया गया हो या अभी तक अपलोड नहीं किया गया हो.</string>
+    <string name="history_detail_eyebrow">बहुत सारा विवरण</string>
+    <string name="history_detail_meta">%1$d पेज • अंतिम बार %2$s पर अपडेट किया गया</string>
+    <string name="history_detail_draft">लॉट अभी भी ड्राफ्ट में है</string>
+    <string name="history_detail_saved">पुनः खोलने, निर्यात करने या बुकमार्क करने के लिए तैयार</string>
+    <string name="history_add_favorite">पसंदीदा चिह्नित करें</string>
+    <string name="history_remove_favorite">पसंदीदा हटाएँ</string>
+    <string name="history_open_review">समीक्षा पर वापस जाएँ</string>
+    <string name="history_open_export">निर्यात</string>
+    <string name="history_pages_eyebrow">पृष्ठों</string>
+    <string name="history_pages_section">बैच पूर्वावलोकन</string>
+    <string name="history_pages_supporting">मान्यता प्राप्त पाठ को खोलने के लिए किसी पृष्ठ पर टैप करें।</string>
+    <string name="history_page_title">पेज %1$d</string>
+    <string name="history_page_overline">पूर्वावलोकन तैयार है</string>
+    <string name="history_page_badge_ocr">ओसीआर सहेजा गया</string>
+    <string name="history_delete_scan">यह स्कैन हटाएँ</string>
+</resources>

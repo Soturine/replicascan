@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="settings_title">設定</string>
+    <string name="settings_eyebrow">設定</string>
+    <string name="settings_heading">Scanoraをお好みに合わせて調整してください</string>
+    <string name="settings_supporting">ここでは、テーマ、手動フォールバック、エクスポート設定など、すべてがローカルのままです。</string>
+    <string name="settings_theme_section">テーマ</string>
+    <string name="settings_theme_supporting">インターフェースが毎日どのように表示されるべきかを定義します。</string>
+    <string name="settings_theme_system">システムに従ってください</string>
+    <string name="settings_theme_system_description">Android のアクティブなテーマを自動的に使用します。</string>
+    <string name="settings_theme_light">常にクリア</string>
+    <string name="settings_theme_light_description">システムが暗い場合でもアプリを鮮明に保ちます。</string>
+    <string name="settings_theme_dark">いつも暗い</string>
+    <string name="settings_theme_dark_description">明るさを下げてアプリを暗くして読書します。</string>
+    <string name="settings_language_section">言語</string>
+    <string name="settings_language_supporting">システムに従うか、Scanora 言語を選択してください。</string>
+    <string name="settings_language_system">システム</string>
+    <string name="settings_language_portuguese">ポルトガル語</string>
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_spanish">Español</string>
+    <string name="settings_language_french">Français</string>
+    <string name="settings_language_italian">Italiano</string>
+    <string name="settings_default_mode_section">標準マニュアルモード</string>
+    <string name="settings_mode_supporting">手動調整および直接インポートの場合にのみ使用されます。高速スキャナーは依然として普遍的です。</string>
+    <string name="settings_pdf_quality_section">標準の PDF 品質</string>
+    <string name="settings_pdf_supporting">この設定は、エクスポート画面の基礎として使用されます。</string>
+    <string name="settings_reset_onboarding">オンボーディングをもう一度見る</string>
+    <string name="settings_open_about">アプリについて</string>
+    <string name="settings_about_title">スキャノーラについて</string>
+    <string name="settings_about_body">Scanora は、ローカル処理、オンデバイス OCR、PDF、JPG、および PNG への明確なエクスポートに重点を置いた Android ドキュメント スキャナーです。提案は、メイン フローのバックエンドを必要とせず、最小限の摩擦でキャプチャから最終ファイルまでを実行することです。</string>
+    <string name="settings_open_privacy">プライバシーポリシーを開く</string>
+    <string name="settings_language_arabic">العربية</string>
+    <string name="settings_language_german">Deutsch</string>
+    <string name="settings_language_indonesian">Bahasa Indonesia</string>
+    <string name="settings_language_hindi">हिन्दी</string>
+    <string name="settings_language_turkish">Türkçe</string>
+    <string name="settings_language_japanese">日本語</string>
+    <string name="settings_language_korean">한국어</string>
+</resources>

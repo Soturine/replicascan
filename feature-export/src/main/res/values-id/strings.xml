@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="export_title">Ekspor</string>
+    <string name="export_back">Untuk kembali</string>
+    <string name="export_eyebrow">Jalan keluar terakhir</string>
+    <string name="export_missing_title">Tidak ada yang perlu diekspor</string>
+    <string name="export_missing_message">Buka batch yang valid sebelum membuat file.</string>
+    <plurals name="export_summary">
+        <item quantity="one">Halaman %1$d siap untuk diekspor.</item>
+        <item quantity="other">Halaman %1$d siap untuk diekspor.</item>
+    </plurals>
+    <string name="export_local_notice">Scanora menghasilkan semua yang ada di perangkat itu sendiri dan menunjukkan di mana file disimpan segera setelah selesai.</string>
+    <string name="export_format_eyebrow">Format</string>
+    <string name="export_format_section">Bagaimana seharusnya batch ini keluar?</string>
+    <string name="export_format_supporting">Pilih bagaimana kumpulan tersebut harus meninggalkan ponsel.</string>
+    <string name="export_kind_pdf">PDF</string>
+    <string name="export_kind_image">Gambar</string>
+    <string name="export_image_format_section">Jenis gambar</string>
+    <string name="export_image_format_supporting">Pilih JPG untuk file yang lebih ringan atau PNG untuk mempertahankan lebih banyak detail.</string>
+    <string name="export_quality_eyebrow">Kualitas</string>
+    <string name="export_quality_section">Kualitas PDF</string>
+    <string name="export_quality_supporting">Kualitas hanya muncul bila keluaran yang dipilih adalah PDF.</string>
+    <string name="export_processing_message">Menghasilkan file di perangkat. Ini mungkin memakan waktu beberapa detik.</string>
+    <string name="export_action">Simpan file</string>
+    <string name="export_action_pdf">Hasilkan PDF</string>
+    <string name="export_action_images">Simpan gambar</string>
+    <string name="export_ready_eyebrow">File siap</string>
+    <string name="export_ready_title">Ekspor selesai</string>
+    <plurals name="export_success_message">
+        <item quantity="one">File %1$d siap dibuka atau dibagikan.</item>
+        <item quantity="other">File %1$d siap dibuka atau dibagikan.</item>
+    </plurals>
+    <string name="export_success_snackbar_single">Berkas disimpan.</string>
+    <string name="export_success_snackbar_multiple">%1$d menyimpan file.</string>
+    <string name="export_share_action">Bagikan file</string>
+    <string name="export_share_file_action">Untuk berbagi</string>
+    <string name="export_location_label">Disimpan di: %1$s</string>
+    <string name="export_file_type">Jenis</string>
+    <string name="export_file_size">Ukuran</string>
+    <string name="export_file_location">Disimpan di</string>
+    <string name="export_file_path">Jalur</string>
+    <string name="export_open_file_action">Buka berkas</string>
+    <string name="export_kind_pdf_description">Menghasilkan satu file untuk diarsipkan, dikirim, atau dicetak.</string>
+    <string name="export_kind_image_description">Menyimpan setiap halaman sebagai gambar independen.</string>
+    <string name="export_type_pdf">dokumen PDF</string>
+    <string name="export_type_jpg">Gambar JPG</string>
+    <string name="export_type_png">Gambar PNG</string>
+    <string name="export_page_size_section">Ukuran halaman</string>
+    <string name="export_page_size_auto">Otomatis</string>
+    <string name="export_page_size_letter">Surat</string>
+    <string name="export_searchable_pdf_ready">PDF menyertakan teks yang dapat dicari.</string>
+</resources>

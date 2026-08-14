@@ -6,7 +6,11 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = ["app", "core-ui", "feature-camera", "feature-editor", "feature-export", "feature-history", "feature-home", "feature-ocr", "feature-settings"]
-LOCALES = ["values", "values-pt-rBR", "values-es", "values-fr", "values-it", "values-ar"]
+LOCALES = [
+    "values", "values-pt-rBR", "values-es", "values-fr", "values-it",
+    "values-ar", "values-de", "values-id", "values-hi", "values-tr",
+    "values-ja", "values-ko",
+]
 PLACEHOLDER = re.compile(r"%(?:\d+\$)?[dsf]")
 
 def catalog(path):
@@ -14,7 +18,10 @@ def catalog(path):
     root = ET.parse(path).getroot()
     for child in root:
         if child.tag == "string" and child.attrib.get("translatable", "true") != "false": result[child.attrib["name"]] = (child.text or "",)
-        elif child.tag == "plurals": result[child.attrib["name"]] = tuple((item.text or "") for item in child)
+        elif child.tag == "plurals":
+            result[child.attrib["name"]] = tuple(
+                (item.attrib.get("quantity", ""), item.text or "") for item in child
+            )
     return result
 
 errors = []
@@ -32,17 +39,33 @@ for module in MODULES:
             continue
         for key, values in entries.items():
             base_values = catalogs["values"][key]
-            base_tokens = sorted(set(token for value in base_values for token in PLACEHOLDER.findall(value)))
-            for value in values:
+            is_plural = bool(base_values and isinstance(base_values[0], tuple))
+            if is_plural:
+                base_quantities = [quantity for quantity, _ in base_values]
+                locale_quantities = [quantity for quantity, _ in values]
+                if len(locale_quantities) != len(set(locale_quantities)):
+                    errors.append(f"{module}/{locale}/{key}: duplicate plural quantities {locale_quantities}")
+                missing_quantities = sorted(set(base_quantities) - set(locale_quantities))
+                if missing_quantities:
+                    errors.append(f"{module}/{locale}/{key}: missing plural quantities {missing_quantities}")
+                if "other" not in locale_quantities:
+                    errors.append(f"{module}/{locale}/{key}: plural must define other")
+                base_texts = [value for _, value in base_values]
+                locale_texts = [value for _, value in values]
+            else:
+                base_texts = list(base_values)
+                locale_texts = list(values)
+            base_tokens = sorted(set(token for value in base_texts for token in PLACEHOLDER.findall(value)))
+            for value in locale_texts:
                 locale_tokens = sorted(set(PLACEHOLDER.findall(value)))
                 if base_tokens != locale_tokens:
                     errors.append(f"{module}/{locale}/{key}: placeholder mismatch {base_tokens} != {locale_tokens}")
-            if any(not value.strip() for value in values):
+            if any(not value.strip() for value in locale_texts):
                 errors.append(f"{module}/{locale}/{key}: blank translation")
-            if locale in {"values-fr", "values-it"} and any("'" in value.replace("\\'", "") for value in values):
+            if locale in {"values-fr", "values-it"} and any("'" in value.replace("\\'", "") for value in locale_texts):
                 errors.append(f"{module}/{locale}/{key}: apostrophe must be escaped for AAPT")
 
 if errors:
     print("\n".join(errors))
     sys.exit(1)
-print("Localization catalogs complete: 9 modules x 6 locales")
+print("Localization catalogs complete: 9 modules x 12 locales")

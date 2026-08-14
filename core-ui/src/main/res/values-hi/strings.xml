@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mode_notebook">नोटबुक/संकाय</string>
+    <string name="mode_notebook_description">हैंडआउट्स, टेबल और अध्ययन पृष्ठों के लिए।</string>
+    <string name="mode_document">दस्तावेज़/अनुबंध</string>
+    <string name="mode_document_description">संरेखण और पठनीय पाठ को प्राथमिकता देता है।</string>
+    <string name="mode_receipt">रसीद</string>
+    <string name="mode_receipt_description">छोटे प्रिंट और कॉम्पैक्ट दस्तावेज़ों पर प्रकाश डालता है।</string>
+    <string name="filter_original">मूल सुधार किया गया</string>
+    <string name="filter_original_description">प्राकृतिक रंगों को बनाए रखता है और परिप्रेक्ष्य को सही करता है।</string>
+    <string name="filter_bw">B&amp;W दस्तावेज़</string>
+    <string name="filter_bw_description">मुद्रण और संग्रह के लिए तीव्र पाठ।</string>
+    <string name="filter_gray">ग्रे दस्तावेज़</string>
+    <string name="filter_gray_description">आक्रामक कंट्रास्ट के बिना रंग शोर को कम करता है।</string>
+    <string name="filter_color">उन्नत रंग</string>
+    <string name="filter_color_description">नोट्स और ग्राफ़ के रंग और तीक्ष्णता में सुधार करता है।</string>
+    <string name="filter_receipt">रसीद / उच्च कंट्रास्ट</string>
+    <string name="filter_receipt_description">रसीदों पर कमजोर प्रिंट को मजबूत करता है।</string>
+    <string name="quality_compact">सघन</string>
+    <string name="quality_compact_description">त्वरित साझाकरण के लिए छोटी फ़ाइल.</string>
+    <string name="quality_balanced">संतुलित</string>
+    <string name="quality_balanced_description">तीक्ष्णता और आकार के बीच अच्छा संतुलन.</string>
+    <string name="quality_high">उच्च गुणवत्ता</string>
+    <string name="quality_high_description">एक बड़ी फ़ाइल में अधिक विवरण.</string>
+    <string name="mascot_processing">आपके डिवाइस पर प्रसंस्करण हो रहा है</string>
+    <string name="mascot_success">सब तैयार</string>
+    <string name="option_selected">चयनित</string>
+</resources>

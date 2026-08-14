@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">शुरू</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">स्कैन करें. व्यवस्थित करें. सरल करें.</string>
+    <string name="home_greeting">नमस्ते!</string>
+    <string name="home_welcome">आपको देखकर अच्छा लगा।</string>
+    <string name="home_start_hint">आरंभ करने के लिए टैप करें.</string>
+    <string name="home_import_gallery_action">गैलरी से आयात करें</string>
+    <string name="home_hero_title">बिना कुछ तैयारी किये स्कैन करें.</string>
+    <string name="home_hero_subtitle">तेज़ स्कैनर किनारों का पता लगाता है, उपलब्ध होने पर गैलरी स्वीकार करता है और फिर समीक्षा खोलता है।</string>
+    <string name="home_quick_scan_action">स्कैन</string>
+    <string name="home_manual_scan_action">मैन्युअल समायोजन</string>
+    <string name="home_import_action">आयात</string>
+    <string name="home_capture_helper">मैन्युअल समायोजन और प्रत्यक्ष आयात संपादन योग्य फ़ॉलबैक के रूप में बने रहेंगे।</string>
+    <string name="home_quick_scan_unavailable">इस डिवाइस पर तेज़ स्कैनर उपलब्ध नहीं है.</string>
+    <string name="home_recent_section">हाल ही का</string>
+    <string name="home_recent_empty_supporting">आपके नवीनतम स्कैन यहां दिखाई देंगे.</string>
+    <string name="home_recent_open_all">सभी देखें</string>
+    <string name="home_empty_title">आपका इतिहास यहीं से शुरू होता है</string>
+    <string name="home_empty_message">पहला बैच बनाने के लिए स्कैन का उपयोग करें। आवश्यकता पड़ने पर मैन्युअल समायोजन अभी भी उपलब्ध है।</string>
+    <string name="home_recent_updated_at">%1$s • को %2$s में अद्यतन किया गया</string>
+    <string name="home_history">मेरे स्कैन</string>
+    <string name="home_settings">सेटिंग्स</string>
+    <string name="home_badge_favorite">पसंदीदा</string>
+    <string name="home_badge_draft">रेखाचित्र</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="one">ऐतिहासिक स्थल में %1$d लॉट।</item>
+        <item quantity="other">स्थानीय इतिहास में %1$d लॉट।</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="one">%1$d पेज</item>
+        <item quantity="other">%1$d पेज</item>
+    </plurals>
+</resources>

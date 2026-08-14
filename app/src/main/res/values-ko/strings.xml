@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">주사. 정리하다. 단순화하십시오.</string>
+    <string name="onboarding_page_one_title">몇 단계만 거치면 스캔 가능</string>
+    <string name="onboarding_page_one_body">가리키고 캡처하고 이동하세요.</string>
+    <string name="onboarding_page_one_image_description">Fox가 휴대폰으로 문서를 스캔하고 있습니다.</string>
+    <string name="onboarding_page_two_title">저장하기 전에 검토하세요</string>
+    <string name="onboarding_page_two_body">필요한 경우 자르기, 회전 및 개선이 가능합니다.</string>
+    <string name="onboarding_page_two_image_description">Fox는 문서 모서리를 조정하고 있습니다.</string>
+    <string name="onboarding_page_three_title">기본적으로 개인 정보 보호</string>
+    <string name="onboarding_page_three_body">귀하의 문서는 가능할 때마다 장치에서 처리됩니다.</string>
+    <string name="onboarding_page_three_image_description">방패로 문서를 보호하는 여우.</string>
+    <string name="onboarding_next">다음</string>
+    <string name="onboarding_finish">시작하려면</string>
+    <string name="draft_title_quick">스캔한 문서</string>
+    <string name="draft_title_camera">문서</string>
+    <string name="draft_title_import">가져온 문서</string>
+    <string name="import_partial_result">%2$d 페이지의 %1$d가 추가되었습니다. %3$d를 추가할 수 없습니다.</string>
+    <string name="import_failed_result">선택한 페이지를 추가할 수 없습니다.</string>
+    <string name="delete_partial_result">문서는 제거되었지만 %1$d 개인 파일은 여전히 ​​정리를 기다리고 있습니다.</string>
+    <string name="export_chooser_title">Scanora 내보내기 공유</string>
+</resources>

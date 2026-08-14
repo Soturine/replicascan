@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="camera_title">Menangkap</string>
+    <string name="camera_back">Untuk kembali</string>
+    <string name="camera_guided_scan">Pemindai Terpandu</string>
+    <string name="camera_scanner_unavailable">Pemindai terpandu tidak tersedia di perangkat ini.</string>
+    <string name="camera_take_photo">Ambil foto</string>
+    <string name="camera_capture_failed">Tidak dapat menyimpan tangkapan.</string>
+    <string name="camera_permission_title">Izin kamera diperlukan</string>
+    <string name="camera_permission_message">Kamera manual menggunakan CameraX untuk menangkap halaman sebelum mengubah dan mengekspor.</string>
+    <string name="camera_permission_action">Izinkan kamera</string>
+    <string name="camera_frame_hint">Bingkai seluruh dokumen di dalam bingkai.</string>
+</resources>

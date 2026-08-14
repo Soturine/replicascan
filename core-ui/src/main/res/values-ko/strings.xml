@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mode_notebook">노트/교직원</string>
+    <string name="mode_notebook_description">유인물, 표, 학습 페이지용.</string>
+    <string name="mode_document">문서/계약</string>
+    <string name="mode_document_description">정렬과 읽을 수 있는 텍스트에 우선순위를 둡니다.</string>
+    <string name="mode_receipt">영수증</string>
+    <string name="mode_receipt_description">작은 활자와 컴팩트한 문서를 강조합니다.</string>
+    <string name="filter_original">수정된 원본</string>
+    <string name="filter_original_description">자연스러운 색상을 유지하고 원근감을 교정합니다.</string>
+    <string name="filter_bw">흑백 문서</string>
+    <string name="filter_bw_description">인쇄 및 보관을 위한 선명한 텍스트.</string>
+    <string name="filter_gray">회색 문서</string>
+    <string name="filter_gray_description">공격적인 대비 없이 색상 노이즈를 줄입니다.</string>
+    <string name="filter_color">향상된 색상</string>
+    <string name="filter_color_description">노트와 그래프의 색상과 선명도를 향상합니다.</string>
+    <string name="filter_receipt">영수증 / 고대비</string>
+    <string name="filter_receipt_description">영수증의 약한 인쇄를 강화합니다.</string>
+    <string name="quality_compact">콤팩트</string>
+    <string name="quality_compact_description">빠른 공유를 위한 더 작은 파일.</string>
+    <string name="quality_balanced">균형 잡힌</string>
+    <string name="quality_balanced_description">선명도와 크기의 균형이 좋습니다.</string>
+    <string name="quality_high">고품질</string>
+    <string name="quality_high_description">자세한 내용은 더 큰 파일로 확인하세요.</string>
+    <string name="mascot_processing">기기에서 처리 중</string>
+    <string name="mascot_success">다 준비됐어</string>
+    <string name="option_selected">선택된</string>
+</resources>

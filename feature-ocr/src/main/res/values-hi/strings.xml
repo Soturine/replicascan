@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ocr_title">OCR</string>
+    <string name="ocr_back">पीछे जाना</string>
+    <string name="ocr_eyebrow">स्थानीय वाचन</string>
+    <string name="ocr_missing_title">पेज अनुपलब्ध</string>
+    <string name="ocr_missing_message">पाठ को पहचानने के लिए एक वैध पृष्ठ खोलें.</string>
+    <string name="ocr_processing">पढ़ने के पाठ…</string>
+    <string name="ocr_processing_detail">पेज तैयार करना और परिणाम व्यवस्थित करना।</string>
+    <string name="ocr_result_title">तैयार पाठ</string>
+    <plurals name="ocr_supporting">
+        <item quantity="one">%1$d संगठित अंश।</item>
+        <item quantity="other">%1$d द्वारा आयोजित अंश।</item>
+    </plurals>
+    <string name="ocr_weak_title">आंशिक वाचन</string>
+    <string name="ocr_weak_text">हमें इस पृष्ठ पर बहुत कम उपयोगी पाठ मिला।</string>
+    <string name="ocr_weak_hint">यदि परिणाम कमज़ोर दिखता है, तो क्रॉपिंग समायोजित करें या तेज़ स्कैनर आज़माएँ।</string>
+    <string name="ocr_empty_title">कोई उपयोगी पाठ नहीं</string>
+    <string name="ocr_empty_text">क्रॉप को समायोजित करने, रोशनी में सुधार करने या तेज़ स्कैनर का उपयोग करने का प्रयास करें।</string>
+    <string name="ocr_copy">पाठ कॉपी करें</string>
+    <string name="ocr_copy_all">सभी को कॉपी करें</string>
+    <string name="ocr_copy_excerpt">अंश कॉपी करें</string>
+    <string name="ocr_copy_success">पाठ कॉपी किया गया.</string>
+    <string name="ocr_retry">फिर से पढे</string>
+    <string name="ocr_view_paragraphs">कुछ अंशः</string>
+    <string name="ocr_view_continuous">सतत पाठ</string>
+    <string name="ocr_paragraph_label">अंश %1$d</string>
+    <string name="ocr_continuous_title">समेकित पाठ</string>
+    <string name="ocr_script_title">दस्तावेज़ लेखन</string>
+    <string name="ocr_script_latin">लैटिन</string>
+    <string name="ocr_script_devanagari">देवनागरी</string>
+    <string name="ocr_script_japanese">जापानी</string>
+    <string name="ocr_script_korean">कोरियाई</string>
+    <string name="ocr_model_pending">चयनित स्थानीय टेम्पलेट को प्रारंभिक डाउनलोड की आवश्यकता हो सकती है।</string>
+</resources>

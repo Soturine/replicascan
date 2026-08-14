@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="export_title">İhracat</string>
+    <string name="export_back">Geri dönmek için</string>
+    <string name="export_eyebrow">Son çıkış</string>
+    <string name="export_missing_title">Dışa aktarılacak hiçbir şey yok</string>
+    <string name="export_missing_message">Dosyaları oluşturmadan önce geçerli bir toplu iş açın.</string>
+    <plurals name="export_summary">
+        <item quantity="one">%1$d sayfası dışa aktarmaya hazır.</item>
+        <item quantity="other">%1$d sayfaları dışa aktarmaya hazır.</item>
+    </plurals>
+    <string name="export_local_notice">Scanora her şeyi cihazın kendisi üzerinde oluşturur ve tamamlanır tamamlanmaz dosyanın nereye kaydedildiğini gösterir.</string>
+    <string name="export_format_eyebrow">Biçim</string>
+    <string name="export_format_section">Bu parti nasıl çıkmalı?</string>
+    <string name="export_format_supporting">Grubun cep telefonundan nasıl çıkması gerektiğini seçin.</string>
+    <string name="export_kind_pdf">PDF</string>
+    <string name="export_kind_image">Resim</string>
+    <string name="export_image_format_section">Resim türü</string>
+    <string name="export_image_format_supporting">Daha hafif bir dosya için JPG\'yi, daha fazla ayrıntıyı korumak için PNG\'yi seçin.</string>
+    <string name="export_quality_eyebrow">Kalite</string>
+    <string name="export_quality_section">PDF Kalitesi</string>
+    <string name="export_quality_supporting">Kalite yalnızca seçilen çıktı PDF olduğunda görünür.</string>
+    <string name="export_processing_message">Cihazda dosyalar oluşturuluyor. Bu birkaç saniye sürebilir.</string>
+    <string name="export_action">Dosyaları kaydet</string>
+    <string name="export_action_pdf">PDF oluştur</string>
+    <string name="export_action_images">Resimleri kaydet</string>
+    <string name="export_ready_eyebrow">Hazır dosyalar</string>
+    <string name="export_ready_title">Dışa aktarma tamamlandı</string>
+    <plurals name="export_success_message">
+        <item quantity="one">%1$d dosyası açılmaya veya paylaşılmaya hazır.</item>
+        <item quantity="other">%1$d dosyaları açılmaya veya paylaşılmaya hazır.</item>
+    </plurals>
+    <string name="export_success_snackbar_single">Dosya kaydedildi.</string>
+    <string name="export_success_snackbar_multiple">%1$d kaydedilen dosyalar.</string>
+    <string name="export_share_action">Dosyaları paylaşın</string>
+    <string name="export_share_file_action">Paylaşmak</string>
+    <string name="export_location_label">Kaydedildiği yer: %1$s</string>
+    <string name="export_file_type">Tip</string>
+    <string name="export_file_size">Boyut</string>
+    <string name="export_file_location">Kayıt yeri</string>
+    <string name="export_file_path">Yol</string>
+    <string name="export_open_file_action">Dosyayı aç</string>
+    <string name="export_kind_pdf_description">Arşivlemek, göndermek veya yazdırmak için tek bir dosya oluşturur.</string>
+    <string name="export_kind_image_description">Her sayfayı bağımsız bir resim olarak kaydeder.</string>
+    <string name="export_type_pdf">PDF belgesi</string>
+    <string name="export_type_jpg">JPG Resmi</string>
+    <string name="export_type_png">PNG Resmi</string>
+    <string name="export_page_size_section">Sayfa boyutu</string>
+    <string name="export_page_size_auto">Otomatik</string>
+    <string name="export_page_size_letter">Mektup</string>
+    <string name="export_searchable_pdf_ready">PDF aranabilir metin içerir.</string>
+</resources>

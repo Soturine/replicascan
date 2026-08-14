@@ -21,6 +21,9 @@
     <string name="editor_filter_preview_loading">Mise à jour de l\'aperçu…</string>
     <string name="editor_filter_preview_refining">Affiner l’aperçu plus clairement…</string>
     <string name="editor_filter_applying">Appliquer des visuels à la page…</string>
+    <string name="editor_filter_show_original">Voir l\'original</string>
+    <string name="editor_filter_show_result">Voir le résultat</string>
+    <string name="editor_filter_comparing_original">Aperçu de l\'original corrigé</string>
     <string name="editor_apply_visual">Appliquer le visuel</string>
     <string name="editor_save_continue">Enregistrer et continuer</string>
     <string name="editor_rotate">Rotation à 90°</string>

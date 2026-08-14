@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="export_title">輸出</string>
+    <string name="export_back">戻るには</string>
+    <string name="export_eyebrow">最終出口</string>
+    <string name="export_missing_title">エクスポートするものがありません</string>
+    <string name="export_missing_message">ファイルを生成する前に、有効なバッチを開きます。</string>
+    <plurals name="export_summary">
+        <item quantity="one">%1$d ページをエクスポートする準備ができました。</item>
+        <item quantity="other">%1$d ページをエクスポートする準備ができました。</item>
+    </plurals>
+    <string name="export_local_notice">Scanora はデバイス自体ですべてを生成し、完了するとすぐにファイルが保存された場所を表示します。</string>
+    <string name="export_format_eyebrow">形式</string>
+    <string name="export_format_section">このバッチはどのように出てくるのでしょうか?</string>
+    <string name="export_format_supporting">バッチが携帯電話からどのように送信されるかを選択します。</string>
+    <string name="export_kind_pdf">PDF</string>
+    <string name="export_kind_image">画像</string>
+    <string name="export_image_format_section">画像の種類</string>
+    <string name="export_image_format_supporting">ファイルを軽量化するには JPG を選択し、詳細を保持するには PNG を選択します。</string>
+    <string name="export_quality_eyebrow">品質</string>
+    <string name="export_quality_section">PDF の品質</string>
+    <string name="export_quality_supporting">品質は、選択した出力が PDF の場合にのみ表示されます。</string>
+    <string name="export_processing_message">デバイス上でファイルを生成しています。これには数秒かかる場合があります。</string>
+    <string name="export_action">ファイルを保存する</string>
+    <string name="export_action_pdf">PDFの生成</string>
+    <string name="export_action_images">画像の保存</string>
+    <string name="export_ready_eyebrow">準備ができたファイル</string>
+    <string name="export_ready_title">エクスポートが完了しました</string>
+    <plurals name="export_success_message">
+        <item quantity="one">%1$d ファイルを開いたり共有したりする準備ができました。</item>
+        <item quantity="other">%1$d ファイルを開いたり共有したりする準備ができました。</item>
+    </plurals>
+    <string name="export_success_snackbar_single">ファイルが保存されました。</string>
+    <string name="export_success_snackbar_multiple">%1$d に保存されたファイル。</string>
+    <string name="export_share_action">ファイルを共有する</string>
+    <string name="export_share_file_action">共有するには</string>
+    <string name="export_location_label">保存場所: %1$s</string>
+    <string name="export_file_type">タイプ</string>
+    <string name="export_file_size">サイズ</string>
+    <string name="export_file_location">保存場所</string>
+    <string name="export_file_path">パス</string>
+    <string name="export_open_file_action">ファイルを開く</string>
+    <string name="export_kind_pdf_description">アーカイブ、送信、または印刷するための単一のファイルを生成します。</string>
+    <string name="export_kind_image_description">各ページを独立した画像として保存します。</string>
+    <string name="export_type_pdf">PDFドキュメント</string>
+    <string name="export_type_jpg">JPG画像</string>
+    <string name="export_type_png">PNG画像</string>
+    <string name="export_page_size_section">ページサイズ</string>
+    <string name="export_page_size_auto">自動</string>
+    <string name="export_page_size_letter">手紙</string>
+    <string name="export_searchable_pdf_ready">PDF には検索可能なテキストが含まれています。</string>
+</resources>

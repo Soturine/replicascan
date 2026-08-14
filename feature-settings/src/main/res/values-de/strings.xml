@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_eyebrow">Präferenzen</string>
+    <string name="settings_heading">Passen Sie Scanora nach Ihren Wünschen an</string>
+    <string name="settings_supporting">Hier bleibt alles lokal: Theme, manuelles Fallback und Exporteinstellungen.</string>
+    <string name="settings_theme_section">Thema</string>
+    <string name="settings_theme_supporting">Definieren Sie, wie die Benutzeroberfläche täglich aussehen soll.</string>
+    <string name="settings_theme_system">Folgen Sie dem System</string>
+    <string name="settings_theme_system_description">Verwendet automatisch das aktive Theme von Android.</string>
+    <string name="settings_theme_light">Immer klar</string>
+    <string name="settings_theme_light_description">Hält die App klar, auch wenn das System dunkel ist.</string>
+    <string name="settings_theme_dark">Immer dunkel</string>
+    <string name="settings_theme_dark_description">Hält die App zum Lesen dunkel und mit geringerer Helligkeit.</string>
+    <string name="settings_language_section">Sprache</string>
+    <string name="settings_language_supporting">Folgen Sie dem System oder wählen Sie die Scanora-Sprache.</string>
+    <string name="settings_language_system">System</string>
+    <string name="settings_language_portuguese">Portugiesisch</string>
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_spanish">Español</string>
+    <string name="settings_language_french">Français</string>
+    <string name="settings_language_italian">Italiano</string>
+    <string name="settings_default_mode_section">Standardmäßiger manueller Modus</string>
+    <string name="settings_mode_supporting">Wird nur bei der manuellen Anpassung und beim direkten Import verwendet. Der schnelle Scanner bleibt universell.</string>
+    <string name="settings_pdf_quality_section">Standard-PDF-Qualität</string>
+    <string name="settings_pdf_supporting">Diese Einstellung wird als Grundlage für den Exportbildschirm verwendet.</string>
+    <string name="settings_reset_onboarding">Siehe Onboarding noch einmal</string>
+    <string name="settings_open_about">Über die App</string>
+    <string name="settings_about_title">Über Scanora</string>
+    <string name="settings_about_body">Scanora ist ein Android-Dokumentenscanner mit Schwerpunkt auf lokaler Verarbeitung, OCR auf dem Gerät und klarem Export in PDF, JPG und PNG. Der Vorschlag besteht darin, mit minimaler Reibung von der Erfassung bis zur endgültigen Datei zu gelangen, ohne dass ein Backend für den Hauptfluss erforderlich ist.</string>
+    <string name="settings_open_privacy">Datenschutzerklärung öffnen</string>
+    <string name="settings_language_arabic">العربية</string>
+    <string name="settings_language_german">Deutsch</string>
+    <string name="settings_language_indonesian">Bahasa Indonesia</string>
+    <string name="settings_language_hindi">हिन्दी</string>
+    <string name="settings_language_turkish">Türkçe</string>
+    <string name="settings_language_japanese">日本語</string>
+    <string name="settings_language_korean">한국어</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="splash_subtitle">स्कैन करें. व्यवस्थित करें. सरल करें.</string>
+    <string name="onboarding_page_one_title">बस कुछ ही चरणों में स्कैन करें</string>
+    <string name="onboarding_page_one_body">इशारा करो, पकड़ो और जाओ।</string>
+    <string name="onboarding_page_one_image_description">फ़ॉक्स सेल फ़ोन से किसी दस्तावेज़ को स्कैन कर रहा है।</string>
+    <string name="onboarding_page_two_title">सहेजने से पहले समीक्षा करें</string>
+    <string name="onboarding_page_two_body">यदि आपको आवश्यकता हो तो काट-छाँट करें, घुमाएँ और सुधार करें।</string>
+    <string name="onboarding_page_two_image_description">फ़ॉक्स दस्तावेज़ के कोनों को समायोजित कर रहा है।</string>
+    <string name="onboarding_page_three_title">डिफ़ॉल्ट रूप से गोपनीयता</string>
+    <string name="onboarding_page_three_body">जब भी संभव हो आपके दस्तावेज़ डिवाइस पर संसाधित किए जाते हैं।</string>
+    <string name="onboarding_page_three_image_description">फॉक्स ढाल के साथ दस्तावेज़ की सुरक्षा कर रहा है।</string>
+    <string name="onboarding_next">अगला</string>
+    <string name="onboarding_finish">आरंभ करना</string>
+    <string name="draft_title_quick">स्कैन किया गया दस्तावेज़</string>
+    <string name="draft_title_camera">दस्तावेज़</string>
+    <string name="draft_title_import">आयातित दस्तावेज़</string>
+    <string name="import_partial_result">%2$d से %1$d पेज जोड़े गए हैं। %3$d जोड़ा नहीं जा सका.</string>
+    <string name="import_failed_result">चयनित पृष्ठ जोड़ने में असमर्थ.</string>
+    <string name="delete_partial_result">दस्तावेज़ हटा दिया गया है, लेकिन %1$d निजी फ़ाइलें अभी भी सफ़ाई की प्रतीक्षा कर रही हैं।</string>
+    <string name="export_chooser_title">स्कैनोरा निर्यात साझा करें</string>
+</resources>

@@ -14,7 +14,19 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = ["app", "core-ui", "feature-camera", "feature-editor", "feature-export", "feature-history", "feature-home", "feature-ocr", "feature-settings"]
-TARGETS = {"en": "values", "es": "values-es", "fr": "values-fr", "it": "values-it", "ar": "values-ar"}
+TARGETS = {
+    "en": "values",
+    "es": "values-es",
+    "fr": "values-fr",
+    "it": "values-it",
+    "ar": "values-ar",
+    "de": "values-de",
+    "id": "values-id",
+    "hi": "values-hi",
+    "tr": "values-tr",
+    "ja": "values-ja",
+    "ko": "values-ko",
+}
 TOKEN = re.compile(r"%(?:\d+\$)?[dsf]")
 
 def translate(text: str, target: str) -> str:
@@ -25,7 +37,12 @@ def translate(text: str, target: str) -> str:
         protected[key] = match.group(0)
         return key
     query = TOKEN.sub(hold, text)
-    if query in {"Scanora", "PDF", "JPG", "PNG", "OCR", "English", "Español", "Français", "Italiano"}: return query
+    if query in {
+        "Scanora", "PDF", "JPG", "PNG", "OCR", "English", "Español",
+        "Français", "Italiano", "Deutsch", "Bahasa Indonesia", "हिन्दी",
+        "Türkçe", "日本語", "한국어", "العربية",
+    }:
+        return query
     url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=pt&tl=" + target + "&dt=t&q=" + urllib.parse.quote(query)
     with urllib.request.urlopen(url, timeout=20) as response:
         data = json.loads(response.read().decode("utf-8"))

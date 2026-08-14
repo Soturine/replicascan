@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="history_title">私のスキャン</string>
+    <string name="history_eyebrow">地元の歴史</string>
+    <string name="history_heading">保存したドキュメント</string>
+    <string name="history_supporting">現在の検索で %1$d 個のロットが見つかりました。</string>
+    <string name="history_supporting_empty">ローカルに保存されたものはすべて、タイトルとタグで検索するとここに表示されます。</string>
+    <string name="history_search_label">検索スキャン</string>
+    <string name="history_search_placeholder">タイトル、タグ、またはバッチタイプ</string>
+    <string name="history_empty_title">スキャンはまだ保存されていません</string>
+    <string name="history_empty_message">レビューまたはエクスポート後、バッチがここに表示され、再度開いたり、お気に入りに追加したり、再度エクスポートしたりできます。</string>
+    <string name="history_subtitle">%1$d ページ • %2$s で更新</string>
+    <string name="history_badge_favorite">お気に入り</string>
+    <string name="history_badge_draft">スケッチ</string>
+    <string name="history_detail_missing_title">スキャンが見つかりません</string>
+    <string name="history_detail_missing_message">このバッチは削除されたか、まだアップロードされていない可能性があります。</string>
+    <string name="history_detail_eyebrow">ロット詳細</string>
+    <string name="history_detail_meta">%1$d ページ • 最終更新日: %2$s</string>
+    <string name="history_detail_draft">ロットはまだドラフト中</string>
+    <string name="history_detail_saved">再度開く、エクスポートする、またはブックマークする準備ができました</string>
+    <string name="history_add_favorite">お気に入りにマークを付ける</string>
+    <string name="history_remove_favorite">お気に入りを削除</string>
+    <string name="history_open_review">レビューに戻る</string>
+    <string name="history_open_export">輸出</string>
+    <string name="history_pages_eyebrow">ページ</string>
+    <string name="history_pages_section">バッチプレビュー</string>
+    <string name="history_pages_supporting">ページをタップして、認識されたテキストを開きます。</string>
+    <string name="history_page_title">ページ %1$d</string>
+    <string name="history_page_overline">プレビューの準備ができました</string>
+    <string name="history_page_badge_ocr">OCR が保存されました</string>
+    <string name="history_delete_scan">このスキャンを削除します</string>
+</resources>

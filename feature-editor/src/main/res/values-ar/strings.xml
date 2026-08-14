@@ -21,6 +21,9 @@
     <string name="editor_filter_preview_loading">جارٍ تحديث المعاينة…</string>
     <string name="editor_filter_preview_refining">تحسين المعاينة بشكل أكثر وضوحًا…</string>
     <string name="editor_filter_applying">جارٍ تطبيق العناصر المرئية على الصفحة...</string>
+    <string name="editor_filter_show_original">عرض الأصل</string>
+    <string name="editor_filter_show_result">عرض النتيجة</string>
+    <string name="editor_filter_comparing_original">معاينة الأصل المصحح</string>
     <string name="editor_apply_visual">تطبيق البصرية</string>
     <string name="editor_save_continue">حفظ والمتابعة</string>
     <string name="editor_rotate">تدوير 90 درجة</string>

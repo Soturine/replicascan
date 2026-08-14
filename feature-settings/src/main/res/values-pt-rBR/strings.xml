@@ -30,4 +30,10 @@
     <string name="settings_about_body">Scanora é um scanner de documentos Android com foco em processamento local, OCR no dispositivo e exportação clara para PDF, JPG e PNG. A proposta é sair da captura até o arquivo final com o mínimo de atrito e sem exigir backend para o fluxo principal.</string>
     <string name="settings_open_privacy">Abrir política de privacidade</string>
     <string name="settings_language_arabic">العربية</string>
+    <string name="settings_language_german">Deutsch</string>
+    <string name="settings_language_indonesian">Bahasa Indonesia</string>
+    <string name="settings_language_hindi">हिन्दी</string>
+    <string name="settings_language_turkish">Türkçe</string>
+    <string name="settings_language_japanese">日本語</string>
+    <string name="settings_language_korean">한국어</string>
 </resources>

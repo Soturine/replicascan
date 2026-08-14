@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_title">Start</string>
+    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_tagline">Scan. Organisieren. Vereinfachen.</string>
+    <string name="home_greeting">Hallo!</string>
+    <string name="home_welcome">Schön dich zu sehen.</string>
+    <string name="home_start_hint">Tippen Sie, um zu beginnen.</string>
+    <string name="home_import_gallery_action">Aus Galerie importieren</string>
+    <string name="home_hero_title">Scannen Sie, ohne etwas vorzubereiten.</string>
+    <string name="home_hero_subtitle">Der schnelle Scanner erkennt Kanten, akzeptiert die Galerie, sofern verfügbar, und öffnet dann die Rezension.</string>
+    <string name="home_quick_scan_action">Scan</string>
+    <string name="home_manual_scan_action">Manuelle Einstellung</string>
+    <string name="home_import_action">Import</string>
+    <string name="home_capture_helper">Manuelle Anpassung und Direktimport bleiben als bearbeitbarer Fallback bestehen.</string>
+    <string name="home_quick_scan_unavailable">Der Schnellscanner ist auf diesem Gerät nicht verfügbar.</string>
+    <string name="home_recent_section">Jüngste</string>
+    <string name="home_recent_empty_supporting">Ihre neuesten Scans werden hier angezeigt.</string>
+    <string name="home_recent_open_all">Alle anzeigen</string>
+    <string name="home_empty_title">Ihre Geschichte beginnt hier</string>
+    <string name="home_empty_message">Verwenden Sie „Scannen“, um den ersten Stapel zu erstellen. Die manuelle Anpassung ist weiterhin verfügbar, wenn Sie sie benötigen.</string>
+    <string name="home_recent_updated_at">%1$s • aktualisiert auf %2$s</string>
+    <string name="home_history">Meine Scans</string>
+    <string name="home_settings">Einstellungen</string>
+    <string name="home_badge_favorite">Favorit</string>
+    <string name="home_badge_draft">Skizzieren</string>
+    <plurals name="home_recent_supporting">
+        <item quantity="one">%1$d-Grundstück an historischem Ort.</item>
+        <item quantity="other">%1$d Lose in der lokalen Geschichte.</item>
+    </plurals>
+    <plurals name="home_recent_pages">
+        <item quantity="one">%1$d-Seite</item>
+        <item quantity="other">%1$d-Seiten</item>
+    </plurals>
+</resources>
