@@ -4,14 +4,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.outlined.FileOpen
+import androidx.compose.material.icons.outlined.IosShare
+import androidx.compose.material.icons.outlined.SaveAlt
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -105,18 +110,14 @@ fun ExportScreen(
                     ) {
                         if (state.isExporting) {
                             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                            Text(
-                                text = stringResource(id = R.string.export_processing_message),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        if (state.exportedFiles.isEmpty()) {
+                        } else if (state.exportedFiles.isEmpty()) {
                             Button(
                                 modifier = Modifier.fillMaxWidth(),
                                 onClick = onExport,
                                 enabled = !state.isExporting && state.scan.pages.isNotEmpty(),
                             ) {
+                                Icon(Icons.Outlined.SaveAlt, contentDescription = null)
+                                Spacer(Modifier.width(8.dp))
                                 Text(
                                     text = if (state.selectedFormat == ExportFormat.PDF) {
                                         stringResource(id = R.string.export_action_pdf)
@@ -130,6 +131,8 @@ fun ExportScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 onClick = { onShare(state.exportedFiles) },
                             ) {
+                                Icon(Icons.Outlined.IosShare, contentDescription = null)
+                                Spacer(Modifier.width(8.dp))
                                 Text(text = stringResource(id = R.string.export_share_action))
                             }
                         }
@@ -144,6 +147,7 @@ fun ExportScreen(
             EmptyStateCard(
                 title = stringResource(id = R.string.export_missing_title),
                 message = stringResource(id = R.string.export_missing_message),
+                mascotState = ScanoraMascotState.Attention,
                 modifier = Modifier
                     .padding(innerPadding)
                     .padding(24.dp),
@@ -156,7 +160,7 @@ fun ExportScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    ScanoraMascot(ScanoraMascotState.Working, size = 220.dp, showLabel = true)
+                    ScanoraMascot(ScanoraMascotState.Processing, size = 220.dp, showLabel = true)
                     Text(
                         text = stringResource(R.string.export_processing_message),
                         style = MaterialTheme.typography.bodyLarge,
@@ -178,7 +182,11 @@ fun ExportScreen(
                     FilledTonalButton(
                         modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                         onClick = { onOpenFile(state.exportedFiles.first()) },
-                    ) { Text(stringResource(R.string.export_open_file_action)) }
+                    ) {
+                        Icon(Icons.Outlined.FileOpen, contentDescription = null)
+                        Spacer(Modifier.width(8.dp))
+                        Text(stringResource(R.string.export_open_file_action))
+                    }
                 }
             } else LazyColumn(
                 modifier = Modifier
@@ -412,12 +420,16 @@ private fun ExportedFileCard(
                     modifier = Modifier.weight(1f),
                     onClick = onOpen,
                 ) {
+                    Icon(Icons.Outlined.FileOpen, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
                     Text(text = stringResource(id = R.string.export_open_file_action))
                 }
                 OutlinedButton(
                     modifier = Modifier.weight(1f),
                     onClick = onShare,
                 ) {
+                    Icon(Icons.Outlined.IosShare, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
                     Text(text = stringResource(id = R.string.export_share_file_action))
                 }
             }
@@ -471,18 +483,13 @@ private fun ExportKind.description(): String = stringResource(when (this) {
     ExportKind.IMAGE -> R.string.export_kind_image_description
 })
 
-private fun ExportFormat.description(): String = when (this) {
-    ExportFormat.PDF -> "Reúne o lote inteiro em um arquivo só, pronto para enviar ou arquivar."
-    ExportFormat.JPG -> "Salva cada página como imagem leve e fácil de compartilhar."
-    ExportFormat.PNG -> "Mantém mais detalhe por página quando a saída precisa ficar em imagem."
-}
-
-private fun String.typeLabel(): String = when (this) {
-    ExportFormat.PDF.mimeType -> "Documento PDF"
-    ExportFormat.JPG.mimeType -> "Imagem JPG"
-    ExportFormat.PNG.mimeType -> "Imagem PNG"
-    else -> this
-}
+@Composable
+private fun String.typeLabel(): String = stringResource(when (this) {
+    ExportFormat.PDF.mimeType -> R.string.export_type_pdf
+    ExportFormat.JPG.mimeType -> R.string.export_type_jpg
+    ExportFormat.PNG.mimeType -> R.string.export_type_png
+    else -> return this
+})
 
 private fun ExportedFile.sizeLabel(): String {
     val sizeInKb = sizeBytes / 1024f

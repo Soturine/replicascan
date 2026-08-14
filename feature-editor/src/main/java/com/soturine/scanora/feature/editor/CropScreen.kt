@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,10 +21,17 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.outlined.AutoFixHigh
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Crop
+import androidx.compose.material.icons.outlined.DeleteOutline
+import androidx.compose.material.icons.outlined.FileUpload
+import androidx.compose.material.icons.outlined.RotateRight
+import androidx.compose.material.icons.outlined.TextSnippet
+import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -63,6 +71,8 @@ import com.soturine.scanora.core.common.model.ScanPage
 import com.soturine.scanora.core.ui.component.AsyncUriImage
 import com.soturine.scanora.core.ui.component.EmptyStateCard
 import com.soturine.scanora.core.ui.component.SectionHeader
+import com.soturine.scanora.core.ui.component.ScanoraMascotState
+import com.soturine.scanora.core.ui.component.ScanoraMascot
 import com.soturine.scanora.core.ui.localizedDescription
 import com.soturine.scanora.core.ui.localizedTitle
 import kotlin.math.max
@@ -134,6 +144,8 @@ fun CropScreen(
                                 onClick = onReestimate,
                                 enabled = !state.isProcessing,
                             ) {
+                                Icon(Icons.Outlined.AutoFixHigh, contentDescription = null)
+                                Spacer(Modifier.width(8.dp))
                                 Text(text = stringResource(id = R.string.editor_reestimate_crop))
                             }
                             Button(
@@ -141,6 +153,8 @@ fun CropScreen(
                                 onClick = { onSaveQuadAndContinue(localQuad) },
                                 enabled = !state.isProcessing,
                             ) {
+                                Icon(Icons.Outlined.Check, contentDescription = null)
+                                Spacer(Modifier.width(8.dp))
                                 Text(text = stringResource(id = R.string.editor_save_crop_continue))
                             }
                         }
@@ -154,6 +168,7 @@ fun CropScreen(
             EmptyStateCard(
                 title = stringResource(id = R.string.editor_missing_page_title),
                 message = stringResource(id = R.string.editor_missing_page_message),
+                mascotState = ScanoraMascotState.Attention,
                 modifier = Modifier
                     .padding(innerPadding)
                     .padding(24.dp),
@@ -273,6 +288,8 @@ fun FilterScreen(
                                 onClick = onRotate,
                                 enabled = !state.isProcessing,
                             ) {
+                                Icon(Icons.Outlined.RotateRight, contentDescription = null)
+                                Spacer(Modifier.width(8.dp))
                                 Text(text = stringResource(id = R.string.editor_rotate))
                             }
                             Button(
@@ -286,6 +303,11 @@ fun FilterScreen(
                                 },
                                 enabled = !state.isProcessing,
                             ) {
+                                Icon(
+                                    if (canContinue) Icons.Outlined.Check else Icons.Outlined.Tune,
+                                    contentDescription = null,
+                                )
+                                Spacer(Modifier.width(8.dp))
                                 Text(
                                     text = if (canContinue) {
                                         stringResource(id = R.string.editor_save_continue)
@@ -305,6 +327,7 @@ fun FilterScreen(
             EmptyStateCard(
                 title = stringResource(id = R.string.editor_missing_page_title),
                 message = stringResource(id = R.string.editor_missing_page_message),
+                mascotState = ScanoraMascotState.Attention,
                 modifier = Modifier
                     .padding(innerPadding)
                     .padding(24.dp),
@@ -439,6 +462,7 @@ fun ReviewScreen(
         EmptyStateCard(
             title = stringResource(id = R.string.editor_missing_page_title),
             message = stringResource(id = R.string.editor_missing_page_message),
+            mascotState = ScanoraMascotState.Attention,
             modifier = modifier.padding(24.dp),
         )
         return
@@ -508,6 +532,8 @@ fun ReviewScreen(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = onOpenExport,
                     ) {
+                        Icon(Icons.Outlined.FileUpload, contentDescription = null)
+                        Spacer(Modifier.width(8.dp))
                         Text(text = stringResource(id = R.string.editor_open_export))
                     }
                     Row(
@@ -519,6 +545,8 @@ fun ReviewScreen(
                             onClick = onOpenCrop,
                             enabled = selectedPage != null,
                         ) {
+                            Icon(Icons.Outlined.Crop, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
                             Text(text = stringResource(id = R.string.editor_open_crop))
                         }
                         FilledTonalButton(
@@ -526,6 +554,8 @@ fun ReviewScreen(
                             onClick = onOpenFilters,
                             enabled = selectedPage != null,
                         ) {
+                            Icon(Icons.Outlined.Tune, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
                             Text(text = stringResource(id = R.string.editor_open_filters))
                         }
                     }
@@ -780,6 +810,8 @@ private fun SelectedPageCard(
                     }
                 }
                 FilledTonalButton(onClick = onOpenOcr) {
+                    Icon(Icons.Outlined.TextSnippet, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
                     Text(text = stringResource(id = R.string.editor_open_ocr))
                 }
             }
@@ -801,6 +833,8 @@ private fun SelectedPageCard(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = onDelete,
                 ) {
+                    Icon(Icons.Outlined.DeleteOutline, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
                     Text(text = stringResource(id = R.string.editor_delete_page))
                 }
             }
@@ -937,12 +971,12 @@ private fun PreviewProgressOverlay(
             color = MaterialTheme.colorScheme.surface.copy(alpha = 0.92f),
             shape = MaterialTheme.shapes.large,
         ) {
-            Row(
+            Column(
                 modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
-                CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.5.dp)
+                ScanoraMascot(state = ScanoraMascotState.Processing, size = 72.dp)
                 Text(
                     text = text,
                     style = MaterialTheme.typography.bodyMedium,

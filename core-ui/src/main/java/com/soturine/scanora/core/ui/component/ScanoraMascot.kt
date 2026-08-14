@@ -28,6 +28,9 @@ enum class ScanoraMascotState(@DrawableRes internal val drawable: Int) {
     Welcome(R.drawable.scanora_mascot_welcome),
     Processing(R.drawable.scanora_mascot_processing),
     Working(R.drawable.scanora_mascot_working),
+    Ocr(R.drawable.scanora_mascot_ocr),
+    Empty(R.drawable.scanora_mascot_empty),
+    Attention(R.drawable.scanora_mascot_attention),
     Success(R.drawable.scanora_mascot_success),
 }
 
@@ -48,9 +51,19 @@ fun ScanoraMascot(
         ),
         label = "mascotPhase",
     )
-    val animatedModifier = if (state == ScanoraMascotState.Processing || state == ScanoraMascotState.Working) {
-        Modifier.graphicsLayer { translationY = (-3 + phase * 6).dp.toPx() }.scale(0.98f + phase * 0.02f)
-    } else Modifier
+    val animatedModifier = when (state) {
+        ScanoraMascotState.Processing,
+        ScanoraMascotState.Working,
+        ScanoraMascotState.Ocr,
+        -> Modifier
+            .graphicsLayer {
+                translationY = (-3 + phase * 6).dp.toPx()
+                rotationZ = if (state == ScanoraMascotState.Ocr) -0.8f + phase * 1.6f else 0f
+            }
+            .scale(0.98f + phase * 0.02f)
+        ScanoraMascotState.Attention -> Modifier.scale(0.985f + phase * 0.015f)
+        else -> Modifier
+    }
 
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Image(

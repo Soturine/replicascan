@@ -9,6 +9,7 @@ object ScanoraSpacing {
     val lg = 16.dp
     val xl = 24.dp
     val xxl = 32.dp
+    val xxxl = 40.dp
 }
 
 object ScanoraSizes {
@@ -16,4 +17,6 @@ object ScanoraSizes {
     val primaryActionHeight = 60.dp
     val compactContentMaxWidth = 680.dp
     val expandedContentMaxWidth = 1180.dp
+    val compactIllustration = 136.dp
+    val heroIllustration = 156.dp
 }

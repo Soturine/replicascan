@@ -9,6 +9,8 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,6 +49,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -61,6 +64,8 @@ import com.soturine.scanora.core.common.model.ScanDocument
 import com.soturine.scanora.core.common.model.ScanMode
 import com.soturine.scanora.core.common.util.DateFormatter
 import com.soturine.scanora.core.ui.component.AsyncUriImage
+import com.soturine.scanora.core.ui.component.EmptyStateCard
+import com.soturine.scanora.core.ui.component.ScanoraMascotState
 import com.soturine.scanora.core.ui.component.ScanoraContent
 import com.soturine.scanora.core.ui.component.ScanoraPrimaryButton
 import com.soturine.scanora.core.ui.component.ScanoraSecondaryButton
@@ -150,23 +155,42 @@ fun HomeScreen(
             item {
                 ScanoraContent {
                     Card(
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.28f)),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                     ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(start = 20.dp, top = 18.dp, end = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    Brush.horizontalGradient(
+                                        listOf(
+                                            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.46f),
+                                            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.34f),
+                                        ),
+                                    ),
+                                ),
                         ) {
-                            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                                Text(stringResource(R.string.home_greeting), style = MaterialTheme.typography.headlineLarge)
-                                Text(stringResource(R.string.home_welcome), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                Text(stringResource(R.string.home_start_hint), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(start = 20.dp, top = 16.dp, end = 8.dp, bottom = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    Text(
+                                        stringResource(R.string.home_greeting),
+                                        style = MaterialTheme.typography.headlineLarge,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                    )
+                                    Text(stringResource(R.string.home_welcome), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Text(stringResource(R.string.home_start_hint), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                                }
+                                Image(
+                                    painter = painterResource(com.soturine.scanora.core.ui.R.drawable.scanora_mascot_welcome),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(150.dp),
+                                    contentScale = ContentScale.Fit,
+                                )
                             }
-                            Image(
-                                painter = painterResource(com.soturine.scanora.core.ui.R.drawable.scanora_mascot_welcome),
-                                contentDescription = null,
-                                modifier = Modifier.size(150.dp),
-                                contentScale = ContentScale.Fit,
-                            )
                         }
                     }
                     ScanoraPrimaryButton(
@@ -201,10 +225,10 @@ fun HomeScreen(
                         TextButton(onClick = onOpenHistory) { Text(stringResource(R.string.home_recent_open_all)) }
                     }
                     if (state.recentScans.isEmpty()) {
-                        Text(
-                            stringResource(R.string.home_empty_message),
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        EmptyStateCard(
+                            title = stringResource(R.string.home_empty_title),
+                            message = stringResource(R.string.home_empty_message),
+                            mascotState = ScanoraMascotState.Empty,
                         )
                     }
                 }
@@ -221,7 +245,12 @@ fun HomeScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeRecentCard(scan: ScanDocument, formatter: DateFormatter, onClick: () -> Unit) {
-    Card(onClick = onClick, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
+    Card(
+        onClick = onClick,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.72f)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(12.dp),
             horizontalArrangement = Arrangement.spacedBy(14.dp),

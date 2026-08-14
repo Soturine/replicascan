@@ -2,18 +2,25 @@ package com.soturine.scanora.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.material3.Button
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,12 +29,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -67,10 +77,11 @@ fun OnboardingScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .navigationBarsPadding()
-            .padding(horizontal = 24.dp, vertical = 16.dp),
+            .background(MaterialTheme.colorScheme.background)
+            .safeDrawingPadding()
+            .padding(horizontal = 20.dp, vertical = 14.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(22.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp),
     ) {
         HorizontalPager(
             state = pagerState,
@@ -79,21 +90,65 @@ fun OnboardingScreen(
                 .weight(1f),
         ) {
             val page = pages[it]
+            val isCurrentPage = pagerState.currentPage == it
+            val artworkScale by animateFloatAsState(
+                targetValue = if (isCurrentPage) 1f else 0.92f,
+                animationSpec = spring(dampingRatio = 0.78f, stiffness = 280f),
+                label = "onboardingArtworkScale",
+            )
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
-                Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    Image(
-                        painter = painterResource(id = page.imageRes),
-                        contentDescription = stringResource(id = page.imageDescriptionRes),
-                        modifier = Modifier.fillMaxWidth().heightIn(max = 410.dp),
-                        contentScale = ContentScale.Fit,
-                    )
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                Brush.verticalGradient(
+                                    listOf(
+                                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.42f),
+                                        MaterialTheme.colorScheme.surfaceContainer,
+                                    ),
+                                ),
+                            )
+                            .padding(18.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Image(
+                            painter = painterResource(id = page.imageRes),
+                            contentDescription = stringResource(id = page.imageDescriptionRes),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .graphicsLayer {
+                                    scaleX = artworkScale
+                                    scaleY = artworkScale
+                                    alpha = 0.82f + (artworkScale - 0.92f) * 2.25f
+                                },
+                            contentScale = ContentScale.Fit,
+                        )
+                    }
                 }
-                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(stringResource(page.titleRes), style = MaterialTheme.typography.headlineMedium, textAlign = TextAlign.Center)
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        stringResource(page.titleRes),
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        textAlign = TextAlign.Center,
+                    )
                     Text(stringResource(page.bodyRes), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
                 }
             }
@@ -124,8 +179,9 @@ fun OnboardingScreen(
             Icon(
                 imageVector = if (pagerState.currentPage == pages.lastIndex) Icons.Outlined.Check else Icons.AutoMirrored.Outlined.ArrowForward,
                 contentDescription = null,
-                modifier = Modifier.padding(end = 8.dp),
+                modifier = Modifier.size(22.dp),
             )
+            Spacer(Modifier.width(8.dp))
             Text(
                 text = if (pagerState.currentPage == pages.lastIndex) {
                     stringResource(id = R.string.onboarding_finish)

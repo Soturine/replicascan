@@ -4,16 +4,20 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.outlined.ContentCopy
+import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -121,6 +125,8 @@ fun OcrScreen(
                             },
                             enabled = hasReadableText && !state.isLoading,
                         ) {
+                            Icon(Icons.Outlined.ContentCopy, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
                             Text(text = stringResource(id = R.string.ocr_copy_all))
                         }
                         FilledTonalButton(
@@ -128,6 +134,8 @@ fun OcrScreen(
                             onClick = onRecognizeAgain,
                             enabled = !state.isLoading,
                         ) {
+                            Icon(Icons.Outlined.Refresh, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
                             Text(text = stringResource(id = R.string.ocr_retry))
                         }
                     }
@@ -140,6 +148,7 @@ fun OcrScreen(
             EmptyStateCard(
                 title = stringResource(id = R.string.ocr_missing_title),
                 message = stringResource(id = R.string.ocr_missing_message),
+                mascotState = ScanoraMascotState.Attention,
                 modifier = Modifier
                     .padding(innerPadding)
                     .padding(24.dp),
@@ -191,6 +200,7 @@ fun OcrScreen(
                         EmptyStateCard(
                             title = stringResource(id = R.string.ocr_empty_title),
                             message = stringResource(id = R.string.ocr_empty_text),
+                            mascotState = ScanoraMascotState.Attention,
                         )
                     }
                 }
@@ -231,7 +241,7 @@ private fun OcrHeaderCard(
         ) {
             if (state.isLoading) {
                 ScanoraMascot(
-                    state = ScanoraMascotState.Working,
+                    state = ScanoraMascotState.Ocr,
                     modifier = Modifier.fillMaxWidth(),
                     size = 132.dp,
                 )

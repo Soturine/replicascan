@@ -25,6 +25,7 @@ fun EmptyStateCard(
     title: String,
     message: String,
     modifier: Modifier = Modifier,
+    mascotState: ScanoraMascotState? = null,
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -39,20 +40,24 @@ fun EmptyStateCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Box(
-                modifier = Modifier
-                    .size(52.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        shape = CircleShape,
-                    ),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Description,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                )
+            if (mascotState != null) {
+                ScanoraMascot(state = mascotState, size = 132.dp)
+            } else {
+                Box(
+                    modifier = Modifier
+                        .size(52.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            shape = CircleShape,
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Description,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
             }
             Text(
                 text = title,

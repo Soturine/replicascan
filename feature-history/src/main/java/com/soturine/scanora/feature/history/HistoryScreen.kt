@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.soturine.scanora.core.common.model.ScanDocument
 import com.soturine.scanora.core.common.usecase.FormatScanDateUseCase
 import com.soturine.scanora.core.ui.component.EmptyStateCard
+import com.soturine.scanora.core.ui.component.ScanoraMascotState
 import com.soturine.scanora.core.ui.component.PageThumbnailCard
 import com.soturine.scanora.core.ui.component.SectionHeader
 import com.soturine.scanora.core.ui.localizedTitle
@@ -83,6 +84,7 @@ fun HistoryScreen(
                     EmptyStateCard(
                         title = stringResource(id = R.string.history_empty_title),
                         message = stringResource(id = R.string.history_empty_message),
+                        mascotState = ScanoraMascotState.Empty,
                     )
                 }
             } else {
@@ -125,6 +127,7 @@ fun ScanDetailScreen(
         EmptyStateCard(
             title = stringResource(id = R.string.history_detail_missing_title),
             message = stringResource(id = R.string.history_detail_missing_message),
+            mascotState = ScanoraMascotState.Attention,
             modifier = modifier.padding(24.dp),
         )
         return

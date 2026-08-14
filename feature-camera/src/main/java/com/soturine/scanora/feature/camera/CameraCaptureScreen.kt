@@ -12,7 +12,9 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,8 +22,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.CameraAlt
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -33,6 +37,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -95,7 +100,7 @@ fun CameraCaptureScreen(
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
-                            imageVector = Icons.Outlined.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                             contentDescription = stringResource(id = R.string.camera_back),
                         )
                     }
@@ -119,6 +124,33 @@ fun CameraCaptureScreen(
                     modifier = Modifier.fillMaxSize(),
                 )
 
+                Surface(
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(horizontal = 24.dp, vertical = 20.dp),
+                    color = Color.Black.copy(alpha = 0.58f),
+                    contentColor = Color.White,
+                    shape = MaterialTheme.shapes.medium,
+                ) {
+                    Text(
+                        text = stringResource(R.string.camera_frame_hint),
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxWidth(0.82f)
+                        .aspectRatio(0.72f)
+                        .border(
+                            width = 3.dp,
+                            color = Color.White.copy(alpha = 0.92f),
+                            shape = RoundedCornerShape(22.dp),
+                        ),
+                )
+
                 Row(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -127,7 +159,9 @@ fun CameraCaptureScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     FilledTonalIconButton(
-                        modifier = Modifier.size(88.dp),
+                        modifier = Modifier
+                            .size(88.dp)
+                            .border(3.dp, MaterialTheme.colorScheme.primary, CircleShape),
                         enabled = !state.isCapturing,
                         onClick = {
                             if (!onCaptureStarted()) return@FilledTonalIconButton
