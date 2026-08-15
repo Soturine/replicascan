@@ -1,7 +1,10 @@
 package com.soturine.scanora.feature.settings
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -21,14 +24,13 @@ import com.soturine.scanora.core.ui.component.ScanoraPrimaryButton
 import com.soturine.scanora.core.ui.component.SectionHeader
 import com.soturine.scanora.core.ui.localizedTitle
 
-private enum class Picker { THEME, LANGUAGE, MODE, PDF }
+private enum class Picker { THEME, LANGUAGE, PDF }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     state: SettingsUiState,
     onThemeSelected: (AppThemePreference) -> Unit,
-    onDefaultModeSelected: (ScanMode) -> Unit,
     onPdfQualitySelected: (PdfQuality) -> Unit,
     onResetOnboarding: () -> Unit,
     onOpenAbout: () -> Unit,
@@ -51,9 +53,6 @@ fun SettingsScreen(
                 PreferenceRow(Icons.Outlined.Palette, stringResource(R.string.settings_theme_section), state.preferences.themePreference.label()) { picker = Picker.THEME }
                 PreferenceRow(Icons.Outlined.Language, stringResource(R.string.settings_language_section), languageLabel(currentLanguageTag)) { picker = Picker.LANGUAGE }
             }
-            Group(stringResource(R.string.settings_default_mode_section)) {
-                PreferenceRow(Icons.Outlined.PhotoCamera, stringResource(R.string.settings_default_mode_section), state.preferences.defaultScanMode.localizedTitle()) { picker = Picker.MODE }
-            }
             Group(stringResource(R.string.settings_pdf_quality_section)) {
                 PreferenceRow(Icons.Outlined.PictureAsPdf, stringResource(R.string.settings_pdf_quality_section), state.preferences.defaultPdfQuality.localizedTitle()) { picker = Picker.PDF }
             }
@@ -65,17 +64,63 @@ fun SettingsScreen(
     }
     when (picker) {
         Picker.THEME -> ChoiceDialog(stringResource(R.string.settings_theme_section), AppThemePreference.entries.map { it to it.label() }, state.preferences.themePreference, { onThemeSelected(it); picker = null }) { picker = null }
-        Picker.LANGUAGE -> ChoiceDialog(
+        Picker.LANGUAGE -> LanguagePickerDialog(
             stringResource(R.string.settings_language_section),
-            listOf("", "pt-BR", "en", "es", "fr", "it", "ar", "de", "id", "hi", "tr", "ja", "ko")
-                .map { it to languageLabel(it) },
             currentLanguageTag,
             { onLanguageSelected(it); picker = null },
-        ) { picker = null }
-        Picker.MODE -> ChoiceDialog(stringResource(R.string.settings_default_mode_section), ScanMode.entries.map { it to it.localizedTitle() }, state.preferences.defaultScanMode, { onDefaultModeSelected(it); picker = null }) { picker = null }
+            onDismiss = { picker = null },
+        )
         Picker.PDF -> ChoiceDialog(stringResource(R.string.settings_pdf_quality_section), PdfQuality.entries.map { it to it.localizedTitle() }, state.preferences.defaultPdfQuality, { onPdfQualitySelected(it); picker = null }) { picker = null }
         null -> Unit
     }
+}
+
+@Composable
+private fun LanguagePickerDialog(
+    title: String,
+    selected: String,
+    onSelect: (String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val systemLabel = stringResource(R.string.settings_language_system)
+    val options = remember(systemLabel) {
+        listOf(
+            "" to systemLabel,
+            "pt-BR" to "Português (Brasil)",
+            "en" to "English",
+            "es" to "Español",
+            "fr" to "Français",
+            "it" to "Italiano",
+            "ar" to "العربية",
+            "de" to "Deutsch",
+            "id" to "Bahasa Indonesia",
+            "hi" to "हिन्दी",
+            "tr" to "Türkçe",
+            "ja" to "日本語",
+            "ko" to "한국어",
+        )
+    }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(title) },
+        text = {
+            LazyColumn(Modifier.fillMaxWidth().heightIn(max = 480.dp)) {
+                items(options, key = { it.first.ifEmpty { "system" } }) { (tag, label) ->
+                    Row(
+                        Modifier.fillMaxWidth().heightIn(min = 52.dp).selectable(
+                            selected = tag == selected,
+                            onClick = { onSelect(tag) },
+                        ).padding(horizontal = 4.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(selected = tag == selected, onClick = null)
+                        Text(label, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(start = 10.dp))
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.cancel)) } },
+    )
 }
 
 @Composable private fun Group(title: String, content: @Composable () -> Unit) = Column(Modifier.fillMaxWidth().padding(bottom = 10.dp)) {
