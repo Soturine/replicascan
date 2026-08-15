@@ -139,28 +139,23 @@ fun CropScreen(
                         if (state.isProcessing) {
                             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                         }
-                        Row(
+                        Button(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            onClick = { onSaveQuadAndContinue(localQuad) },
+                            enabled = !state.isProcessing && isQuadValid,
                         ) {
-                            FilledTonalButton(
-                                modifier = Modifier.weight(1f),
-                                onClick = onReestimate,
-                                enabled = !state.isProcessing,
-                            ) {
-                                Icon(Icons.Outlined.AutoFixHigh, contentDescription = null)
-                                Spacer(Modifier.width(8.dp))
-                                Text(text = stringResource(id = R.string.editor_reestimate_crop))
-                            }
-                            Button(
-                                modifier = Modifier.weight(1f),
-                                onClick = { onSaveQuadAndContinue(localQuad) },
-                                enabled = !state.isProcessing && isQuadValid,
-                            ) {
-                                Icon(Icons.Outlined.Check, contentDescription = null)
-                                Spacer(Modifier.width(8.dp))
-                                Text(text = stringResource(id = R.string.editor_save_crop_continue))
-                            }
+                            Icon(Icons.Outlined.Check, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
+                            Text(text = stringResource(id = R.string.editor_save_crop_continue))
+                        }
+                        FilledTonalButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = onReestimate,
+                            enabled = !state.isProcessing,
+                        ) {
+                            Icon(Icons.Outlined.AutoFixHigh, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
+                            Text(text = stringResource(id = R.string.editor_reestimate_crop))
                         }
                     }
                 }
@@ -316,43 +311,38 @@ fun FilterScreen(
                         if (state.isProcessing) {
                             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                         }
-                        Row(
+                        Button(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            onClick = {
+                                if (canContinue) {
+                                    onOpenReview()
+                                } else {
+                                    onApplyFilter(selectedFilter)
+                                }
+                            },
+                            enabled = !state.isProcessing,
                         ) {
-                            FilledTonalButton(
-                                modifier = Modifier.weight(1f),
-                                onClick = onRotate,
-                                enabled = !state.isProcessing,
-                            ) {
-                                Icon(Icons.Outlined.RotateRight, contentDescription = null)
-                                Spacer(Modifier.width(8.dp))
-                                Text(text = stringResource(id = R.string.editor_rotate))
-                            }
-                            Button(
-                                modifier = Modifier.weight(1f),
-                                onClick = {
-                                    if (canContinue) {
-                                        onOpenReview()
-                                    } else {
-                                        onApplyFilter(selectedFilter)
-                                    }
+                            Icon(
+                                if (canContinue) Icons.Outlined.Check else Icons.Outlined.Tune,
+                                contentDescription = null,
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                text = if (canContinue) {
+                                    stringResource(id = R.string.editor_save_continue)
+                                } else {
+                                    stringResource(id = R.string.editor_apply_visual)
                                 },
-                                enabled = !state.isProcessing,
-                            ) {
-                                Icon(
-                                    if (canContinue) Icons.Outlined.Check else Icons.Outlined.Tune,
-                                    contentDescription = null,
-                                )
-                                Spacer(Modifier.width(8.dp))
-                                Text(
-                                    text = if (canContinue) {
-                                        stringResource(id = R.string.editor_save_continue)
-                                    } else {
-                                        stringResource(id = R.string.editor_apply_visual)
-                                    },
-                                )
-                            }
+                            )
+                        }
+                        FilledTonalButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = onRotate,
+                            enabled = !state.isProcessing,
+                        ) {
+                            Icon(Icons.Outlined.RotateRight, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
+                            Text(text = stringResource(id = R.string.editor_rotate))
                         }
                     }
                 }

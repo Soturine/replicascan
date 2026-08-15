@@ -2,17 +2,18 @@ package com.soturine.scanora.feature.export
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -43,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.soturine.scanora.core.common.model.ExportFormat
 import com.soturine.scanora.core.common.model.ExportedFile
@@ -55,7 +57,7 @@ import com.soturine.scanora.core.ui.component.SectionHeader
 import com.soturine.scanora.core.ui.component.ScanoraMascot
 import com.soturine.scanora.core.ui.component.ScanoraMascotState
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExportScreen(
     state: ExportUiState,
@@ -217,18 +219,13 @@ fun ExportScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(18.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(6.dp),
                         ) {
                             SectionHeader(
                                 eyebrow = stringResource(id = R.string.export_eyebrow),
                                 title = scan.title,
                                 supportingText = pluralStringResource(R.plurals.export_summary, scan.pageCount, scan.pageCount),
-                            )
-                            Text(
-                                text = stringResource(id = R.string.export_local_notice),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                     }
@@ -241,13 +238,13 @@ fun ExportScreen(
                             text = stringResource(id = R.string.export_format_section),
                             style = MaterialTheme.typography.titleMedium,
                         )
-                        FlowRow(
+                        Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             ExportKind.entries.forEach { kind ->
                                 ExportChoiceButton(
+                                    modifier = Modifier.weight(1f),
                                     title = kind.title(),
                                     selected = selectedKind == kind,
                                     onClick = {
@@ -287,13 +284,13 @@ fun ExportScreen(
                                     text = stringResource(id = R.string.export_image_format_section),
                                     style = MaterialTheme.typography.titleMedium,
                                 )
-                                FlowRow(
+                                Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                    verticalArrangement = Arrangement.spacedBy(8.dp),
                                 ) {
                                     listOf(ExportFormat.JPG, ExportFormat.PNG).forEach { format ->
                                         ExportChoiceButton(
+                                            modifier = Modifier.weight(1f),
                                             title = format.title,
                                             selected = state.selectedFormat == format,
                                             onClick = { onSelectFormat(format) },
@@ -326,13 +323,14 @@ fun ExportScreen(
                                     text = stringResource(id = R.string.export_quality_section),
                                     style = MaterialTheme.typography.titleMedium,
                                 )
-                                FlowRow(
+                                LazyRow(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                                    contentPadding = PaddingValues(end = 8.dp),
                                 ) {
-                                    PdfQuality.entries.forEach { quality ->
+                                    items(PdfQuality.entries, key = { it.name }) { quality ->
                                         ExportChoiceButton(
+                                            modifier = Modifier.widthIn(min = 124.dp),
                                             title = quality.localizedTitle(),
                                             selected = state.selectedQuality == quality,
                                             onClick = { onSelectQuality(quality) },
@@ -348,13 +346,14 @@ fun ExportScreen(
                                     text = stringResource(R.string.export_page_size_section),
                                     style = MaterialTheme.typography.titleSmall,
                                 )
-                                FlowRow(
+                                LazyRow(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                                    contentPadding = PaddingValues(end = 8.dp),
                                 ) {
-                                    PdfPageSize.entries.forEach { size ->
+                                    items(PdfPageSize.entries, key = { it.name }) { size ->
                                         ExportChoiceButton(
+                                            modifier = Modifier.widthIn(min = 112.dp),
                                             title = when (size) {
                                                 PdfPageSize.AUTO -> stringResource(R.string.export_page_size_auto)
                                                 PdfPageSize.A4 -> "A4"
@@ -382,10 +381,16 @@ private fun ExportChoiceButton(
     modifier: Modifier = Modifier,
 ) {
     FilterChip(
-        modifier = modifier,
+        modifier = modifier.heightIn(min = 52.dp),
         selected = selected,
         onClick = onClick,
-        label = { Text(text = title) },
+        label = {
+            Text(
+                text = title,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        },
     )
 }
 
