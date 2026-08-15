@@ -36,5 +36,5 @@
     <string name="settings_about_title">About Scanora</string>
     <string name="settings_about_body">Scanora is an Android document scanner with a focus on local processing, on-device OCR, and clear export to PDF, JPG, and PNG. The proposal is to go from capture to the final file with minimal friction and without requiring a backend for the main flow.</string>
     <string name="settings_open_privacy">Open privacy policy</string>
-    <string name="settings_version" translatable="false">0.3.0</string>
+    <string name="settings_version" translatable="false">0.3.1</string>
 </resources>

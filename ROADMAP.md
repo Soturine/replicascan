@@ -28,13 +28,20 @@ O roadmap segue: **integridade → imagem canônica → detecção → geometria
 
 ## v0.3.1 — Product & Play Store Hardening
 
-- QA físico/upgrade, Android 16, TalkBack, font 200%, landscape/tablet;
-- revisão linguística nativa do árabe, R8, AAB assinado, Data Safety e store listing.
+**Status:** implementação entregue em 2026-08-15; validação física do proprietário pendente
+
+- câmera própria como CTA principal, com detecção ao vivo, foco, flash e lote multipágina;
+- detector perspectivo multi-escala, perfil automático e fallback conservador;
+- crop com lupa/snap, revisão compacta e cinco filtros com `Auto` recomendado;
+- OCR automático com fallback local limitado e qualidade explícita;
+- exportação progressiva responsiva, idioma rolável e identidade visual consistente;
+- regressão sintética mensurável; corpus físico, TalkBack, fonte 200%, RTL e upgrade em Motorola continuam como gate humano.
 
 ## v0.3.2 — Measured Performance
 
 - cold start, jank, latências e peak RAM;
 - thumbnails/cache medidos; Macrobenchmark/Baseline Profile só com ganho.
+- Android 16, landscape/tablet, R8, AAB assinado, Data Safety e store listing após o gate físico da v0.3.1.
 
 ## v0.3.3 — Measured Detector Upgrade
 

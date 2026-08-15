@@ -4,6 +4,36 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-08-15
+
+### Added
+
+- Detector perspectivo local em três escalas, com ajuste robusto de quatro lados, interseções e fallback conservador.
+- Captura própria auto-first com overlay ao vivo suavizado, backpressure, foco por toque, flash e lote multipágina.
+- Perfil automático geral/recibo sem expor escolhas técnicas no fluxo principal.
+- Filtro `Auto` recomendado e OCR automático com dica fraca do locale, no máximo dois reconhecedores e estados `EMPTY`, `WEAK`, `PARTIAL` e `GOOD`.
+- Matriz determinística de 18 cenários de perspectiva com IoU e erro médio de cantos.
+
+### Changed
+
+- Home passa a abrir a câmera própria no CTA principal e mantém o scanner do Google como alternativa assistida.
+- Crop ganhou lupa, snap leve e hierarquia document-first; revisão concentra crop, rotação, filtro e OCR numa barra compacta.
+- Filtros exibem cinco intenções úteis e exportação adapta as opções a traduções e larguras menores.
+- CTAs longos de recorte e filtros deixaram de disputar meia largura; a ação principal agora ocupa a linha inteira.
+- Seletor de idioma usa lista rolável, nomes nativos, alvo mínimo e uma única opção `Sistema`.
+- OCR abre em modo automático e recolhe a seleção manual de escrita como opção avançada.
+- Ícone reutiliza a mesma raposa PNG oficial da Home, com transparência real e sem texto.
+
+### Fixed
+
+- Removido o perfil manual padrão que concorria com a decisão automática do pipeline.
+- Eliminado o recorte central excessivo quando não há suporte geométrico suficiente.
+- Corrigida a quebra de palavras nos chips de qualidade e tamanho da exportação; opções longas passam a rolar horizontalmente sem deformar o texto.
+
+### Validation
+
+- Validação física de câmera, TalkBack, RTL, fonte 200% e upgrade em Motorola permanece pendente do proprietário e não é substituída por testes automatizados.
+
 ## [0.3.0] - 2026-08-14
 
 ### Added

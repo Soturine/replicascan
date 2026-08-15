@@ -8,6 +8,9 @@
 - busca FTS por título, tags e OCR após migration 1→2;
 - construção de nomes de arquivo para exportação;
 - pós-processamento de OCR: ordenação visual, agrupamento em parágrafos, descarte de ruído e texto consolidado;
+- planejamento automático de OCR limitado a dois reconhecedores e classificação EMPTY/WEAK/PARTIAL/GOOD;
+- detector perspectivo em 18 casos determinísticos, com limiares de IoU e erro médio de cantos;
+- roteamento interno automático entre perfis geral e recibo;
 - regras puras do pipeline de imagem: normalização de rotação/crop, chaves de preview/OCR/exportação, seleção de fonte derivada e invalidação de cache visual;
 - ownership/path traversal, importação parcial, rollback, orphan cleanup e captura não concorrente;
 - testes instrumentados de Room para CRUD/cascade/ordem, migration, FTS, deleção física, export fail-fast e PDF pesquisável em API 35;

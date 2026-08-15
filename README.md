@@ -3,7 +3,7 @@
 ![Android](https://img.shields.io/badge/platform-Android-2E7D8C)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-23414B)
 ![Compose](https://img.shields.io/badge/Jetpack%20Compose-2026.03.00-DD8A2E)
-![Version](https://img.shields.io/badge/version-0.3.0-E95F0C)
+![Version](https://img.shields.io/badge/version-0.3.1-E95F0C)
 [![Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml)
 [![Deploy Pages](https://github.com/Soturine/scanora/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/pages.yml)
 
@@ -15,18 +15,19 @@ Site: https://soturine.github.io/scanora/
 
 ## O que o app já faz
 
-- scanner rápido com `ML Kit Document Scanner` como fluxo principal direto na Home;
+- scanner próprio com `CameraX`, detecção ao vivo, foco por toque, flash e lote multipágina como fluxo principal da Home;
+- `ML Kit Document Scanner` preservado como alternativa assistida;
 - importação de galeria pelo fluxo do Google quando suportada;
-- captura manual com `CameraX` e importação direta como fallback editável;
+- captura e importação direta continuam editáveis com recorte manual acessível;
 - Home minimalista sem escolha obrigatória de tipo antes do scan;
 - onboarding arrastável, ícone do app e estados contextuais com a raposa mascote do Scanora;
 - interface em 12 idiomas: English, Português do Brasil, Español, Français, Italiano, العربية, Deutsch, Bahasa Indonesia, हिन्दी, Türkçe, 日本語 e 한국어, com RTL real no árabe;
 - cópia das imagens de entrada para armazenamento interno antes de criar o lote local;
-- detector local de documento com perfis geral/caderno/recibo, confiança tipada, `NO_DOCUMENT` e fallback conservador;
+- detector local perspectivo em três escalas, quatro lados independentes, perfis automáticos, confiança tipada, `NO_DOCUMENT` e fallback conservador;
 - reajuste automático do crop e editor manual mais confortável para acertos finos;
 - filtros locais recalibrados para documento, cinza, cor e recibo com menos risco de estourar a página;
 - pipeline de imagem unificado para preview, filtros, OCR e exportação derivarem da mesma página lógica;
-- OCR local por script (latino, devanágari, japonês e coreano), com readiness do modelo, estrutura, fingerprint e artefato persistido;
+- OCR local automático com fallback limitado a dois reconhecedores, qualidade EMPTY/WEAK/PARTIAL/GOOD, seleção manual avançada, fingerprint e artefato persistido;
 - busca local por título, tags e OCR via Room FTS;
 - exportação em PDF pesquisável quando há OCR, JPG e PNG, com A4/Letter/Auto e escolha progressiva por formato;
 - pós-exportação com nome, tipo, tamanho, local salvo, abrir e compartilhar;
@@ -38,7 +39,7 @@ Site: https://soturine.github.io/scanora/
 
 ## Proposta de valor
 
-Scanora foi pensado para transformar páginas, contratos, cadernos e recibos em arquivos legíveis sem depender de upload obrigatório. O scanner rápido é o caminho principal, sem exigir que o usuário escolha o tipo antes de capturar, e o fluxo manual continua disponível quando o documento precisa de ajuste fino.
+Scanora foi pensado para transformar páginas, contratos, cadernos e recibos em arquivos legíveis sem depender de upload obrigatório. A câmera própria é o caminho principal, sem exigir que o usuário escolha um perfil técnico antes de capturar, e o scanner assistido continua disponível como alternativa.
 
 ## Capturas
 
@@ -109,7 +110,7 @@ Política completa em [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
 
 ## Status
 
-`0.3.0` transforma detecção, OCR, busca e exportação em um motor documental verificável: decisões de crop têm confiança explícita, OCR vira dado versionado e pesquisável, e o PDF pode carregar texto local sem alterar a aparência da página aprovada.
+`0.3.1` leva o motor documental ao fluxo principal: captura própria assistida por detecção ao vivo, crop perspectivo mais robusto, revisão compacta, filtros automáticos, OCR automático limitado e exportação responsiva.
 
 ## Contribuir
 

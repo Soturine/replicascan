@@ -1,6 +1,6 @@
 # Estado atual do Scanora
 
-O Scanora `0.3.0` é um scanner Android local-first. O fluxo principal abre o ML Kit Document Scanner; CameraX e o seletor de imagens permanecem como alternativas editáveis. Não há conta, backend, sincronização ou envio automático de documentos.
+O Scanora `0.3.1` é um scanner Android local-first. O fluxo principal usa a câmera própria com detecção ao vivo e lote multipágina; o ML Kit Document Scanner permanece como alternativa assistida e o seletor de imagens como entrada editável. Não há conta, backend, sincronização ou envio automático de documentos.
 
 ## Fluxo do produto
 

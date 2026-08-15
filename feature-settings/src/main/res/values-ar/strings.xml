@@ -36,5 +36,5 @@
     <string name="settings_about_title">حول سكانورا</string>
     <string name="settings_about_body">Scanora هو ماسح ضوئي للمستندات يعمل بنظام Android مع التركيز على المعالجة المحلية والتعرف الضوئي على الحروف على الجهاز والتصدير الواضح إلى PDF وJPG وPNG. يتمثل الاقتراح في الانتقال من الالتقاط إلى الملف النهائي بأقل قدر من الاحتكاك ودون الحاجة إلى واجهة خلفية للتدفق الرئيسي.</string>
     <string name="settings_open_privacy">فتح سياسة الخصوصية</string>
-    <string name="settings_version" translatable="false">0.3.0</string>
+    <string name="settings_version" translatable="false">0.3.1</string>
 </resources>
