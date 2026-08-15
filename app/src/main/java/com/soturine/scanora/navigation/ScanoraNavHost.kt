@@ -132,17 +132,19 @@ fun ScanoraNavHost(
         ) { entry ->
             val mode = ScanMode.fromStorageKey(entry.arguments?.getString("mode").orEmpty())
             val cameraViewModel: CameraCaptureViewModel = featureViewModel(key = "camera-${mode.storageKey}") {
-                CameraCaptureViewModel(mode)
+                CameraCaptureViewModel(mode, container.documentProcessingRepository)
             }
             val state = cameraViewModel.uiState.collectAsStateWithLifecycle()
             CameraCaptureScreen(
                 state = state.value,
                 onPermissionResult = cameraViewModel::onPermissionResult,
-                onCapturedImage = { uri ->
+                onCapturedImage = cameraViewModel::onCaptured,
+                onAnalyzeFrame = cameraViewModel::analyzeFrame,
+                onDone = { capturedUris ->
                     coroutineScope.launch {
                         container.scanDraftCoordinator.createDraft(
                             mode = mode,
-                            uriValues = listOf(uri),
+                            uriValues = capturedUris,
                             source = DraftSource.MANUAL_CAMERA,
                             titlePrefix = resources.getString(R.string.draft_title_camera),
                         ).handle(context) { result ->
@@ -239,6 +241,7 @@ fun ScanoraNavHost(
                 onMovePageUp = { editorViewModel.movePage(it, -1) },
                 onMovePageDown = { editorViewModel.movePage(it, 1) },
                 onDeleteCurrentPage = editorViewModel::deleteCurrentPage,
+                onRotate = editorViewModel::rotateCurrentPage,
                 onOpenCrop = {
                     state.value.currentPage?.id?.let { pageId ->
                         navController.navigate(ScanoraDestinations.crop(scanId, pageId))
@@ -362,7 +365,6 @@ fun ScanoraNavHost(
             SettingsScreen(
                 state = state.value,
                 onThemeSelected = settingsViewModel::setTheme,
-                onDefaultModeSelected = settingsViewModel::setDefaultMode,
                 onPdfQualitySelected = settingsViewModel::setPdfQuality,
                 onResetOnboarding = settingsViewModel::resetOnboarding,
                 onOpenAbout = { navController.navigate(ScanoraDestinations.About) },

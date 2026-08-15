@@ -1,13 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="camera_title">कब्जा</string>
-    <string name="camera_back">पीछे जाना</string>
+    <string name="camera_title">स्कैन करें</string>
+    <string name="camera_back">वापस</string>
     <string name="camera_guided_scan">निर्देशित स्कैनर</string>
     <string name="camera_scanner_unavailable">इस डिवाइस पर गाइडेड स्कैनर उपलब्ध नहीं है.</string>
     <string name="camera_take_photo">फोटो खींचो</string>
     <string name="camera_capture_failed">कैप्चर सहेजने में असमर्थ.</string>
     <string name="camera_permission_title">कैमरे की अनुमति आवश्यक है</string>
-    <string name="camera_permission_message">मैन्युअल कैमरा बदलाव और निर्यात करने से पहले पृष्ठ को कैप्चर करने के लिए कैमराएक्स का उपयोग करता है।</string>
+    <string name="camera_permission_message">Scanora आपके डिवाइस पर दस्तावेज़ ढूँढने और कैप्चर करने के लिए कैमरे का उपयोग करता है।</string>
     <string name="camera_permission_action">कैमरे की अनुमति दें</string>
     <string name="camera_frame_hint">संपूर्ण दस्तावेज़ को फ़्रेम के भीतर फ़्रेम करें.</string>
+    <string name="camera_status_searching">कैमरा दस्तावेज़ की ओर करें</string>
+    <string name="camera_status_detected">दस्तावेज़ मिल गया</string>
+    <string name="camera_torch_enable">लाइट चालू करें</string>
+    <string name="camera_torch_disable">लाइट बंद करें</string>
+    <string name="camera_done">पूर्ण</string>
 </resources>

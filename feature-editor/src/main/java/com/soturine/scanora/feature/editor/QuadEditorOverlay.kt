@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -64,7 +65,17 @@ fun QuadEditorOverlay(
         null -> null
     }
 
-    Canvas(modifier = modifier.fillMaxSize()) {
+    Canvas(
+        modifier = modifier
+            .fillMaxSize()
+            .magnifier(
+                sourceCenter = { activeOffset ?: Offset.Unspecified },
+                magnifierCenter = {
+                    activeOffset?.let { Offset(it.x, it.y - 96.dp.toPx()) } ?: Offset.Unspecified
+                },
+                zoom = 1.8f,
+            ),
+    ) {
         val dimmedPath = Path().apply {
             fillType = PathFillType.EvenOdd
             addRect(imageBounds)
@@ -195,6 +206,7 @@ private fun Handle(
     val touchTarget = 64.dp
     val visualSize = if (active) 26.dp else 22.dp
     val latestPoint by rememberUpdatedState(point)
+    fun move(point: PointValue) = onMoved(point.snapToEdge())
 
     Box(
         modifier = Modifier
@@ -209,19 +221,19 @@ private fun Handle(
                 contentDescription = label
                 customActions = listOf(
                     CustomAccessibilityAction(actionLabels[0]) {
-                        onMoved(latestPoint.copy(y = (latestPoint.y - ACCESSIBILITY_STEP).coerceAtLeast(0f)))
+                        move(latestPoint.copy(y = (latestPoint.y - ACCESSIBILITY_STEP).coerceAtLeast(0f)))
                         true
                     },
                     CustomAccessibilityAction(actionLabels[1]) {
-                        onMoved(latestPoint.copy(y = (latestPoint.y + ACCESSIBILITY_STEP).coerceAtMost(1f)))
+                        move(latestPoint.copy(y = (latestPoint.y + ACCESSIBILITY_STEP).coerceAtMost(1f)))
                         true
                     },
                     CustomAccessibilityAction(actionLabels[2]) {
-                        onMoved(latestPoint.copy(x = (latestPoint.x - ACCESSIBILITY_STEP).coerceAtLeast(0f)))
+                        move(latestPoint.copy(x = (latestPoint.x - ACCESSIBILITY_STEP).coerceAtLeast(0f)))
                         true
                     },
                     CustomAccessibilityAction(actionLabels[3]) {
-                        onMoved(latestPoint.copy(x = (latestPoint.x + ACCESSIBILITY_STEP).coerceAtMost(1f)))
+                        move(latestPoint.copy(x = (latestPoint.x + ACCESSIBILITY_STEP).coerceAtMost(1f)))
                         true
                     },
                 )
@@ -246,7 +258,7 @@ private fun Handle(
                         y = (currentPoint.y + dragAmount.y / imageBounds.height).coerceIn(0f, 1f),
                     )
                     currentPoint = moved
-                    onMoved(moved)
+                    move(moved)
                 }
             },
     ) {
@@ -277,6 +289,20 @@ private enum class HandleAnchor {
 }
 
 private const val ACCESSIBILITY_STEP = 0.025f
+private const val EDGE_SNAP_THRESHOLD = 0.018f
+
+private fun PointValue.snapToEdge(): PointValue = PointValue(
+    x = when {
+        x <= EDGE_SNAP_THRESHOLD -> 0f
+        x >= 1f - EDGE_SNAP_THRESHOLD -> 1f
+        else -> x
+    },
+    y = when {
+        y <= EDGE_SNAP_THRESHOLD -> 0f
+        y >= 1f - EDGE_SNAP_THRESHOLD -> 1f
+        else -> y
+    },
+)
 
 private fun Rect.toOffset(point: PointValue): Offset =
     Offset(

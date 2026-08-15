@@ -22,6 +22,7 @@ fun ScanMode.localizedDescription(): String = stringResource(when (this) {
 
 @Composable
 fun DocumentFilterType.localizedTitle(): String = stringResource(when (this) {
+    DocumentFilterType.AUTO -> R.string.filter_auto
     DocumentFilterType.ORIGINAL_CORRECTED -> R.string.filter_original
     DocumentFilterType.DOCUMENT_BLACK_WHITE -> R.string.filter_bw
     DocumentFilterType.DOCUMENT_GRAY -> R.string.filter_gray
@@ -31,6 +32,7 @@ fun DocumentFilterType.localizedTitle(): String = stringResource(when (this) {
 
 @Composable
 fun DocumentFilterType.localizedDescription(): String = stringResource(when (this) {
+    DocumentFilterType.AUTO -> R.string.filter_auto_description
     DocumentFilterType.ORIGINAL_CORRECTED -> R.string.filter_original_description
     DocumentFilterType.DOCUMENT_BLACK_WHITE -> R.string.filter_bw_description
     DocumentFilterType.DOCUMENT_GRAY -> R.string.filter_gray_description

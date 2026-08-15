@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="filter_auto">Automático</string>
+    <string name="filter_auto_description">Ajusta nitidez e cor ao tipo de página.</string>
     <string name="mode_notebook">Caderno / Faculdade</string><string name="mode_notebook_description">Para apostilas, quadros e páginas de estudo.</string>
     <string name="mode_document">Documento / Contrato</string><string name="mode_document_description">Prioriza alinhamento e texto legível.</string>
     <string name="mode_receipt">Recibo</string><string name="mode_receipt_description">Destaca letras pequenas e documentos compactos.</string>

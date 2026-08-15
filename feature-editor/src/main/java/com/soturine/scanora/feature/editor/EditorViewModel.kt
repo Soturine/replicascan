@@ -4,12 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soturine.scanora.core.common.model.DocumentFilterType
 import com.soturine.scanora.core.common.model.DocumentDetectionResult
-import com.soturine.scanora.core.common.model.DocumentProfile
 import com.soturine.scanora.core.common.model.DocumentQuad
 import com.soturine.scanora.core.common.model.ImagePipelineSpec
 import com.soturine.scanora.core.common.model.PageRenderPurpose
 import com.soturine.scanora.core.common.model.ScanPage
-import com.soturine.scanora.core.common.model.ScanMode
 import com.soturine.scanora.core.common.model.requiresDerivedImage
 import com.soturine.scanora.core.common.model.withInvalidatedDerivedImage
 import com.soturine.scanora.core.common.repository.DocumentProcessingRepository
@@ -114,10 +112,7 @@ class EditorViewModel(
             isProcessing.value = true
             errorMessage.value = null
             runCatching {
-                val detection = processingRepository.detectDocument(
-                    imageUri = page.sourceUri,
-                    profile = uiState.value.scan?.mode.toDocumentProfile(),
-                )
+                val detection = processingRepository.detectDocumentAutomatically(page.sourceUri)
                 detectionResult.value = detection
                 scanRepository.updatePage(
                     scanId = scanId,
@@ -400,10 +395,7 @@ class EditorViewModel(
     private suspend fun ensureQuad(page: ScanPage): DocumentQuad {
         val existing = page.quad
         if (existing != null) return existing
-        val detection = processingRepository.detectDocument(
-            imageUri = page.sourceUri,
-            profile = uiState.value.scan?.mode.toDocumentProfile(),
-        )
+        val detection = processingRepository.detectDocumentAutomatically(page.sourceUri)
         detectionResult.value = detection
         scanRepository.updatePage(
             scanId = scanId,
@@ -422,10 +414,4 @@ class EditorViewModel(
         filterType = filterType,
         maxDimension = maxDimension,
     ).toString()
-}
-
-private fun ScanMode?.toDocumentProfile(): DocumentProfile = when (this) {
-    ScanMode.NOTEBOOK -> DocumentProfile.NOTEBOOK
-    ScanMode.RECEIPT -> DocumentProfile.RECEIPT
-    ScanMode.DOCUMENT, null -> DocumentProfile.GENERAL
 }

@@ -6,7 +6,7 @@ data class ScanPage(
     val index: Int,
     val sourceUri: String,
     val processedUri: String? = null,
-    val filterType: DocumentFilterType = DocumentFilterType.ORIGINAL_CORRECTED,
+    val filterType: DocumentFilterType = DocumentFilterType.AUTO,
     val rotationDegrees: Int = 0,
     val quad: DocumentQuad? = null,
     val ocrText: String? = null,

@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+    <string name="filter_auto">Otomatis</string>
+    <string name="filter_auto_description">Menyesuaikan kejernihan dan warna dengan halaman.</string>
     <string name="mode_notebook">Buku Catatan / Fakultas</string>
     <string name="mode_notebook_description">Untuk handout, tabel dan halaman belajar.</string>
     <string name="mode_document">Dokumen/Kontrak</string>

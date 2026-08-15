@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+    <string name="filter_auto">Auto</string>
+    <string name="filter_auto_description">Adatta nitidezza e colore alla pagina.</string>
     <string name="mode_notebook">Quaderno/Facoltà</string>
     <string name="mode_notebook_description">Per dispense, tabelle e pagine di studio.</string>
     <string name="mode_document">Documento/Contratto</string>

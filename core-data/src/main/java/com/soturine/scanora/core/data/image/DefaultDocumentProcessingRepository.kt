@@ -11,6 +11,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.net.Uri
 import com.soturine.scanora.core.common.image.CanonicalImageDecoder
+import com.soturine.scanora.core.common.image.AutomaticDocumentProfileRouter
 import com.soturine.scanora.core.common.image.DocumentQuadValidator
 import com.soturine.scanora.core.common.image.ImagePurpose
 import com.soturine.scanora.core.common.model.DocumentDetectionResult
@@ -38,6 +39,15 @@ class DefaultDocumentProcessingRepository(
     private val documentDetector: DocumentDetector = HeuristicDocumentDetector(),
 ) : DocumentProcessingRepository {
     private val imageDecoder = CanonicalImageDecoder(context)
+    override suspend fun detectDocumentAutomatically(imageUri: String): DocumentDetectionResult = withContext(Dispatchers.Default) {
+        val bitmap = imageDecoder.decode(imageUri, ImagePurpose.DETECTION)?.bitmap
+            ?: return@withContext DocumentDetectionResult.noDocument()
+        val general = documentDetector.detect(bitmap, DocumentProfile.GENERAL)
+        val routedProfile = AutomaticDocumentProfileRouter.route(general)
+        if (routedProfile == DocumentProfile.GENERAL) general
+        else listOf(general, documentDetector.detect(bitmap, routedProfile)).maxBy { it.score }
+    }
+
     override suspend fun detectDocument(
         imageUri: String,
         profile: DocumentProfile,
@@ -45,6 +55,15 @@ class DefaultDocumentProcessingRepository(
         val bitmap = imageDecoder.decode(imageUri, ImagePurpose.DETECTION)?.bitmap
             ?: return@withContext DocumentDetectionResult.noDocument()
         documentDetector.detect(bitmap, profile)
+    }
+
+    override suspend fun detectPreviewLuma(
+        luma: IntArray,
+        width: Int,
+        height: Int,
+        profile: DocumentProfile,
+    ): DocumentDetectionResult = withContext(Dispatchers.Default) {
+        documentDetector.detectLuma(luma, width, height, profile)
     }
 
     override suspend fun renderPreview(
@@ -118,6 +137,7 @@ class DefaultDocumentProcessingRepository(
             maxDimension = maxDimension,
         )
         processed = when (filterType) {
+            DocumentFilterType.AUTO -> autoEnhance(processed)
             DocumentFilterType.ORIGINAL_CORRECTED -> enhanceOriginal(processed)
             DocumentFilterType.DOCUMENT_BLACK_WHITE -> documentBlackWhite(processed)
             DocumentFilterType.DOCUMENT_GRAY -> documentGray(processed)
@@ -153,6 +173,24 @@ class DefaultDocumentProcessingRepository(
             processed = rotateBitmap(processed, normalizedRotation.toFloat())
         }
         return processed
+    }
+
+    private fun autoEnhance(bitmap: Bitmap): Bitmap {
+        val aspect = max(bitmap.width, bitmap.height).toFloat() / min(bitmap.width, bitmap.height).coerceAtLeast(1)
+        if (aspect >= 2.25f) return receiptHighContrast(bitmap)
+        var saturationTotal = 0f
+        var samples = 0
+        val step = max(min(bitmap.width, bitmap.height) / 72, 1)
+        val hsv = FloatArray(3)
+        for (y in 0 until bitmap.height step step) {
+            for (x in 0 until bitmap.width step step) {
+                Color.colorToHSV(bitmap.getPixel(x, y), hsv)
+                saturationTotal += hsv[1]
+                samples++
+            }
+        }
+        val averageSaturation = saturationTotal / samples.coerceAtLeast(1)
+        return if (averageSaturation >= 0.12f) colorEnhanced(bitmap) else documentGray(bitmap)
     }
 
     private fun estimateQuadFromBounds(

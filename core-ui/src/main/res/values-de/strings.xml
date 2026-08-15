@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+    <string name="filter_auto">Automatisch</string>
+    <string name="filter_auto_description">Passt Klarheit und Farbe an die Seite an.</string>
     <string name="mode_notebook">Notizbuch / Fakultät</string>
     <string name="mode_notebook_description">Für Handouts, Tabellen und Lernseiten.</string>
     <string name="mode_document">Dokument/Vertrag</string>

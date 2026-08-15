@@ -1,13 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="camera_title">Esir almak</string>
-    <string name="camera_back">Geri dönmek için</string>
+    <string name="camera_title">Tara</string>
+    <string name="camera_back">Geri</string>
     <string name="camera_guided_scan">Kılavuzlu Tarayıcı</string>
     <string name="camera_scanner_unavailable">Kılavuzlu tarayıcı bu cihazda mevcut değildir.</string>
     <string name="camera_take_photo">Fotoğraf çek</string>
     <string name="camera_capture_failed">Yakalama kaydedilemiyor.</string>
     <string name="camera_permission_title">Kamera izni gerekli</string>
-    <string name="camera_permission_message">Manuel kamera, ince ayar yapmadan ve dışa aktarmadan önce sayfayı yakalamak için CameraX\'i kullanır.</string>
+    <string name="camera_permission_message">Scanora, cihazdaki belgeleri bulmak ve yakalamak için kamerayı kullanır.</string>
     <string name="camera_permission_action">Kameraya izin ver</string>
     <string name="camera_frame_hint">Belgenin tamamını çerçeve içine alın.</string>
+    <string name="camera_status_searching">Kamerayı belgeye doğrultun</string>
+    <string name="camera_status_detected">Belge bulundu</string>
+    <string name="camera_torch_enable">Işığı aç</string>
+    <string name="camera_torch_disable">Işığı kapat</string>
+    <string name="camera_done">Bitti</string>
 </resources>

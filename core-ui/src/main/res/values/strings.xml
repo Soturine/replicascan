@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="filter_auto">Auto</string>
+    <string name="filter_auto_description">Adapts clarity and color to the page.</string>
     <string name="mode_notebook">Notebook / School</string>
     <string name="mode_notebook_description">For notes, boards, and study pages.</string>
     <string name="mode_document">Document / Contract</string>

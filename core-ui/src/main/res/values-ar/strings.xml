@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+    <string name="filter_auto">تلقائي</string>
+    <string name="filter_auto_description">يضبط الوضوح والألوان حسب الصفحة.</string>
     <string name="mode_notebook">دفتر / الكلية</string>
     <string name="mode_notebook_description">للنشرات والجداول وصفحات الدراسة.</string>
     <string name="mode_document">الوثيقة/العقد</string>

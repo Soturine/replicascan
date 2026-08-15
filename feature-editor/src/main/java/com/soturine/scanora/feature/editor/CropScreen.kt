@@ -34,6 +34,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -181,25 +182,11 @@ fun CropScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(horizontal = 20.dp, vertical = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp),
+                    .padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                SectionHeader(
-                    eyebrow = stringResource(id = R.string.editor_crop_eyebrow),
-                    title = stringResource(id = R.string.editor_crop_heading),
-                    supportingText = stringResource(id = R.string.editor_crop_helper),
-                )
-                state.detectionResult?.let { detection ->
-                    Surface(
-                        color = when (detection.confidence) {
-                            DocumentDetectionConfidence.HIGH -> MaterialTheme.colorScheme.primaryContainer
-                            DocumentDetectionConfidence.MEDIUM -> MaterialTheme.colorScheme.secondaryContainer
-                            DocumentDetectionConfidence.LOW,
-                            DocumentDetectionConfidence.NONE,
-                            -> MaterialTheme.colorScheme.errorContainer
-                        },
-                        shape = MaterialTheme.shapes.medium,
-                    ) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    state.detectionResult?.let { detection ->
                         Text(
                             text = when (detection.confidence) {
                                 DocumentDetectionConfidence.HIGH -> stringResource(R.string.editor_crop_detected)
@@ -207,10 +194,21 @@ fun CropScreen(
                                 DocumentDetectionConfidence.LOW -> stringResource(R.string.editor_crop_adjust)
                                 DocumentDetectionConfidence.NONE -> stringResource(R.string.editor_crop_not_found)
                             },
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                             style = MaterialTheme.typography.labelLarge,
+                            color = if (detection.confidence == DocumentDetectionConfidence.NONE) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.weight(1f),
                         )
-                    }
+                    } ?: Spacer(Modifier.weight(1f))
+                    OutlinedButton(
+                        onClick = { localQuad = com.soturine.scanora.core.common.model.DocumentDetectionResult.FULL_PAGE_QUAD },
+                        enabled = !state.isProcessing,
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                    ) { Text(stringResource(R.string.editor_crop_use_full_page)) }
+                    Spacer(Modifier.width(6.dp))
+                    IconButton(
+                        onClick = { localQuad = page.quad ?: defaultQuad() },
+                        enabled = !state.isProcessing,
+                    ) { Icon(Icons.Outlined.AutoFixHigh, stringResource(R.string.editor_crop_restore)) }
                 }
                 Card(
                     modifier = Modifier
@@ -246,25 +244,6 @@ fun CropScreen(
                         color = MaterialTheme.colorScheme.error,
                     )
                 }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    OutlinedButton(
-                        modifier = Modifier.weight(1f),
-                        onClick = { localQuad = com.soturine.scanora.core.common.model.DocumentDetectionResult.FULL_PAGE_QUAD },
-                        enabled = !state.isProcessing,
-                    ) {
-                        Text(stringResource(R.string.editor_crop_use_full_page))
-                    }
-                    OutlinedButton(
-                        modifier = Modifier.weight(1f),
-                        onClick = { localQuad = page.quad ?: defaultQuad() },
-                        enabled = !state.isProcessing,
-                    ) {
-                        Text(stringResource(R.string.editor_crop_restore))
-                    }
-                }
             }
         }
     }
@@ -285,7 +264,7 @@ fun FilterScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val page = state.currentPage
     var selectedFilter by remember(page?.id, page?.filterType) {
-        mutableStateOf(page?.filterType ?: DocumentFilterType.ORIGINAL_CORRECTED)
+        mutableStateOf(page?.filterType ?: DocumentFilterType.AUTO)
     }
     var showingOriginal by remember(page?.id, selectedFilter) { mutableStateOf(false) }
     var previewLongSide by remember(page?.id) { mutableIntStateOf(1500) }
@@ -399,13 +378,6 @@ fun FilterScreen(
                 verticalArrangement = Arrangement.spacedBy(14.dp),
             ) {
                 item {
-                    SectionHeader(
-                        eyebrow = stringResource(id = R.string.editor_filter_eyebrow),
-                        title = stringResource(id = R.string.editor_filter_heading),
-                        supportingText = stringResource(id = R.string.editor_filter_helper),
-                    )
-                }
-                item {
                     Card(
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -414,13 +386,13 @@ fun FilterScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                                .padding(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(396.dp)
+                                    .height(460.dp)
                                     .onSizeChanged { size ->
                                         previewLongSide = max(size.width, size.height).coerceIn(1400, 1800)
                                     },
@@ -475,8 +447,15 @@ fun FilterScreen(
                     }
                 }
                 item {
+                    val visiblePresets = listOf(
+                        DocumentFilterType.AUTO,
+                        DocumentFilterType.ORIGINAL_CORRECTED,
+                        DocumentFilterType.COLOR_ENHANCED,
+                        DocumentFilterType.DOCUMENT_GRAY,
+                        DocumentFilterType.DOCUMENT_BLACK_WHITE,
+                    )
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        itemsIndexed(DocumentFilterType.entries, key = { _, filter -> filter.storageKey }) { _, filter ->
+                        itemsIndexed(visiblePresets, key = { _, filter -> filter.storageKey }) { _, filter ->
                             FilterPresetCard(
                                 title = filter.localizedTitle(),
                                 selected = selectedFilter == filter,
@@ -486,30 +465,6 @@ fun FilterScreen(
                                     showingOriginal = false
                                     selectedFilter = filter
                                 },
-                            )
-                        }
-                    }
-                }
-                item {
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
-                        ),
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(6.dp),
-                        ) {
-                            Text(
-                                text = selectedFilter.localizedTitle(),
-                                style = MaterialTheme.typography.titleMedium,
-                            )
-                            Text(
-                                text = selectedFilter.localizedDescription(),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                     }
@@ -531,6 +486,7 @@ fun ReviewScreen(
     onMovePageUp: (String) -> Unit,
     onMovePageDown: (String) -> Unit,
     onDeleteCurrentPage: () -> Unit,
+    onRotate: () -> Unit,
     onOpenCrop: () -> Unit,
     onOpenFilters: () -> Unit,
     onOpenExport: () -> Unit,
@@ -617,27 +573,21 @@ fun ReviewScreen(
                         Spacer(Modifier.width(8.dp))
                         Text(text = stringResource(id = R.string.editor_open_export))
                     }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    ) {
-                        FilledTonalButton(
-                            modifier = Modifier.weight(1f),
-                            onClick = onOpenCrop,
-                            enabled = selectedPage != null,
-                        ) {
-                            Icon(Icons.Outlined.Crop, contentDescription = null)
-                            Spacer(Modifier.width(8.dp))
-                            Text(text = stringResource(id = R.string.editor_open_crop))
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                        FilledTonalIconButton(onClick = onOpenCrop, enabled = selectedPage != null) {
+                            Icon(Icons.Outlined.Crop, stringResource(id = R.string.editor_open_crop))
                         }
-                        FilledTonalButton(
-                            modifier = Modifier.weight(1f),
-                            onClick = onOpenFilters,
+                        FilledTonalIconButton(onClick = onRotate, enabled = selectedPage != null && !state.isProcessing) {
+                            Icon(Icons.Outlined.RotateRight, stringResource(id = R.string.editor_rotate))
+                        }
+                        FilledTonalIconButton(onClick = onOpenFilters, enabled = selectedPage != null) {
+                            Icon(Icons.Outlined.Tune, stringResource(id = R.string.editor_open_filters))
+                        }
+                        FilledTonalIconButton(
+                            onClick = { selectedPage?.id?.let(onOpenOcr) },
                             enabled = selectedPage != null,
                         ) {
-                            Icon(Icons.Outlined.Tune, contentDescription = null)
-                            Spacer(Modifier.width(8.dp))
-                            Text(text = stringResource(id = R.string.editor_open_filters))
+                            Icon(Icons.Outlined.TextSnippet, stringResource(id = R.string.editor_open_ocr))
                         }
                     }
                 }
@@ -744,7 +694,6 @@ fun ReviewScreen(
                         onPreviewSize = { size ->
                             previewLongSide = max(size.width, size.height).coerceIn(1400, 1800)
                         },
-                        onOpenOcr = { onOpenOcr(selectedPage.id) },
                         onMoveUp = { onMovePageUp(selectedPage.id) },
                         onMoveDown = { onMovePageDown(selectedPage.id) },
                         onDelete = onDeleteCurrentPage,
@@ -848,7 +797,6 @@ private fun SelectedPageCard(
     canMoveUp: Boolean,
     canMoveDown: Boolean,
     onPreviewSize: (IntSize) -> Unit,
-    onOpenOcr: () -> Unit,
     onMoveUp: () -> Unit,
     onMoveDown: () -> Unit,
     onDelete: () -> Unit,
@@ -890,10 +838,8 @@ private fun SelectedPageCard(
                         )
                     }
                 }
-                FilledTonalButton(onClick = onOpenOcr) {
-                    Icon(Icons.Outlined.TextSnippet, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text(text = stringResource(id = R.string.editor_open_ocr))
+                IconButton(onClick = onDelete) {
+                    Icon(Icons.Outlined.DeleteOutline, stringResource(id = R.string.editor_delete_page))
                 }
             }
             AsyncUriImage(
@@ -901,24 +847,11 @@ private fun SelectedPageCard(
                 fallbackImageUri = page.sourceUri,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(288.dp)
+                    .height(420.dp)
                     .onSizeChanged(onPreviewSize),
                 contentScale = ContentScale.Fit,
                 maxDimension = 1800,
             )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                OutlinedButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = onDelete,
-                ) {
-                    Icon(Icons.Outlined.DeleteOutline, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text(text = stringResource(id = R.string.editor_delete_page))
-                }
-            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),

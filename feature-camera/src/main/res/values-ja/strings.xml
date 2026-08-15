@@ -1,13 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="camera_title">捕獲</string>
-    <string name="camera_back">戻るには</string>
+    <string name="camera_title">スキャン</string>
+    <string name="camera_back">戻る</string>
     <string name="camera_guided_scan">ガイド付きスキャナー</string>
     <string name="camera_scanner_unavailable">このデバイスではガイド付きスキャナーを利用できません。</string>
     <string name="camera_take_photo">写真をキャプチャする</string>
     <string name="camera_capture_failed">キャプチャを保存できません。</string>
     <string name="camera_permission_title">カメラの許可が必要です</string>
-    <string name="camera_permission_message">手動カメラは、微調整してエクスポートする前に、CameraX を使用してページをキャプチャします。</string>
+    <string name="camera_permission_message">Scanora は端末のカメラで書類を検出して撮影します。</string>
     <string name="camera_permission_action">カメラを許可する</string>
     <string name="camera_frame_hint">文書全体をフレーム内に収めます。</string>
+    <string name="camera_status_searching">書類にカメラを向けてください</string>
+    <string name="camera_status_detected">書類を検出しました</string>
+    <string name="camera_torch_enable">ライトをオン</string>
+    <string name="camera_torch_disable">ライトをオフ</string>
+    <string name="camera_done">完了</string>
 </resources>

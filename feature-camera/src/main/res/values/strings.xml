@@ -1,13 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="camera_title">Capture</string>
+    <string name="camera_title">Scan</string>
     <string name="camera_back">To go back</string>
     <string name="camera_guided_scan">Guided Scanner</string>
     <string name="camera_scanner_unavailable">Guided scanner is not available on this device.</string>
     <string name="camera_take_photo">Capture photo</string>
     <string name="camera_capture_failed">Unable to save capture.</string>
     <string name="camera_permission_title">Camera permission required</string>
-    <string name="camera_permission_message">Manual camera uses CameraX to capture the page before tweaking and exporting.</string>
+    <string name="camera_permission_message">Scanora uses the camera to find and capture documents on your device.</string>
     <string name="camera_permission_action">Allow camera</string>
     <string name="camera_frame_hint">Fit the whole document inside the frame.</string>
+    <string name="camera_status_searching">Point at the document</string>
+    <string name="camera_status_detected">Document found</string>
+    <string name="camera_torch_enable">Turn flashlight on</string>
+    <string name="camera_torch_disable">Turn flashlight off</string>
+    <string name="camera_done">Done</string>
 </resources>

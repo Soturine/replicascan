@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+    <string name="filter_auto">Otomatik</string>
+    <string name="filter_auto_description">Netliği ve rengi sayfaya göre ayarlar.</string>
     <string name="mode_notebook">Defter / Fakülte</string>
     <string name="mode_notebook_description">Broşürler, tablolar ve çalışma sayfaları için.</string>
     <string name="mode_document">Belge/Sözleşme</string>

@@ -1,13 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="camera_title">يأسر</string>
-    <string name="camera_back">سأعود</string>
+    <string name="camera_title">مسح ضوئي</string>
+    <string name="camera_back">رجوع</string>
     <string name="camera_guided_scan">الماسح الضوئي الموجه</string>
     <string name="camera_scanner_unavailable">الماسح الضوئي الموجه غير متوفر على هذا الجهاز.</string>
     <string name="camera_take_photo">التقاط الصورة</string>
     <string name="camera_capture_failed">غير قادر على حفظ الالتقاط.</string>
     <string name="camera_permission_title">إذن الكاميرا مطلوب</string>
-    <string name="camera_permission_message">تستخدم الكاميرا اليدوية CameraX لالتقاط الصفحة قبل التعديل والتصدير.</string>
+    <string name="camera_permission_message">يستخدم Scanora الكاميرا للعثور على المستندات والتقاطها على جهازك.</string>
     <string name="camera_permission_action">السماح بالكاميرا</string>
     <string name="camera_frame_hint">قم بتركيب المستند بأكمله داخل الإطار.</string>
+    <string name="camera_status_searching">وجّه الكاميرا إلى المستند</string>
+    <string name="camera_status_detected">تم العثور على المستند</string>
+    <string name="camera_torch_enable">تشغيل المصباح</string>
+    <string name="camera_torch_disable">إيقاف المصباح</string>
+    <string name="camera_done">تم</string>
 </resources>

@@ -6,4 +6,11 @@ import com.soturine.scanora.core.common.model.DocumentProfile
 
 interface DocumentDetector {
     fun detect(bitmap: Bitmap, profile: DocumentProfile): DocumentDetectionResult
+
+    fun detectLuma(
+        luma: IntArray,
+        width: Int,
+        height: Int,
+        profile: DocumentProfile,
+    ): DocumentDetectionResult
 }

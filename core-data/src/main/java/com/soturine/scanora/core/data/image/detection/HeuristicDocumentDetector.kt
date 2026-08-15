@@ -23,19 +23,30 @@ import kotlin.system.measureNanoTime
  */
 class HeuristicDocumentDetector : DocumentDetector {
     override fun detect(bitmap: Bitmap, profile: DocumentProfile): DocumentDetectionResult {
+        return detectLuma(bitmap.toLuma(), bitmap.width, bitmap.height, profile)
+    }
+
+    override fun detectLuma(
+        luma: IntArray,
+        width: Int,
+        height: Int,
+        profile: DocumentProfile,
+    ): DocumentDetectionResult {
         var result = DocumentDetectionResult.noDocument()
         val elapsed = measureNanoTime {
-            result = detectMeasured(bitmap, profile)
+            result = detectMeasured(luma, width, height, profile)
         } / NANOS_PER_MILLI
         return result.copy(processingTimeMillis = elapsed)
     }
 
-    private fun detectMeasured(bitmap: Bitmap, profile: DocumentProfile): DocumentDetectionResult {
-        val width = bitmap.width
-        val height = bitmap.height
+    private fun detectMeasured(
+        luma: IntArray,
+        width: Int,
+        height: Int,
+        profile: DocumentProfile,
+    ): DocumentDetectionResult {
         if (width < MIN_SIDE || height < MIN_SIDE) return DocumentDetectionResult.noDocument()
-
-        val luma = bitmap.toLuma()
+        if (luma.size != width * height) return DocumentDetectionResult.noDocument()
         val projections = buildEdgeProjections(luma, width, height)
         val config = ProfileConfig.forProfile(profile)
         val candidates = buildList {

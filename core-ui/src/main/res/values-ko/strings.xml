@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+    <string name="filter_auto">자동</string>
+    <string name="filter_auto_description">페이지에 맞게 선명도와 색상을 조정합니다.</string>
     <string name="mode_notebook">노트/교직원</string>
     <string name="mode_notebook_description">유인물, 표, 학습 페이지용.</string>
     <string name="mode_document">문서/계약</string>

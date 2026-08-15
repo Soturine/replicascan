@@ -3,6 +3,7 @@ package com.soturine.scanora.core.common.model
 enum class DocumentFilterType(
     val storageKey: String,
 ) {
+    AUTO("auto"),
     ORIGINAL_CORRECTED("original_corrected"),
     DOCUMENT_BLACK_WHITE("document_bw"),
     DOCUMENT_GRAY("document_gray"),

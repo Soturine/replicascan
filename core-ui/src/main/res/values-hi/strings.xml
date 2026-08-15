@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+    <string name="filter_auto">स्वचालित</string>
+    <string name="filter_auto_description">पृष्ठ के अनुसार स्पष्टता और रंग समायोजित करता है।</string>
     <string name="mode_notebook">नोटबुक/संकाय</string>
     <string name="mode_notebook_description">हैंडआउट्स, टेबल और अध्ययन पृष्ठों के लिए।</string>
     <string name="mode_document">दस्तावेज़/अनुबंध</string>

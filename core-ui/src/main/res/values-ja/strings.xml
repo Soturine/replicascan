@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+    <string name="filter_auto">自動</string>
+    <string name="filter_auto_description">ページに合わせて鮮明さと色を調整します。</string>
     <string name="mode_notebook">ノート/教員</string>
     <string name="mode_notebook_description">配布資料、表、学習ページ用。</string>
     <string name="mode_document">文書/契約書</string>
