@@ -27,6 +27,8 @@
     <string name="ocr_paragraph_label">Alıntı %1$d</string>
     <string name="ocr_continuous_title">Birleştirilmiş metin</string>
     <string name="ocr_script_title">Belge yazımı</string>
+    <string name="ocr_script_automatic">Otomatik</string>
+    <string name="ocr_script_more">Diller</string>
     <string name="ocr_script_latin">Latince</string>
     <string name="ocr_script_devanagari">Devanagari</string>
     <string name="ocr_script_japanese">Japonca</string>

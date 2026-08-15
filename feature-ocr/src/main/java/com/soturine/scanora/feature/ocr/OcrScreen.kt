@@ -36,6 +36,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -229,13 +230,29 @@ private fun OcrScriptSelector(
     enabled: Boolean,
     onSelected: (OcrScript) -> Unit,
 ) {
+    var advancedExpanded by rememberSaveable { mutableStateOf(selected != OcrScript.AUTOMATIC) }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(
-            text = stringResource(R.string.ocr_script_title),
-            style = MaterialTheme.typography.labelLarge,
-        )
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            items(OcrScript.entries) { script ->
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            FilterChip(
+                selected = selected == OcrScript.AUTOMATIC,
+                onClick = { onSelected(OcrScript.AUTOMATIC) },
+                enabled = enabled,
+                label = { Text(stringResource(R.string.ocr_script_automatic)) },
+            )
+            TextButton(onClick = { advancedExpanded = !advancedExpanded }) {
+                Text(stringResource(R.string.ocr_script_more))
+            }
+        }
+        if (advancedExpanded) {
+            Text(
+                text = stringResource(R.string.ocr_script_title),
+                style = MaterialTheme.typography.labelLarge,
+            )
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                items(OcrScript.entries.filterNot { it == OcrScript.AUTOMATIC }) { script ->
                 FilterChip(
                     selected = selected == script,
                     onClick = { onSelected(script) },
@@ -243,6 +260,7 @@ private fun OcrScriptSelector(
                     label = {
                         Text(
                             when (script) {
+                                OcrScript.AUTOMATIC -> stringResource(R.string.ocr_script_automatic)
                                 OcrScript.LATIN -> stringResource(R.string.ocr_script_latin)
                                 OcrScript.DEVANAGARI -> stringResource(R.string.ocr_script_devanagari)
                                 OcrScript.JAPANESE -> stringResource(R.string.ocr_script_japanese)
@@ -252,6 +270,7 @@ private fun OcrScriptSelector(
                     },
                 )
             }
+        }
         }
         if (readiness == OcrModelReadiness.DOWNLOAD_PENDING) {
             Text(

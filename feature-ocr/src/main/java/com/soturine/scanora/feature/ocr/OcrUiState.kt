@@ -15,7 +15,7 @@ data class OcrUiState(
     val discardedNoiseCount: Int = 0,
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
-    val script: OcrScript = OcrScript.LATIN,
+    val script: OcrScript = OcrScript.AUTOMATIC,
     val modelReadiness: OcrModelReadiness = OcrModelReadiness.DOWNLOAD_PENDING,
 )
 

@@ -11,6 +11,7 @@ import com.soturine.scanora.core.common.repository.DocumentProcessingRepository
 import com.soturine.scanora.core.common.repository.OcrRepository
 import com.soturine.scanora.core.common.repository.OcrRequest
 import java.security.MessageDigest
+import java.util.Locale
 import com.soturine.scanora.core.common.repository.ScanRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,7 +34,7 @@ class OcrViewModel(
     private val previewImageUri = MutableStateFlow<String?>(null)
     private val isLoading = MutableStateFlow(false)
     private val errorMessage = MutableStateFlow<String?>(null)
-    private val selectedScript = MutableStateFlow(OcrScript.LATIN)
+    private val selectedScript = MutableStateFlow(OcrScript.AUTOMATIC)
     private val modelReadiness = MutableStateFlow(OcrModelReadiness.DOWNLOAD_PENDING)
 
     private val baseUiState = combine(
@@ -117,6 +118,8 @@ class OcrViewModel(
                         page.quad.toString(),
                         page.rotationDegrees.toString(),
                         page.filterType.name,
+                        selectedScript.value.name,
+                        localeScriptHint()?.name.orEmpty(),
                         "ocr-v3",
                     ).joinToString("|").toByteArray(),
                 )
@@ -125,6 +128,7 @@ class OcrViewModel(
                 OcrRequest(
                     imageUri = preparedUri,
                     script = selectedScript.value,
+                    fallbackHint = localeScriptHint(),
                     sourceFingerprint = fingerprint,
                 ),
             )
@@ -135,5 +139,12 @@ class OcrViewModel(
             errorMessage.value = throwable.message ?: "Não foi possível reconhecer o texto."
         }
         isLoading.value = false
+    }
+
+    private fun localeScriptHint(): OcrScript? = when (Locale.getDefault().language) {
+        "hi", "mr", "ne" -> OcrScript.DEVANAGARI
+        "ja" -> OcrScript.JAPANESE
+        "ko" -> OcrScript.KOREAN
+        else -> null
     }
 }

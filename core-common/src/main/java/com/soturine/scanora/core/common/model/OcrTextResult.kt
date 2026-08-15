@@ -37,7 +37,7 @@ data class OcrTextElement(
     val confidence: Float? = null,
 )
 
-enum class OcrScript { LATIN, DEVANAGARI, JAPANESE, KOREAN }
+enum class OcrScript { AUTOMATIC, LATIN, DEVANAGARI, JAPANESE, KOREAN }
 
 enum class OcrModelReadiness { READY, DOWNLOAD_PENDING, UNAVAILABLE }
 
@@ -74,6 +74,7 @@ data class OcrTextParagraph(
 enum class OcrTextQuality {
     EMPTY,
     WEAK,
+    PARTIAL,
     GOOD,
 }
 

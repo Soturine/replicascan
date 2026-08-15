@@ -27,6 +27,8 @@
     <string name="ocr_paragraph_label">Kutipan %1$d</string>
     <string name="ocr_continuous_title">Teks gabungan</string>
     <string name="ocr_script_title">Penulisan dokumen</string>
+    <string name="ocr_script_automatic">Otomatis</string>
+    <string name="ocr_script_more">Bahasa</string>
     <string name="ocr_script_latin">Latin</string>
     <string name="ocr_script_devanagari">Dewanagari</string>
     <string name="ocr_script_japanese">Jepang</string>

@@ -7,7 +7,8 @@ import com.soturine.scanora.core.common.model.OcrFailureReason
 
 data class OcrRequest(
     val imageUri: String,
-    val script: OcrScript = OcrScript.LATIN,
+    val script: OcrScript = OcrScript.AUTOMATIC,
+    val fallbackHint: OcrScript? = null,
     val sourceFingerprint: String = imageUri,
     val pipelineVersion: String = "ocr-v3",
 )

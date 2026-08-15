@@ -27,6 +27,8 @@
     <string name="ocr_paragraph_label">Auszug %1$d</string>
     <string name="ocr_continuous_title">Konsolidierter Text</string>
     <string name="ocr_script_title">Schreiben von Dokumenten</string>
+    <string name="ocr_script_automatic">Automatisch</string>
+    <string name="ocr_script_more">Sprachen</string>
     <string name="ocr_script_latin">lateinisch</string>
     <string name="ocr_script_devanagari">Devanagari</string>
     <string name="ocr_script_japanese">japanisch</string>

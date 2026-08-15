@@ -27,6 +27,8 @@
     <string name="ocr_paragraph_label">抜粋 %1$d</string>
     <string name="ocr_continuous_title">統合されたテキスト</string>
     <string name="ocr_script_title">文書作成</string>
+    <string name="ocr_script_automatic">自動</string>
+    <string name="ocr_script_more">言語</string>
     <string name="ocr_script_latin">ラテン</string>
     <string name="ocr_script_devanagari">デヴァナーガリー</string>
     <string name="ocr_script_japanese">日本語</string>

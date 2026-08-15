@@ -27,6 +27,8 @@
     <string name="ocr_paragraph_label">Trecho %1$d</string>
     <string name="ocr_continuous_title">Texto consolidado</string>
     <string name="ocr_script_title">Escrita do documento</string>
+    <string name="ocr_script_automatic">Automático</string>
+    <string name="ocr_script_more">Idiomas</string>
     <string name="ocr_script_latin">Latina</string>
     <string name="ocr_script_devanagari">Devanágari</string>
     <string name="ocr_script_japanese">Japonês</string>

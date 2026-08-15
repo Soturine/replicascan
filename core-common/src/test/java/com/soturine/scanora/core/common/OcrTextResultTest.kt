@@ -88,7 +88,7 @@ class OcrTextResultTest {
 
         assertThat(result.paragraphs).hasSize(1)
         assertThat(result.fullText).isEqualTo("Total Pagamento realizado com cartao em 25 de abril")
-        assertThat(result.quality).isEqualTo(OcrTextQuality.GOOD)
+        assertThat(result.quality).isEqualTo(OcrTextQuality.PARTIAL)
     }
 
     private fun block(vararg lines: OcrTextLine): OcrTextBlock = OcrTextBlock(lines.toList())

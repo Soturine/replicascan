@@ -14,6 +14,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.soturine.scanora.core.common.image.CanonicalImageDecoder
 import com.soturine.scanora.core.common.image.ImagePurpose
 import com.soturine.scanora.core.common.model.OcrArtifactMetadata
+import com.soturine.scanora.core.common.model.AutomaticOcrScriptPlanner
 import com.soturine.scanora.core.common.model.OcrFailureReason
 import com.soturine.scanora.core.common.model.OcrModelReadiness
 import com.soturine.scanora.core.common.model.OcrScript
@@ -21,6 +22,7 @@ import com.soturine.scanora.core.common.model.OcrTextBlock
 import com.soturine.scanora.core.common.model.OcrTextBounds
 import com.soturine.scanora.core.common.model.OcrTextElement
 import com.soturine.scanora.core.common.model.OcrTextLine
+import com.soturine.scanora.core.common.model.OcrTextQuality
 import com.soturine.scanora.core.common.model.OcrTextResult
 import com.soturine.scanora.core.common.repository.OcrRepository
 import com.soturine.scanora.core.common.repository.OcrRequest
@@ -46,25 +48,32 @@ class DefaultOcrRepository(context: Context) : OcrRepository, AutoCloseable {
     override suspend fun recognize(request: OcrRequest): OcrTextResult = withContext(Dispatchers.IO) {
         val decoded = imageDecoder.decode(request.imageUri, ImagePurpose.OCR)
             ?: throw OcrRecognitionException(OcrFailureReason.IMAGE_UNREADABLE)
-        try {
-            val recognized = recognizerClients.getValue(request.script)
-                .process(InputImage.fromBitmap(decoded.bitmap, 0))
-                .awaitResult()
-            readiness[request.script] = OcrModelReadiness.READY
-            formatRecognizedText(recognized, request)
-        } catch (exception: MlKitException) {
-            val reason = if (exception.errorCode == 14) {
-                readiness[request.script] = OcrModelReadiness.DOWNLOAD_PENDING
-                OcrFailureReason.MODEL_NOT_READY
-            } else {
-                OcrFailureReason.RECOGNITION_FAILED
+        val candidates = AutomaticOcrScriptPlanner.candidates(request.script, request.fallbackHint)
+        var best: OcrTextResult? = null
+        var lastFailure: OcrRecognitionException? = null
+        candidates.forEach { script ->
+            runCatching {
+                recognizeWithScript(
+                    image = InputImage.fromBitmap(decoded.bitmap, 0),
+                    request = request.copy(script = script),
+                )
+            }.onSuccess { result ->
+                if (best == null || result.isBetterThan(best!!)) best = result
+                if (result.quality == OcrTextQuality.GOOD) return@withContext result
+            }.onFailure { failure ->
+                lastFailure = failure as? OcrRecognitionException
+                    ?: OcrRecognitionException(OcrFailureReason.RECOGNITION_FAILED, failure)
             }
-            throw OcrRecognitionException(reason, exception)
         }
+        best ?: throw lastFailure ?: OcrRecognitionException(OcrFailureReason.RECOGNITION_FAILED)
     }
 
     override suspend fun modelReadiness(script: OcrScript): OcrModelReadiness =
-        readiness[script] ?: OcrModelReadiness.UNAVAILABLE
+        if (script == OcrScript.AUTOMATIC) {
+            readiness[OcrScript.LATIN] ?: OcrModelReadiness.DOWNLOAD_PENDING
+        } else {
+            readiness[script] ?: OcrModelReadiness.UNAVAILABLE
+        }
 
     override fun close() {
         recognizerClients.values.forEach(TextRecognizer::close)
@@ -103,6 +112,38 @@ class DefaultOcrRepository(context: Context) : OcrRepository, AutoCloseable {
                 createdAtEpochMillis = System.currentTimeMillis(),
             ),
         )
+    }
+
+    private suspend fun recognizeWithScript(
+        image: InputImage,
+        request: OcrRequest,
+    ): OcrTextResult {
+        val script = request.script
+        require(script != OcrScript.AUTOMATIC)
+        return try {
+            val recognized = recognizerClients.getValue(script).process(image).awaitResult()
+            readiness[script] = OcrModelReadiness.READY
+            formatRecognizedText(recognized, request)
+        } catch (exception: MlKitException) {
+            val reason = if (exception.errorCode == 14) {
+                readiness[script] = OcrModelReadiness.DOWNLOAD_PENDING
+                OcrFailureReason.MODEL_NOT_READY
+            } else {
+                OcrFailureReason.RECOGNITION_FAILED
+            }
+            throw OcrRecognitionException(reason, exception)
+        }
+    }
+
+    private fun OcrTextResult.isBetterThan(other: OcrTextResult): Boolean {
+        val rank = mapOf(
+            OcrTextQuality.EMPTY to 0,
+            OcrTextQuality.WEAK to 1,
+            OcrTextQuality.PARTIAL to 2,
+            OcrTextQuality.GOOD to 3,
+        )
+        return rank.getValue(quality) > rank.getValue(other.quality) ||
+            (quality == other.quality && fullText.length > other.fullText.length)
     }
 
     private fun Rect.toOcrTextBounds() = OcrTextBounds(left, top, right, bottom)

@@ -27,6 +27,8 @@
     <string name="ocr_paragraph_label">अंश %1$d</string>
     <string name="ocr_continuous_title">समेकित पाठ</string>
     <string name="ocr_script_title">दस्तावेज़ लेखन</string>
+    <string name="ocr_script_automatic">स्वचालित</string>
+    <string name="ocr_script_more">भाषाएँ</string>
     <string name="ocr_script_latin">लैटिन</string>
     <string name="ocr_script_devanagari">देवनागरी</string>
     <string name="ocr_script_japanese">जापानी</string>

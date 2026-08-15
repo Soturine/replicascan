@@ -243,10 +243,10 @@ object OcrTextPostProcessor {
         if (consolidatedText.isBlank()) return OcrTextQuality.EMPTY
         val words = wordCount(consolidatedText)
         val mostlyTiny = paragraphs.isNotEmpty() && paragraphs.count { it.wordCount <= 2 } > paragraphs.size / 2
-        return if (words < 5 || consolidatedText.length < 32 || mostlyTiny) {
-            OcrTextQuality.WEAK
-        } else {
-            OcrTextQuality.GOOD
+        return when {
+            words < 5 || consolidatedText.length < 32 -> OcrTextQuality.WEAK
+            words < 12 || consolidatedText.length < 90 || mostlyTiny -> OcrTextQuality.PARTIAL
+            else -> OcrTextQuality.GOOD
         }
     }
 
