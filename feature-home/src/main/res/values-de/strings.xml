@@ -10,7 +10,7 @@
     <string name="home_hero_title">Scannen Sie, ohne etwas vorzubereiten.</string>
     <string name="home_hero_subtitle">Der schnelle Scanner erkennt Kanten, akzeptiert die Galerie, sofern verfügbar, und öffnet dann die Rezension.</string>
     <string name="home_quick_scan_action">Scan</string>
-    <string name="home_manual_scan_action">Manuelle Einstellung</string>
+    <string name="home_manual_scan_action">Assistierter Scanner</string>
     <string name="home_import_action">Import</string>
     <string name="home_capture_helper">Manuelle Anpassung und Direktimport bleiben als bearbeitbarer Fallback bestehen.</string>
     <string name="home_quick_scan_unavailable">Der Schnellscanner ist auf diesem Gerät nicht verfügbar.</string>

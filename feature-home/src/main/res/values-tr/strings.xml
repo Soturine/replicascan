@@ -10,7 +10,7 @@
     <string name="home_hero_title">Hiçbir şey hazırlamadan tarayın.</string>
     <string name="home_hero_subtitle">Hızlı tarayıcı kenarları algılar, mevcut olduğunda galeriyi kabul eder ve ardından incelemeyi açar.</string>
     <string name="home_quick_scan_action">Tara</string>
-    <string name="home_manual_scan_action">Manuel ayar</string>
+    <string name="home_manual_scan_action">Yardımlı tarayıcı</string>
     <string name="home_import_action">İçe aktarmak</string>
     <string name="home_capture_helper">Manuel ayarlama ve doğrudan içe aktarma, düzenlenebilir bir geri dönüş olarak kalır.</string>
     <string name="home_quick_scan_unavailable">Hızlı tarayıcı bu cihazda mevcut değil.</string>

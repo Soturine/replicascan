@@ -10,7 +10,7 @@
     <string name="home_hero_title">المسح دون تحضير أي شيء.</string>
     <string name="home_hero_subtitle">يكتشف الماسح الضوئي السريع الحواف، ويقبل المعرض عندما يكون متاحًا، ثم يفتح المراجعة.</string>
     <string name="home_quick_scan_action">مسح</string>
-    <string name="home_manual_scan_action">التعديل اليدوي</string>
+    <string name="home_manual_scan_action">ماسح بمساعدة</string>
     <string name="home_import_action">يستورد</string>
     <string name="home_capture_helper">ويظل التعديل اليدوي والاستيراد المباشر كإجراء احتياطي قابل للتحرير.</string>
     <string name="home_quick_scan_unavailable">الماسح الضوئي السريع غير متوفر على هذا الجهاز.</string>

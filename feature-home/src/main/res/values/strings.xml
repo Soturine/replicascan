@@ -10,7 +10,7 @@
     <string name="home_hero_title">Scan without preparing anything.</string>
     <string name="home_hero_subtitle">The fast scanner detects edges, accepts gallery when available, and then opens the review.</string>
     <string name="home_quick_scan_action">Scan</string>
-    <string name="home_manual_scan_action">Manual adjustment</string>
+    <string name="home_manual_scan_action">Assisted scanner</string>
     <string name="home_import_action">Import</string>
     <string name="home_capture_helper">Manual adjustment and direct import remain as editable fallback.</string>
     <string name="home_quick_scan_unavailable">Fast scanner is not available on this device.</string>

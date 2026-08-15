@@ -2,6 +2,8 @@ package com.soturine.scanora.feature.export
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +24,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -52,7 +55,7 @@ import com.soturine.scanora.core.ui.component.SectionHeader
 import com.soturine.scanora.core.ui.component.ScanoraMascot
 import com.soturine.scanora.core.ui.component.ScanoraMascotState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ExportScreen(
     state: ExportUiState,
@@ -238,13 +241,13 @@ fun ExportScreen(
                             text = stringResource(id = R.string.export_format_section),
                             style = MaterialTheme.typography.titleMedium,
                         )
-                        Row(
+                        FlowRow(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             ExportKind.entries.forEach { kind ->
                                 ExportChoiceButton(
-                                    modifier = Modifier.weight(1f),
                                     title = kind.title(),
                                     selected = selectedKind == kind,
                                     onClick = {
@@ -284,13 +287,13 @@ fun ExportScreen(
                                     text = stringResource(id = R.string.export_image_format_section),
                                     style = MaterialTheme.typography.titleMedium,
                                 )
-                                Row(
+                                FlowRow(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp),
                                 ) {
                                     listOf(ExportFormat.JPG, ExportFormat.PNG).forEach { format ->
                                         ExportChoiceButton(
-                                            modifier = Modifier.weight(1f),
                                             title = format.title,
                                             selected = state.selectedFormat == format,
                                             onClick = { onSelectFormat(format) },
@@ -323,13 +326,13 @@ fun ExportScreen(
                                     text = stringResource(id = R.string.export_quality_section),
                                     style = MaterialTheme.typography.titleMedium,
                                 )
-                                Row(
+                                FlowRow(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp),
                                 ) {
                                     PdfQuality.entries.forEach { quality ->
                                         ExportChoiceButton(
-                                            modifier = Modifier.weight(1f),
                                             title = quality.localizedTitle(),
                                             selected = state.selectedQuality == quality,
                                             onClick = { onSelectQuality(quality) },
@@ -345,13 +348,13 @@ fun ExportScreen(
                                     text = stringResource(R.string.export_page_size_section),
                                     style = MaterialTheme.typography.titleSmall,
                                 )
-                                Row(
+                                FlowRow(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp),
                                 ) {
                                     PdfPageSize.entries.forEach { size ->
                                         ExportChoiceButton(
-                                            modifier = Modifier.weight(1f),
                                             title = when (size) {
                                                 PdfPageSize.AUTO -> stringResource(R.string.export_page_size_auto)
                                                 PdfPageSize.A4 -> "A4"
@@ -378,27 +381,12 @@ private fun ExportChoiceButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val containerColor = if (selected) {
-        MaterialTheme.colorScheme.primaryContainer
-    } else {
-        MaterialTheme.colorScheme.surface
-    }
-    val contentColor = if (selected) {
-        MaterialTheme.colorScheme.onPrimaryContainer
-    } else {
-        MaterialTheme.colorScheme.onSurfaceVariant
-    }
-
-    FilledTonalButton(
+    FilterChip(
         modifier = modifier,
+        selected = selected,
         onClick = onClick,
-        colors = androidx.compose.material3.ButtonDefaults.filledTonalButtonColors(
-            containerColor = containerColor,
-            contentColor = contentColor,
-        ),
-    ) {
-        Text(text = title)
-    }
+        label = { Text(text = title) },
+    )
 }
 
 @Composable

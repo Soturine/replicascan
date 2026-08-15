@@ -10,7 +10,7 @@
     <string name="home_hero_title">बिना कुछ तैयारी किये स्कैन करें.</string>
     <string name="home_hero_subtitle">तेज़ स्कैनर किनारों का पता लगाता है, उपलब्ध होने पर गैलरी स्वीकार करता है और फिर समीक्षा खोलता है।</string>
     <string name="home_quick_scan_action">स्कैन</string>
-    <string name="home_manual_scan_action">मैन्युअल समायोजन</string>
+    <string name="home_manual_scan_action">सहायक स्कैनर</string>
     <string name="home_import_action">आयात</string>
     <string name="home_capture_helper">मैन्युअल समायोजन और प्रत्यक्ष आयात संपादन योग्य फ़ॉलबैक के रूप में बने रहेंगे।</string>
     <string name="home_quick_scan_unavailable">इस डिवाइस पर तेज़ स्कैनर उपलब्ध नहीं है.</string>

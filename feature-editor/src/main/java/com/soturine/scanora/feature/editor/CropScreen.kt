@@ -608,38 +608,45 @@ fun ReviewScreen(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                     ),
                 ) {
-                    Column(
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(18.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text(
-                            text = title,
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-                        Text(
-                            text = pluralStringResource(R.plurals.editor_review_summary, orderedPages.size, orderedPages.size),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        if (scan.tags.isNotEmpty()) {
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
                             Text(
-                                text = scan.tags.joinToString(separator = " / "),
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.primary,
+                                text = title,
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.onSurface,
                             )
-                        }
-                        OutlinedButton(onClick = { metadataExpanded = !metadataExpanded }) {
                             Text(
-                                text = if (metadataExpanded) {
-                                    stringResource(id = R.string.editor_hide_metadata)
-                                } else {
-                                    stringResource(id = R.string.editor_edit_metadata)
-                                },
+                                text = pluralStringResource(R.plurals.editor_review_summary, orderedPages.size, orderedPages.size),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
+                            if (scan.tags.isNotEmpty()) {
+                                Text(
+                                    text = scan.tags.joinToString(separator = " / "),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            }
+                            OutlinedButton(onClick = { metadataExpanded = !metadataExpanded }) {
+                                Text(
+                                    text = if (metadataExpanded) {
+                                        stringResource(id = R.string.editor_hide_metadata)
+                                    } else {
+                                        stringResource(id = R.string.editor_edit_metadata)
+                                    },
+                                )
+                            }
                         }
+                        ScanoraMascot(ScanoraMascotState.Working, size = 86.dp)
                     }
                 }
             }

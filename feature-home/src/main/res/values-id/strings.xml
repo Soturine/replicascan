@@ -10,7 +10,7 @@
     <string name="home_hero_title">Pindai tanpa menyiapkan apa pun.</string>
     <string name="home_hero_subtitle">Pemindai cepat mendeteksi tepian, menerima galeri bila tersedia, dan kemudian membuka tinjauan.</string>
     <string name="home_quick_scan_action">Pindai</string>
-    <string name="home_manual_scan_action">Penyesuaian manual</string>
+    <string name="home_manual_scan_action">Pemindai berbantuan</string>
     <string name="home_import_action">Impor</string>
     <string name="home_capture_helper">Penyesuaian manual dan impor langsung tetap menjadi cadangan yang dapat diedit.</string>
     <string name="home_quick_scan_unavailable">Pemindai cepat tidak tersedia di perangkat ini.</string>

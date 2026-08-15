@@ -10,7 +10,7 @@
     <string name="home_hero_title">Scansiona senza preparare nulla.</string>
     <string name="home_hero_subtitle">Lo scanner veloce rileva i bordi, accetta la galleria quando disponibile, quindi apre la revisione.</string>
     <string name="home_quick_scan_action">Scansione</string>
-    <string name="home_manual_scan_action">Regolazione manuale</string>
+    <string name="home_manual_scan_action">Scanner assistito</string>
     <string name="home_import_action">Importare</string>
     <string name="home_capture_helper">La regolazione manuale e l\'importazione diretta rimangono come fallback modificabili.</string>
     <string name="home_quick_scan_unavailable">Lo scanner veloce non è disponibile su questo dispositivo.</string>

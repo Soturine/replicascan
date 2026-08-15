@@ -10,7 +10,7 @@
     <string name="home_hero_title">Escanea sin preparar nada.</string>
     <string name="home_hero_subtitle">El escáner rápido detecta bordes, acepta la galería cuando está disponible y luego abre la revisión.</string>
     <string name="home_quick_scan_action">Escanear</string>
-    <string name="home_manual_scan_action">Ajuste manual</string>
+    <string name="home_manual_scan_action">Escáner asistido</string>
     <string name="home_import_action">Importar</string>
     <string name="home_capture_helper">El ajuste manual y la importación directa siguen siendo opciones editables.</string>
     <string name="home_quick_scan_unavailable">El escáner rápido no está disponible en este dispositivo.</string>

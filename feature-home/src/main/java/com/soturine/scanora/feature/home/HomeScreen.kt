@@ -107,7 +107,7 @@ fun HomeScreen(
         if (pages.isNotEmpty()) onStartQuickScan(pages)
     }
 
-    fun launchQuickScan() {
+    fun launchAssistedScan() {
         if (activity == null) {
             coroutineScope.launch { snackbarHostState.showSnackbar(quickScanUnavailableMessage) }
             return
@@ -195,7 +195,7 @@ fun HomeScreen(
                     }
                     ScanoraPrimaryButton(
                         text = stringResource(R.string.home_quick_scan_action),
-                        onClick = ::launchQuickScan,
+                        onClick = { onOpenManualCamera(state.manualMode) },
                         icon = {
                             Icon(Icons.Outlined.DocumentScanner, null)
                             Spacer(Modifier.width(10.dp))
@@ -203,7 +203,7 @@ fun HomeScreen(
                     )
     ScanoraSecondaryButton(
                         text = stringResource(R.string.home_manual_scan_action),
-                        onClick = { onOpenManualCamera(state.manualMode) },
+                        onClick = ::launchAssistedScan,
                         modifier = Modifier.fillMaxWidth(),
                         icon = { Icon(Icons.Outlined.CameraAlt, null); Spacer(Modifier.width(10.dp)) },
                     )

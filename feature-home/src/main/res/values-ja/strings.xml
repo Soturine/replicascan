@@ -10,7 +10,7 @@
     <string name="home_hero_title">何も準備せずにスキャンしてください。</string>
     <string name="home_hero_subtitle">高速スキャナはエッジを検出し、利用可能な場合はギャラリーを受け入れ、レビューを開きます。</string>
     <string name="home_quick_scan_action">スキャン</string>
-    <string name="home_manual_scan_action">手動調整</string>
+    <string name="home_manual_scan_action">アシストスキャナー</string>
     <string name="home_import_action">輸入</string>
     <string name="home_capture_helper">手動調整と直接インポートは編集可能なフォールバックとして残ります。</string>
     <string name="home_quick_scan_unavailable">このデバイスでは高速スキャナーを使用できません。</string>
