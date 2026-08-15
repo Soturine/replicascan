@@ -39,7 +39,7 @@ class HeuristicDocumentDetector : DocumentDetector {
         val projections = buildEdgeProjections(luma, width, height)
         val config = ProfileConfig.forProfile(profile)
         val candidates = buildList {
-            edgeCandidate(projections, width, height)?.let(::add)
+            edgeCandidates(projections, width, height).forEach(::add)
             brightnessCandidate(luma, width, height)?.let(::add)
             borderContrastCandidate(luma, width, height)?.let(::add)
         }
@@ -48,7 +48,14 @@ class HeuristicDocumentDetector : DocumentDetector {
             .distinctBy { listOf(it.left / 8, it.top / 8, it.right / 8, it.bottom / 8) }
 
         val ranked = candidates.mapNotNull { bounds ->
-            val quad = refineQuad(bounds, projections, width, height)
+            val estimate = PerspectiveQuadEstimator.estimate(
+                luma = luma,
+                width = width,
+                height = height,
+                coarse = PerspectiveQuadEstimator.Bounds(bounds.left, bounds.top, bounds.right, bounds.bottom),
+                minimumAreaRatio = config.minimumAreaRatio,
+            )
+            val quad = estimate?.quad ?: refineAxisAlignedQuad(bounds, projections, width, height)
             if (!DocumentQuadValidator.isValidNormalized(quad, config.minimumAreaRatio)) return@mapNotNull null
             ScoredQuad(
                 quad = quad,
@@ -60,6 +67,7 @@ class HeuristicDocumentDetector : DocumentDetector {
                     width = width,
                     height = height,
                     config = config,
+                    perspectiveSupport = estimate?.support ?: 0f,
                 ),
             )
         }.sortedByDescending(ScoredQuad::score)
@@ -117,13 +125,15 @@ class HeuristicDocumentDetector : DocumentDetector {
         )
     }
 
-    private fun edgeCandidate(edges: EdgeProjections, width: Int, height: Int): Rect? {
-        if (edges.meanEdge < MIN_EDGE) return null
-        val left = edges.columns.boundary(fromStart = true) ?: return null
-        val right = edges.columns.boundary(fromStart = false) ?: return null
-        val top = edges.rows.boundary(fromStart = true) ?: return null
-        val bottom = edges.rows.boundary(fromStart = false) ?: return null
-        return Rect(left, top, right, bottom).takeIf { it.width() > 0 && it.height() > 0 }
+    private fun edgeCandidates(edges: EdgeProjections, width: Int, height: Int): List<Rect> {
+        if (edges.meanEdge < MIN_EDGE) return emptyList()
+        return EDGE_BOUNDARY_FRACTIONS.mapNotNull { fraction ->
+            val left = edges.columns.boundary(fromStart = true, thresholdFraction = fraction) ?: return@mapNotNull null
+            val right = edges.columns.boundary(fromStart = false, thresholdFraction = fraction) ?: return@mapNotNull null
+            val top = edges.rows.boundary(fromStart = true, thresholdFraction = fraction) ?: return@mapNotNull null
+            val bottom = edges.rows.boundary(fromStart = false, thresholdFraction = fraction) ?: return@mapNotNull null
+            Rect(left, top, right, bottom).takeIf { it.width() > 0 && it.height() > 0 }
+        }
     }
 
     private fun brightnessCandidate(luma: IntArray, width: Int, height: Int): Rect? {
@@ -176,7 +186,7 @@ class HeuristicDocumentDetector : DocumentDetector {
         return Rect(left, top, right, bottom)
     }
 
-    private fun refineQuad(bounds: Rect, edges: EdgeProjections, width: Int, height: Int): DocumentQuad {
+    private fun refineAxisAlignedQuad(bounds: Rect, edges: EdgeProjections, width: Int, height: Int): DocumentQuad {
         val searchX = max(bounds.width() / 12, 4)
         val searchY = max(bounds.height() / 12, 4)
         val top = edges.rows.peakNear(bounds.top, searchY)
@@ -199,6 +209,7 @@ class HeuristicDocumentDetector : DocumentDetector {
         width: Int,
         height: Int,
         config: ProfileConfig,
+        perspectiveSupport: Float,
     ): Float {
         val areaRatio = bounds.width().toFloat() * bounds.height() / (width.toFloat() * height)
         val aspect = bounds.width().toFloat() / bounds.height().coerceAtLeast(1)
@@ -210,7 +221,7 @@ class HeuristicDocumentDetector : DocumentDetector {
             abs(centerX - width / 2f) / width.coerceAtLeast(1) +
                 abs(centerY - height / 2f) / height.coerceAtLeast(1)
             )
-        val centerScore = (1f - centerDistance * 1.7f).coerceIn(0f, 1f)
+        val centerScore = (1f - centerDistance * 1.35f).coerceIn(0f, 1f)
         val edgePeak = listOf(
             projections.columns.getOrElse(bounds.left) { 0f } / height,
             projections.columns.getOrElse(bounds.right.coerceAtMost(width - 1)) { 0f } / height,
@@ -227,8 +238,9 @@ class HeuristicDocumentDetector : DocumentDetector {
                 contrastScore * 0.23f +
                 areaScore * 0.16f +
                 aspectScore * 0.13f +
-                centerScore * 0.08f +
-                geometryScore * 0.06f
+                centerScore * 0.04f +
+                geometryScore * 0.06f +
+                perspectiveSupport * 0.04f
             ).coerceIn(0f, 1f)
     }
 
@@ -260,10 +272,10 @@ class HeuristicDocumentDetector : DocumentDetector {
         return output
     }
 
-    private fun FloatArray.boundary(fromStart: Boolean): Int? {
+    private fun FloatArray.boundary(fromStart: Boolean, thresholdFraction: Float): Int? {
         val maximum = maxOrNull() ?: return null
         if (maximum <= 0f) return null
-        val threshold = maximum * 0.24f
+        val threshold = maximum * thresholdFraction
         val margin = max(size / 40, 2)
         val range = if (fromStart) margin until size - margin else size - margin - 1 downTo margin
         return range.firstOrNull { this[it] >= threshold }
@@ -378,5 +390,6 @@ class HeuristicDocumentDetector : DocumentDetector {
         private const val MIN_REGION_CONTRAST = 9f
         private const val MAX_AREA_RATIO = 0.965f
         private const val NANOS_PER_MILLI = 1_000_000L
+        private val EDGE_BOUNDARY_FRACTIONS = listOf(0.18f, 0.27f, 0.36f)
     }
 }
