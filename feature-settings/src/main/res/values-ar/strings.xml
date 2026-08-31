@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_title">إعدادات</string>
     <string name="settings_eyebrow">التفضيلات</string>
-    <string name="settings_heading">اضبط Scanora كما يناسبك</string>
+    <string name="settings_heading">اضبط ReplicaScan كما يناسبك</string>
     <string name="settings_supporting">تبقى إعدادات المظهر والوضع اليدوي والتصدير محفوظة على جهازك.</string>
     <string name="settings_theme_section">سمة</string>
     <string name="settings_theme_supporting">يحدد الشكل الذي يجب أن تظهر به الواجهة بشكل يومي.</string>
@@ -34,7 +34,7 @@
     <string name="settings_reset_onboarding">عرض الشاشات التعريفية مرة أخرى</string>
     <string name="settings_open_about">حول التطبيق</string>
     <string name="settings_about_title">حول سكانورا</string>
-    <string name="settings_about_body">Scanora هو ماسح ضوئي للمستندات يعمل بنظام Android مع التركيز على المعالجة المحلية والتعرف الضوئي على الحروف على الجهاز والتصدير الواضح إلى PDF وJPG وPNG. يتمثل الاقتراح في الانتقال من الالتقاط إلى الملف النهائي بأقل قدر من الاحتكاك ودون الحاجة إلى واجهة خلفية للتدفق الرئيسي.</string>
+    <string name="settings_about_body">ReplicaScan هو ماسح ضوئي للمستندات يعمل بنظام Android مع التركيز على المعالجة المحلية والتعرف الضوئي على الحروف على الجهاز والتصدير الواضح إلى PDF وJPG وPNG. يتمثل الاقتراح في الانتقال من الالتقاط إلى الملف النهائي بأقل قدر من الاحتكاك ودون الحاجة إلى واجهة خلفية للتدفق الرئيسي.</string>
     <string name="settings_open_privacy">فتح سياسة الخصوصية</string>
     <string name="settings_version" translatable="false">0.3.1</string>
 </resources>

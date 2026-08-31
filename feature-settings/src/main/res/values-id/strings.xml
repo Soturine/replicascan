@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_title">Pengaturan</string>
     <string name="settings_eyebrow">Preferensi</string>
-    <string name="settings_heading">Sesuaikan Scanora sesuai keinginan Anda</string>
+    <string name="settings_heading">Sesuaikan ReplicaScan sesuai keinginan Anda</string>
     <string name="settings_supporting">Semuanya di sini tetap bersifat lokal: tema, penggantian manual, dan preferensi ekspor.</string>
     <string name="settings_theme_section">Tema</string>
     <string name="settings_theme_supporting">Tentukan bagaimana antarmuka akan muncul setiap hari.</string>
@@ -13,7 +13,7 @@
     <string name="settings_theme_dark">Selalu gelap</string>
     <string name="settings_theme_dark_description">Membuat aplikasi tetap gelap untuk membaca dengan kecerahan lebih rendah.</string>
     <string name="settings_language_section">Bahasa</string>
-    <string name="settings_language_supporting">Ikuti sistem atau pilih bahasa Scanora.</string>
+    <string name="settings_language_supporting">Ikuti sistem atau pilih bahasa ReplicaScan.</string>
     <string name="settings_language_system">Sistem</string>
     <string name="settings_language_portuguese">Portugis</string>
     <string name="settings_language_english">English</string>
@@ -26,8 +26,8 @@
     <string name="settings_pdf_supporting">Preferensi ini digunakan sebagai dasar untuk layar ekspor.</string>
     <string name="settings_reset_onboarding">Lihat orientasi lagi</string>
     <string name="settings_open_about">Tentang aplikasi</string>
-    <string name="settings_about_title">Tentang Scanora</string>
-    <string name="settings_about_body">Scanora adalah pemindai dokumen Android dengan fokus pada pemrosesan lokal, OCR pada perangkat, dan ekspor yang jelas ke PDF, JPG, dan PNG. Usulannya adalah beralih dari pengambilan ke file akhir dengan gesekan minimal dan tanpa memerlukan backend untuk aliran utama.</string>
+    <string name="settings_about_title">Tentang ReplicaScan</string>
+    <string name="settings_about_body">ReplicaScan adalah pemindai dokumen Android dengan fokus pada pemrosesan lokal, OCR pada perangkat, dan ekspor yang jelas ke PDF, JPG, dan PNG. Usulannya adalah beralih dari pengambilan ke file akhir dengan gesekan minimal dan tanpa memerlukan backend untuk aliran utama.</string>
     <string name="settings_open_privacy">Buka kebijakan privasi</string>
     <string name="settings_language_arabic">العربية</string>
     <string name="settings_language_german">Deutsch</string>

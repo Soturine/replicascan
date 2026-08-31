@@ -9,7 +9,7 @@
         <item quantity="one">%1$d ページをエクスポートする準備ができました。</item>
         <item quantity="other">%1$d ページをエクスポートする準備ができました。</item>
     </plurals>
-    <string name="export_local_notice">Scanora はデバイス自体ですべてを生成し、完了するとすぐにファイルが保存された場所を表示します。</string>
+    <string name="export_local_notice">ReplicaScan はデバイス自体ですべてを生成し、完了するとすぐにファイルが保存された場所を表示します。</string>
     <string name="export_format_eyebrow">形式</string>
     <string name="export_format_section">このバッチはどのように出てくるのでしょうか?</string>
     <string name="export_format_supporting">バッチが携帯電話からどのように送信されるかを選択します。</string>

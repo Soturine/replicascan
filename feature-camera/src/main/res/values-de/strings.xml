@@ -7,7 +7,7 @@
     <string name="camera_take_photo">Foto aufnehmen</string>
     <string name="camera_capture_failed">Die Aufnahme konnte nicht gespeichert werden.</string>
     <string name="camera_permission_title">Kameraerlaubnis erforderlich</string>
-    <string name="camera_permission_message">Scanora verwendet die Kamera, um Dokumente auf dem Gerät zu finden und zu erfassen.</string>
+    <string name="camera_permission_message">ReplicaScan verwendet die Kamera, um Dokumente auf dem Gerät zu finden und zu erfassen.</string>
     <string name="camera_permission_action">Kamera zulassen</string>
     <string name="camera_frame_hint">Rahmen Sie das gesamte Dokument in den Rahmen ein.</string>
     <string name="camera_status_searching">Auf das Dokument richten</string>

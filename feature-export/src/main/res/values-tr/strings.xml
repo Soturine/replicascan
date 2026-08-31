@@ -9,7 +9,7 @@
         <item quantity="one">%1$d sayfası dışa aktarmaya hazır.</item>
         <item quantity="other">%1$d sayfaları dışa aktarmaya hazır.</item>
     </plurals>
-    <string name="export_local_notice">Scanora her şeyi cihazın kendisi üzerinde oluşturur ve tamamlanır tamamlanmaz dosyanın nereye kaydedildiğini gösterir.</string>
+    <string name="export_local_notice">ReplicaScan her şeyi cihazın kendisi üzerinde oluşturur ve tamamlanır tamamlanmaz dosyanın nereye kaydedildiğini gösterir.</string>
     <string name="export_format_eyebrow">Biçim</string>
     <string name="export_format_section">Bu parti nasıl çıkmalı?</string>
     <string name="export_format_supporting">Grubun cep telefonundan nasıl çıkması gerektiğini seçin.</string>

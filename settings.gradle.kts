@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Scanora"
+rootProject.name = "ReplicaScan"
 
 include(
     ":app",

@@ -7,7 +7,7 @@
     <string name="camera_take_photo">Capturar foto</string>
     <string name="camera_capture_failed">Não foi possível salvar a captura.</string>
     <string name="camera_permission_title">Permissão de câmera necessária</string>
-    <string name="camera_permission_message">O Scanora usa a câmera para encontrar e capturar documentos no aparelho.</string>
+    <string name="camera_permission_message">O ReplicaScan usa a câmera para encontrar e capturar documentos no aparelho.</string>
     <string name="camera_permission_action">Permitir câmera</string>
     <string name="camera_frame_hint">Enquadre o documento inteiro dentro da moldura.</string>
     <string name="camera_status_searching">Aponte para o documento</string>

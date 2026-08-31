@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_title">Ayarlar</string>
     <string name="settings_eyebrow">Tercihler</string>
-    <string name="settings_heading">Scanora\'yı beğeninize göre ayarlayın</string>
+    <string name="settings_heading">ReplicaScan\'yı beğeninize göre ayarlayın</string>
     <string name="settings_supporting">Buradaki her şey yerel kalır: tema, manuel geri dönüş ve dışa aktarma tercihleri.</string>
     <string name="settings_theme_section">Tema</string>
     <string name="settings_theme_supporting">Arayüzün günlük olarak nasıl görünmesi gerektiğini tanımlayın.</string>
@@ -13,7 +13,7 @@
     <string name="settings_theme_dark">Her zaman karanlık</string>
     <string name="settings_theme_dark_description">Daha az parlaklıkla okumak için uygulamayı karanlık tutar.</string>
     <string name="settings_language_section">Dil</string>
-    <string name="settings_language_supporting">Sistemi takip edin veya Scanora dilini seçin.</string>
+    <string name="settings_language_supporting">Sistemi takip edin veya ReplicaScan dilini seçin.</string>
     <string name="settings_language_system">Sistem</string>
     <string name="settings_language_portuguese">Portekizce</string>
     <string name="settings_language_english">English</string>
@@ -26,8 +26,8 @@
     <string name="settings_pdf_supporting">Bu tercih, dışa aktarma ekranının temeli olarak kullanılır.</string>
     <string name="settings_reset_onboarding">Tekrar katılıma bakın</string>
     <string name="settings_open_about">Uygulama hakkında</string>
-    <string name="settings_about_title">Scanora Hakkında</string>
-    <string name="settings_about_body">Scanora, yerel işlemeye, cihaz üzerinde OCR\'ye ve PDF, JPG ve PNG\'ye net bir şekilde dışa aktarmaya odaklanan bir Android belge tarayıcısıdır. Teklif, minimum sürtünmeyle ve ana akış için bir arka uç gerektirmeden yakalama aşamasından son dosyaya geçmektir.</string>
+    <string name="settings_about_title">ReplicaScan Hakkında</string>
+    <string name="settings_about_body">ReplicaScan, yerel işlemeye, cihaz üzerinde OCR\'ye ve PDF, JPG ve PNG\'ye net bir şekilde dışa aktarmaya odaklanan bir Android belge tarayıcısıdır. Teklif, minimum sürtünmeyle ve ana akış için bir arka uç gerektirmeden yakalama aşamasından son dosyaya geçmektir.</string>
     <string name="settings_open_privacy">Gizlilik politikasını aç</string>
     <string name="settings_language_arabic">العربية</string>
     <string name="settings_language_german">Deutsch</string>

@@ -9,7 +9,7 @@
         <item quantity="one">%1$d página lista para exportar.</item>
         <item quantity="other">%1$d páginas listas para exportar.</item>
     </plurals>
-    <string name="export_local_notice">Scanora genera todo en el propio dispositivo y muestra dónde se guardó el archivo tan pronto como finaliza.</string>
+    <string name="export_local_notice">ReplicaScan genera todo en el propio dispositivo y muestra dónde se guardó el archivo tan pronto como finaliza.</string>
     <string name="export_format_eyebrow">Formato</string>
     <string name="export_format_section">¿Cómo debería salir este lote?</string>
     <string name="export_format_supporting">Seleccione cómo debe salir el lote del celular.</string>

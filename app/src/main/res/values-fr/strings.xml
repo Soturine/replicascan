@@ -18,5 +18,5 @@
     <string name="import_partial_result">Les pages %1$d à partir de %2$d ont été ajoutées. %3$d n\'a pas pu être ajouté.</string>
     <string name="import_failed_result">Impossible d\'ajouter les pages sélectionnées.</string>
     <string name="delete_partial_result">Le document a été supprimé, mais les fichiers privés %1$d sont toujours en attente de nettoyage.</string>
-    <string name="export_chooser_title">Partager l’exportation Scanora</string>
+    <string name="export_chooser_title">Partager l’exportation ReplicaScan</string>
 </resources>

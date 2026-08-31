@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.soturine.scanora"
+    namespace = "com.soturine.replicascan"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.soturine.scanora"
+        applicationId = "com.soturine.replicascan"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()

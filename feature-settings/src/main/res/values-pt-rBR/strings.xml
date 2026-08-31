@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_title">Configurações</string>
     <string name="settings_eyebrow">Preferências</string>
-    <string name="settings_heading">Ajuste o Scanora ao seu jeito</string>
+    <string name="settings_heading">Ajuste o ReplicaScan ao seu jeito</string>
     <string name="settings_supporting">Tudo aqui continua local: tema, fallback manual e preferências de exportação.</string>
     <string name="settings_theme_section">Tema</string>
     <string name="settings_theme_supporting">Defina como a interface deve aparecer no dia a dia.</string>
@@ -13,7 +13,7 @@
     <string name="settings_theme_dark">Sempre escuro</string>
     <string name="settings_theme_dark_description">Mantém o app escuro para leitura com menos brilho.</string>
     <string name="settings_language_section">Idioma</string>
-    <string name="settings_language_supporting">Acompanhe o sistema ou escolha o idioma do Scanora.</string>
+    <string name="settings_language_supporting">Acompanhe o sistema ou escolha o idioma do ReplicaScan.</string>
     <string name="settings_language_system">Sistema</string>
     <string name="settings_language_portuguese">Português</string>
     <string name="settings_language_english">English</string>
@@ -26,8 +26,8 @@
     <string name="settings_pdf_supporting">Essa preferência é usada como base na tela de exportação.</string>
     <string name="settings_reset_onboarding">Ver onboarding novamente</string>
     <string name="settings_open_about">Sobre o app</string>
-    <string name="settings_about_title">Sobre o Scanora</string>
-    <string name="settings_about_body">Scanora é um scanner de documentos Android com foco em processamento local, OCR no dispositivo e exportação clara para PDF, JPG e PNG. A proposta é sair da captura até o arquivo final com o mínimo de atrito e sem exigir backend para o fluxo principal.</string>
+    <string name="settings_about_title">Sobre o ReplicaScan</string>
+    <string name="settings_about_body">ReplicaScan é um scanner de documentos Android com foco em processamento local, OCR no dispositivo e exportação clara para PDF, JPG e PNG. A proposta é sair da captura até o arquivo final com o mínimo de atrito e sem exigir backend para o fluxo principal.</string>
     <string name="settings_open_privacy">Abrir política de privacidade</string>
     <string name="settings_language_arabic">العربية</string>
     <string name="settings_language_german">Deutsch</string>

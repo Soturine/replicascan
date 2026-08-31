@@ -9,7 +9,7 @@
         <item quantity="one">Halaman %1$d siap untuk diekspor.</item>
         <item quantity="other">Halaman %1$d siap untuk diekspor.</item>
     </plurals>
-    <string name="export_local_notice">Scanora menghasilkan semua yang ada di perangkat itu sendiri dan menunjukkan di mana file disimpan segera setelah selesai.</string>
+    <string name="export_local_notice">ReplicaScan menghasilkan semua yang ada di perangkat itu sendiri dan menunjukkan di mana file disimpan segera setelah selesai.</string>
     <string name="export_format_eyebrow">Format</string>
     <string name="export_format_section">Bagaimana seharusnya batch ini keluar?</string>
     <string name="export_format_supporting">Pilih bagaimana kumpulan tersebut harus meninggalkan ponsel.</string>

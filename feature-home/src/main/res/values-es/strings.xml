@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="home_title">Comenzar</string>
-    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_app_bar_title">ReplicaScan</string>
     <string name="home_tagline">Escanear. Organizar. Simplificar.</string>
     <string name="home_greeting">¡Hola!</string>
     <string name="home_welcome">Es bueno verte.</string>

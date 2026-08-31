@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.soturine.scanora.feature.export"
+    namespace = "com.soturine.replicascan.feature.export"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

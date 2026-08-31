@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_title">설정</string>
     <string name="settings_eyebrow">환경설정</string>
-    <string name="settings_heading">Scanora를 원하는 대로 조정하세요.</string>
+    <string name="settings_heading">ReplicaScan를 원하는 대로 조정하세요.</string>
     <string name="settings_supporting">테마, 수동 대체, 내보내기 기본 설정 등 여기에 있는 모든 항목은 로컬로 유지됩니다.</string>
     <string name="settings_theme_section">주제</string>
     <string name="settings_theme_supporting">인터페이스가 매일 표시되는 방식을 정의합니다.</string>
@@ -13,7 +13,7 @@
     <string name="settings_theme_dark">항상 어두움</string>
     <string name="settings_theme_dark_description">밝기를 낮추고 읽기에 적합하도록 앱을 어둡게 유지합니다.</string>
     <string name="settings_language_section">언어</string>
-    <string name="settings_language_supporting">시스템을 따르거나 Scanora 언어를 선택하십시오.</string>
+    <string name="settings_language_supporting">시스템을 따르거나 ReplicaScan 언어를 선택하십시오.</string>
     <string name="settings_language_system">체계</string>
     <string name="settings_language_portuguese">포르투갈 인</string>
     <string name="settings_language_english">English</string>
@@ -27,7 +27,7 @@
     <string name="settings_reset_onboarding">온보딩 다시 보기</string>
     <string name="settings_open_about">앱 정보</string>
     <string name="settings_about_title">스카노라 소개</string>
-    <string name="settings_about_body">Scanora는 로컬 처리, 기기 내 OCR 및 PDF, JPG, PNG로의 명확한 내보내기에 중점을 둔 Android 문서 스캐너입니다. 제안은 최소한의 마찰로 그리고 기본 흐름에 대한 백엔드를 요구하지 않고 캡처에서 최종 파일로 이동하는 것입니다.</string>
+    <string name="settings_about_body">ReplicaScan는 로컬 처리, 기기 내 OCR 및 PDF, JPG, PNG로의 명확한 내보내기에 중점을 둔 Android 문서 스캐너입니다. 제안은 최소한의 마찰로 그리고 기본 흐름에 대한 백엔드를 요구하지 않고 캡처에서 최종 파일로 이동하는 것입니다.</string>
     <string name="settings_open_privacy">개인 정보 보호 정책 열기</string>
     <string name="settings_language_arabic">العربية</string>
     <string name="settings_language_german">Deutsch</string>

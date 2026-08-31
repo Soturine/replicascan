@@ -7,7 +7,7 @@
     <string name="camera_take_photo">التقاط الصورة</string>
     <string name="camera_capture_failed">غير قادر على حفظ الالتقاط.</string>
     <string name="camera_permission_title">إذن الكاميرا مطلوب</string>
-    <string name="camera_permission_message">يستخدم Scanora الكاميرا للعثور على المستندات والتقاطها على جهازك.</string>
+    <string name="camera_permission_message">يستخدم ReplicaScan الكاميرا للعثور على المستندات والتقاطها على جهازك.</string>
     <string name="camera_permission_action">السماح بالكاميرا</string>
     <string name="camera_frame_hint">قم بتركيب المستند بأكمله داخل الإطار.</string>
     <string name="camera_status_searching">وجّه الكاميرا إلى المستند</string>

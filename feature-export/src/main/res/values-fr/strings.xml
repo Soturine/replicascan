@@ -9,7 +9,7 @@
         <item quantity="one">%1$d page prête à exporter.</item>
         <item quantity="other">%1$d pages prêtes à exporter.</item>
     </plurals>
-    <string name="export_local_notice">Scanora génère tout sur l\'appareil lui-même et affiche où le fichier a été enregistré dès qu\'il est terminé.</string>
+    <string name="export_local_notice">ReplicaScan génère tout sur l\'appareil lui-même et affiche où le fichier a été enregistré dès qu\'il est terminé.</string>
     <string name="export_format_eyebrow">Format</string>
     <string name="export_format_section">Comment ce lot devrait-il sortir ?</string>
     <string name="export_format_supporting">Sélectionnez la manière dont le lot doit quitter le téléphone portable.</string>

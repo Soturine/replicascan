@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="home_title">始める</string>
-    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_app_bar_title">ReplicaScan</string>
     <string name="home_tagline">スキャン。整理する。簡素化します。</string>
     <string name="home_greeting">こんにちは！</string>
     <string name="home_welcome">会えてうれしいです。</string>

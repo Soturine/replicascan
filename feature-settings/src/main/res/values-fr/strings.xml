@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_title">Paramètres</string>
     <string name="settings_eyebrow">Préférences</string>
-    <string name="settings_heading">Ajustez Scanora à votre guise</string>
+    <string name="settings_heading">Ajustez ReplicaScan à votre guise</string>
     <string name="settings_supporting">Ici, tout reste local : thème, repli manuel et préférences d\'exportation.</string>
     <string name="settings_theme_section">Thème</string>
     <string name="settings_theme_supporting">Définit comment l\'interface doit apparaître au quotidien.</string>
@@ -13,7 +13,7 @@
     <string name="settings_theme_dark">Toujours sombre</string>
     <string name="settings_theme_dark_description">Maintient l\'application sombre pour la lecture avec moins de luminosité.</string>
     <string name="settings_language_section">Langue</string>
-    <string name="settings_language_supporting">Suivez le système ou choisissez la langue Scanora.</string>
+    <string name="settings_language_supporting">Suivez le système ou choisissez la langue ReplicaScan.</string>
     <string name="settings_language_system">Système</string>
     <string name="settings_language_portuguese">portugais</string>
     <string name="settings_language_english">English</string>
@@ -33,7 +33,7 @@
     <string name="settings_pdf_supporting">Cette préférence est utilisée comme base pour l\'écran d\'exportation.</string>
     <string name="settings_reset_onboarding">Voir à nouveau l\'intégration</string>
     <string name="settings_open_about">À propos de l\'application</string>
-    <string name="settings_about_title">À propos de Scanora</string>
-    <string name="settings_about_body">Scanora est un scanner de documents Android axé sur le traitement local, l\'OCR sur l\'appareil et l\'exportation claire au format PDF, JPG et PNG. La proposition est de passer de la capture au fichier final avec un minimum de frictions et sans nécessiter de backend pour le flux principal.</string>
+    <string name="settings_about_title">À propos de ReplicaScan</string>
+    <string name="settings_about_body">ReplicaScan est un scanner de documents Android axé sur le traitement local, l\'OCR sur l\'appareil et l\'exportation claire au format PDF, JPG et PNG. La proposition est de passer de la capture au fichier final avec un minimum de frictions et sans nécessiter de backend pour le flux principal.</string>
     <string name="settings_open_privacy">Ouvrir la politique de confidentialité</string>
 </resources>

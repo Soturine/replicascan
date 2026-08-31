@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="home_title">शुरू</string>
-    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_app_bar_title">ReplicaScan</string>
     <string name="home_tagline">स्कैन करें. व्यवस्थित करें. सरल करें.</string>
     <string name="home_greeting">नमस्ते!</string>
     <string name="home_welcome">आपको देखकर अच्छा लगा।</string>

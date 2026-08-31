@@ -7,7 +7,7 @@
     <string name="camera_take_photo">Cattura foto</string>
     <string name="camera_capture_failed">Impossibile salvare l\'acquisizione.</string>
     <string name="camera_permission_title">È richiesta l\'autorizzazione della fotocamera</string>
-    <string name="camera_permission_message">Scanora usa la fotocamera per trovare e acquisire i documenti sul dispositivo.</string>
+    <string name="camera_permission_message">ReplicaScan usa la fotocamera per trovare e acquisire i documenti sul dispositivo.</string>
     <string name="camera_permission_action">Consenti fotocamera</string>
     <string name="camera_frame_hint">Inquadra l\'intero documento nella cornice.</string>
     <string name="camera_status_searching">Inquadra il documento</string>

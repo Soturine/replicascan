@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_title">Ajustes</string>
     <string name="settings_eyebrow">Preferencias</string>
-    <string name="settings_heading">Ajusta Scanora a tu gusto</string>
+    <string name="settings_heading">Ajusta ReplicaScan a tu gusto</string>
     <string name="settings_supporting">Aquí todo sigue siendo local: tema, respaldo manual y preferencias de exportación.</string>
     <string name="settings_theme_section">Tema</string>
     <string name="settings_theme_supporting">Define cómo debe aparecer la interfaz a diario.</string>
@@ -13,7 +13,7 @@
     <string name="settings_theme_dark">siempre oscuro</string>
     <string name="settings_theme_dark_description">Mantiene la aplicación oscura para leer con menos brillo.</string>
     <string name="settings_language_section">Idioma</string>
-    <string name="settings_language_supporting">Siga el sistema o elija el idioma de Scanora.</string>
+    <string name="settings_language_supporting">Siga el sistema o elija el idioma de ReplicaScan.</string>
     <string name="settings_language_system">Sistema</string>
     <string name="settings_language_portuguese">portugués</string>
     <string name="settings_language_english">English</string>
@@ -33,7 +33,7 @@
     <string name="settings_pdf_supporting">Esta preferencia se utiliza como base para la pantalla de exportación.</string>
     <string name="settings_reset_onboarding">Ver incorporación nuevamente</string>
     <string name="settings_open_about">Acerca de la aplicación</string>
-    <string name="settings_about_title">Acerca de Scanora</string>
-    <string name="settings_about_body">Scanora es un escáner de documentos de Android centrado en el procesamiento local, OCR en el dispositivo y exportación clara a PDF, JPG y PNG. La propuesta es pasar de la captura al archivo final con la mínima fricción y sin requerir un backend para el flujo principal.</string>
+    <string name="settings_about_title">Acerca de ReplicaScan</string>
+    <string name="settings_about_body">ReplicaScan es un escáner de documentos de Android centrado en el procesamiento local, OCR en el dispositivo y exportación clara a PDF, JPG y PNG. La propuesta es pasar de la captura al archivo final con la mínima fricción y sin requerir un backend para el flujo principal.</string>
     <string name="settings_open_privacy">Abrir política de privacidad</string>
 </resources>

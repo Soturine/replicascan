@@ -7,7 +7,7 @@
     <string name="camera_take_photo">Ambil foto</string>
     <string name="camera_capture_failed">Tidak dapat menyimpan tangkapan.</string>
     <string name="camera_permission_title">Izin kamera diperlukan</string>
-    <string name="camera_permission_message">Scanora memakai kamera untuk menemukan dan menangkap dokumen di perangkat.</string>
+    <string name="camera_permission_message">ReplicaScan memakai kamera untuk menemukan dan menangkap dokumen di perangkat.</string>
     <string name="camera_permission_action">Izinkan kamera</string>
     <string name="camera_frame_hint">Bingkai seluruh dokumen di dalam bingkai.</string>
     <string name="camera_status_searching">Arahkan ke dokumen</string>

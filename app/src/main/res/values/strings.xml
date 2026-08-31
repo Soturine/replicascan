@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Scanora</string>
-    <string name="splash_title" translatable="false">Scanora</string>
+    <string name="app_name" translatable="false">ReplicaScan</string>
+    <string name="splash_title" translatable="false">ReplicaScan</string>
     <string name="splash_subtitle">Scan. Organize. Simplify.</string>
     <string name="onboarding_page_one_title">Scan in just a few steps</string>
     <string name="onboarding_page_one_body">Point, capture, and you’re done.</string>
@@ -20,5 +20,5 @@
     <string name="import_partial_result">%1$d of %2$d pages were added. %3$d could not be added.</string>
     <string name="import_failed_result">The selected pages could not be added.</string>
     <string name="delete_partial_result">The document was removed, but %1$d private files still need cleanup.</string>
-    <string name="export_chooser_title">Share Scanora export</string>
+    <string name="export_chooser_title">Share ReplicaScan export</string>
 </resources>

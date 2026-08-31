@@ -13,7 +13,7 @@
         <item quantity="many">%1$d صفحة جاهزة للتصدير.</item>
         <item quantity="other">%1$d صفحة جاهزة للتصدير.</item>
     </plurals>
-    <string name="export_local_notice">يقوم Scanora بإنشاء كل شيء على الجهاز نفسه ويظهر مكان حفظ الملف بمجرد الانتهاء منه.</string>
+    <string name="export_local_notice">يقوم ReplicaScan بإنشاء كل شيء على الجهاز نفسه ويظهر مكان حفظ الملف بمجرد الانتهاء منه.</string>
     <string name="export_format_eyebrow">شكل</string>
     <string name="export_format_section">كيف يجب أن تخرج هذه الدفعة؟</string>
     <string name="export_format_supporting">حدد كيفية خروج الدفعة من الهاتف الخليوي.</string>

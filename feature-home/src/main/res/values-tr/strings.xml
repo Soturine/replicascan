@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="home_title">Başlangıç</string>
-    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_app_bar_title">ReplicaScan</string>
     <string name="home_tagline">Tara. Organize edin. Basitleştirin.</string>
     <string name="home_greeting">Merhaba!</string>
     <string name="home_welcome">Seni görmek güzel.</string>

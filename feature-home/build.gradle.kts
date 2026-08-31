@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.soturine.scanora.feature.home"
+    namespace = "com.soturine.replicascan.feature.home"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

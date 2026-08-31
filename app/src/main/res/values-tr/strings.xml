@@ -18,5 +18,5 @@
     <string name="import_partial_result">%2$d sayfalarından %1$d eklendi. %3$d eklenemedi.</string>
     <string name="import_failed_result">Seçilen sayfalar eklenemiyor.</string>
     <string name="delete_partial_result">Belge kaldırıldı ancak %1$d özel dosyaları hâlâ temizlenmeyi bekliyor.</string>
-    <string name="export_chooser_title">Scanora ihracatını paylaşın</string>
+    <string name="export_chooser_title">ReplicaScan ihracatını paylaşın</string>
 </resources>

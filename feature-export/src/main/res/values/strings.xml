@@ -9,7 +9,7 @@
         <item quantity="one">%1$d page ready to export.</item>
         <item quantity="other">%1$d pages ready to export.</item>
     </plurals>
-    <string name="export_local_notice">Scanora generates everything on the device itself and shows where the file was saved as soon as it is finished.</string>
+    <string name="export_local_notice">ReplicaScan generates everything on the device itself and shows where the file was saved as soon as it is finished.</string>
     <string name="export_format_eyebrow">Format</string>
     <string name="export_format_section">How should this batch come out?</string>
     <string name="export_format_supporting">Select how the batch should leave the cell phone.</string>

@@ -18,5 +18,5 @@
     <string name="import_partial_result">%2$dから%1$dのページを追加しました。 %3$dを追加できませんでした。</string>
     <string name="import_failed_result">選択したページを追加できません。</string>
     <string name="delete_partial_result">ドキュメントは削除されましたが、%1$d プライベート ファイルはまだクリーンアップを待っています。</string>
-    <string name="export_chooser_title">Scanora エクスポートを共有する</string>
+    <string name="export_chooser_title">ReplicaScan エクスポートを共有する</string>
 </resources>

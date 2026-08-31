@@ -18,5 +18,5 @@
     <string name="import_partial_result">%1$d dari halaman %2$d telah ditambahkan. %3$d tidak dapat ditambahkan.</string>
     <string name="import_failed_result">Tidak dapat menambahkan halaman yang dipilih.</string>
     <string name="delete_partial_result">Dokumen telah dihapus, namun file pribadi %1$d masih menunggu pembersihan.</string>
-    <string name="export_chooser_title">Bagikan ekspor Scanora</string>
+    <string name="export_chooser_title">Bagikan ekspor ReplicaScan</string>
 </resources>

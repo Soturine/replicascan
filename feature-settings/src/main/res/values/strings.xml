@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_title">Settings</string>
     <string name="settings_eyebrow">Preferences</string>
-    <string name="settings_heading">Adjust Scanora to your liking</string>
+    <string name="settings_heading">Adjust ReplicaScan to your liking</string>
     <string name="settings_supporting">Everything here remains local: theme, manual fallback, and export preferences.</string>
     <string name="settings_theme_section">Theme</string>
     <string name="settings_theme_supporting">Define how the interface should appear on a daily basis.</string>
@@ -13,7 +13,7 @@
     <string name="settings_theme_dark">Always dark</string>
     <string name="settings_theme_dark_description">Keeps the app dark for reading with less brightness.</string>
     <string name="settings_language_section">Language</string>
-    <string name="settings_language_supporting">Follow the system or choose the Scanora language.</string>
+    <string name="settings_language_supporting">Follow the system or choose the ReplicaScan language.</string>
     <string name="settings_language_system">System</string>
     <string name="settings_language_portuguese">Portuguese</string>
     <string name="settings_language_english">English</string>
@@ -33,8 +33,8 @@
     <string name="settings_pdf_supporting">This preference is used as the basis for the export screen.</string>
     <string name="settings_reset_onboarding">See onboarding again</string>
     <string name="settings_open_about">About the app</string>
-    <string name="settings_about_title">About Scanora</string>
-    <string name="settings_about_body">Scanora is an Android document scanner with a focus on local processing, on-device OCR, and clear export to PDF, JPG, and PNG. The proposal is to go from capture to the final file with minimal friction and without requiring a backend for the main flow.</string>
+    <string name="settings_about_title">About ReplicaScan</string>
+    <string name="settings_about_body">ReplicaScan is an Android document scanner with a focus on local processing, on-device OCR, and clear export to PDF, JPG, and PNG. The proposal is to go from capture to the final file with minimal friction and without requiring a backend for the main flow.</string>
     <string name="settings_open_privacy">Open privacy policy</string>
     <string name="settings_version" translatable="false">0.3.1</string>
 </resources>

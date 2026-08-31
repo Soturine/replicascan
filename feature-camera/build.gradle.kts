@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.soturine.scanora.feature.camera"
+    namespace = "com.soturine.replicascan.feature.camera"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

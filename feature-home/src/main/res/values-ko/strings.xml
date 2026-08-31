@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="home_title">시작</string>
-    <string name="home_app_bar_title">Scanora</string>
+    <string name="home_app_bar_title">ReplicaScan</string>
     <string name="home_tagline">주사. 정리하다. 단순화하십시오.</string>
     <string name="home_greeting">안녕하세요!</string>
     <string name="home_welcome">만나서 반가워요.</string>

@@ -7,7 +7,7 @@
     <string name="camera_take_photo">Fotoğraf çek</string>
     <string name="camera_capture_failed">Yakalama kaydedilemiyor.</string>
     <string name="camera_permission_title">Kamera izni gerekli</string>
-    <string name="camera_permission_message">Scanora, cihazdaki belgeleri bulmak ve yakalamak için kamerayı kullanır.</string>
+    <string name="camera_permission_message">ReplicaScan, cihazdaki belgeleri bulmak ve yakalamak için kamerayı kullanır.</string>
     <string name="camera_permission_action">Kameraya izin ver</string>
     <string name="camera_frame_hint">Belgenin tamamını çerçeve içine alın.</string>
     <string name="camera_status_searching">Kamerayı belgeye doğrultun</string>

@@ -18,5 +18,5 @@
     <string name="import_partial_result">%2$d 페이지의 %1$d가 추가되었습니다. %3$d를 추가할 수 없습니다.</string>
     <string name="import_failed_result">선택한 페이지를 추가할 수 없습니다.</string>
     <string name="delete_partial_result">문서는 제거되었지만 %1$d 개인 파일은 여전히 ​​정리를 기다리고 있습니다.</string>
-    <string name="export_chooser_title">Scanora 내보내기 공유</string>
+    <string name="export_chooser_title">ReplicaScan 내보내기 공유</string>
 </resources>
