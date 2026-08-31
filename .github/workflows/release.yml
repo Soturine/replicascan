@@ -13,7 +13,24 @@ permissions:
   contents: read
 
 jobs:
+  intent:
+    runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.manifest.outputs.publish }}
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Validate release manifest shape
+        id: manifest
+        run: |
+          test "$(jq -r .product release/manifest.json)" = "ReplicaScan"
+          test "$(jq -r .version release/manifest.json)" = "0.4.0"
+          test "$(jq -r .versionCode release/manifest.json)" = "19"
+          echo "publish=$(jq -r .publish release/manifest.json)" >> "$GITHUB_OUTPUT"
+
   validate-build:
+    needs: intent
+    if: needs.intent.outputs.publish == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -69,6 +86,8 @@ jobs:
           retention-days: 14
 
   instrumented-api36:
+    needs: intent
+    if: needs.intent.outputs.publish == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -94,6 +113,8 @@ jobs:
           script: ./gradlew connectedDebugAndroidTest
 
   site:
+    needs: intent
+    if: needs.intent.outputs.publish == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout exact source
@@ -102,6 +123,8 @@ jobs:
         run: python tools/check_site.py
 
   security:
+    needs: intent
+    if: needs.intent.outputs.publish == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -126,8 +149,8 @@ jobs:
         uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
 
   publish:
-    needs: [validate-build, instrumented-api36, site, security]
-    if: github.ref == 'refs/heads/main'
+    needs: [intent, validate-build, instrumented-api36, site, security]
+    if: github.ref == 'refs/heads/main' && needs.intent.outputs.publish == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -138,29 +161,18 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
-      - name: Read release intent
-        id: intent
-        run: |
-          echo "publish=$(jq -r .publish release/manifest.json)" >> "$GITHUB_OUTPUT"
-          test "$(jq -r .product release/manifest.json)" = "ReplicaScan"
-          test "$(jq -r .version release/manifest.json)" = "0.4.0"
-          test "$(jq -r .versionCode release/manifest.json)" = "19"
       - name: Download exact release candidate
-        if: steps.intent.outputs.publish == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: replicascan-v0.4.0-release-candidate
           path: dist
       - name: Verify exact artifact
-        if: steps.intent.outputs.publish == 'true'
         run: cd dist && sha256sum --check SHA256SUMS.txt
       - name: Attest evaluation APK provenance
-        if: steps.intent.outputs.publish == 'true'
         uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
         with:
           subject-path: dist/replicascan-v0.4.0-debug.apk
       - name: Create immutable tag and release idempotently
-        if: steps.intent.outputs.publish == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: v0.4.0
@@ -190,6 +202,3 @@ jobs:
               --title "ReplicaScan v0.4.0" \
               --notes-file docs/releases/v0.4.0.md
           fi
-      - name: Publication intentionally disabled
-        if: steps.intent.outputs.publish != 'true'
-        run: echo "Validated release pipeline; manifest publish is false."

@@ -16,10 +16,9 @@ Scanora and under the Apache License 2.0. Those grants remain valid for those
 versions. Existing commits, tags, release assets, and license text in their
 historical Git states are intentionally preserved.
 
-The current proprietary terms are prospective from the licensing transition
-commit. They do not revoke or rewrite rights already granted for historical
-releases. The exact transition commit is recorded in the `v0.4.0` release notes
-and changelog once the commit exists.
+The current proprietary terms are prospective from licensing transition commit
+`f3316b7aa4874d98ccb47e29c8a3fcf513e4296d`. They do not revoke or rewrite
+rights already granted for historical releases.
 
 ## Ownership audit
 

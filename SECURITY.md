@@ -5,8 +5,8 @@
 Se você encontrar uma vulnerabilidade:
 
 1. Não abra issue pública.
-2. Use o fluxo privado de security advisory do GitHub, quando disponível.
-3. Caso isso ainda não esteja configurado, entre em contato com os maintainers pelo canal privado disponível no GitHub do repositório.
+2. Use o fluxo privado de security advisory do GitHub; Private Vulnerability Reporting está habilitado neste repositório.
+3. Se o fluxo estiver indisponível, entre em contato com os maintainers pelo canal privado disponível no GitHub do repositório.
 
 ## O que é considerado vulnerabilidade
 
