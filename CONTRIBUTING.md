@@ -1,49 +1,40 @@
-# Contribuindo com o Scanora
+# Contributing to ReplicaScan
 
-## Pré-requisitos
+ReplicaScan is proprietary, source-visible software. Issues, reproducible bug
+reports, security reports through the private channel, and product feedback are
+welcome. External code is not accepted for merge automatically.
 
-- Git
-- Android Studio com suporte a Kotlin e Compose
-- JDK 17 ou superior compatível com AGP 9
+## Code contributions
+
+Before submitting code, obtain explicit written agreement from the maintainer
+covering the licensing or assignment terms for that contribution. A pull
+request opened without that agreement may be reviewed as a proposal but will
+not be merged into the proprietary codebase.
+
+Do not submit code, assets, generated output, or copied examples that you do not
+have the right to contribute. Third-party material must retain its license and
+required attribution.
+
+## Bug reports and proposals
+
+- Search existing issues before opening a new one.
+- Include the affected version, Android version, device/emulator, reproduction
+  steps, expected behavior, and actual behavior.
+- Remove documents, OCR text, paths, and personal information from logs and
+  screenshots.
+- For vulnerabilities, do not open a public issue; follow
+  [SECURITY.md](SECURITY.md).
+
+## Development baseline
+
+- JDK 17
 - Android SDK Platform 36
+- Gradle Wrapper from this repository
 
-## Fluxo sugerido
+Use a focused branch and Conventional Commits. During implementation run the
+smallest relevant tests; before a release milestone run the qualification
+commands documented in [docs/testing.md](docs/testing.md).
 
-1. Faça um fork ou clone do repositório.
-2. Crie uma branch descritiva a partir de `main`.
-3. Implemente a mudança com escopo claro.
-4. Rode lint e testes antes de abrir o PR.
-5. Descreva motivação, comportamento esperado e riscos no pull request.
-
-## Padrão de branch
-
-Sugestões:
-
-- `feat/nome-curto`
-- `fix/nome-curto`
-- `docs/nome-curto`
-- `refactor/nome-curto`
-- `test/nome-curto`
-
-## Padrão de commit
-
-Preferência do projeto:
-
-- `feat: adiciona exportacao png`
-- `fix: corrige ordenacao de paginas`
-- `docs: atualiza setup do android studio`
-- `test: cobre validacao de nome`
-
-## Como abrir issues
-
-- Use os templates em `.github/ISSUE_TEMPLATE`.
-- Informe contexto, reprodução, comportamento atual e comportamento esperado.
-- Se envolver segurança, não abra issue pública. Veja [SECURITY.md](SECURITY.md).
-
-## Checklist de PR
-
-- O escopo está claro e pequeno o suficiente para revisão?
-- A mudança tem impacto documentado em comportamento?
-- Há testes ou justificativa explícita para a ausência deles?
-- Strings novas foram preparadas para futura internacionalização?
-- Não houve introdução de dependência ou serviço externo desnecessário?
+By participating in project discussions, you agree to follow
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Current licensing details and the
+historical boundary are in [LICENSING.md](LICENSING.md).

@@ -4,6 +4,10 @@
 build/
 **/build/
 local.properties
+*.jks
+*.keystore
+keystore.properties
+.tmp/
 captures/
 .DS_Store
 Thumbs.db
