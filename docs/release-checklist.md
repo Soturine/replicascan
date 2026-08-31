@@ -1,44 +1,37 @@
 # Checklist de release
 
-## Repositório e versão
+## Fonte e identidade
 
-- [ ] `git status --short` limpo e branch correta;
-- [ ] `versionName`, `versionCode`, README, site e changelog alinhados;
-- [ ] tag ainda não existe e apontará para o HEAD publicado.
+- [ ] branch `main`, worktree limpo e remoto canônico;
+- [ ] versão, código, pacote, manifest, changelog, README e site alinhados;
+- [ ] branding/localização/consistência verdes;
+- [ ] tag ausente ou já apontando exatamente ao SHA pretendido;
+- [ ] nenhum segredo, documento real ou binário inesperado no diff.
 
-## Integridade e privacidade
+## Integridade e segurança
 
-- [ ] não existe destructive migration em produção;
-- [ ] schema Room foi exportado e mudanças possuem migration/teste;
-- [ ] deleção e rollback cobrem arquivos privados sem tocar em externos;
-- [ ] cache expirado possui fallback;
-- [ ] backup e device transfer seguem a política documentada;
-- [ ] FileProvider expõe apenas diretórios necessários;
-- [ ] diff não contém segredos, documentos reais ou binários inesperados.
+- [ ] migrations não destrutivas e schemas versionados;
+- [ ] import/delete/rollback controlam apenas arquivos privados gerenciados;
+- [ ] backup/device transfer e FileProvider mantêm menor privilégio;
+- [ ] CodeQL e testes package/provider/Room verdes;
+- [ ] dependências e avisos de terceiros revisados.
 
-## Gates
+## Qualificação local
 
-```bash
-./gradlew clean
-./gradlew testDebugUnitTest
-./gradlew lint
-./gradlew check
-./gradlew assembleDebug
-./gradlew assembleRelease
-./gradlew assembleDebugAndroidTest
+```powershell
+.\gradlew.bat testDebugUnitTest lint check assembleDebug assembleRelease assembleDebugAndroidTest
+python tools/check_localization.py
+python tools/check_branding.py
+python tools/check_consistency.py
+python -m unittest discover -s tools/tests -p "test_*.py"
 ```
 
-- [ ] `python tools/check_localization.py` confirma chaves, plurais e placeholders nos 12 idiomas;
-- [ ] light/dark, landscape, fonte 200% e TalkBack foram revisados em aparelho ou emulador;
-- [ ] `:core-data:connectedDebugAndroidTest` executado em API 35 para migration, FTS e PDF pesquisável;
-- [ ] smoke manual cobre captura, importação parcial, fallback, deleção, OCR, export e compartilhamento;
-- [ ] CI final concluiu sem findings ignorados.
+## Publicação remota
 
-## Publicação
-
-- [ ] commits são pequenos e revisáveis;
-- [ ] `main` foi enviada sem force push;
-- [ ] HEAD remoto coincide com o local;
-- [ ] tag anotada foi enviada;
-- [ ] GitHub Release usa apenas garantias validadas;
-- [ ] APK/AAB só é anexado quando assinatura e validação do artefato estiverem definidas.
+- [ ] `release/manifest.json` usa `publish: true` apenas no SHA final;
+- [ ] pre-rename/final push sem force push e HEAD remoto verificado;
+- [ ] GitHub API 36 é o gate instrumental principal; API 35 é compatibilidade agendada;
+- [ ] artefato construído uma vez, checksum produzido junto e mesmo arquivo reutilizado;
+- [ ] tag anotada e release são responsabilidade do workflow após green;
+- [ ] estado remoto consultado uma vez, sem polling agentic;
+- [ ] validação física (câmera/crop/TalkBack/200%/RTL) reportada honestamente como concluída ou pendente.

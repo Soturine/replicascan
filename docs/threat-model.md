@@ -24,7 +24,7 @@ Este documento descreve proteções atuais, não uma certificação de seguranç
 
 ## Componentes Google
 
-O scanner guiado usa Google Play services/ML Kit Document Scanner e pode depender da disponibilidade desse componente no aparelho. OCR usa ML Kit Text Recognition no dispositivo. O Scanora não adiciona analytics, backend nem OCR remoto nesta versão.
+O scanner guiado usa Google Play services/ML Kit Document Scanner e pode depender da disponibilidade desse componente no aparelho. OCR usa ML Kit Text Recognition no dispositivo. O ReplicaScan não adiciona analytics, backend nem OCR remoto nesta versão.
 
 ## Fora do escopo atual
 

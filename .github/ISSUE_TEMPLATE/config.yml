@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Segurança
-    url: https://github.com/Soturine/scanora/security
+    url: https://github.com/Soturine/replicascan/security
     about: Não abra issues públicas para vulnerabilidades.

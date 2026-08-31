@@ -1,222 +1,55 @@
 # AGENTS.md
 
-## Projeto
-Scanora é um app Android de escaneamento de documentos com foco em:
-- privacidade
-- processamento local
-- OCR no dispositivo
-- revisão e exportação rápidas
-- arquitetura modular pronta para evolução
+## Produto e fonte de verdade
 
-## Verdadeiro contexto do repositório
-Ao trabalhar neste repo:
-- leia o repositório inteiro antes de alterar qualquer coisa
-- não assuma que o README público está totalmente atualizado
-- confie primeiro no código, changelog, roadmap, arquivos de versão e tags
-- trate a documentação pública como potencialmente defasada
-- preserve a arquitetura existente
+ReplicaScan é um scanner Android local-first. Antes de alterar, valide código, versão, changelog, roadmap e tags; o README pode atrasar o estado real. Preserve o monólito modular e as regras em [docs/engineering/ENGINEERING_CONSTITUTION.md](docs/engineering/ENGINEERING_CONSTITUTION.md).
 
-## Stack esperada
-- Kotlin
-- Android Gradle Plugin 9.x
-- Gradle Wrapper
-- Jetpack Compose + Material 3
-- Navigation Compose
-- ViewModel + Coroutines + Flow
-- Room
-- DataStore
-- WorkManager
-- CameraX
-- ML Kit Document Scanner
-- ML Kit Text Recognition
+## Módulos
 
-## Estrutura do projeto
-- `app`: entrypoint, navegação, onboarding, composição dos módulos
-- `core-common`: modelos, contratos, regras e interfaces centrais
-- `core-data`: Room, DataStore, OCR, exportação, pipeline de imagem
-- `core-ui`: tema e componentes reutilizáveis
-- `feature-home`: tela inicial
-- `feature-camera`: captura
-- `feature-editor`: crop, filtros, revisão de página/lote
-- `feature-export`: exportação e compartilhamento
-- `feature-history`: histórico
-- `feature-ocr`: OCR e leitura do texto
-- `feature-settings`: preferências
-- `docs`: documentação complementar
-- `site`: página pública do projeto
+- `app`: bootstrap, navegação e onboarding;
+- `core-common`: modelos, contratos e regras centrais;
+- `core-data`: Room, DataStore, OCR, imagem, exportação e lifecycle;
+- `core-ui`: tema e componentes;
+- `feature-*`: home, câmera, editor, exportação, histórico, OCR e configurações;
+- `docs`, `site`, `tools`: documentação pública, Pages e gates.
 
-## Missão do agente
-Ao editar este repositório, priorize:
-1. qualidade real do produto
-2. estabilidade
-3. usabilidade
-4. desempenho em aparelho real
-5. consistência entre preview, edição e exportação
-6. documentação alinhada com o estado real do projeto
+## Não negociáveis
 
-## Prioridades atuais de produto
-O foco do Scanora não é “ter muitas features”.
-O foco é fazer bem o fluxo principal:
-- capturar ou importar
-- detectar e ajustar documento
-- corrigir perspectiva
-- aplicar visual útil
-- revisar com clareza
-- exportar sem atrito
-- copiar OCR de forma usável
+- não reescrever o app, adicionar backend ou mover trabalho pesado para a main thread;
+- `sourceUri` é canônico; derivados são cache regenerável;
+- Room sem fallback destrutivo, schemas exportados e migrations testadas;
+- persistir importação somente após cópia privada, com rollback em falha;
+- não omitir páginas silenciosamente nem apagar URIs externas/exports do usuário;
+- backup/device transfer documental desativado;
+- FileProvider somente nos subdiretórios necessários, com leitura mínima;
+- preview intermediário; processamento/exportação full-res fora da UI;
+- baixa confiança de crop usa fallback conservador e o ajuste manual permanece funcional;
+- UI limpa, acessível, localizada e com progressive disclosure.
 
-## Problemas conhecidos que devem orientar decisões
-- auto crop manual/importado ainda é mais fraco que o scanner do Google
-- páginas de caderno com espiral e fundos poluídos ainda quebram a heurística
-- filtros locais podem parecer inferiores ao scanner do Google
-- algumas telas ainda ficam poluídas visualmente
-- exportação tende a mostrar opções demais ao mesmo tempo
-- OCR precisa ser útil e legível, não apenas “funcionar tecnicamente”
+## Comandos
 
-## Regras de implementação
-- não reescreva o app do zero
-- não quebre a modularização
-- não adicione backend
-- não introduza bibliotecas pesadas sem necessidade clara
-- não mova processamento pesado para a main thread
-- não aplique bitmap full-res em tempo real na UI
-- preview pode usar resolução intermediária
-- aplicação final e exportação devem usar imagem full-res fora da UI
-- preserve comportamento estável em aparelho mediano
-- prefira melhorias locais, incrementais e verificáveis
+Durante a implementação, prefira tasks focadas. Antes do push final:
 
-## Regras permanentes de integridade e privacidade
-- migrations Room de produção nunca podem usar fallback destrutivo
-- todo schema Room deve ser exportado e toda mudança de versão deve possuir migration testada
-- `sourceUri` é a fonte canônica persistente; derivados são cache regenerável
-- importação só persiste Room depois da cópia privada e deve fazer rollback se a persistência falhar
-- temporários ficam apenas em namespaces conhecidos e possuem cleanup conservador com grace period
-- excluir página ou scan deve controlar também os arquivos privados gerenciados, sem apagar URIs externas ou exports do usuário
-- dados documentais, banco, OCR e preferências devem permanecer excluídos de backup e device transfer automáticos
-- FileProvider deve expor somente subdiretórios de export necessários, com grant mínimo de leitura
-- importação e exportação nunca podem omitir páginas silenciosamente
-- release exige schema versionado, testes de integridade, `check`, lint e builds debug/release
+```powershell
+.\gradlew.bat testDebugUnitTest lint check assembleDebug assembleRelease assembleDebugAndroidTest
+python tools/check_localization.py
+python tools/check_branding.py
+python tools/check_consistency.py
+python -m unittest discover -s tools/tests -p "test_*.py"
+```
 
-## Regras para crop / imagem
-- priorize robustez sobre “mágica”
-- quando a confiança do auto crop for baixa, use fallback conservador
-- ajuste manual dos 4 cantos deve sempre continuar funcional
-- preview e resultado final devem ser coerentes
-- correção de perspectiva precisa ser estável
-- rotação automática deve evitar decisões absurdas
-- considere cenários reais:
-  - folha simples
-  - caderno pautado
-  - manuscrito
-  - gráfico
-  - recibo
-  - papel colorido
-  - fundo com mesa/cadeira/objetos
+API 36 no GitHub é o gate instrumental de release. API 35 é compatibilidade agendada. Testes automatizados não substituem câmera, TalkBack, fonte 200%, RTL e corpus físico.
 
-## Regras para filtros
-Cada filtro precisa ter intenção clara.
-Evite filtros placebo ou quase iguais.
+## Git, licença e release
 
-Presets preferidos:
-- Original corrigido
-- Documento P&B
-- Documento cinza
-- Colorido aprimorado
-- Recibo / Alto contraste
+- use commits lógicos; não force-push, mova tags ou reescreva histórico;
+- código corrente é proprietário conforme `LICENSE`/`LICENSING.md`; terceiros mantêm suas licenças;
+- o branding gate permite o nome histórico apenas em caminhos explicitamente autorizados;
+- `release/manifest.json` expressa intenção de publicar;
+- GitHub Actions constrói o artefato uma vez, valida, testa API 36, cria tag anotada e publica o mesmo APK;
+- não faça polling de CI: após o push, consulte uma vez e deixe o GitHub concluir;
+- recuperação e idempotência: [docs/release.md](docs/release.md).
 
-Filtros devem:
-- preservar legibilidade
-- evitar branco estourado
-- evitar texto apagado
-- reduzir sujeira e sombra
-- manter coerência com o preview
+## Documentação canônica
 
-## Regras de UX
-Direção visual desejada:
-- mais clean
-- mais direta
-- menos texto
-- menos cards verbosos
-- menos sensação de formulário
-- mais progressive disclosure
-- mais foco em ação
-
-Ao simplificar telas:
-- mostre primeiro o essencial
-- esconda detalhes avançados até o usuário precisar
-- reduza opções simultâneas
-- prefira agrupamento dependente da escolha atual
-- preserve clareza do CTA principal
-
-## Regras para exportação
-- não mostrar configurações irrelevantes ao formato escolhido
-- PDF pode expandir qualidades logo abaixo da seleção
-- JPG/PNG não devem carregar opções de PDF na cara do usuário
-- o caminho até gerar/salvar/compartilhar deve ser óbvio
-- estados de sucesso e erro precisam ser curtos e claros
-
-## Regras para OCR
-- OCR deve ser tratado como recurso prático, não como promessa perfeita
-- melhorar pré-processamento quando fizer sentido
-- a tela de OCR deve ser legível e limpa
-- não despejar texto cru de forma caótica
-- priorizar copiar texto com poucos toques
-
-## Documentação
-Sempre que a mudança alterar o produto de forma perceptível, revise:
-- `README.md`
-- `ROADMAP.md`
-- `CHANGELOG.md`
-- `site/`
-
-Se houver inconsistência de versão entre código, changelog, roadmap, README e release:
-- alinhe tudo
-- explique o que estava defasado
-- não deixe documentação pública contraditória
-
-## Processo de trabalho esperado
-1. Ler o repo inteiro
-2. Identificar arquivos-alvo
-3. Fazer alterações pequenas e consistentes
-4. Validar build e qualidade
-5. Atualizar documentação necessária
-6. Gerar resumo final objetivo
-
-## Validação obrigatória
-Antes de concluir, executar:
-- `./gradlew assembleDebug`
-- `./gradlew testDebugUnitTest`
-- `./gradlew lint`
-
-No Windows, usar:
-- `gradlew.bat assembleDebug`
-- `gradlew.bat testDebugUnitTest`
-- `gradlew.bat lint`
-
-## Entrega final esperada do agente
-A resposta final deve incluir:
-- o que mudou
-- por que mudou
-- arquivos alterados
-- impacto em UX e produto
-- resultado dos comandos de validação
-- commit/push/tag/release, se aplicável
-
-## O que evitar
-- refactor cosmético desnecessário
-- sycophancy
-- mudanças grandes sem necessidade
-- duplicação de lógica
-- telas com excesso de texto explicativo
-- opções demais ao mesmo tempo
-- filtros agressivos sem ganho real
-- heurísticas frágeis sem fallback
-- documentação desatualizada após alteração de produto
-
-## Regra final
-Aja como maintainer sênior de um app Android real:
-- pragmático
-- cuidadoso com regressão
-- obcecado por UX
-- focado em desempenho
-- focado em qualidade visível ao usuário
+Mudanças perceptíveis exigem revisão de `README.md`, `CHANGELOG.md`, `ROADMAP.md`, `PRIVACY_POLICY.md` e `site/`. Registre limites como implementado, validado, pendente ou fora de escopo; nunca transforme CI enfileirada em sucesso declarado.

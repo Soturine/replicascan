@@ -42,7 +42,7 @@ Desde a `v0.2.5`, a UI deixa de tratar esses blocos crus como produto final. Um 
 
 ## 8. Exportação local mais encontrável
 
-PDF, JPG e PNG seguem locais, mas a base atual usa `Downloads/Scanora` em Android 10+ para resolver o problema prático de “exportei e não achei o arquivo”. A UI escolhe primeiro entre `PDF` e `Imagem`, revela apenas opções relevantes e mostra nome, tipo, tamanho, local salvo, abrir e compartilhar depois de gerar.
+PDF, JPG e PNG seguem locais, mas a base atual usa `Downloads/ReplicaScan` em Android 10+ para resolver o problema prático de “exportei e não achei o arquivo”. A UI escolhe primeiro entre `PDF` e `Imagem`, revela apenas opções relevantes e mostra nome, tipo, tamanho, local salvo, abrir e compartilhar depois de gerar.
 
 ## 9. Fonte canônica da página
 
@@ -58,7 +58,7 @@ Room exporta seu schema no repositório e abre sem `fallbackToDestructiveMigrati
 
 ## 11. Ownership e deleção física
 
-Somente arquivos dentro dos namespaces canônicos do Scanora podem ser removidos automaticamente. Fotos externas e exports finais não pertencem ao lifecycle da página. Falhas físicas produzem resultado parcial e o worker tenta apenas orphan cleanup conservador.
+Somente arquivos dentro dos namespaces canônicos do ReplicaScan podem ser removidos automaticamente. Fotos externas e exports finais não pertencem ao lifecycle da página. Falhas físicas produzem resultado parcial e o worker tenta apenas orphan cleanup conservador.
 
 ## 12. Dados documentais fora de backup automático
 

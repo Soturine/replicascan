@@ -79,7 +79,7 @@ Esse pós-processamento ordena linhas por posição visual, agrupa linhas próxi
 
 ## Exportação
 
-PDF, JPG e PNG continuam sendo gerados localmente. Em Android 10+ a saída vai para `Downloads/Scanora`, enquanto versões anteriores usam o armazenamento do app. Quando há crop, rotação ou filtro, a exportação rederiva a página a partir de `sourceUri`. PDF aceita página automática, A4 ou Letter e inclui uma camada de texto pesquisável quando existe OCR persistido; a imagem opaca aprovada continua definindo a aparência visual.
+PDF, JPG e PNG continuam sendo gerados localmente. Em Android 10+ a saída vai para `Downloads/ReplicaScan`, enquanto versões anteriores usam o armazenamento do app. Quando há crop, rotação ou filtro, a exportação rederiva a página a partir de `sourceUri`. PDF aceita página automática, A4 ou Letter e inclui uma camada de texto pesquisável quando existe OCR persistido; a imagem opaca aprovada continua definindo a aparência visual.
 
 Se uma página não puder ser renderizada, a exportação falha com índice/ID e não publica sucesso incompleto. Imagens são escritas uma por vez e saídas parciais são removidas. O PDF escreve diretamente no destino, sem `ByteArrayOutputStream` ou roundtrip JPEG, e limita a resolução incorporada conforme a qualidade escolhida.
 

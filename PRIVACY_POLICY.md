@@ -1,41 +1,38 @@
-# Política de Privacidade do Scanora
+# Política de Privacidade do ReplicaScan
 
-Última atualização: 2026-08-12
+Última atualização: 2026-08-31 — versão 0.4.0
 
 ## Resumo
 
-O Scanora funciona localmente e não exige conta, login, sincronização ou backend. A versão `0.2.7` desativa cloud backup e transferência automática dos dados do app, além de restringir o compartilhamento aos arquivos que o usuário escolheu exportar.
+ReplicaScan funciona localmente e não exige conta, login, sincronização ou backend. O app não possui analytics próprio, tracking ou OCR remoto e não envia automaticamente o conteúdo dos seus documentos para servidores da Soturine.
 
 ## Dados processados
 
-O app pode manter no aparelho imagens capturadas ou importadas, crop/rotação/filtro, texto OCR, títulos, tags, favoritos, preferências e exports em PDF/JPG/PNG.
+Imagens capturadas/importadas, crop, rotação, filtros, OCR, títulos, tags, favoritos e preferências permanecem no aparelho. Room guarda metadados e OCR; derivados visuais são cache regenerável.
 
 ## Permissões e componentes
 
-- `CAMERA` é usada apenas na captura manual;
-- seleção de mídia usa os seletores da plataforma;
-- ML Kit Document Scanner, via Google Play services, oferece o scanner guiado;
-- ML Kit Text Recognition executa OCR no dispositivo;
-- não há analytics, tracking nem envio automático de documentos para servidor próprio ou OCR remoto.
+- `CAMERA` é usada somente quando você abre a captura;
+- a seleção de mídia usa os seletores da plataforma;
+- Google Play services ML Kit Document Scanner oferece o scanner guiado;
+- ML Kit Text Recognition processa OCR no dispositivo.
 
-## Armazenamento e backup
+Embora entradas e resultados do ML Kit sejam processados no aparelho, componentes do Google podem contatar seus serviços para baixar/atualizar modelos e componentes, verificar compatibilidade e coletar métricas de desempenho/utilização da API. Esse comportamento é regido pelos [termos do ML Kit](https://developers.google.com/ml-kit/terms) e pelos termos do Google, não pela Soturine.
 
-A fonte canônica de cada página fica na área privada do Scanora. Metadados e OCR ficam em Room; derivados ficam em cache regenerável. Arquivos, banco, preferências e armazenamento externo do app são excluídos das regras de cloud backup e device transfer, com `allowBackup` também desativado.
+## Armazenamento, backup e migração
 
-O Scanora ainda não oferece backup próprio. Desinstalar ou limpar os dados do app pode remover o histórico privado.
+A fonte canônica fica na área privada do ReplicaScan. Backup em nuvem e transferência automática de arquivos, banco, OCR e preferências permanecem desativados. Desinstalar ou limpar os dados pode remover o histórico privado.
+
+A v0.4.0 usa o novo pacote `com.soturine.replicascan` e instala separadamente das builds antigas. O app não lê nem exclui dados privados da instalação anterior. Exporte documentos importantes antes de remover a instalação antiga.
 
 ## Compartilhamento e exports
 
-Compartilhamento só começa após ação do usuário e concede leitura temporária por `content://`. O FileProvider não expõe fontes privadas, banco, preferências ou a raiz do cache.
+Compartilhamento só começa após uma ação do usuário e concede leitura temporária por `content://`. O FileProvider expõe apenas subdiretórios de exportação; fontes privadas, banco, preferências e a raiz do cache não são compartilhados.
 
-Em Android 10+, exports finais são salvos em `Downloads/Scanora`. Esses arquivos passam a pertencer ao usuário: excluir o scan privado não apaga automaticamente um PDF/JPG/PNG já exportado.
+Em Android 10+, os arquivos finais são salvos em `Downloads/ReplicaScan`. O app não apaga a pasta histórica usada por versões anteriores. Excluir um lote privado não remove PDFs/JPGs/PNGs que você já exportou.
 
 ## Retenção e exclusão
 
-Excluir página ou lote remove os registros e os arquivos privados gerenciados correspondentes. Fotos originais da galeria, conteúdo de outros providers e exports finais não são apagados. Derivados e temporários antigos podem ser removidos automaticamente; fontes órfãs só são removidas dentro do namespace gerenciado e após período de segurança.
+Excluir página ou lote remove registros e arquivos privados gerenciados correspondentes. Fotos originais externas e exports finais não são apagados. Temporários só são limpos em namespaces conhecidos e com período de segurança.
 
-Detalhes técnicos estão em [docs/data-lifecycle.md](docs/data-lifecycle.md) e [docs/threat-model.md](docs/threat-model.md).
-
-## Contato
-
-Para vulnerabilidades, siga `SECURITY.md` e não publique documentos ou dados pessoais em issues.
+Detalhes: [data lifecycle](docs/data-lifecycle.md) e [threat model](docs/threat-model.md). Para vulnerabilidades, use o processo privado descrito em [SECURITY.md](SECURITY.md) e nunca publique documentos pessoais em issues.

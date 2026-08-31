@@ -1,117 +1,72 @@
-# Scanora
+# ReplicaScan
 
 ![Android](https://img.shields.io/badge/platform-Android-2E7D8C)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-23414B)
-![Compose](https://img.shields.io/badge/Jetpack%20Compose-2026.03.00-DD8A2E)
-![Version](https://img.shields.io/badge/version-0.3.1-E95F0C)
-[![Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml)
-[![Deploy Pages](https://github.com/Soturine/scanora/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/scanora/actions/workflows/pages.yml)
+![Version](https://img.shields.io/badge/version-0.4.0-E95F0C)
+[![Android CI](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml)
+[![Deploy Pages](https://github.com/Soturine/replicascan/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/pages.yml)
 
-Scanora é um app Android de digitalização de documentos com foco em processamento local, OCR no dispositivo e um fluxo direto entre captura, revisão e exportação.
+ReplicaScan é um scanner Android local-first: captura ou importa documentos, corrige perspectiva, revisa, executa OCR no aparelho e exporta em PDF, JPG ou PNG.
 
-Repositório: https://github.com/Soturine/scanora  
-Releases: https://github.com/Soturine/scanora/releases  
-Site: https://soturine.github.io/scanora/
+- Repositório: <https://github.com/Soturine/replicascan>
+- Releases: <https://github.com/Soturine/replicascan/releases>
+- Site: <https://soturine.github.io/replicascan/>
 
-## O que o app já faz
+## Produto
 
-- scanner próprio com `CameraX`, detecção ao vivo, foco por toque, flash e lote multipágina como fluxo principal da Home;
-- `ML Kit Document Scanner` preservado como alternativa assistida;
-- importação de galeria pelo fluxo do Google quando suportada;
-- captura e importação direta continuam editáveis com recorte manual acessível;
-- Home minimalista sem escolha obrigatória de tipo antes do scan;
-- onboarding arrastável, ícone do app e estados contextuais com a raposa mascote do Scanora;
-- interface em 12 idiomas: English, Português do Brasil, Español, Français, Italiano, العربية, Deutsch, Bahasa Indonesia, हिन्दी, Türkçe, 日本語 e 한국어, com RTL real no árabe;
-- cópia das imagens de entrada para armazenamento interno antes de criar o lote local;
-- detector local perspectivo em três escalas, quatro lados independentes, perfis automáticos, confiança tipada, `NO_DOCUMENT` e fallback conservador;
-- reajuste automático do crop e editor manual mais confortável para acertos finos;
-- filtros locais recalibrados para documento, cinza, cor e recibo com menos risco de estourar a página;
-- pipeline de imagem unificado para preview, filtros, OCR e exportação derivarem da mesma página lógica;
-- OCR local automático com fallback limitado a dois reconhecedores, qualidade EMPTY/WEAK/PARTIAL/GOOD, seleção manual avançada, fingerprint e artefato persistido;
-- busca local por título, tags e OCR via Room FTS;
-- exportação em PDF pesquisável quando há OCR, JPG e PNG, com A4/Letter/Auto e escolha progressiva por formato;
-- pós-exportação com nome, tipo, tamanho, local salvo, abrir e compartilhar;
-- histórico local com título, tags, favoritos e busca.
-- banco sem migration destrutiva, schema versionado e lifecycle explícito dos arquivos privados;
-- importação parcial com contagem de falhas, rollback e preservação da ordem;
-- cache visual descartável com fallback para a fonte canônica;
-- backup automático desativado e compartilhamento restrito aos diretórios de export.
+- câmera própria com CameraX, detecção ao vivo, foco, flash e lote multipágina;
+- ML Kit Document Scanner como alternativa assistida;
+- crop perspectivo com fallback conservador e ajuste manual dos quatro cantos;
+- cinco filtros com intenção clara e pipeline coerente entre preview e exportação;
+- OCR local com qualidade explícita, trechos legíveis e cópia rápida;
+- PDF pesquisável quando há OCR, JPG e PNG, com opções progressivas por formato;
+- histórico local com título, tags, favoritos e busca Room FTS;
+- 12 idiomas, incluindo árabe com RTL;
+- raposa oficial consistente no launcher, onboarding e estados de processamento.
 
-## Proposta de valor
+Não há conta, backend, sincronização ou upload obrigatório de documentos. Componentes do Google Play services/ML Kit podem contatar o Google para atualizações e métricas técnicas conforme os termos do fornecedor; veja [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
 
-Scanora foi pensado para transformar páginas, contratos, cadernos e recibos em arquivos legíveis sem depender de upload obrigatório. A câmera própria é o caminho principal, sem exigir que o usuário escolha um perfil técnico antes de capturar, e o scanner assistido continua disponível como alternativa.
+## Identidade Android
 
-## Capturas
+- produto: `ReplicaScan`
+- versão: `0.4.0` (`versionCode 19`)
+- `applicationId`: `com.soturine.replicascan`
+- namespace base: `com.soturine.replicascan`
+- exportações em Android 10+: `Downloads/ReplicaScan`
 
-Capturas oficiais do app em aparelho real seguem em validação final.  
-Nesta rodada, o material público foi alinhado ao fluxo real do produto sem substituir essa etapa por mockups artificiais.
-
-## Stack
-
-- Kotlin
-- Android Gradle Plugin 9.1.1
-- Jetpack Compose + Material 3
-- Navigation Compose
-- ViewModel + Coroutines + Flow
-- Room
-- DataStore
-- WorkManager
-- CameraX
-- ML Kit Document Scanner
-- ML Kit Text Recognition
+O novo `applicationId` faz a v0.4.0 instalar como um app diferente das builds históricas. Exporte documentos importantes da instalação antiga antes de removê-la.
 
 ## Arquitetura
 
-- `app`: bootstrap, navegação, onboarding e integração dos módulos
-- `core-common`: modelos, contratos e use cases
-- `core-data`: Room, DataStore, OCR, exportação e processamento de imagem
-- `core-ui`: tema e componentes reutilizáveis
-- `feature-*`: telas e ViewModels por contexto funcional
+O projeto é um monólito modular em Kotlin, Jetpack Compose e Material 3:
 
-Referências técnicas:
+- `app`: bootstrap, navegação, onboarding e composição;
+- `core-common`: modelos e contratos centrais;
+- `core-data`: Room, DataStore, OCR, imagem e exportação;
+- `core-ui`: tema e componentes reutilizáveis;
+- `feature-*`: câmera, home, editor, exportação, histórico, OCR e configurações.
 
-- [docs/architecture.md](docs/architecture.md)
-- [docs/current-state.md](docs/current-state.md)
-- [docs/data-lifecycle.md](docs/data-lifecycle.md)
-- [docs/threat-model.md](docs/threat-model.md)
-- [docs/decisions.md](docs/decisions.md)
-- [docs/setup.md](docs/setup.md)
-- [docs/testing.md](docs/testing.md)
-- [docs/publishing.md](docs/publishing.md)
+Referências: [arquitetura](docs/architecture.md), [estado atual](docs/current-state.md), [lifecycle dos dados](docs/data-lifecycle.md), [threat model](docs/threat-model.md), [setup](docs/setup.md), [testes](docs/testing.md) e [constituição de engenharia](docs/engineering/ENGINEERING_CONSTITUTION.md).
 
-## Como rodar
+## Desenvolvimento
 
-1. Abra o projeto no Android Studio com suporte a AGP 9.1.1.
-2. Use JDK 17 ou superior compatível com AGP 9.
-3. Instale Android SDK Platform 36 e Build Tools 36.0.0.
-4. Rode `./gradlew assembleDebug` ou execute o módulo `app`.
+Requisitos: JDK 17, Android SDK Platform 36 e Build Tools 36.0.0.
 
-Identidade do app:
+```powershell
+.\gradlew.bat assembleDebug
+.\gradlew.bat testDebugUnitTest
+.\gradlew.bat lint
+python tools/check_localization.py
+python tools/check_branding.py
+python tools/check_consistency.py
+```
 
-- `applicationId`: `com.soturine.scanora`
-- namespace base: `com.soturine.scanora`
+O pipeline de `main` valida, produz uma única vez o APK de avaliação, testa em API 36 e só então cria a tag anotada e a GitHub Release. API 35 permanece como verificação de compatibilidade agendada. Consulte [docs/release.md](docs/release.md).
 
-## CI e Pages
+## Licença
 
-- O workflow [Android CI](https://github.com/Soturine/scanora/actions/workflows/android-ci.yml) roda `check`, compila debug/release e executa os testes instrumentados de Room, busca e PDF em emulador API 35.
-- CodeQL analisa Java/Kotlin e o setup Gradle valida o wrapper; Dependabot acompanha Gradle e GitHub Actions.
-- O site público é publicado a partir de `site/`.
-- Para o GitHub Pages funcionar no repositório publicado, ative em `Settings > Pages > Source: GitHub Actions`.
+O código corrente do ReplicaScan é proprietário e disponibilizado para visualização pública sob [LICENSE](LICENSE). Todos os direitos são reservados; disponibilidade pública do código não significa open source.
 
-## Privacidade
+As releases históricas até `v0.3.1`, publicadas sob o nome anterior, permanecem sob Apache License 2.0 em seus respectivos commits, tags e artefatos. A fronteira e os componentes de terceiros estão documentados em [LICENSING.md](LICENSING.md) e [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-- processamento local por padrão;
-- OCR e filtros executados no dispositivo sempre que possível;
-- sem backend obrigatório, login ou sincronização no MVP.
-- scans, Room, OCR e preferências excluídos de cloud backup e device transfer automáticos;
-- excluir uma página ou lote remove os arquivos privados gerenciados, mas preserva fotos externas e exports do usuário.
-
-Política completa em [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
-
-## Status
-
-`0.3.1` leva o motor documental ao fluxo principal: captura própria assistida por detecção ao vivo, crop perspectivo mais robusto, revisão compacta, filtros automáticos, OCR automático limitado e exportação responsiva.
-
-## Contribuir
-
-Consulte [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [SECURITY.md](SECURITY.md) e [ROADMAP.md](ROADMAP.md).
+Veja também [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), [CHANGELOG.md](CHANGELOG.md) e [ROADMAP.md](ROADMAP.md).

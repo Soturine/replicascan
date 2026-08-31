@@ -1,4 +1,4 @@
-# Escopo do Scanora
+# Escopo do ReplicaScan
 
 Este arquivo histórico deixou de ser fonte de estado atual a partir da `0.2.7` porque misturava decisões já entregues, pendências antigas e roadmap.
 

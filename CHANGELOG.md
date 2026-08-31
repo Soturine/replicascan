@@ -4,6 +4,28 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-31
+
+### Added
+
+- Gates automatizados de branding, localização, consistência, identidade do pacote e segurança do FileProvider.
+- Pipeline assíncrono e fail-closed: API 36, CodeQL, artefato único, SHA-256, provenance e tag anotada após sucesso.
+- Constituição de engenharia, ADRs de identidade/release e runbook idempotente.
+
+### Changed
+
+- O produto corrente passa a ser ReplicaScan, com repositório `Soturine/replicascan`, pacote `com.soturine.replicascan` e versão 0.4.0 (`versionCode 19`).
+- Room, DataStore, WorkManager, recursos e diretório de exportação corrente usam a nova identidade, sem apagar dados ou exports históricos.
+- O código corrente passa a ser proprietário e All Rights Reserved a partir do commit de transição; releases até v0.3.1 preservam a licença Apache 2.0 recebida na época.
+
+### Security
+
+- Workflows passam a usar permissões mínimas e actions fixadas por commit; o release reutiliza o APK verificado e falha em divergência de versão, checksum, tag ou SHA.
+
+### Validation
+
+- Câmera, crop em corpus físico, TalkBack, fonte 200%, RTL e aparelhos representativos continuam pendentes de validação humana.
+
 ## [0.3.1] - 2026-08-15
 
 ### Added

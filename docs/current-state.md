@@ -1,6 +1,8 @@
-# Estado atual do Scanora
+# Estado atual do ReplicaScan
 
-O Scanora `0.3.1` é um scanner Android local-first. O fluxo principal usa a câmera própria com detecção ao vivo e lote multipágina; o ML Kit Document Scanner permanece como alternativa assistida e o seletor de imagens como entrada editável. Não há conta, backend, sincronização ou envio automático de documentos.
+O ReplicaScan `0.4.0` é um scanner Android local-first. O fluxo principal usa a câmera própria com detecção ao vivo e lote multipágina; o ML Kit Document Scanner permanece como alternativa assistida e o seletor de imagens como entrada editável. Não há conta, backend, sincronização ou envio automático de documentos.
+
+A v0.4.0 altera a identidade do pacote para `com.soturine.replicascan` e instala separadamente das builds históricas. O document engine e a UX funcional permanecem os da base endurecida na v0.3.1; esta versão concentra identidade, licença e release engineering.
 
 ## Fluxo do produto
 

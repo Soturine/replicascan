@@ -1,59 +1,38 @@
-# Roadmap — Scanora
+# Roadmap — ReplicaScan
 
-O roadmap segue: **integridade → imagem canônica → detecção → geometria → filtros → OCR → exportação → busca**. Concluídos ficam no `CHANGELOG.md`.
+ReplicaScan é o nome corrente a partir da v0.4.0. O produto usou outro nome até a v0.3.1; esse histórico permanece intacto no Git, nas tags, releases e no changelog.
 
-## v0.2.9 — Image Quality, Intelligent Crop & Product Polish
+## v0.4.0 — Identity & Engineering Foundation
 
-**Status:** entregue em 2026-08-13
+**Status:** implementação preparada; publicação depende dos gates assíncronos do GitHub.
 
-- metadata via `UPDATE`, páginas preservadas e ordem estrita;
-- decoder canônico com EXIF, mirror, sampling e budgets;
-- OCR canônico sem preprocess duplicado;
-- imagens exportadas uma página por vez;
-- onboarding com swipe, safe insets e raposas PNG animadas;
-- UI creme/laranja/navy/teal, Settings compacta e estados contextuais de processamento;
-- seis idiomas, incluindo árabe com layout RTL;
-- JPEG apenas no scanner rápido; `targetSdk 36`.
+- rebrand completo de produto, pacote Android, repositório, recursos e artefatos;
+- licença corrente proprietária com fronteira histórica e avisos de terceiros;
+- gates negativos de branding, localização e consistência de release;
+- API 36 como gate instrumental principal e API 35 como compatibilidade agendada;
+- release fail-closed com APK construído uma vez, checksum, attestation e tag anotada após sucesso;
+- constituição de engenharia, ADRs e runbook de recuperação.
 
-## v0.3.0 — Document Engine, OCR & Search
+## v0.4.1 — Physical QA & Play Hardening
 
-**Status:** entregue em 2026-08-14
+- validar câmera, crop, TalkBack, fonte 200%, RTL e upgrade em aparelhos físicos;
+- medir cold start, jank, latência, pico de RAM e tamanho do artefato;
+- preparar AAB e assinatura de produção sem armazenar segredo no repositório;
+- concluir Data Safety e store listing com evidências reais.
 
-- detecção tipada com confiança, perfis e `NO_DOCUMENT`, mantendo crop manual acessível;
-- harness determinista para IoU, erro de cantos, falso positivo e latência;
-- OCR por script com readiness, estrutura e fingerprint persistidos;
-- Room 2 com migration explícita, artefato OCR e FTS para título/tags/texto;
-- PDF pesquisável quando há OCR, escrita sem cópia integral extra e tamanhos Auto/A4/Letter;
-- comparação original/resultado e 12 idiomas de UI.
+## v0.4.2 — Measured Document Quality
 
-## v0.3.1 — Product & Play Store Hardening
+- ampliar corpus legal/sintético de folha, recibo, caderno, sombra e fundos poluídos;
+- comparar IoU, erro de cantos, falsos positivos, legibilidade, latência e memória;
+- melhorar heurística/filtros apenas quando métricas superarem a base atual;
+- preservar crop manual e fallback conservador.
 
-**Status:** implementação entregue em 2026-08-15; validação física do proprietário pendente
+## v0.5.0+ — Optional Intelligence
 
-- câmera própria como CTA principal, com detecção ao vivo, foco, flash e lote multipágina;
-- detector perspectivo multi-escala, perfil automático e fallback conservador;
-- crop com lupa/snap, revisão compacta e cinco filtros com `Auto` recomendado;
-- OCR automático com fallback local limitado e qualidade explícita;
-- exportação progressiva responsiva, idioma rolável e identidade visual consistente;
-- regressão sintética mensurável; corpus físico, TalkBack, fonte 200%, RTL e upgrade em Motorola continuam como gate humano.
-
-## v0.3.2 — Measured Performance
-
-- cold start, jank, latências e peak RAM;
-- thumbnails/cache medidos; Macrobenchmark/Baseline Profile só com ganho.
-- Android 16, landscape/tablet, R8, AAB assinado, Data Safety e store listing após o gate físico da v0.3.1.
-
-## v0.3.3 — Measured Detector Upgrade
-
-- dataset legal/sintético: A4, recibo, caderno, sombra, perspectiva e `NO_DOCUMENT`;
-- IoU, corner error, falsos positivos, latência, RAM, APK e bateria;
-- comparar a heurística v0.3.0, OpenCV e LiteRT sem remover fallback manual.
-
-## v0.4.0+ — Optional Document Intelligence
-
-- OCR plugável e layout/tabelas somente após benchmark;
-- remoto apenas opt-in e com consentimento antes de sair do aparelho.
+- layout/tabelas e OCR alternativo somente após benchmark;
+- processamento remoto apenas opt-in, com consentimento anterior à saída do aparelho;
+- monetização somente depois de revisão de privacidade e UX.
 
 ## Fora do caminho crítico
 
-Login, cloud, chat com PDF, LLM, editor PDF completo, dezenas de modos/filtros, DI por estética e rewrite não antecedem os fundamentos.
+Backend, login, cloud sync, AdMob, assinatura/Play Console, OpenCV/LiteRT, novo OCR, detector ML, domínio e redesign amplo não fazem parte da v0.4.0.

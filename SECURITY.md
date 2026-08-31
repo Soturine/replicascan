@@ -27,4 +27,4 @@ Se você encontrar uma vulnerabilidade:
 
 ## Limites atuais
 
-O Scanora não promete secure delete em memória flash, cofre criptografado ou proteção contra um dispositivo já comprometido. A política atual de armazenamento, backup, cache e ownership está descrita em `docs/data-lifecycle.md` e `docs/threat-model.md`.
+O ReplicaScan não promete secure delete em memória flash, cofre criptografado ou proteção contra um dispositivo já comprometido. A política atual de armazenamento, backup, cache e ownership está descrita em `docs/data-lifecycle.md` e `docs/threat-model.md`.

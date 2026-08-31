@@ -4,12 +4,12 @@ Este arquivo é histórico. O estado operacional vigente fica em [`../docs/curre
 
 ## Visão geral
 
-`Scanora` é um aplicativo Android de escaneamento de documentos com foco em privacidade, processamento local, OCR no dispositivo, revisão rápida e exportação simples.
+`ReplicaScan` é um aplicativo Android de escaneamento de documentos com foco em privacidade, processamento local, OCR no dispositivo, revisão rápida e exportação simples.
 
 Identidade técnica atual:
 
-- Nome do app: `Scanora`
-- Package base: `com.soturine.scanora`
+- Nome do app: `ReplicaScan`
+- Package base: `com.soturine.replicascan`
 - Stack principal: Kotlin, Jetpack Compose, Material 3, CameraX, ML Kit Document Scanner, ML Kit Text Recognition, Room, DataStore, Navigation Compose e WorkManager
 
 ## Direção de produto

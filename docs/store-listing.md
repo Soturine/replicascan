@@ -2,7 +2,7 @@
 
 ## App title
 
-Scanora
+ReplicaScan
 
 ## Short description
 
@@ -10,7 +10,7 @@ Escaneie, corrija e exporte documentos com foco em privacidade local.
 
 ## Long description
 
-Scanora transforma seu Android em um scanner de documentos moderno, rápido e offline-first. Use o scanner rápido do Google como caminho principal para documentos do dia a dia, sem escolher tipo antes de capturar; quando precisar, ajuste corte, filtros e páginas manualmente antes de revisar OCR por trechos organizados ou exportar em PDF, JPG ou PNG.
+ReplicaScan transforma seu Android em um scanner de documentos moderno, rápido e offline-first. Use o scanner rápido do Google como caminho principal para documentos do dia a dia, sem escolher tipo antes de capturar; quando precisar, ajuste corte, filtros e páginas manualmente antes de revisar OCR por trechos organizados ou exportar em PDF, JPG ou PNG.
 
 O app foi pensado para quem quer produtividade sem depender de upload obrigatório. O processamento acontece localmente sempre que possível, incluindo OCR com texto consolidado para copiar tudo ou copiar trechos reconhecidos e filtros voltados para leitura real de documentos.
 

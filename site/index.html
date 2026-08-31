@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scanora</title>
+  <title>ReplicaScan</title>
   <meta
     name="description"
-    content="Scanora é um scanner de documentos para Android com scanner rápido, OCR local, exportação em PDF/JPG/PNG e foco em privacidade."
+    content="ReplicaScan é um scanner de documentos para Android com scanner rápido, OCR local, exportação em PDF/JPG/PNG e foco em privacidade."
   />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,8 +21,8 @@
     <header class="hero-shell" id="top">
       <nav class="nav">
         <a class="brand" href="#top">
-          <img class="brand-icon" src="assets/scanora_icon.png" alt="" />
-          <span>Scanora</span>
+          <img class="brand-icon" src="assets/replicascan_icon.png" alt="" />
+          <span>ReplicaScan</span>
         </a>
         <div class="nav-links">
           <a href="#produto">Produto</a>
@@ -40,18 +40,18 @@
             <span>Home direta, OCR organizado e pós-scan claro.</span>
           </h1>
           <p class="lead">
-            Scanora abre o scanner assistido do Google sem pedir tipo antes da captura,
+            ReplicaScan abre o scanner assistido do Google sem pedir tipo antes da captura,
             leva direto para revisão, organiza OCR em trechos e exporta PDF, JPG ou PNG a
             partir da mesma página aprovada.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="https://github.com/Soturine/scanora">Ver repositório</a>
-            <a class="button secondary" href="https://github.com/Soturine/scanora/releases">Ver releases</a>
+            <a class="button primary" href="https://github.com/Soturine/replicascan">Ver repositório</a>
+            <a class="button secondary" href="https://github.com/Soturine/replicascan/releases">Ver releases</a>
           </div>
           <div class="hero-meta">
-            <span>Versão 0.3.1</span>
+            <span>Versão 0.4.0</span>
             <span>CI Android ativo</span>
-            <span>com.soturine.scanora</span>
+            <span>com.soturine.replicascan</span>
           </div>
         </div>
 
@@ -61,7 +61,7 @@
               <span class="preview-dot"></span>
               <span class="preview-dot"></span>
               <span class="preview-dot"></span>
-              <strong>Scanora</strong>
+              <strong>ReplicaScan</strong>
             </div>
             <div class="preview-stage">
               <div class="preview-hero">
@@ -133,7 +133,7 @@
           <p class="eyebrow">Material público</p>
           <h2>O produto evoluiu. As capturas oficiais fecham a próxima rodada de QA.</h2>
           <p>
-            O site e a documentação foram alinhados ao fluxo real da versão 0.3.1. As
+            O site e a documentação foram alinhados ao fluxo real da versão 0.4.0. As
             capturas finais em aparelho real seguem como fechamento natural de QA visual,
             sem substituir essa etapa por mockups artificiais.
           </p>
@@ -163,7 +163,7 @@
             <p class="eyebrow">Privacidade</p>
             <h2>O fluxo principal não depende de backend.</h2>
             <p>
-              Scanora prioriza processamento local, armazenamento local e compartilhamento
+              ReplicaScan prioriza processamento local, armazenamento local e compartilhamento
               pelas APIs padrão do Android. Backup e transferência automática dos dados privados
               ficam desativados, e o app não exige login para escanear, revisar ou exportar.
             </p>
@@ -176,6 +176,7 @@
               <li>Fontes privadas removidas junto da página ou lote</li>
               <li>Compartilhamento restrito aos diretórios de export</li>
               <li>Sem upload automático de documentos</li>
+              <li>ML Kit pode baixar componentes e enviar métricas técnicas conforme os termos do Google</li>
             </ul>
           </div>
         </div>
@@ -191,8 +192,8 @@
             </p>
           </div>
           <div class="card code-card">
-            <pre><code>git clone https://github.com/Soturine/scanora.git
-cd scanora
+            <pre><code>git clone https://github.com/Soturine/replicascan.git
+cd replicascan
 ./gradlew assembleDebug
 ./gradlew testDebugUnitTest
 ./gradlew lint</code></pre>
@@ -207,13 +208,14 @@ cd scanora
       <section class="section section-alt">
         <div class="section-heading">
           <p class="eyebrow">Documentação</p>
-          <h2>Referências rápidas para contribuir.</h2>
+          <h2>Referências rápidas para avaliar e desenvolver.</h2>
         </div>
         <div class="link-grid">
-          <a class="card link-card" href="https://github.com/Soturine/scanora/blob/main/docs/architecture.md">Arquitetura</a>
-          <a class="card link-card" href="https://github.com/Soturine/scanora/blob/main/docs/setup.md">Setup</a>
-          <a class="card link-card" href="https://github.com/Soturine/scanora/blob/main/docs/testing.md">Testes</a>
-          <a class="card link-card" href="https://github.com/Soturine/scanora/blob/main/PRIVACY_POLICY.md">Privacidade</a>
+          <a class="card link-card" href="https://github.com/Soturine/replicascan/blob/main/docs/architecture.md">Arquitetura</a>
+          <a class="card link-card" href="https://github.com/Soturine/replicascan/blob/main/docs/setup.md">Setup</a>
+          <a class="card link-card" href="https://github.com/Soturine/replicascan/blob/main/docs/testing.md">Testes</a>
+          <a class="card link-card" href="https://github.com/Soturine/replicascan/blob/main/PRIVACY_POLICY.md">Privacidade</a>
+          <a class="card link-card" href="https://github.com/Soturine/replicascan/blob/main/LICENSING.md">Licenciamento</a>
         </div>
       </section>
 
@@ -229,11 +231,11 @@ cd scanora
           </article>
           <article class="card">
             <h3>Atual</h3>
-            <p>v0.3.1: captura própria multipágina, detecção perspectiva, OCR automático limitado, revisão compacta e doze idiomas.</p>
+            <p>v0.4.0: identidade ReplicaScan, pacote Android independente, licença corrente proprietária e release assíncrona auditável.</p>
           </article>
           <article class="card">
             <h3>Próxima</h3>
-            <p>v0.3.2: desempenho medido, QA físico, revisão linguística nativa e preparação para loja após o gate em aparelho.</p>
+            <p>v0.4.1: desempenho medido, QA físico, revisão linguística nativa e preparação para loja após o gate em aparelho.</p>
           </article>
         </div>
       </section>
@@ -250,7 +252,7 @@ cd scanora
           </article>
           <article class="card card-soft">
             <h3>Onde o arquivo exportado fica?</h3>
-            <p>Em Android 10+ o app salva em <strong>Downloads/Scanora</strong>. Em versões anteriores, a saída cai no armazenamento do app.</p>
+            <p>Em Android 10+ o app salva em <strong>Downloads/ReplicaScan</strong>. Em versões anteriores, a saída cai no armazenamento do app.</p>
           </article>
           <article class="card card-soft">
             <h3>O CI já está ativo?</h3>
@@ -261,7 +263,7 @@ cd scanora
     </main>
 
     <footer class="footer">
-      <p>Scanora • 0.3.1 • Projeto Android open-source com experiência acessível, privacidade, OCR e exportação clara.</p>
+      <p>ReplicaScan • 0.4.0 • Código corrente proprietário e publicamente visível. Veja LICENSE e LICENSING.md.</p>
     </footer>
   </div>
 
