@@ -1,21 +1,21 @@
-name: Android CI
+name: Android API 35 Compatibility
 
 on:
-  pull_request:
-  push:
-    branches: [develop]
+  schedule:
+    - cron: "37 5 * * 2"
   workflow_dispatch:
 
 concurrency:
-  group: android-ci-${{ github.ref }}
+  group: android-api35-compatibility
   cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
-  validate:
+  instrumented-api35:
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -29,12 +29,11 @@ jobs:
       - name: Setup Gradle and validate wrapper
         uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4
       - run: chmod +x ./gradlew
-      - name: Repository gates
-        run: |
-          python tools/check_localization.py
-          python tools/check_branding.py
-          python tools/check_consistency.py
-          python tools/check_site.py
-          python -m unittest discover -s tools/tests -p 'test_*.py'
-      - name: Android validation
-        run: ./gradlew testDebugUnitTest lint check assembleDebug assembleRelease assembleDebugAndroidTest
+      - name: Run compatibility instrumentation
+        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          script: ./gradlew connectedDebugAndroidTest

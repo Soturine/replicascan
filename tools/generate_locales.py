@@ -1,4 +1,4 @@
-"""One-shot localization generator for Scanora resource catalogs.
+"""One-shot localization generator for ReplicaScan resource catalogs.
 
 The Portuguese product copy is the source for feature modules. The app and
 core-ui catalogs already use English as the unqualified fallback.
@@ -38,7 +38,7 @@ def translate(text: str, target: str) -> str:
         return key
     query = TOKEN.sub(hold, text)
     if query in {
-        "Scanora", "PDF", "JPG", "PNG", "OCR", "English", "Español",
+        "ReplicaScan", "PDF", "JPG", "PNG", "OCR", "English", "Español",
         "Français", "Italiano", "Deutsch", "Bahasa Indonesia", "हिन्दी",
         "Türkçe", "日本語", "한국어", "العربية",
     }:
@@ -48,7 +48,7 @@ def translate(text: str, target: str) -> str:
         data = json.loads(response.read().decode("utf-8"))
     result = "".join(part[0] for part in data[0] if part[0])
     for key, value in protected.items(): result = result.replace(key, value)
-    return result.replace("Scanora's", "Scanora")
+    return result.replace("ReplicaScan's", "ReplicaScan")
 
 def all_text_nodes(root):
     nodes = []

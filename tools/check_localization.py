@@ -1,4 +1,4 @@
-"""Fail when a supported Scanora locale is incomplete or breaks placeholders."""
+"""Fail when a supported ReplicaScan locale is incomplete or breaks placeholders."""
 from pathlib import Path
 import re
 import sys

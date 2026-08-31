@@ -13,4 +13,6 @@ captures/
 Thumbs.db
 *.iml
 *.log
+__pycache__/
+*.pyc
 /.kotlin/
