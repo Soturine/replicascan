@@ -18,6 +18,7 @@
     <string name="home_camera_unavailable">Aucune application d\'appareil photo.</string>
     <plurals name="home_recent_pages">
         <item quantity="one">%1$d page</item>
+        <item quantity="many">%1$d pages</item>
         <item quantity="other">%1$d pages</item>
     </plurals>
 </resources>

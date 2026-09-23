@@ -17,7 +17,6 @@
     <string name="history_missing_message">삭제되었을 수 있어요.</string>
     <string name="history_page_label">%1$d페이지</string>
     <plurals name="history_pages">
-        <item quantity="one">%1$d페이지</item>
         <item quantity="other">%1$d페이지</item>
     </plurals>
 </resources>

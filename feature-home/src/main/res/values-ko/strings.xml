@@ -17,7 +17,6 @@
     <string name="home_take_photo">사진 찍기</string>
     <string name="home_camera_unavailable">카메라 앱이 없어요.</string>
     <plurals name="home_recent_pages">
-        <item quantity="one">%1$d페이지</item>
         <item quantity="other">%1$d페이지</item>
     </plurals>
 </resources>

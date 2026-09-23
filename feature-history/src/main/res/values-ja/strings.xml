@@ -17,7 +17,6 @@
     <string name="history_missing_message">削除された可能性があります。</string>
     <string name="history_page_label">%1$d ページ</string>
     <plurals name="history_pages">
-        <item quantity="one">%1$d ページ</item>
         <item quantity="other">%1$d ページ</item>
     </plurals>
 </resources>

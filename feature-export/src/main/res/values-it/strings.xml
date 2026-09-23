@@ -26,10 +26,12 @@
     <string name="export_missing_message">Potrebbe essere stato eliminato.</string>
     <plurals name="export_summary">
         <item quantity="one">%1$d pagina</item>
+        <item quantity="many">%1$d pagine</item>
         <item quantity="other">%1$d pagine</item>
     </plurals>
     <plurals name="export_done_message">
         <item quantity="one">%1$d file pronto da aprire o condividere.</item>
+        <item quantity="many">%1$d file pronti da aprire o condividere.</item>
         <item quantity="other">%1$d file pronti da aprire o condividere.</item>
     </plurals>
 </resources>

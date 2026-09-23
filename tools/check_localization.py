@@ -11,6 +11,14 @@ LOCALES = [
     "values-ar", "values-de", "values-id", "values-hi", "values-tr",
     "values-ja", "values-ko",
 ]
+# CLDR plural categories Android resolves for each supported locale (lint MissingQuantity/UnusedQuantity).
+CLDR_QUANTITIES = {
+    "values": {"one", "other"}, "values-de": {"one", "other"}, "values-hi": {"one", "other"}, "values-tr": {"one", "other"},
+    "values-pt-rBR": {"one", "many", "other"}, "values-es": {"one", "many", "other"},
+    "values-fr": {"one", "many", "other"}, "values-it": {"one", "many", "other"},
+    "values-ar": {"zero", "one", "two", "few", "many", "other"},
+    "values-id": {"other"}, "values-ja": {"other"}, "values-ko": {"other"},
+}
 PLACEHOLDER = re.compile(r"%(?:\d+\$)?[dsf]")
 
 def catalog(path):
@@ -45,9 +53,9 @@ for module in MODULES:
                 locale_quantities = [quantity for quantity, _ in values]
                 if len(locale_quantities) != len(set(locale_quantities)):
                     errors.append(f"{module}/{locale}/{key}: duplicate plural quantities {locale_quantities}")
-                missing_quantities = sorted(set(base_quantities) - set(locale_quantities))
-                if missing_quantities:
-                    errors.append(f"{module}/{locale}/{key}: missing plural quantities {missing_quantities}")
+                expected_quantities = CLDR_QUANTITIES[locale]
+                if set(locale_quantities) != expected_quantities:
+                    errors.append(f"{module}/{locale}/{key}: plural quantities {sorted(locale_quantities)} != CLDR {sorted(expected_quantities)}")
                 if "other" not in locale_quantities:
                     errors.append(f"{module}/{locale}/{key}: plural must define other")
                 base_texts = [value for _, value in base_values]

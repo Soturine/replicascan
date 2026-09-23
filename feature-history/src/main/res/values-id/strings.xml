@@ -17,7 +17,6 @@
     <string name="history_missing_message">Mungkin sudah dihapus.</string>
     <string name="history_page_label">Halaman %1$d</string>
     <plurals name="history_pages">
-        <item quantity="one">%1$d halaman</item>
         <item quantity="other">%1$d halaman</item>
     </plurals>
 </resources>

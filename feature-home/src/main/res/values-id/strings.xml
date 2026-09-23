@@ -17,7 +17,6 @@
     <string name="home_take_photo">Ambil foto</string>
     <string name="home_camera_unavailable">Tidak ada aplikasi kamera.</string>
     <plurals name="home_recent_pages">
-        <item quantity="one">%1$d halaman</item>
         <item quantity="other">%1$d halaman</item>
     </plurals>
 </resources>

@@ -18,6 +18,7 @@
     <string name="home_camera_unavailable">No hay ninguna app de cámara.</string>
     <plurals name="home_recent_pages">
         <item quantity="one">%1$d página</item>
+        <item quantity="many">%1$d páginas</item>
         <item quantity="other">%1$d páginas</item>
     </plurals>
 </resources>
