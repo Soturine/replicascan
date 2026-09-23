@@ -1,8 +1,13 @@
 name: ReplicaScan Release
 
+# Qualification and verification only. The owner publishes the tag and GitHub Release with
+# tools/release_artifact.py (see docs/release.md and ADR 0003); this workflow never creates
+# tags or releases, so it cannot race or overwrite a publication.
+
 on:
   push:
     branches: [main]
+    tags: ["v*"]
   workflow_dispatch:
 
 concurrency:
@@ -16,21 +21,20 @@ jobs:
   intent:
     runs-on: ubuntu-latest
     outputs:
-      publish: ${{ steps.manifest.outputs.publish }}
+      tag: ${{ steps.names.outputs.tag }}
+      artifact: ${{ steps.names.outputs.artifact }}
     steps:
       - name: Checkout exact source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - name: Validate release manifest shape
-        id: manifest
+      - name: Derive release names from manifest
+        id: names
         run: |
-          test "$(jq -r .product release/manifest.json)" = "ReplicaScan"
-          test "$(jq -r .version release/manifest.json)" = "0.4.0"
-          test "$(jq -r .versionCode release/manifest.json)" = "19"
-          echo "publish=$(jq -r .publish release/manifest.json)" >> "$GITHUB_OUTPUT"
+          python tools/release_artifact.py names | tee -a "$GITHUB_OUTPUT"
+          python tools/check_consistency.py
 
   validate-build:
     needs: intent
-    if: needs.intent.outputs.publish == 'true'
+    if: github.ref_type == 'branch'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -50,46 +54,24 @@ jobs:
         run: |
           python tools/check_localization.py
           python tools/check_branding.py
-          python tools/check_consistency.py
           python -m unittest discover -s tools/tests -p 'test_*.py'
       - name: Test and build once
         run: ./gradlew testDebugUnitTest lint check assembleDebug assembleRelease assembleDebugAndroidTest
-      - name: Verify APK identity and prepare exact artifact
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p dist
-          cp app/build/outputs/apk/debug/app-debug.apk dist/replicascan-v0.4.0-debug.apk
-          AAPT="$(find "$ANDROID_HOME/build-tools" -type f -name aapt | sort -V | tail -1)"
-          BADGING="$($AAPT dump badging dist/replicascan-v0.4.0-debug.apk | head -1)"
-          grep -F "package: name='com.soturine.replicascan' versionCode='19' versionName='0.4.0'" <<< "$BADGING"
-          (cd dist && sha256sum replicascan-v0.4.0-debug.apk > SHA256SUMS.txt)
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          Path('dist/build-metadata.json').write_text(json.dumps({
-              'product': 'ReplicaScan',
-              'version': '0.4.0',
-              'versionCode': 19,
-              'package': 'com.soturine.replicascan',
-              'sourceSha': os.environ['GITHUB_SHA'],
-              'artifact': 'replicascan-v0.4.0-debug.apk',
-              'artifactType': 'evaluation-debug-apk'
-          }, indent=2) + '\n', encoding='utf-8')
-          PY
-      - name: Upload exact release candidate
+      - name: Verify APK identity and record candidate metadata
+        run: python tools/release_artifact.py prepare --source-sha "$GITHUB_SHA" --out dist
+      - name: Upload candidate for inspection
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: replicascan-v0.4.0-release-candidate
+          name: ${{ needs.intent.outputs.tag }}-ci-candidate
           path: dist/
           if-no-files-found: error
           retention-days: 14
 
   instrumented-api36:
     needs: intent
-    if: needs.intent.outputs.publish == 'true'
+    if: github.ref_type == 'branch'
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 60
     steps:
       - name: Checkout exact source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -103,18 +85,30 @@ jobs:
       - name: Setup Gradle and validate wrapper
         uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4
       - run: chmod +x ./gradlew
-      - name: Run release instrumentation on Android 16
-        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2
+      # Without this the emulator falls back to `-accel off` (root cause of the earlier API 36 release failure).
+      - name: Enable KVM for the runner user
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Run instrumentation on the Android 16 managed device
+        run: >
+          ./gradlew api36DebugAndroidTest --no-parallel
+          -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect
+      - name: Keep instrumentation reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          api-level: 36
-          arch: x86_64
-          profile: pixel_6
-          disable-animations: true
-          script: ./gradlew connectedDebugAndroidTest
+          name: api36-reports
+          path: |
+            */build/outputs/androidTest-results/managedDevice/
+            */build/reports/androidTests/managedDevice/
+          if-no-files-found: warn
+          retention-days: 14
 
   site:
     needs: intent
-    if: needs.intent.outputs.publish == 'true'
+    if: github.ref_type == 'branch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout exact source
@@ -124,7 +118,7 @@ jobs:
 
   security:
     needs: intent
-    if: needs.intent.outputs.publish == 'true'
+    if: github.ref_type == 'branch'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -148,57 +142,30 @@ jobs:
       - name: Analyze
         uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
 
-  publish:
-    needs: [intent, validate-build, instrumented-api36, site, security]
-    if: github.ref == 'refs/heads/main' && needs.intent.outputs.publish == 'true'
+  verify-published:
+    needs: intent
+    if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      id-token: write
-      attestations: write
     steps:
-      - name: Checkout exact source and tags
+      - name: Checkout tagged source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          fetch-depth: 0
-      - name: Download exact release candidate
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
-        with:
-          name: replicascan-v0.4.0-release-candidate
-          path: dist
-      - name: Verify exact artifact
-        run: cd dist && sha256sum --check SHA256SUMS.txt
-      - name: Attest evaluation APK provenance
-        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
-        with:
-          subject-path: dist/replicascan-v0.4.0-debug.apk
-      - name: Create immutable tag and release idempotently
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3
+      - name: Tag must match the release manifest
+        env:
+          EXPECTED: ${{ needs.intent.outputs.tag }}
+        run: test "$GITHUB_REF_NAME" = "$EXPECTED"
+      - name: Verify the published assets are the qualified artifact
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: v0.4.0
-        shell: bash
         run: |
-          set -euo pipefail
-          git fetch --tags origin
-          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
-            test "$(git rev-list -n 1 "$TAG")" = "$GITHUB_SHA"
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git tag -a "$TAG" "$GITHUB_SHA" -m "ReplicaScan v0.4.0"
-            git push origin "$TAG"
-          fi
-
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            test "$(gh release view "$TAG" --json tagName --jq .tagName)" = "$TAG"
-            printf '%s\n' SHA256SUMS.txt build-metadata.json replicascan-v0.4.0-debug.apk > expected-assets.txt
-            gh release view "$TAG" --json assets --jq '.assets[].name' | sort > actual-assets.txt
-            diff -u expected-assets.txt actual-assets.txt
-          else
-            gh release create "$TAG" \
-              dist/replicascan-v0.4.0-debug.apk \
-              dist/SHA256SUMS.txt \
-              dist/build-metadata.json \
-              --title "ReplicaScan v0.4.0" \
-              --notes-file docs/releases/v0.4.0.md
-          fi
+          # The owner pushes the annotated tag first and uploads assets right after; wait up to 15 min.
+          for attempt in $(seq 1 30); do
+            if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets | length' | grep -qx 3; then
+              break
+            fi
+            sleep 30
+          done
+          mkdir release-assets
+          gh release download "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --dir release-assets
+          python tools/release_artifact.py verify --dir release-assets --tag-sha "$GITHUB_SHA" --badging
