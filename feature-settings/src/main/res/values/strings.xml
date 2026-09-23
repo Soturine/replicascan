@@ -1,40 +1,20 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_title">Settings</string>
-    <string name="settings_eyebrow">Preferences</string>
-    <string name="settings_heading">Adjust ReplicaScan to your liking</string>
-    <string name="settings_supporting">Everything here remains local: theme, manual fallback, and export preferences.</string>
-    <string name="settings_theme_section">Theme</string>
-    <string name="settings_theme_supporting">Define how the interface should appear on a daily basis.</string>
-    <string name="settings_theme_system">Follow the system</string>
-    <string name="settings_theme_system_description">Automatically uses Android\'s active theme.</string>
-    <string name="settings_theme_light">Always clear</string>
-    <string name="settings_theme_light_description">Keeps the app clear even when the system is dark.</string>
-    <string name="settings_theme_dark">Always dark</string>
-    <string name="settings_theme_dark_description">Keeps the app dark for reading with less brightness.</string>
-    <string name="settings_language_section">Language</string>
-    <string name="settings_language_supporting">Follow the system or choose the ReplicaScan language.</string>
-    <string name="settings_language_system">System</string>
-    <string name="settings_language_portuguese">Portuguese</string>
-    <string name="settings_language_english">English</string>
-    <string name="settings_language_spanish">Español</string>
-    <string name="settings_language_french">Français</string>
-    <string name="settings_language_italian">Italiano</string>
-    <string name="settings_language_arabic">العربية</string>
-    <string name="settings_language_german">Deutsch</string>
-    <string name="settings_language_indonesian">Bahasa Indonesia</string>
-    <string name="settings_language_hindi">हिन्दी</string>
-    <string name="settings_language_turkish">Türkçe</string>
-    <string name="settings_language_japanese">日本語</string>
-    <string name="settings_language_korean">한국어</string>
-    <string name="settings_default_mode_section">Standard manual mode</string>
-    <string name="settings_mode_supporting">Used only in manual adjustment and direct import. The fast scanner remains universal.</string>
-    <string name="settings_pdf_quality_section">Standard PDF quality</string>
-    <string name="settings_pdf_supporting">This preference is used as the basis for the export screen.</string>
-    <string name="settings_reset_onboarding">See onboarding again</string>
-    <string name="settings_open_about">About the app</string>
-    <string name="settings_about_title">About ReplicaScan</string>
-    <string name="settings_about_body">ReplicaScan is an Android document scanner with a focus on local processing, on-device OCR, and clear export to PDF, JPG, and PNG. The proposal is to go from capture to the final file with minimal friction and without requiring a backend for the main flow.</string>
-    <string name="settings_open_privacy">Open privacy policy</string>
-    <string name="settings_version" translatable="false">0.3.1</string>
+    <string name="settings_back">Back</string>
+    <string name="settings_appearance_section">Appearance</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_system">System default</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_system">System default</string>
+    <string name="settings_export_section">Export</string>
+    <string name="settings_pdf_quality">Default PDF quality</string>
+    <string name="settings_help_section">Help</string>
+    <string name="settings_introduction">View introduction</string>
+    <string name="settings_privacy">Privacy policy</string>
+    <string name="settings_about">About</string>
+    <string name="settings_about_body">ReplicaScan scans documents on your phone, recognizes text on the device and exports PDF, JPG or PNG. No account needed, and the app never uploads your documents.</string>
+    <string name="settings_version">Version %1$s</string>
 </resources>

@@ -1,39 +1,20 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_title">Pengaturan</string>
-    <string name="settings_eyebrow">Preferensi</string>
-    <string name="settings_heading">Sesuaikan ReplicaScan sesuai keinginan Anda</string>
-    <string name="settings_supporting">Semuanya di sini tetap bersifat lokal: tema, penggantian manual, dan preferensi ekspor.</string>
-    <string name="settings_theme_section">Tema</string>
-    <string name="settings_theme_supporting">Tentukan bagaimana antarmuka akan muncul setiap hari.</string>
-    <string name="settings_theme_system">Ikuti sistemnya</string>
-    <string name="settings_theme_system_description">Secara otomatis menggunakan tema aktif Android.</string>
-    <string name="settings_theme_light">Selalu jelas</string>
-    <string name="settings_theme_light_description">Menjaga aplikasi tetap jernih meskipun sistem gelap.</string>
-    <string name="settings_theme_dark">Selalu gelap</string>
-    <string name="settings_theme_dark_description">Membuat aplikasi tetap gelap untuk membaca dengan kecerahan lebih rendah.</string>
-    <string name="settings_language_section">Bahasa</string>
-    <string name="settings_language_supporting">Ikuti sistem atau pilih bahasa ReplicaScan.</string>
-    <string name="settings_language_system">Sistem</string>
-    <string name="settings_language_portuguese">Portugis</string>
-    <string name="settings_language_english">English</string>
-    <string name="settings_language_spanish">Español</string>
-    <string name="settings_language_french">Français</string>
-    <string name="settings_language_italian">Italiano</string>
-    <string name="settings_default_mode_section">Mode manual standar</string>
-    <string name="settings_mode_supporting">Hanya digunakan dalam penyesuaian manual dan impor langsung. Pemindai cepat tetap bersifat universal.</string>
-    <string name="settings_pdf_quality_section">Kualitas PDF standar</string>
-    <string name="settings_pdf_supporting">Preferensi ini digunakan sebagai dasar untuk layar ekspor.</string>
-    <string name="settings_reset_onboarding">Lihat orientasi lagi</string>
-    <string name="settings_open_about">Tentang aplikasi</string>
-    <string name="settings_about_title">Tentang ReplicaScan</string>
-    <string name="settings_about_body">ReplicaScan adalah pemindai dokumen Android dengan fokus pada pemrosesan lokal, OCR pada perangkat, dan ekspor yang jelas ke PDF, JPG, dan PNG. Usulannya adalah beralih dari pengambilan ke file akhir dengan gesekan minimal dan tanpa memerlukan backend untuk aliran utama.</string>
-    <string name="settings_open_privacy">Buka kebijakan privasi</string>
-    <string name="settings_language_arabic">العربية</string>
-    <string name="settings_language_german">Deutsch</string>
-    <string name="settings_language_indonesian">Bahasa Indonesia</string>
-    <string name="settings_language_hindi">हिन्दी</string>
-    <string name="settings_language_turkish">Türkçe</string>
-    <string name="settings_language_japanese">日本語</string>
-    <string name="settings_language_korean">한국어</string>
+    <string name="settings_title">Setelan</string>
+    <string name="settings_back">Kembali</string>
+    <string name="settings_appearance_section">Tampilan</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_system">Default sistem</string>
+    <string name="settings_theme_light">Terang</string>
+    <string name="settings_theme_dark">Gelap</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="settings_language_system">Default sistem</string>
+    <string name="settings_export_section">Ekspor</string>
+    <string name="settings_pdf_quality">Kualitas PDF default</string>
+    <string name="settings_help_section">Bantuan</string>
+    <string name="settings_introduction">Lihat pengenalan</string>
+    <string name="settings_privacy">Kebijakan privasi</string>
+    <string name="settings_about">Tentang</string>
+    <string name="settings_about_body">ReplicaScan memindai dokumen di ponsel Anda, mengenali teks langsung di perangkat, dan mengekspor ke PDF, JPG, atau PNG. Tidak perlu akun, dan aplikasi tidak pernah mengunggah dokumen Anda.</string>
+    <string name="settings_version">Versi %1$s</string>
 </resources>

@@ -1,37 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ocr_title">OCR</string>
+    <string name="ocr_title">Texto</string>
     <string name="ocr_back">Voltar</string>
-    <string name="ocr_eyebrow">Leitura local</string>
-    <string name="ocr_missing_title">Página indisponível</string>
-    <string name="ocr_missing_message">Abra uma página válida para reconhecer texto.</string>
-    <string name="ocr_processing">Lendo texto…</string>
-    <string name="ocr_processing_detail">Preparando a página e organizando o resultado.</string>
-    <string name="ocr_result_title">Texto pronto</string>
-    <plurals name="ocr_supporting">
-        <item quantity="one">%1$d trecho organizado.</item>
-        <item quantity="other">%1$d trechos organizados.</item>
-    </plurals>
-    <string name="ocr_weak_title">Leitura parcial</string>
-    <string name="ocr_weak_text">Encontramos pouco texto útil nesta página.</string>
-    <string name="ocr_weak_hint">Se o resultado parecer fraco, ajuste o corte ou tente o scanner rápido.</string>
-    <string name="ocr_empty_title">Nenhum texto útil</string>
-    <string name="ocr_empty_text">Tente ajustar o corte, melhorar a luz ou usar o scanner rápido.</string>
     <string name="ocr_copy">Copiar texto</string>
-    <string name="ocr_copy_all">Copiar tudo</string>
-    <string name="ocr_copy_excerpt">Copiar trecho</string>
-    <string name="ocr_copy_success">Texto copiado.</string>
-    <string name="ocr_retry">Ler novamente</string>
-    <string name="ocr_view_paragraphs">Trechos</string>
-    <string name="ocr_view_continuous">Texto contínuo</string>
-    <string name="ocr_paragraph_label">Trecho %1$d</string>
-    <string name="ocr_continuous_title">Texto consolidado</string>
-    <string name="ocr_script_title">Escrita do documento</string>
-    <string name="ocr_script_automatic">Automático</string>
-    <string name="ocr_script_more">Idiomas</string>
-    <string name="ocr_script_latin">Latina</string>
-    <string name="ocr_script_devanagari">Devanágari</string>
+    <string name="ocr_copied">Texto copiado</string>
+    <string name="ocr_reading">Lendo o texto…</string>
+    <string name="ocr_preparing">Preparando reconhecimento de texto…</string>
+    <string name="ocr_empty_title">Nenhum texto encontrado</string>
+    <string name="ocr_empty_message">Tente uma página mais nítida e bem iluminada ou escolha outro idioma abaixo.</string>
+    <string name="ocr_quality_uncertain">Algumas partes podem estar erradas. Confira antes de usar.</string>
+    <string name="ocr_try_other_language">Tentar outro idioma</string>
+    <string name="ocr_language_hint">Escolha o sistema de escrita desta página.</string>
+    <string name="ocr_retry">Ler de novo</string>
+    <string name="ocr_script_latin">Alfabeto latino (português, inglês, espanhol…)</string>
+    <string name="ocr_script_devanagari">Hindi e outras línguas em devanágari</string>
     <string name="ocr_script_japanese">Japonês</string>
     <string name="ocr_script_korean">Coreano</string>
-    <string name="ocr_model_pending">O modelo local selecionado pode precisar de um download inicial.</string>
+    <string name="ocr_message_image_unreadable">Não foi possível abrir esta página.</string>
+    <string name="ocr_message_failed">Não foi possível ler o texto. Tente novamente.</string>
+    <string name="ocr_missing_title">Página não encontrada</string>
+    <string name="ocr_missing_message">Ela pode ter sido excluída.</string>
 </resources>

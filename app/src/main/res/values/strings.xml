@@ -2,23 +2,24 @@
 <resources>
     <string name="app_name" translatable="false">ReplicaScan</string>
     <string name="splash_title" translatable="false">ReplicaScan</string>
-    <string name="splash_subtitle">Scan. Organize. Simplify.</string>
-    <string name="onboarding_page_one_title">Scan in just a few steps</string>
-    <string name="onboarding_page_one_body">Point, capture, and you’re done.</string>
+    <string name="splash_subtitle">Scan. Organize. Share.</string>
+    <string name="onboarding_page_one_title">Scan in a few taps</string>
+    <string name="onboarding_page_one_body">Point the camera at the page. Edges, perspective and cleanup are handled for you.</string>
     <string name="onboarding_page_one_image_description">Fox scanning a document with a phone.</string>
-    <string name="onboarding_page_two_title">Review before saving</string>
-    <string name="onboarding_page_two_body">Crop, rotate, and improve when needed.</string>
+    <string name="onboarding_page_two_title">Review, then share</string>
+    <string name="onboarding_page_two_body">Crop, rotate, copy the text and export as PDF or image.</string>
     <string name="onboarding_page_two_image_description">Fox adjusting the corners of a document.</string>
-    <string name="onboarding_page_three_title">Privacy by default</string>
-    <string name="onboarding_page_three_body">Your documents are processed on your device whenever possible.</string>
+    <string name="onboarding_page_three_title">Your documents stay with you</string>
+    <string name="onboarding_page_three_body">Pages are saved only on this device. No account needed.</string>
     <string name="onboarding_page_three_image_description">Fox protecting a document with a shield.</string>
     <string name="onboarding_next">Next</string>
     <string name="onboarding_finish">Get started</string>
-    <string name="draft_title_quick">Scanned document</string>
-    <string name="draft_title_camera">Document</string>
-    <string name="draft_title_import">Imported document</string>
-    <string name="import_partial_result">%1$d of %2$d pages were added. %3$d could not be added.</string>
-    <string name="import_failed_result">The selected pages could not be added.</string>
-    <string name="delete_partial_result">The document was removed, but %1$d private files still need cleanup.</string>
-    <string name="export_chooser_title">Share ReplicaScan export</string>
+    <string name="draft_title_scan">Document</string>
+    <string name="draft_title_import">Imported</string>
+    <string name="draft_title_photo">Photo</string>
+    <string name="import_partial_result">Added %1$d of %2$d pages. %3$d could not be read.</string>
+    <string name="import_failed_result">These pages could not be added. Try again.</string>
+    <string name="delete_partial_result">Document deleted. %1$d temporary files will be cleaned up later.</string>
+    <string name="export_chooser_title">Share</string>
+    <string name="no_app_to_open">No app available to open this.</string>
 </resources>

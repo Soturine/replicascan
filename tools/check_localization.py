@@ -5,7 +5,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
-MODULES = ["app", "core-ui", "feature-camera", "feature-editor", "feature-export", "feature-history", "feature-home", "feature-ocr", "feature-settings"]
+MODULES = ["app", "core-ui", "feature-editor", "feature-export", "feature-history", "feature-home", "feature-ocr", "feature-settings"]
 LOCALES = [
     "values", "values-pt-rBR", "values-es", "values-fr", "values-it",
     "values-ar", "values-de", "values-id", "values-hi", "values-tr",
@@ -68,4 +68,4 @@ for module in MODULES:
 if errors:
     print("\n".join(errors))
     sys.exit(1)
-print("Localization catalogs complete: 9 modules x 12 locales")
+print(f"Localization catalogs complete: {len(MODULES)} modules x {len(LOCALES)} locales")

@@ -1,52 +1,35 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="export_title">Export</string>
-    <string name="export_back">To go back</string>
-    <string name="export_eyebrow">Final exit</string>
-    <string name="export_missing_title">Nothing to export</string>
-    <string name="export_missing_message">Open a valid batch before generating files.</string>
-    <plurals name="export_summary">
-        <item quantity="one">%1$d page ready to export.</item>
-        <item quantity="other">%1$d pages ready to export.</item>
-    </plurals>
-    <string name="export_local_notice">ReplicaScan generates everything on the device itself and shows where the file was saved as soon as it is finished.</string>
-    <string name="export_format_eyebrow">Format</string>
-    <string name="export_format_section">How should this batch come out?</string>
-    <string name="export_format_supporting">Select how the batch should leave the cell phone.</string>
+    <string name="export_back">Back</string>
+    <string name="export_action">Export</string>
+    <string name="export_format_section">Format</string>
     <string name="export_kind_pdf">PDF</string>
     <string name="export_kind_image">Image</string>
+    <string name="export_quality_section">Quality</string>
+    <string name="export_more_options">More options</string>
+    <string name="export_page_size_section">Page size</string>
+    <string name="export_page_size_auto">Match page</string>
+    <string name="export_page_size_a4">A4</string>
+    <string name="export_page_size_letter">Letter</string>
     <string name="export_image_format_section">Image type</string>
-    <string name="export_image_format_supporting">Choose JPG for a lighter file or PNG to preserve more detail.</string>
-    <string name="export_quality_eyebrow">Quality</string>
-    <string name="export_quality_section">PDF Quality</string>
-    <string name="export_quality_supporting">The quality only appears when the selected output is PDF.</string>
-    <string name="export_processing_message">Generating files on the device. This may take a few seconds.</string>
-    <string name="export_action">Save files</string>
-    <string name="export_action_pdf">Generate PDF</string>
-    <string name="export_action_images">Save images</string>
-    <string name="export_ready_eyebrow">Ready files</string>
-    <string name="export_ready_title">Export completed</string>
-    <plurals name="export_success_message">
+    <string name="export_jpg_description">Smaller files for photos and sharing.</string>
+    <string name="export_png_description">Lossless, best for text and graphics.</string>
+    <string name="export_done_title">Export ready</string>
+    <string name="export_searchable_pdf_ready">Text in this PDF can be searched and copied.</string>
+    <string name="export_share_action">Share</string>
+    <string name="export_open_file_action">Open</string>
+    <string name="export_message_empty">This document has no pages.</string>
+    <string name="export_message_page_unreadable">Page %1$d couldn\'t be read. Nothing was saved.</string>
+    <string name="export_message_failed">Couldn\'t save the file. Nothing was kept.</string>
+    <string name="export_missing_title">Document not found</string>
+    <string name="export_missing_message">It may have been deleted.</string>
+    <plurals name="export_summary">
+        <item quantity="one">%1$d page</item>
+        <item quantity="other">%1$d pages</item>
+    </plurals>
+    <plurals name="export_done_message">
         <item quantity="one">%1$d file ready to open or share.</item>
         <item quantity="other">%1$d files ready to open or share.</item>
     </plurals>
-    <string name="export_success_snackbar_single">File saved.</string>
-    <string name="export_success_snackbar_multiple">%1$d saved files.</string>
-    <string name="export_share_action">Share files</string>
-    <string name="export_share_file_action">To share</string>
-    <string name="export_location_label">Saved in: %1$s</string>
-    <string name="export_file_type">Type</string>
-    <string name="export_file_size">Size</string>
-    <string name="export_file_location">Saved in</string>
-    <string name="export_file_path">Path</string>
-    <string name="export_open_file_action">Open file</string>
-    <string name="export_kind_pdf_description">Creates one file to archive, send, or print.</string>
-    <string name="export_kind_image_description">Saves each page as a separate image.</string>
-    <string name="export_type_pdf">PDF document</string>
-    <string name="export_type_jpg">JPG image</string>
-    <string name="export_type_png">PNG image</string>
-    <string name="export_page_size_section">Page size</string>
-    <string name="export_page_size_auto">Auto</string>
-    <string name="export_page_size_letter">Letter</string>
-    <string name="export_searchable_pdf_ready">Searchable text was included in the PDF.</string>
 </resources>

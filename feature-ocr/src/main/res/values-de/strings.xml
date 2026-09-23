@@ -1,37 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ocr_title">OCR</string>
-    <string name="ocr_back">Zurückgehen</string>
-    <string name="ocr_eyebrow">Lokale Lektüre</string>
-    <string name="ocr_missing_title">Seite nicht verfügbar</string>
-    <string name="ocr_missing_message">Öffnen Sie eine gültige Seite, um Text zu erkennen.</string>
-    <string name="ocr_processing">Text lesen…</string>
-    <string name="ocr_processing_detail">Vorbereiten der Seite und Organisieren des Ergebnisses.</string>
-    <string name="ocr_result_title">Fertiger Text</string>
-    <plurals name="ocr_supporting">
-        <item quantity="one">%1$d organisierter Auszug.</item>
-        <item quantity="other">%1$d organisierte Auszüge.</item>
-    </plurals>
-    <string name="ocr_weak_title">Teilweise Lektüre</string>
-    <string name="ocr_weak_text">Wir haben auf dieser Seite wenig nützlichen Text gefunden.</string>
-    <string name="ocr_weak_hint">Wenn das Ergebnis schwach aussieht, passen Sie den Zuschnitt an oder versuchen Sie es mit dem Schnellscanner.</string>
-    <string name="ocr_empty_title">Kein nützlicher Text</string>
-    <string name="ocr_empty_text">Versuchen Sie, den Ausschnitt anzupassen, das Licht zu verbessern oder den Schnellscanner zu verwenden.</string>
+    <string name="ocr_title">Text</string>
+    <string name="ocr_back">Zurück</string>
     <string name="ocr_copy">Text kopieren</string>
-    <string name="ocr_copy_all">Alles kopieren</string>
-    <string name="ocr_copy_excerpt">Auszug kopieren</string>
-    <string name="ocr_copy_success">Text kopiert.</string>
-    <string name="ocr_retry">Lesen Sie noch einmal</string>
-    <string name="ocr_view_paragraphs">Auszüge</string>
-    <string name="ocr_view_continuous">Fließtext</string>
-    <string name="ocr_paragraph_label">Auszug %1$d</string>
-    <string name="ocr_continuous_title">Konsolidierter Text</string>
-    <string name="ocr_script_title">Schreiben von Dokumenten</string>
-    <string name="ocr_script_automatic">Automatisch</string>
-    <string name="ocr_script_more">Sprachen</string>
-    <string name="ocr_script_latin">lateinisch</string>
-    <string name="ocr_script_devanagari">Devanagari</string>
-    <string name="ocr_script_japanese">japanisch</string>
+    <string name="ocr_copied">Text kopiert</string>
+    <string name="ocr_reading">Text wird gelesen…</string>
+    <string name="ocr_preparing">Texterkennung wird vorbereitet…</string>
+    <string name="ocr_empty_title">Kein Text gefunden</string>
+    <string name="ocr_empty_message">Versuche eine schärfere, gut beleuchtete Seite oder wähle unten eine andere Sprache.</string>
+    <string name="ocr_quality_uncertain">Einige Stellen können falsch sein. Vor der Verwendung prüfen.</string>
+    <string name="ocr_try_other_language">Andere Sprache versuchen</string>
+    <string name="ocr_language_hint">Wähle die Schrift dieser Seite.</string>
+    <string name="ocr_retry">Erneut lesen</string>
+    <string name="ocr_script_latin">Lateinisches Alphabet (Deutsch, Englisch, Spanisch …)</string>
+    <string name="ocr_script_devanagari">Hindi und andere Sprachen in Devanagari</string>
+    <string name="ocr_script_japanese">Japanisch</string>
     <string name="ocr_script_korean">Koreanisch</string>
-    <string name="ocr_model_pending">Für die ausgewählte lokale Vorlage ist möglicherweise ein erster Download erforderlich.</string>
+    <string name="ocr_message_image_unreadable">Diese Seite konnte nicht geöffnet werden.</string>
+    <string name="ocr_message_failed">Der Text konnte nicht gelesen werden. Bitte erneut versuchen.</string>
+    <string name="ocr_missing_title">Seite nicht gefunden</string>
+    <string name="ocr_missing_message">Sie wurde möglicherweise gelöscht.</string>
 </resources>

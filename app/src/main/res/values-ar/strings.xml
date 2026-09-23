@@ -1,22 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="splash_subtitle">مسح. تنظم. بسّط.</string>
-    <string name="onboarding_page_one_title">امسح مستندك بخطوات قليلة</string>
-    <string name="onboarding_page_one_body">وجّه الكاميرا، التقط الصورة، وانتهيت.</string>
-    <string name="onboarding_page_one_image_description">ثعلب يمسح مستندًا باستخدام الهاتف.</string>
-    <string name="onboarding_page_two_title">راجع قبل الحفظ</string>
-    <string name="onboarding_page_two_body">قصّ الصفحة ودوّرها وحسّنها عند الحاجة.</string>
-    <string name="onboarding_page_two_image_description">ثعلب يضبط زوايا المستند.</string>
-    <string name="onboarding_page_three_title">الخصوصية افتراضيًا</string>
-    <string name="onboarding_page_three_body">تتم معالجة مستنداتك على جهازك كلما أمكن.</string>
+    <string name="splash_subtitle">امسح. نظّم. شارك.</string>
+    <string name="onboarding_page_one_title">امسح ضوئيًا ببضع لمسات</string>
+    <string name="onboarding_page_one_body">وجّه الكاميرا إلى الصفحة. يتم ضبط الحواف والمنظور والتنظيف تلقائيًا.</string>
+    <string name="onboarding_page_one_image_description">ثعلب يمسح مستندًا بالهاتف.</string>
+    <string name="onboarding_page_two_title">راجِع ثم شارك</string>
+    <string name="onboarding_page_two_body">اقصص ودوّر وانسخ النص وصدّر بصيغة PDF أو صورة.</string>
+    <string name="onboarding_page_two_image_description">ثعلب يضبط زوايا مستند.</string>
+    <string name="onboarding_page_three_title">مستنداتك تبقى معك</string>
+    <string name="onboarding_page_three_body">تُحفظ الصفحات على هذا الجهاز فقط. لا حاجة إلى حساب.</string>
     <string name="onboarding_page_three_image_description">ثعلب يحمي مستندًا بدرع.</string>
     <string name="onboarding_next">التالي</string>
     <string name="onboarding_finish">ابدأ</string>
-    <string name="draft_title_quick">الوثيقة الممسوحة ضوئيا</string>
-    <string name="draft_title_camera">وثيقة</string>
-    <string name="draft_title_import">وثيقة مستوردة</string>
-    <string name="import_partial_result">تمت إضافة %1$d من صفحات %2$d. لا يمكن إضافة %3$d.</string>
-    <string name="import_failed_result">غير قادر على إضافة الصفحات المحددة.</string>
-    <string name="delete_partial_result">تمت إزالة المستند، لكن ملفات %1$d الخاصة لا تزال في انتظار التنظيف.</string>
-    <string name="export_chooser_title">مشاركة تصدير سكانورا</string>
+    <string name="draft_title_scan">مستند</string>
+    <string name="draft_title_import">مستورد</string>
+    <string name="draft_title_photo">صورة</string>
+    <string name="import_partial_result">تمت إضافة %1$d من %2$d صفحة. تعذّرت قراءة %3$d.</string>
+    <string name="import_failed_result">تعذّرت إضافة هذه الصفحات. حاول مرة أخرى.</string>
+    <string name="delete_partial_result">تم حذف المستند. سيتم تنظيف %1$d من الملفات المؤقتة لاحقًا.</string>
+    <string name="export_chooser_title">مشاركة</string>
+    <string name="no_app_to_open">لا يوجد تطبيق لفتح هذا.</string>
 </resources>

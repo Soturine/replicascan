@@ -1,22 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="splash_subtitle">Tara. Organize edin. Basitleştirin.</string>
-    <string name="onboarding_page_one_title">Yalnızca birkaç adımda tarayın</string>
-    <string name="onboarding_page_one_body">Nişan alın, yakalayın ve gidin.</string>
-    <string name="onboarding_page_one_image_description">Fox cep telefonuyla bir belgeyi tarıyor.</string>
-    <string name="onboarding_page_two_title">Kaydetmeden önce inceleyin</string>
-    <string name="onboarding_page_two_body">Gerekirse kırpın, döndürün ve iyileştirin.</string>
-    <string name="onboarding_page_two_image_description">Fox bir belgenin köşelerini ayarlıyor.</string>
-    <string name="onboarding_page_three_title">Varsayılan olarak gizlilik</string>
-    <string name="onboarding_page_three_body">Belgeleriniz mümkün olduğunca cihazda işlenir.</string>
-    <string name="onboarding_page_three_image_description">Fox bir belgeyi kalkanla koruyor.</string>
-    <string name="onboarding_next">Sonraki</string>
-    <string name="onboarding_finish">Başlamak için</string>
-    <string name="draft_title_quick">Taranan belge</string>
-    <string name="draft_title_camera">Belge</string>
-    <string name="draft_title_import">İçe aktarılan belge</string>
-    <string name="import_partial_result">%2$d sayfalarından %1$d eklendi. %3$d eklenemedi.</string>
-    <string name="import_failed_result">Seçilen sayfalar eklenemiyor.</string>
-    <string name="delete_partial_result">Belge kaldırıldı ancak %1$d özel dosyaları hâlâ temizlenmeyi bekliyor.</string>
-    <string name="export_chooser_title">ReplicaScan ihracatını paylaşın</string>
+    <string name="splash_subtitle">Tara. Düzenle. Paylaş.</string>
+    <string name="onboarding_page_one_title">Birkaç dokunuşla tarayın</string>
+    <string name="onboarding_page_one_body">Kamerayı sayfaya tutun. Kenarlar, perspektif ve temizleme sizin için yapılır.</string>
+    <string name="onboarding_page_one_image_description">Telefonla belge tarayan tilki.</string>
+    <string name="onboarding_page_two_title">Kontrol edin, sonra paylaşın</string>
+    <string name="onboarding_page_two_body">Kırpın, döndürün, metni kopyalayın ve PDF ya da görüntü olarak dışa aktarın.</string>
+    <string name="onboarding_page_two_image_description">Belgenin köşelerini ayarlayan tilki.</string>
+    <string name="onboarding_page_three_title">Belgeleriniz sizde kalır</string>
+    <string name="onboarding_page_three_body">Sayfalar yalnızca bu cihazda saklanır. Hesap gerekmez.</string>
+    <string name="onboarding_page_three_image_description">Belgeyi kalkanla koruyan tilki.</string>
+    <string name="onboarding_next">İleri</string>
+    <string name="onboarding_finish">Başla</string>
+    <string name="draft_title_scan">Belge</string>
+    <string name="draft_title_import">İçe aktarılan</string>
+    <string name="draft_title_photo">Fotoğraf</string>
+    <string name="import_partial_result">%2$d sayfadan %1$d tanesi eklendi. %3$d sayfa okunamadı.</string>
+    <string name="import_failed_result">Bu sayfalar eklenemedi. Tekrar deneyin.</string>
+    <string name="delete_partial_result">Belge silindi. %1$d geçici dosya daha sonra temizlenecek.</string>
+    <string name="export_chooser_title">Paylaş</string>
+    <string name="no_app_to_open">Bunu açacak uygulama yok.</string>
 </resources>

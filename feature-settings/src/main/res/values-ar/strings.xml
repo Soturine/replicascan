@@ -1,40 +1,20 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_title">إعدادات</string>
-    <string name="settings_eyebrow">التفضيلات</string>
-    <string name="settings_heading">اضبط ReplicaScan كما يناسبك</string>
-    <string name="settings_supporting">تبقى إعدادات المظهر والوضع اليدوي والتصدير محفوظة على جهازك.</string>
-    <string name="settings_theme_section">سمة</string>
-    <string name="settings_theme_supporting">يحدد الشكل الذي يجب أن تظهر به الواجهة بشكل يومي.</string>
-    <string name="settings_theme_system">اتبع النظام</string>
-    <string name="settings_theme_system_description">يستخدم سمة Android النشطة تلقائيًا.</string>
-    <string name="settings_theme_light">الوضع الفاتح دائمًا</string>
-    <string name="settings_theme_light_description">يحافظ على وضوح التطبيق حتى عندما يكون النظام مظلمًا.</string>
-    <string name="settings_theme_dark">الوضع الداكن دائمًا</string>
-    <string name="settings_theme_dark_description">يبقي التطبيق مظلمًا للقراءة بسطوع أقل.</string>
-    <string name="settings_language_section">لغة</string>
-    <string name="settings_language_supporting">اتبع النظام أو اختر لغة سكانورا.</string>
-    <string name="settings_language_system">نظام</string>
-    <string name="settings_language_portuguese">البرتغالية</string>
-    <string name="settings_language_english">English</string>
-    <string name="settings_language_spanish">Español</string>
-    <string name="settings_language_french">Français</string>
-    <string name="settings_language_italian">Italiano</string>
-    <string name="settings_language_arabic">العربية</string>
-    <string name="settings_language_german">Deutsch</string>
-    <string name="settings_language_indonesian">Bahasa Indonesia</string>
-    <string name="settings_language_hindi">हिन्दी</string>
-    <string name="settings_language_turkish">Türkçe</string>
-    <string name="settings_language_japanese">日本語</string>
-    <string name="settings_language_korean">한국어</string>
-    <string name="settings_default_mode_section">الوضع اليدوي القياسي</string>
-    <string name="settings_mode_supporting">يستخدم فقط في التعديل اليدوي والاستيراد المباشر. يظل الماسح الضوئي السريع عالميًا.</string>
-    <string name="settings_pdf_quality_section">جودة PDF القياسية</string>
-    <string name="settings_pdf_supporting">يتم استخدام هذا التفضيل كأساس لشاشة التصدير.</string>
-    <string name="settings_reset_onboarding">عرض الشاشات التعريفية مرة أخرى</string>
-    <string name="settings_open_about">حول التطبيق</string>
-    <string name="settings_about_title">حول سكانورا</string>
-    <string name="settings_about_body">ReplicaScan هو ماسح ضوئي للمستندات يعمل بنظام Android مع التركيز على المعالجة المحلية والتعرف الضوئي على الحروف على الجهاز والتصدير الواضح إلى PDF وJPG وPNG. يتمثل الاقتراح في الانتقال من الالتقاط إلى الملف النهائي بأقل قدر من الاحتكاك ودون الحاجة إلى واجهة خلفية للتدفق الرئيسي.</string>
-    <string name="settings_open_privacy">فتح سياسة الخصوصية</string>
-    <string name="settings_version" translatable="false">0.3.1</string>
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_back">رجوع</string>
+    <string name="settings_appearance_section">المظهر</string>
+    <string name="settings_theme">السمة</string>
+    <string name="settings_theme_system">إعداد النظام</string>
+    <string name="settings_theme_light">فاتح</string>
+    <string name="settings_theme_dark">داكن</string>
+    <string name="settings_language">اللغة</string>
+    <string name="settings_language_system">إعداد النظام</string>
+    <string name="settings_export_section">التصدير</string>
+    <string name="settings_pdf_quality">جودة PDF الافتراضية</string>
+    <string name="settings_help_section">المساعدة</string>
+    <string name="settings_introduction">عرض المقدمة</string>
+    <string name="settings_privacy">سياسة الخصوصية</string>
+    <string name="settings_about">حول التطبيق</string>
+    <string name="settings_about_body">يمسح ReplicaScan المستندات على هاتفك ويتعرّف على النص على الجهاز نفسه ويصدّرها بصيغة PDF أو JPG أو PNG. لا حاجة إلى حساب، ولا يرفع التطبيق مستنداتك أبدًا.</string>
+    <string name="settings_version">الإصدار %1$s</string>
 </resources>

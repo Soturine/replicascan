@@ -1,37 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ocr_title">OCR</string>
-    <string name="ocr_back">Untuk kembali</string>
-    <string name="ocr_eyebrow">Bacaan lokal</string>
-    <string name="ocr_missing_title">Halaman tidak tersedia</string>
-    <string name="ocr_missing_message">Buka halaman yang valid untuk mengenali teks.</string>
-    <string name="ocr_processing">Membaca teks…</string>
-    <string name="ocr_processing_detail">Mempersiapkan halaman dan mengatur hasilnya.</string>
-    <string name="ocr_result_title">Teks siap</string>
-    <plurals name="ocr_supporting">
-        <item quantity="one">%1$d mengatur kutipan.</item>
-        <item quantity="other">%1$d mengatur kutipan.</item>
-    </plurals>
-    <string name="ocr_weak_title">Membaca sebagian</string>
-    <string name="ocr_weak_text">Kami menemukan sedikit teks berguna di halaman ini.</string>
-    <string name="ocr_weak_hint">Jika hasilnya tampak lemah, sesuaikan pemotongan atau coba pemindai cepat.</string>
-    <string name="ocr_empty_title">Tidak ada teks yang berguna</string>
-    <string name="ocr_empty_text">Coba sesuaikan pemotongan, tingkatkan pencahayaan, atau gunakan pemindai cepat.</string>
+    <string name="ocr_title">Teks</string>
+    <string name="ocr_back">Kembali</string>
     <string name="ocr_copy">Salin teks</string>
-    <string name="ocr_copy_all">Salin semua</string>
-    <string name="ocr_copy_excerpt">Salin kutipan</string>
-    <string name="ocr_copy_success">Teks disalin.</string>
-    <string name="ocr_retry">Baca lagi</string>
-    <string name="ocr_view_paragraphs">Kutipan</string>
-    <string name="ocr_view_continuous">Teks berkelanjutan</string>
-    <string name="ocr_paragraph_label">Kutipan %1$d</string>
-    <string name="ocr_continuous_title">Teks gabungan</string>
-    <string name="ocr_script_title">Penulisan dokumen</string>
-    <string name="ocr_script_automatic">Otomatis</string>
-    <string name="ocr_script_more">Bahasa</string>
-    <string name="ocr_script_latin">Latin</string>
-    <string name="ocr_script_devanagari">Dewanagari</string>
+    <string name="ocr_copied">Teks disalin</string>
+    <string name="ocr_reading">Membaca teks…</string>
+    <string name="ocr_preparing">Menyiapkan pengenalan teks…</string>
+    <string name="ocr_empty_title">Tidak ada teks</string>
+    <string name="ocr_empty_message">Coba halaman yang lebih tajam dan terang, atau pilih bahasa lain di bawah.</string>
+    <string name="ocr_quality_uncertain">Beberapa bagian mungkin salah. Periksa sebelum digunakan.</string>
+    <string name="ocr_try_other_language">Coba bahasa lain</string>
+    <string name="ocr_language_hint">Pilih sistem tulisan halaman ini.</string>
+    <string name="ocr_retry">Baca ulang</string>
+    <string name="ocr_script_latin">Alfabet Latin (Indonesia, Inggris, Spanyol…)</string>
+    <string name="ocr_script_devanagari">Hindi dan bahasa lain beraksara Dewanagari</string>
     <string name="ocr_script_japanese">Jepang</string>
     <string name="ocr_script_korean">Korea</string>
-    <string name="ocr_model_pending">Templat lokal yang dipilih mungkin memerlukan pengunduhan awal.</string>
+    <string name="ocr_message_image_unreadable">Halaman ini tidak dapat dibuka.</string>
+    <string name="ocr_message_failed">Teks tidak dapat dibaca. Coba lagi.</string>
+    <string name="ocr_missing_title">Halaman tidak ditemukan</string>
+    <string name="ocr_missing_message">Mungkin sudah dihapus.</string>
 </resources>

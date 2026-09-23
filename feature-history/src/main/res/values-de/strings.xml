@@ -1,32 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="history_title">Meine Scans</string>
-    <string name="history_eyebrow">Lokale Geschichte</string>
-    <string name="history_heading">Ihre gespeicherten Dokumente</string>
-    <string name="history_supporting">%1$d-Los(e) in der aktuellen Suche gefunden.</string>
-    <string name="history_supporting_empty">Alles, was lokal gespeichert ist, erscheint hier mit der Suche nach Titel und Tag.</string>
-    <string name="history_search_label">Scans durchsuchen</string>
-    <string name="history_search_placeholder">Titel, Tag oder Stapeltyp</string>
-    <string name="history_empty_title">Noch keine Scans gespeichert</string>
-    <string name="history_empty_message">Nach der Überprüfung oder dem Export werden Ihre Stapel hier angezeigt und können erneut geöffnet, als Favorit markiert oder erneut exportiert werden.</string>
-    <string name="history_subtitle">%1$d-Seite(n) • aktualisiert auf %2$s</string>
-    <string name="history_badge_favorite">Favorit</string>
-    <string name="history_badge_draft">Skizzieren</string>
-    <string name="history_detail_missing_title">Scan nicht gefunden</string>
-    <string name="history_detail_missing_message">Dieser Stapel wurde möglicherweise entfernt oder wurde noch nicht hochgeladen.</string>
-    <string name="history_detail_eyebrow">Losdetails</string>
-    <string name="history_detail_meta">%1$d-Seite(n) • zuletzt aktualisiert auf %2$s</string>
-    <string name="history_detail_draft">Grundstück noch im Entwurf</string>
-    <string name="history_detail_saved">Bereit zum erneuten Öffnen, Exportieren oder Lesezeichen</string>
-    <string name="history_add_favorite">Als Favorit markieren</string>
-    <string name="history_remove_favorite">Favorit entfernen</string>
-    <string name="history_open_review">Zurück zur Rezension</string>
-    <string name="history_open_export">Export</string>
-    <string name="history_pages_eyebrow">Seiten</string>
-    <string name="history_pages_section">Stapelvorschau</string>
-    <string name="history_pages_supporting">Tippen Sie auf eine Seite, um den erkannten Text zu öffnen.</string>
-    <string name="history_page_title">Seite %1$d</string>
-    <string name="history_page_overline">Vorschau bereit</string>
-    <string name="history_page_badge_ocr">OCR gespeichert</string>
-    <string name="history_delete_scan">Löschen Sie diesen Scan</string>
+    <string name="history_title">Verlauf</string>
+    <string name="history_back">Zurück</string>
+    <string name="history_search_placeholder">Namen, Tags oder Text suchen</string>
+    <string name="history_empty_title">Noch nichts da</string>
+    <string name="history_empty_message">Gescannte Dokumente erscheinen hier.</string>
+    <string name="history_no_results_title">Keine Ergebnisse</string>
+    <string name="history_no_results_message">Versuche ein anderes Wort.</string>
+    <string name="history_favorite">Favorit</string>
+    <string name="history_delete">Löschen</string>
+    <string name="history_delete_title">Dieses Dokument löschen?</string>
+    <string name="history_delete_message">Alle Seiten werden von diesem Gerät entfernt. Bereits exportierte Dateien bleiben erhalten.</string>
+    <string name="history_export">Exportieren</string>
+    <string name="history_edit">Bearbeiten</string>
+    <string name="history_missing_title">Dokument nicht gefunden</string>
+    <string name="history_missing_message">Es wurde möglicherweise gelöscht.</string>
+    <string name="history_page_label">Seite %1$d</string>
+    <plurals name="history_pages">
+        <item quantity="one">%1$d Seite</item>
+        <item quantity="other">%1$d Seiten</item>
+    </plurals>
 </resources>

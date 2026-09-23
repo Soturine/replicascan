@@ -1,37 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ocr_title">OCR</string>
-    <string name="ocr_back">To go back</string>
-    <string name="ocr_eyebrow">Local reading</string>
-    <string name="ocr_missing_title">Page unavailable</string>
-    <string name="ocr_missing_message">Open a valid page to recognize text.</string>
-    <string name="ocr_processing">Reading text…</string>
-    <string name="ocr_processing_detail">Preparing the page and organizing the result.</string>
-    <string name="ocr_result_title">Ready text</string>
-    <plurals name="ocr_supporting">
-        <item quantity="one">%1$d organized section.</item>
-        <item quantity="other">%1$d organized sections.</item>
-    </plurals>
-    <string name="ocr_weak_title">Partial reading</string>
-    <string name="ocr_weak_text">We found little useful text on this page.</string>
-    <string name="ocr_weak_hint">If the result looks weak, adjust the cropping or try the fast scanner.</string>
-    <string name="ocr_empty_title">No useful text</string>
-    <string name="ocr_empty_text">Try adjusting the crop, improving the light, or using the fast scanner.</string>
+    <string name="ocr_title">Text</string>
+    <string name="ocr_back">Back</string>
     <string name="ocr_copy">Copy text</string>
-    <string name="ocr_copy_all">Copy all</string>
-    <string name="ocr_copy_excerpt">Copy excerpt</string>
-    <string name="ocr_copy_success">Text copied.</string>
+    <string name="ocr_copied">Text copied</string>
+    <string name="ocr_reading">Reading the text…</string>
+    <string name="ocr_preparing">Preparing text recognition…</string>
+    <string name="ocr_empty_title">No text found</string>
+    <string name="ocr_empty_message">Try a sharper, well-lit page or pick another language below.</string>
+    <string name="ocr_quality_uncertain">Some parts may be wrong. Check before using.</string>
+    <string name="ocr_try_other_language">Try another language</string>
+    <string name="ocr_language_hint">Pick the writing system used on this page.</string>
     <string name="ocr_retry">Read again</string>
-    <string name="ocr_view_paragraphs">Excerpts</string>
-    <string name="ocr_view_continuous">Continuous text</string>
-    <string name="ocr_paragraph_label">Excerpt %1$d</string>
-    <string name="ocr_continuous_title">Consolidated text</string>
-    <string name="ocr_script_title">Document script</string>
-    <string name="ocr_script_automatic">Automatic</string>
-    <string name="ocr_script_more">Languages</string>
-    <string name="ocr_script_latin">Latin</string>
-    <string name="ocr_script_devanagari">Devanagari</string>
+    <string name="ocr_script_latin">Latin alphabet (English, Portuguese, Spanish…)</string>
+    <string name="ocr_script_devanagari">Hindi and other Devanagari languages</string>
     <string name="ocr_script_japanese">Japanese</string>
     <string name="ocr_script_korean">Korean</string>
-    <string name="ocr_model_pending">The selected local model may need a one-time download.</string>
+    <string name="ocr_message_image_unreadable">This page couldn\'t be opened.</string>
+    <string name="ocr_message_failed">Couldn\'t read the text. Try again.</string>
+    <string name="ocr_missing_title">Page not found</string>
+    <string name="ocr_missing_message">It may have been deleted.</string>
 </resources>

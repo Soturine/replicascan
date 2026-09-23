@@ -1,22 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="splash_subtitle">Escanear. Organizar. Simplificar.</string>
-    <string name="onboarding_page_one_title">Escanee en solo unos pocos pasos</string>
-    <string name="onboarding_page_one_body">Apunta, captura y listo.</string>
-    <string name="onboarding_page_one_image_description">Fox escaneando un documento con el celular.</string>
-    <string name="onboarding_page_two_title">Revisar antes de guardar</string>
-    <string name="onboarding_page_two_body">Recorta, rota y mejora si es necesario.</string>
-    <string name="onboarding_page_two_image_description">Fox ajustando las esquinas de un documento.</string>
-    <string name="onboarding_page_three_title">Privacidad por defecto</string>
-    <string name="onboarding_page_three_body">Sus documentos se procesan en el dispositivo siempre que sea posible.</string>
-    <string name="onboarding_page_three_image_description">Fox protegiendo un documento con escudo.</string>
-    <string name="onboarding_next">Próximo</string>
-    <string name="onboarding_finish">para empezar</string>
-    <string name="draft_title_quick">documento escaneado</string>
-    <string name="draft_title_camera">Documento</string>
-    <string name="draft_title_import">Documento importado</string>
-    <string name="import_partial_result">Se han agregado las páginas %1$d de %2$d. No se pudo agregar %3$d.</string>
-    <string name="import_failed_result">No se pueden agregar las páginas seleccionadas.</string>
-    <string name="delete_partial_result">El documento se eliminó, pero los archivos privados %1$d aún están esperando ser limpiados.</string>
-    <string name="export_chooser_title">Compartir exportación de ReplicaScan</string>
+    <string name="splash_subtitle">Escanea. Organiza. Comparte.</string>
+    <string name="onboarding_page_one_title">Escanea en pocos toques</string>
+    <string name="onboarding_page_one_body">Apunta la cámara a la página. Los bordes, la perspectiva y la limpieza se ajustan por ti.</string>
+    <string name="onboarding_page_one_image_description">Zorro escaneando un documento con el teléfono.</string>
+    <string name="onboarding_page_two_title">Revisa y comparte</string>
+    <string name="onboarding_page_two_body">Recorta, gira, copia el texto y exporta en PDF o imagen.</string>
+    <string name="onboarding_page_two_image_description">Zorro ajustando las esquinas de un documento.</string>
+    <string name="onboarding_page_three_title">Tus documentos se quedan contigo</string>
+    <string name="onboarding_page_three_body">Las páginas se guardan solo en este dispositivo. No necesitas cuenta.</string>
+    <string name="onboarding_page_three_image_description">Zorro protegiendo un documento con un escudo.</string>
+    <string name="onboarding_next">Siguiente</string>
+    <string name="onboarding_finish">Empezar</string>
+    <string name="draft_title_scan">Documento</string>
+    <string name="draft_title_import">Importado</string>
+    <string name="draft_title_photo">Foto</string>
+    <string name="import_partial_result">Se añadieron %1$d de %2$d páginas. %3$d no se pudieron leer.</string>
+    <string name="import_failed_result">No se pudieron añadir estas páginas. Inténtalo de nuevo.</string>
+    <string name="delete_partial_result">Documento eliminado. %1$d archivos temporales se limpiarán más tarde.</string>
+    <string name="export_chooser_title">Compartir</string>
+    <string name="no_app_to_open">No hay ninguna app para abrir esto.</string>
 </resources>

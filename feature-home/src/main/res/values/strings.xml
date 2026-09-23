@@ -1,33 +1,22 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_title">Start</string>
-    <string name="home_app_bar_title">ReplicaScan</string>
-    <string name="home_tagline">Scan. Organize. Simplify.</string>
-    <string name="home_greeting">Hello!</string>
-    <string name="home_welcome">Good to see you.</string>
-    <string name="home_start_hint">Tap to get started.</string>
-    <string name="home_import_gallery_action">Import from gallery</string>
-    <string name="home_hero_title">Scan without preparing anything.</string>
-    <string name="home_hero_subtitle">The fast scanner detects edges, accepts gallery when available, and then opens the review.</string>
-    <string name="home_quick_scan_action">Scan</string>
-    <string name="home_manual_scan_action">Assisted scanner</string>
-    <string name="home_import_action">Import</string>
-    <string name="home_capture_helper">Manual adjustment and direct import remain as editable fallback.</string>
-    <string name="home_quick_scan_unavailable">Fast scanner is not available on this device.</string>
+    <string name="home_app_bar_title" translatable="false">ReplicaScan</string>
+    <string name="home_hero_title">Scan a document</string>
+    <string name="home_hero_body">Edges, perspective and cleanup are automatic. Pages stay on this device.</string>
+    <string name="home_scan_action">Scan</string>
+    <string name="home_import_action">Import images</string>
+    <string name="home_preparing_pages">Preparing pages…</string>
     <string name="home_recent_section">Recent</string>
-    <string name="home_recent_empty_supporting">Your latest scans appear here.</string>
     <string name="home_recent_open_all">See all</string>
-    <string name="home_empty_title">Your history starts here</string>
-    <string name="home_empty_message">Use Scan to create the first batch. Manual adjustment is still available when you need it.</string>
-    <string name="home_recent_updated_at">%1$s • updated to %2$s</string>
-    <string name="home_history">My scans</string>
+    <string name="home_empty_title">No documents yet</string>
+    <string name="home_empty_message">Scanned documents will appear here.</string>
+    <string name="home_history">History</string>
     <string name="home_settings">Settings</string>
-    <string name="home_badge_favorite">Favorite</string>
-    <string name="home_badge_draft">Sketch</string>
-    <plurals name="home_recent_supporting">
-        <item quantity="one">%1$d lot in historic site.</item>
-        <item quantity="other">%1$d lots in local history.</item>
-    </plurals>
+    <string name="home_favorite">Favorite</string>
+    <string name="home_scanner_unavailable_title">Scanner not available</string>
+    <string name="home_scanner_unavailable_message">The automatic scanner can\'t open on this device right now. Take a photo or import an image and adjust the corners yourself.</string>
+    <string name="home_take_photo">Take photo</string>
+    <string name="home_camera_unavailable">No camera app available.</string>
     <plurals name="home_recent_pages">
         <item quantity="one">%1$d page</item>
         <item quantity="other">%1$d pages</item>

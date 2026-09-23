@@ -1,22 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="splash_subtitle">Scansione. Organizzare. Semplificare.</string>
-    <string name="onboarding_page_one_title">Scansione in pochi passaggi</string>
-    <string name="onboarding_page_one_body">Inquadra, cattura e vai.</string>
-    <string name="onboarding_page_one_image_description">Fox che scansiona un documento con il cellulare.</string>
-    <string name="onboarding_page_two_title">Rivedi prima di salvare</string>
-    <string name="onboarding_page_two_body">Ritaglia, ruota e migliora se necessario.</string>
-    <string name="onboarding_page_two_image_description">Fox che aggiusta gli angoli di un documento.</string>
-    <string name="onboarding_page_three_title">Privacy per impostazione predefinita</string>
-    <string name="onboarding_page_three_body">I tuoi documenti vengono elaborati sul dispositivo quando possibile.</string>
+    <string name="splash_subtitle">Scansiona. Organizza. Condividi.</string>
+    <string name="onboarding_page_one_title">Scansiona in pochi tocchi</string>
+    <string name="onboarding_page_one_body">Inquadra la pagina. Bordi, prospettiva e pulizia vengono gestiti per te.</string>
+    <string name="onboarding_page_one_image_description">Volpe che scansiona un documento con il telefono.</string>
+    <string name="onboarding_page_two_title">Controlla e condividi</string>
+    <string name="onboarding_page_two_body">Ritaglia, ruota, copia il testo ed esporta in PDF o immagine.</string>
+    <string name="onboarding_page_two_image_description">Volpe che regola gli angoli di un documento.</string>
+    <string name="onboarding_page_three_title">I tuoi documenti restano con te</string>
+    <string name="onboarding_page_three_body">Le pagine sono salvate solo su questo dispositivo. Nessun account richiesto.</string>
     <string name="onboarding_page_three_image_description">Volpe che protegge un documento con uno scudo.</string>
-    <string name="onboarding_next">Prossimo</string>
-    <string name="onboarding_finish">Per iniziare</string>
-    <string name="draft_title_quick">Documento scansionato</string>
-    <string name="draft_title_camera">Documento</string>
-    <string name="draft_title_import">Documento importato</string>
-    <string name="import_partial_result">Sono state aggiunte le pagine %1$d da %2$d. Impossibile aggiungere %3$d.</string>
-    <string name="import_failed_result">Impossibile aggiungere le pagine selezionate.</string>
-    <string name="delete_partial_result">Il documento è stato rimosso, ma i file privati ​​%1$d sono ancora in attesa di essere puliti.</string>
-    <string name="export_chooser_title">Condividi esportazione ReplicaScan</string>
+    <string name="onboarding_next">Avanti</string>
+    <string name="onboarding_finish">Inizia</string>
+    <string name="draft_title_scan">Documento</string>
+    <string name="draft_title_import">Importato</string>
+    <string name="draft_title_photo">Foto</string>
+    <string name="import_partial_result">Aggiunte %1$d pagine su %2$d. %3$d non sono leggibili.</string>
+    <string name="import_failed_result">Impossibile aggiungere queste pagine. Riprova.</string>
+    <string name="delete_partial_result">Documento eliminato. %1$d file temporanei verranno puliti più tardi.</string>
+    <string name="export_chooser_title">Condividi</string>
+    <string name="no_app_to_open">Nessuna app disponibile per aprirlo.</string>
 </resources>

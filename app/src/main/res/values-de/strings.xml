@@ -1,22 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="splash_subtitle">Scan. Organisieren. Vereinfachen.</string>
-    <string name="onboarding_page_one_title">Scannen Sie in nur wenigen Schritten</string>
-    <string name="onboarding_page_one_body">Zielen, erfassen und loslegen.</string>
-    <string name="onboarding_page_one_image_description">Fuchs scannt ein Dokument mit dem Handy.</string>
-    <string name="onboarding_page_two_title">Vor dem Speichern überprüfen</string>
-    <string name="onboarding_page_two_body">Bei Bedarf zuschneiden, drehen und verbessern.</string>
-    <string name="onboarding_page_two_image_description">Fox passt die Ecken eines Dokuments an.</string>
-    <string name="onboarding_page_three_title">Datenschutz standardmäßig</string>
-    <string name="onboarding_page_three_body">Ihre Dokumente werden nach Möglichkeit auf dem Gerät verarbeitet.</string>
-    <string name="onboarding_page_three_image_description">Fuchs schützt ein Dokument mit Schild.</string>
-    <string name="onboarding_next">Nächste</string>
-    <string name="onboarding_finish">Um zu beginnen</string>
-    <string name="draft_title_quick">Gescanntes Dokument</string>
-    <string name="draft_title_camera">Dokumentieren</string>
-    <string name="draft_title_import">Importiertes Dokument</string>
-    <string name="import_partial_result">%1$d von %2$d-Seiten wurden hinzugefügt. %3$d konnte nicht hinzugefügt werden.</string>
-    <string name="import_failed_result">Ausgewählte Seiten können nicht hinzugefügt werden.</string>
-    <string name="delete_partial_result">Das Dokument wurde entfernt, aber die privaten %1$d-Dateien warten noch auf die Bereinigung.</string>
-    <string name="export_chooser_title">Teilen Sie den ReplicaScan-Export</string>
+    <string name="splash_subtitle">Scannen. Ordnen. Teilen.</string>
+    <string name="onboarding_page_one_title">In wenigen Schritten scannen</string>
+    <string name="onboarding_page_one_body">Richte die Kamera auf die Seite. Kanten, Perspektive und Bereinigung werden automatisch erledigt.</string>
+    <string name="onboarding_page_one_image_description">Fuchs scannt ein Dokument mit dem Smartphone.</string>
+    <string name="onboarding_page_two_title">Prüfen und teilen</string>
+    <string name="onboarding_page_two_body">Zuschneiden, drehen, Text kopieren und als PDF oder Bild exportieren.</string>
+    <string name="onboarding_page_two_image_description">Fuchs passt die Ecken eines Dokuments an.</string>
+    <string name="onboarding_page_three_title">Deine Dokumente bleiben bei dir</string>
+    <string name="onboarding_page_three_body">Seiten werden nur auf diesem Gerät gespeichert. Kein Konto nötig.</string>
+    <string name="onboarding_page_three_image_description">Fuchs schützt ein Dokument mit einem Schild.</string>
+    <string name="onboarding_next">Weiter</string>
+    <string name="onboarding_finish">Loslegen</string>
+    <string name="draft_title_scan">Dokument</string>
+    <string name="draft_title_import">Importiert</string>
+    <string name="draft_title_photo">Foto</string>
+    <string name="import_partial_result">%1$d von %2$d Seiten hinzugefügt. %3$d konnten nicht gelesen werden.</string>
+    <string name="import_failed_result">Diese Seiten konnten nicht hinzugefügt werden. Bitte erneut versuchen.</string>
+    <string name="delete_partial_result">Dokument gelöscht. %1$d temporäre Dateien werden später bereinigt.</string>
+    <string name="export_chooser_title">Teilen</string>
+    <string name="no_app_to_open">Keine App zum Öffnen verfügbar.</string>
 </resources>

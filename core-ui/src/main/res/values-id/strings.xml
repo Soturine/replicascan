@@ -1,30 +1,13 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="filter_auto">Otomatis</string>
-    <string name="filter_auto_description">Menyesuaikan kejernihan dan warna dengan halaman.</string>
-    <string name="mode_notebook">Buku Catatan / Fakultas</string>
-    <string name="mode_notebook_description">Untuk handout, tabel dan halaman belajar.</string>
-    <string name="mode_document">Dokumen/Kontrak</string>
-    <string name="mode_document_description">Memprioritaskan perataan dan teks yang dapat dibaca.</string>
-    <string name="mode_receipt">Kuitansi</string>
-    <string name="mode_receipt_description">Menyoroti cetakan kecil dan dokumen ringkas.</string>
-    <string name="filter_original">Asli yang diperbaiki</string>
-    <string name="filter_original_description">Mempertahankan warna alami dan mengoreksi perspektif.</string>
-    <string name="filter_bw">Dokumen Hitam Putih</string>
-    <string name="filter_bw_description">Teks tajam untuk dicetak dan diarsipkan.</string>
-    <string name="filter_gray">Dokumen abu-abu</string>
-    <string name="filter_gray_description">Mengurangi noise warna tanpa kontras agresif.</string>
-    <string name="filter_color">Warna yang ditingkatkan</string>
-    <string name="filter_color_description">Meningkatkan warna dan ketajaman catatan dan grafik.</string>
-    <string name="filter_receipt">Penerimaan / Kontras tinggi</string>
-    <string name="filter_receipt_description">Memperkuat cetakan yang lemah pada kuitansi.</string>
-    <string name="quality_compact">Kompak</string>
-    <string name="quality_compact_description">File yang lebih kecil untuk berbagi dengan cepat.</string>
+    <string name="filter_original">Asli</string>
+    <string name="filter_enhanced">Ditingkatkan</string>
+    <string name="filter_gray">Abu-abu</string>
+    <string name="filter_bw">Hitam putih</string>
+    <string name="quality_compact">Ringkas</string>
     <string name="quality_balanced">Seimbang</string>
-    <string name="quality_balanced_description">Keseimbangan yang baik antara ketajaman dan ukuran.</string>
-    <string name="quality_high">Kualitas tinggi</string>
-    <string name="quality_high_description">Lebih detailnya ada di file yang lebih besar.</string>
-    <string name="mascot_processing">Memproses di perangkat Anda</string>
-    <string name="mascot_success">Siap</string>
-    <string name="option_selected">Terpilih</string>
+    <string name="quality_high">Tinggi</string>
+    <string name="quality_compact_description">File lebih kecil, cocok untuk dikirim.</string>
+    <string name="quality_balanced_description">Keseimbangan antara ketajaman dan ukuran.</string>
+    <string name="quality_high_description">Halaman paling tajam, file lebih besar.</string>
 </resources>

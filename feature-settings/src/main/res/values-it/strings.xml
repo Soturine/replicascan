@@ -1,39 +1,20 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_title">Impostazioni</string>
-    <string name="settings_eyebrow">Preferenze</string>
-    <string name="settings_heading">Adatta ReplicaScan a tuo piacimento</string>
-    <string name="settings_supporting">Tutto qui rimane locale: tema, fallback manuale e preferenze di esportazione.</string>
-    <string name="settings_theme_section">Tema</string>
-    <string name="settings_theme_supporting">Definisce come dovrebbe apparire l\'interfaccia su base giornaliera.</string>
-    <string name="settings_theme_system">Segui il sistema</string>
-    <string name="settings_theme_system_description">Utilizza automaticamente il tema attivo di Android.</string>
-    <string name="settings_theme_light">Sempre chiaro</string>
-    <string name="settings_theme_light_description">Mantiene l\'app pulita anche quando il sistema è spento.</string>
-    <string name="settings_theme_dark">Sempre buio</string>
-    <string name="settings_theme_dark_description">Mantiene l\'app scura per leggere con meno luminosità.</string>
-    <string name="settings_language_section">Lingua</string>
-    <string name="settings_language_supporting">Segui il sistema o scegli la lingua ReplicaScan.</string>
-    <string name="settings_language_system">Sistema</string>
-    <string name="settings_language_portuguese">portoghese</string>
-    <string name="settings_language_english">English</string>
-    <string name="settings_language_spanish">Español</string>
-    <string name="settings_language_french">Français</string>
-    <string name="settings_language_italian">Italiano</string>
-    <string name="settings_language_arabic">Arabo</string>
-    <string name="settings_language_german">Deutsch</string>
-    <string name="settings_language_indonesian">Bahasa Indonesia</string>
-    <string name="settings_language_hindi">हिन्दी</string>
-    <string name="settings_language_turkish">Türkçe</string>
-    <string name="settings_language_japanese">日本語</string>
-    <string name="settings_language_korean">한국어</string>
-    <string name="settings_default_mode_section">Modalità manuale standard</string>
-    <string name="settings_mode_supporting">Utilizzato solo nella regolazione manuale e nell\'importazione diretta. Lo scanner veloce rimane universale.</string>
-    <string name="settings_pdf_quality_section">Qualità PDF standard</string>
-    <string name="settings_pdf_supporting">Questa preferenza viene utilizzata come base per la schermata di esportazione.</string>
-    <string name="settings_reset_onboarding">Vedi di nuovo l\'onboarding</string>
-    <string name="settings_open_about">Informazioni sull\'app</string>
-    <string name="settings_about_title">A proposito di ReplicaScan</string>
-    <string name="settings_about_body">ReplicaScan è uno scanner di documenti Android incentrato sull\'elaborazione locale, sull\'OCR sul dispositivo e sull\'esportazione chiara in PDF, JPG e PNG. La proposta è di passare dall\'acquisizione al file finale con il minimo attrito e senza richiedere un backend per il flusso principale.</string>
-    <string name="settings_open_privacy">Apri l\'informativa sulla privacy</string>
+    <string name="settings_back">Indietro</string>
+    <string name="settings_appearance_section">Aspetto</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_system">Predefinito di sistema</string>
+    <string name="settings_theme_light">Chiaro</string>
+    <string name="settings_theme_dark">Scuro</string>
+    <string name="settings_language">Lingua</string>
+    <string name="settings_language_system">Predefinito di sistema</string>
+    <string name="settings_export_section">Esportazione</string>
+    <string name="settings_pdf_quality">Qualità PDF predefinita</string>
+    <string name="settings_help_section">Aiuto</string>
+    <string name="settings_introduction">Guarda l\'introduzione</string>
+    <string name="settings_privacy">Informativa sulla privacy</string>
+    <string name="settings_about">Informazioni</string>
+    <string name="settings_about_body">ReplicaScan scansiona i documenti sul telefono, riconosce il testo sul dispositivo ed esporta in PDF, JPG o PNG. Nessun account richiesto e l\'app non carica mai i tuoi documenti.</string>
+    <string name="settings_version">Versione %1$s</string>
 </resources>
