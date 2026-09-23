@@ -7,7 +7,7 @@ licenses or terms below.
 ## Runtime and Android build dependencies
 
 - Android Open Source Project and AndroidX/Jetpack components, including
-  Activity, AppCompat, CameraX, Compose, Core, DataStore, Lifecycle,
+  Activity, AppCompat, Compose, Core, DataStore, Lifecycle,
   Navigation, Room, Test, and WorkManager: primarily Apache License 2.0.
   Source and license information: <https://cs.android.com/androidx/platform/frameworks/support>
 - Kotlin and Kotlin standard tooling: Apache License 2.0.

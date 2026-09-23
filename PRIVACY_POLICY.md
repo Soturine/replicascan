@@ -1,38 +1,38 @@
 # Política de Privacidade do ReplicaScan
 
-Última atualização: 2026-08-31 — versão 0.4.0
+Última atualização: 2026-09-23 — versão 0.4.0
 
 ## Resumo
 
-ReplicaScan funciona localmente e não exige conta, login, sincronização ou backend. O app não possui analytics próprio, tracking ou OCR remoto e não envia automaticamente o conteúdo dos seus documentos para servidores da Soturine.
+ReplicaScan funciona localmente e não exige conta, login, sincronização ou backend. O app não tem analytics próprio, rastreamento, anúncios nem OCR remoto, e o código do ReplicaScan não envia o conteúdo dos seus documentos para servidores.
 
 ## Dados processados
 
-Imagens capturadas/importadas, crop, rotação, filtros, OCR, títulos, tags, favoritos e preferências permanecem no aparelho. Room guarda metadados e OCR; derivados visuais são cache regenerável.
+Páginas escaneadas ou importadas, recortes, rotações, visuais, texto reconhecido, títulos, etiquetas, favoritos e preferências ficam no aparelho. O Room guarda metadados e texto; imagens derivadas são cache regenerável.
 
 ## Permissões e componentes
 
-- `CAMERA` é usada somente quando você abre a captura;
-- a seleção de mídia usa os seletores da plataforma;
-- Google Play services ML Kit Document Scanner oferece o scanner guiado;
-- ML Kit Text Recognition processa OCR no dispositivo.
+- O ReplicaScan **não** solicita a permissão de câmera. O **ML Kit Document Scanner** do Google Play services abre a câmera com a permissão do próprio Google Play services; a alternativa usa o app de câmera do sistema, que grava a foto num arquivo temporário do ReplicaScan.
+- A seleção de imagens usa o seletor de fotos do sistema.
+- O **ML Kit Text Recognition** reconhece texto no aparelho.
+- O manifesto final contém `INTERNET` e `ACCESS_NETWORK_STATE`, adicionadas pelas bibliotecas do ML Kit/Google Play services. O código do ReplicaScan não faz chamadas de rede.
 
-Embora entradas e resultados do ML Kit sejam processados no aparelho, componentes do Google podem contatar seus serviços para baixar/atualizar modelos e componentes, verificar compatibilidade e coletar métricas de desempenho/utilização da API. Esse comportamento é regido pelos [termos do ML Kit](https://developers.google.com/ml-kit/terms) e pelos termos do Google, não pela Soturine.
+Segundo a documentação do Google, o fluxo do Document Scanner e o reconhecimento de texto acontecem no aparelho. Mesmo assim, o Google Play services pode baixar e atualizar a interface e os modelos, verificar compatibilidade e coletar métricas técnicas de uso da API. Esse comportamento é regido pelos [termos do ML Kit](https://developers.google.com/ml-kit/terms) e pelos termos do Google, não pela Soturine.
 
 ## Armazenamento, backup e migração
 
-A fonte canônica fica na área privada do ReplicaScan. Backup em nuvem e transferência automática de arquivos, banco, OCR e preferências permanecem desativados. Desinstalar ou limpar os dados pode remover o histórico privado.
+A fonte canônica de cada página fica na área privada do ReplicaScan. Backup em nuvem e transferência automática de arquivos, banco, texto e preferências estão desativados. Desinstalar ou limpar os dados remove o histórico privado.
 
-A v0.4.0 usa o novo pacote `com.soturine.replicascan` e instala separadamente das builds antigas. O app não lê nem exclui dados privados da instalação anterior. Exporte documentos importantes antes de remover a instalação antiga.
+A v0.4.0 usa o pacote `com.soturine.replicascan` e instala separadamente das builds antigas. O app não lê nem apaga dados da instalação anterior. Exporte documentos importantes antes de remover a instalação antiga.
 
-## Compartilhamento e exports
+## Compartilhamento e exportação
 
-Compartilhamento só começa após uma ação do usuário e concede leitura temporária por `content://`. O FileProvider expõe apenas subdiretórios de exportação; fontes privadas, banco, preferências e a raiz do cache não são compartilhados.
+Compartilhar sempre começa por uma ação sua e concede leitura temporária por `content://`. O FileProvider expõe apenas os diretórios de exportação e o arquivo temporário de captura; fontes privadas, banco, preferências e o restante do cache não são compartilhados.
 
-Em Android 10+, os arquivos finais são salvos em `Downloads/ReplicaScan`. O app não apaga a pasta histórica usada por versões anteriores. Excluir um lote privado não remove PDFs/JPGs/PNGs que você já exportou.
+No Android 10+, os arquivos exportados ficam em `Downloads/ReplicaScan`. Excluir um documento no app não remove PDFs, JPGs ou PNGs que você já exportou.
 
 ## Retenção e exclusão
 
-Excluir página ou lote remove registros e arquivos privados gerenciados correspondentes. Fotos originais externas e exports finais não são apagados. Temporários só são limpos em namespaces conhecidos e com período de segurança.
+Excluir uma página ou um documento remove os registros e os arquivos privados gerenciados. Fotos externas e arquivos exportados não são apagados. Temporários são limpos apenas em diretórios conhecidos e após um período de segurança.
 
-Detalhes: [data lifecycle](docs/data-lifecycle.md) e [threat model](docs/threat-model.md). Para vulnerabilidades, use o processo privado descrito em [SECURITY.md](SECURITY.md) e nunca publique documentos pessoais em issues.
+Detalhes: [ciclo de vida dos dados](docs/data-lifecycle.md) e [modelo de ameaças](docs/threat-model.md). Para vulnerabilidades, use o processo privado de [SECURITY.md](SECURITY.md) e nunca publique documentos pessoais em issues.
