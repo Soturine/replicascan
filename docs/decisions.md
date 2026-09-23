@@ -75,4 +75,3 @@ Foi uma decisão consciente para manter o escopo honesto, offline e sem dependê
 ## v0.4.0 — ML Kit Document Scanner como motor principal
 
 O detector heurístico próprio falhava em mesa/fundo, caderno com espiral, perspectiva forte e fundos texturizados. O ReplicaScan passa a usar o ML Kit Document Scanner (modo `FULL`) para captura, bordas, perspectiva e limpeza, e concentra seu valor em armazenamento local íntegro, organização, busca, OCR estruturado, PDF pesquisável e exportação. CameraX, o analisador ao vivo, os perfis de documento e a escolha de modo foram removidos; o crop manual continua disponível. Sem Google Play services, a alternativa é a câmera do sistema com crop manual. As menções a CameraX acima são históricas.
-
