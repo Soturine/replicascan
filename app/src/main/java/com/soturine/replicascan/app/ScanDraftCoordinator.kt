@@ -1,6 +1,5 @@
 package com.soturine.replicascan.app
 
-import com.soturine.replicascan.core.common.model.ScanMode
 import com.soturine.replicascan.core.common.repository.ScanRepository
 import com.soturine.replicascan.core.data.files.SourceFileStore
 import java.text.DateFormat
@@ -9,12 +8,6 @@ import java.util.Locale
 import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
-
-enum class DraftSource {
-    QUICK_SCAN,
-    MANUAL_CAMERA,
-    MANUAL_IMPORT,
-}
 
 sealed interface DraftCreationResult {
     data class Success(
@@ -35,9 +28,7 @@ class ScanDraftCoordinator(
     private val fileStore: SourceFileStore,
 ) {
     suspend fun createDraft(
-        mode: ScanMode,
         uriValues: List<String>,
-        source: DraftSource,
         titlePrefix: String,
     ): DraftCreationResult {
         if (uriValues.isEmpty()) return DraftCreationResult.Failure(0, 0)
@@ -50,7 +41,6 @@ class ScanDraftCoordinator(
             val formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
             val created = scanRepository.createScan(
                 title = "$titlePrefix ${formatter.format(Date())}",
-                mode = mode,
                 sourceUris = importResult.imported.map { it.stableUri },
             )
             DraftCreationResult.Success(

@@ -3,8 +3,8 @@ package com.soturine.replicascan.app
 import com.google.common.truth.Truth.assertThat
 import com.soturine.replicascan.core.common.model.CreatedScan
 import com.soturine.replicascan.core.common.model.DeletionOutcome
+import com.soturine.replicascan.core.common.model.OcrTextResult
 import com.soturine.replicascan.core.common.model.ScanDocument
-import com.soturine.replicascan.core.common.model.ScanMode
 import com.soturine.replicascan.core.common.model.ScanPage
 import com.soturine.replicascan.core.common.repository.ScanRepository
 import com.soturine.replicascan.core.data.files.ImportFailure
@@ -29,12 +29,7 @@ class ScanDraftCoordinatorTest {
         val repository = FakeScanRepository()
         val coordinator = ScanDraftCoordinator(repository, fileStore)
 
-        val result = coordinator.createDraft(
-            ScanMode.DOCUMENT,
-            listOf("one", "two", "three"),
-            DraftSource.MANUAL_IMPORT,
-            "Imported document",
-        )
+        val result = coordinator.createDraft(listOf("one", "two", "three"), "Imported document")
 
         assertThat(repository.createdSourceUris).containsExactly("first", "third").inOrder()
         assertThat(result).isEqualTo(DraftCreationResult.Success("scan", "page-1", 2, 1))
@@ -47,15 +42,35 @@ class ScanDraftCoordinatorTest {
         val repository = FakeScanRepository(failCreate = true)
         val coordinator = ScanDraftCoordinator(repository, fileStore)
 
-        val result = coordinator.createDraft(
-            ScanMode.DOCUMENT,
-            listOf("one", "two"),
-            DraftSource.QUICK_SCAN,
-            "Scanned document",
-        )
+        val result = coordinator.createDraft(listOf("one", "two"), "Scanned document")
 
         assertThat(fileStore.rolledBack).containsExactlyElementsIn(imported)
         assertThat(result).isInstanceOf(DraftCreationResult.Failure::class.java)
+    }
+
+    @Test
+    fun emptyScannerResultCreatesNothing() = runTest {
+        val fileStore = FakeSourceFileStore(SourceImportResult(emptyList(), emptyList()))
+        val repository = FakeScanRepository()
+
+        val result = ScanDraftCoordinator(repository, fileStore).createDraft(emptyList(), "Scanned document")
+
+        assertThat(result).isEqualTo(DraftCreationResult.Failure(0, 0))
+        assertThat(repository.createdSourceUris).isEmpty()
+    }
+
+    @Test
+    fun noReadablePageNeverCreatesAnEmptyDocument() = runTest {
+        val fileStore = FakeSourceFileStore(
+            SourceImportResult(emptyList(), listOf(ImportFailure(0, ImportFailureReason.EMPTY_SOURCE))),
+        )
+        val repository = FakeScanRepository()
+
+        val result = ScanDraftCoordinator(repository, fileStore).createDraft(listOf("broken"), "Scanned document")
+
+        assertThat(result).isEqualTo(DraftCreationResult.Failure(1, 1))
+        assertThat(repository.createdSourceUris).isEmpty()
+        assertThat(fileStore.rolledBack).isEmpty()
     }
 
     private class FakeSourceFileStore(
@@ -83,7 +98,6 @@ class ScanDraftCoordinatorTest {
 
         override suspend fun createScan(
             title: String,
-            mode: ScanMode,
             sourceUris: List<String>,
             tags: List<String>,
             isDraft: Boolean,
@@ -100,7 +114,7 @@ class ScanDraftCoordinatorTest {
         override suspend fun renameScan(scanId: String, title: String) = Unit
         override suspend fun updateTags(scanId: String, tags: List<String>) = Unit
         override suspend fun toggleFavorite(scanId: String) = Unit
-        override suspend fun updatePageOcr(scanId: String, pageId: String, text: String) = Unit
+        override suspend fun updatePageOcrArtifact(scanId: String, pageId: String, result: OcrTextResult) = Unit
         override suspend fun markScanSaved(scanId: String) = Unit
         override suspend fun deleteScan(scanId: String) = DeletionOutcome(false)
     }

@@ -1,34 +1,38 @@
 package com.soturine.replicascan.navigation
 
+import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalResources
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.FileProvider
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.soturine.replicascan.BuildConfig
+import com.soturine.replicascan.R
 import com.soturine.replicascan.app.AppContainer
 import com.soturine.replicascan.app.DraftCreationResult
-import com.soturine.replicascan.app.DraftSource
 import com.soturine.replicascan.app.RootViewModel
-import com.soturine.replicascan.R
 import com.soturine.replicascan.core.common.model.ExportedFile
-import com.soturine.replicascan.core.common.model.ScanMode
-import com.soturine.replicascan.feature.camera.CameraCaptureScreen
-import com.soturine.replicascan.feature.camera.CameraCaptureViewModel
 import com.soturine.replicascan.feature.editor.CropScreen
 import com.soturine.replicascan.feature.editor.EditorViewModel
 import com.soturine.replicascan.feature.editor.FilterScreen
@@ -39,6 +43,7 @@ import com.soturine.replicascan.feature.history.HistoryScreen
 import com.soturine.replicascan.feature.history.HistoryViewModel
 import com.soturine.replicascan.feature.history.ScanDetailScreen
 import com.soturine.replicascan.feature.history.ScanDetailViewModel
+import com.soturine.replicascan.feature.home.CaptureTarget
 import com.soturine.replicascan.feature.home.HomeScreen
 import com.soturine.replicascan.feature.home.HomeViewModel
 import com.soturine.replicascan.feature.ocr.OcrScreen
@@ -49,252 +54,153 @@ import com.soturine.replicascan.feature.settings.SettingsViewModel
 import com.soturine.replicascan.onboarding.OnboardingScreen
 import kotlinx.coroutines.launch
 
+private const val PRIVACY_POLICY_URL = "https://github.com/Soturine/replicascan/blob/main/PRIVACY_POLICY.md"
+
 @Composable
 fun ReplicaScanNavHost(
     container: AppContainer,
     rootViewModel: RootViewModel,
 ) {
     val context = LocalContext.current
-    val resources = LocalResources.current
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
     val rootState = rootViewModel.uiState.collectAsStateWithLifecycle()
+    // One draft at a time: repeated taps or a second scanner result cannot create duplicate documents.
+    var creatingDocument by remember { mutableStateOf(false) }
     val startDestination = if (rootState.value.onboardingCompleted) {
         ReplicaScanDestinations.Home
     } else {
         ReplicaScanDestinations.Onboarding
     }
 
-    NavHost(
-        navController = navController,
-        startDestination = startDestination,
-    ) {
+    fun createDocument(uris: List<String>, titleRes: Int, openCrop: Boolean) {
+        if (creatingDocument) return
+        creatingDocument = true
+        coroutineScope.launch {
+            try {
+                when (val result = container.scanDraftCoordinator.createDraft(uris, context.getString(titleRes))) {
+                    is DraftCreationResult.Success -> {
+                        if (result.failureCount > 0) {
+                            val total = result.importedCount + result.failureCount
+                            context.toast(context.getString(R.string.import_partial_result, result.importedCount, total, result.failureCount))
+                        }
+                        navController.navigate(ReplicaScanDestinations.review(result.scanId))
+                        if (openCrop) navController.navigate(ReplicaScanDestinations.crop(result.scanId, result.firstPageId))
+                    }
+                    is DraftCreationResult.Failure -> if (result.requestedCount > 0) {
+                        context.toast(context.getString(R.string.import_failed_result))
+                    }
+                }
+            } finally {
+                creatingDocument = false
+            }
+        }
+    }
+
+    NavHost(navController = navController, startDestination = startDestination) {
         composable(ReplicaScanDestinations.Onboarding) {
             OnboardingScreen(
                 onFinish = {
                     rootViewModel.completeOnboarding()
-                    navController.navigate(ReplicaScanDestinations.Home) {
-                        popUpTo(ReplicaScanDestinations.Onboarding) { inclusive = true }
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    } else {
+                        navController.navigate(ReplicaScanDestinations.Home) {
+                            popUpTo(ReplicaScanDestinations.Onboarding) { inclusive = true }
+                        }
                     }
                 },
             )
         }
         composable(ReplicaScanDestinations.Home) {
-            val homeViewModel: HomeViewModel = featureViewModel {
-                HomeViewModel(
-                    scanRepository = container.scanRepository,
-                    preferencesRepository = container.userPreferencesRepository,
-                )
-            }
+            val homeViewModel: HomeViewModel = featureViewModel { HomeViewModel(container.scanRepository) }
             val state = homeViewModel.uiState.collectAsStateWithLifecycle()
             HomeScreen(
                 state = state.value,
-                onStartQuickScan = { uris ->
-                    coroutineScope.launch {
-                        container.scanDraftCoordinator.createDraft(
-                            mode = ScanMode.DOCUMENT,
-                            uriValues = uris,
-                            source = DraftSource.QUICK_SCAN,
-                            titlePrefix = resources.getString(R.string.draft_title_quick),
-                        ).handle(
-                            context = context,
-                            onSuccess = { result ->
-                                navController.navigate(ReplicaScanDestinations.review(result.scanId))
-                            },
-                        )
-                    }
-                },
-                onOpenManualCamera = { mode ->
-                    navController.navigate(ReplicaScanDestinations.camera(mode))
-                },
-                onImportImages = { mode, uris ->
-                    coroutineScope.launch {
-                        container.scanDraftCoordinator.createDraft(
-                            mode = mode,
-                            uriValues = uris,
-                            source = DraftSource.MANUAL_IMPORT,
-                            titlePrefix = resources.getString(R.string.draft_title_import),
-                        ).handle(context) { result ->
-                            navController.navigate(ReplicaScanDestinations.crop(result.scanId, result.firstPageId))
-                        }
-                    }
+                isCreatingDocument = creatingDocument,
+                onScannedPages = { uris -> createDocument(uris, R.string.draft_title_scan, openCrop = false) },
+                onImportImages = { uris -> createDocument(uris, R.string.draft_title_import, openCrop = false) },
+                onCapturedPhoto = { path -> createDocument(listOf(path), R.string.draft_title_photo, openCrop = true) },
+                onDiscardCapture = container.scanFileStore::discardCapture,
+                newCaptureTarget = {
+                    runCatching {
+                        val file = container.scanFileStore.newCaptureFile()
+                        CaptureTarget(file.absolutePath, FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file))
+                    }.getOrNull()
                 },
                 onOpenHistory = { navController.navigate(ReplicaScanDestinations.History) },
                 onOpenSettings = { navController.navigate(ReplicaScanDestinations.Settings) },
-                onOpenScan = { scanId ->
-                    navController.navigate(ReplicaScanDestinations.detail(scanId))
-                },
+                onOpenScan = { scanId -> navController.navigate(ReplicaScanDestinations.detail(scanId)) },
             )
         }
-        composable(
-            route = ReplicaScanDestinations.Camera,
-            arguments = listOf(navArgument("mode") { type = NavType.StringType }),
-        ) { entry ->
-            val mode = ScanMode.fromStorageKey(entry.arguments?.getString("mode").orEmpty())
-            val cameraViewModel: CameraCaptureViewModel = featureViewModel(key = "camera-${mode.storageKey}") {
-                CameraCaptureViewModel(mode, container.documentProcessingRepository)
-            }
-            val state = cameraViewModel.uiState.collectAsStateWithLifecycle()
-            CameraCaptureScreen(
-                state = state.value,
-                onPermissionResult = cameraViewModel::onPermissionResult,
-                onCapturedImage = cameraViewModel::onCaptured,
-                onAnalyzeFrame = cameraViewModel::analyzeFrame,
-                onDone = { capturedUris ->
-                    coroutineScope.launch {
-                        container.scanDraftCoordinator.createDraft(
-                            mode = mode,
-                            uriValues = capturedUris,
-                            source = DraftSource.MANUAL_CAMERA,
-                            titlePrefix = resources.getString(R.string.draft_title_camera),
-                        ).handle(context) { result ->
-                            navController.navigate(ReplicaScanDestinations.crop(result.scanId, result.firstPageId))
-                        }
-                    }
-                },
-                onBack = { navController.popBackStack() },
-                onCaptureStarted = cameraViewModel::tryStartCapture,
-                onCaptureFinished = cameraViewModel::onCaptureFinished,
-                onError = cameraViewModel::onError,
-            )
-        }
-        composable(
-            route = ReplicaScanDestinations.Crop,
-            arguments = listOf(
-                navArgument("scanId") { type = NavType.StringType },
-                navArgument("pageId") { type = NavType.StringType },
-            ),
-        ) { entry ->
-            val scanId = entry.arguments?.getString("scanId").orEmpty()
-            val pageId = entry.arguments?.getString("pageId").orEmpty()
-            val editorViewModel: EditorViewModel = featureViewModel(key = "crop-$scanId-$pageId") {
-                EditorViewModel(
-                    scanId = scanId,
-                    initialPageId = pageId,
-                    scanRepository = container.scanRepository,
-                    processingRepository = container.documentProcessingRepository,
-                )
-            }
+        composable(ReplicaScanDestinations.Crop, arguments = scanPageArguments) { entry ->
+            val (scanId, pageId) = entry.scanAndPage()
+            val editorViewModel = editorViewModel(container, "crop-$scanId-$pageId", scanId, pageId)
             val state = editorViewModel.uiState.collectAsStateWithLifecycle()
             CropScreen(
                 state = state.value,
-                onSaveQuadAndContinue = { quad ->
-                    editorViewModel.updateQuad(quad) {
-                        navController.navigate(ReplicaScanDestinations.filters(scanId, pageId))
-                    }
-                },
-                onEnsureQuad = editorViewModel::ensureQuadForCurrentPage,
-                onReestimate = editorViewModel::reestimateCurrentPageQuad,
+                onDone = { quad -> editorViewModel.updateQuad(quad) { navController.popBackStack() } },
                 onBack = { navController.popBackStack() },
                 onClearMessage = editorViewModel::clearMessage,
             )
         }
-        composable(
-            route = ReplicaScanDestinations.Filters,
-            arguments = listOf(
-                navArgument("scanId") { type = NavType.StringType },
-                navArgument("pageId") { type = NavType.StringType },
-            ),
-        ) { entry ->
-            val scanId = entry.arguments?.getString("scanId").orEmpty()
-            val pageId = entry.arguments?.getString("pageId").orEmpty()
-            val editorViewModel: EditorViewModel = featureViewModel(key = "filter-$scanId-$pageId") {
-                EditorViewModel(
-                    scanId = scanId,
-                    initialPageId = pageId,
-                    scanRepository = container.scanRepository,
-                    processingRepository = container.documentProcessingRepository,
-                )
-            }
+        composable(ReplicaScanDestinations.Filters, arguments = scanPageArguments) { entry ->
+            val (scanId, pageId) = entry.scanAndPage()
+            val editorViewModel = editorViewModel(container, "filter-$scanId-$pageId", scanId, pageId)
             val state = editorViewModel.uiState.collectAsStateWithLifecycle()
             FilterScreen(
                 state = state.value,
-                onApplyFilter = editorViewModel::applyFilter,
                 onRequestPreview = editorViewModel::prepareFilterPreview,
-                onRotate = editorViewModel::rotateCurrentPage,
-                onOpenReview = { navController.navigate(ReplicaScanDestinations.review(scanId)) },
+                onApply = { filter -> editorViewModel.applyFilter(filter) { navController.popBackStack() } },
                 onBack = { navController.popBackStack() },
                 onClearMessage = editorViewModel::clearMessage,
             )
         }
-        composable(
-            route = ReplicaScanDestinations.Review,
-            arguments = listOf(navArgument("scanId") { type = NavType.StringType }),
-        ) { entry ->
-            val scanId = entry.arguments?.getString("scanId").orEmpty()
-            val editorViewModel: EditorViewModel = featureViewModel(key = "review-$scanId") {
-                EditorViewModel(
-                    scanId = scanId,
-                    initialPageId = null,
-                    scanRepository = container.scanRepository,
-                    processingRepository = container.documentProcessingRepository,
-                )
-            }
+        composable(ReplicaScanDestinations.Review, arguments = listOf(stringArgument("scanId"))) { entry ->
+            val scanId = entry.stringArgument("scanId")
+            val editorViewModel = editorViewModel(container, "review-$scanId", scanId, null)
             val state = editorViewModel.uiState.collectAsStateWithLifecycle()
             ReviewScreen(
                 state = state.value,
+                onPreparePreview = editorViewModel::prepareCurrentPagePreview,
+                onSelectPage = editorViewModel::selectPage,
+                onMovePage = editorViewModel::movePage,
+                onDeleteCurrentPage = editorViewModel::deleteCurrentPage,
                 onRename = editorViewModel::renameScan,
                 onUpdateTags = editorViewModel::updateTags,
-                onPreparePreview = editorViewModel::prepareCurrentPagePreview,
-                onClearMessage = editorViewModel::clearMessage,
-                onSelectPage = editorViewModel::selectPage,
-                onMovePageUp = { editorViewModel.movePage(it, -1) },
-                onMovePageDown = { editorViewModel.movePage(it, 1) },
-                onDeleteCurrentPage = editorViewModel::deleteCurrentPage,
                 onRotate = editorViewModel::rotateCurrentPage,
-                onOpenCrop = {
-                    state.value.currentPage?.id?.let { pageId ->
-                        navController.navigate(ReplicaScanDestinations.crop(scanId, pageId))
-                    }
-                },
-                onOpenFilters = {
-                    state.value.currentPage?.id?.let { pageId ->
-                        navController.navigate(ReplicaScanDestinations.filters(scanId, pageId))
-                    }
-                },
+                onOpenCrop = { pageId -> navController.navigate(ReplicaScanDestinations.crop(scanId, pageId)) },
+                onOpenFilters = { pageId -> navController.navigate(ReplicaScanDestinations.filters(scanId, pageId)) },
+                onOpenOcr = { pageId -> navController.navigate(ReplicaScanDestinations.ocr(scanId, pageId)) },
                 onOpenExport = { navController.navigate(ReplicaScanDestinations.export(scanId)) },
-                onOpenOcr = { pageId ->
-                    navController.navigate(ReplicaScanDestinations.ocr(scanId, pageId))
-                },
-                onBack = { navController.popBackStack() },
+                onBack = { navController.popToHome() },
+                onClearMessage = editorViewModel::clearMessage,
             )
         }
         composable(ReplicaScanDestinations.History) {
-            val historyViewModel: HistoryViewModel = featureViewModel {
-                HistoryViewModel(container.scanRepository)
-            }
+            val historyViewModel: HistoryViewModel = featureViewModel { HistoryViewModel(container.scanRepository) }
             val state = historyViewModel.uiState.collectAsStateWithLifecycle()
             HistoryScreen(
                 state = state.value,
                 onQueryChange = historyViewModel::onQueryChange,
-                onOpenScan = { scanId ->
-                    navController.navigate(ReplicaScanDestinations.detail(scanId))
-                },
+                onOpenScan = { scanId -> navController.navigate(ReplicaScanDestinations.detail(scanId)) },
+                onBack = { navController.popBackStack() },
             )
         }
-        composable(
-            route = ReplicaScanDestinations.Detail,
-            arguments = listOf(navArgument("scanId") { type = NavType.StringType }),
-        ) { entry ->
-            val scanId = entry.arguments?.getString("scanId").orEmpty()
+        composable(ReplicaScanDestinations.Detail, arguments = listOf(stringArgument("scanId"))) { entry ->
+            val scanId = entry.stringArgument("scanId")
             val detailViewModel: ScanDetailViewModel = featureViewModel(key = "detail-$scanId") {
-                ScanDetailViewModel(
-                    scanId = scanId,
-                    scanRepository = container.scanRepository,
-                )
+                ScanDetailViewModel(scanId = scanId, scanRepository = container.scanRepository)
             }
-            val state = detailViewModel.scan.collectAsStateWithLifecycle()
+            val state = detailViewModel.state.collectAsStateWithLifecycle()
             ScanDetailScreen(
-                scan = state.value,
+                scan = state.value?.scan,
+                isLoaded = state.value != null,
                 onToggleFavorite = detailViewModel::toggleFavorite,
                 onDeleteScan = {
                     detailViewModel.deleteScan { outcome ->
                         if (outcome.hasCleanupFailures) {
-                            Toast.makeText(
-                                context,
-                                resources.getString(R.string.delete_partial_result, outcome.failedFileCount),
-                                Toast.LENGTH_LONG,
-                            ).show()
+                            context.toast(context.getString(R.string.delete_partial_result, outcome.failedFileCount))
                         }
                         navController.popBackStack()
                     }
@@ -302,13 +208,11 @@ fun ReplicaScanNavHost(
                 onOpenReview = { navController.navigate(ReplicaScanDestinations.review(scanId)) },
                 onOpenExport = { navController.navigate(ReplicaScanDestinations.export(scanId)) },
                 onOpenOcr = { pageId -> navController.navigate(ReplicaScanDestinations.ocr(scanId, pageId)) },
+                onBack = { navController.popBackStack() },
             )
         }
-        composable(
-            route = ReplicaScanDestinations.Export,
-            arguments = listOf(navArgument("scanId") { type = NavType.StringType }),
-        ) { entry ->
-            val scanId = entry.arguments?.getString("scanId").orEmpty()
+        composable(ReplicaScanDestinations.Export, arguments = listOf(stringArgument("scanId"))) { entry ->
+            val scanId = entry.stringArgument("scanId")
             val exportViewModel: ExportViewModel = featureViewModel(key = "export-$scanId") {
                 ExportViewModel(
                     scanId = scanId,
@@ -330,15 +234,8 @@ fun ReplicaScanNavHost(
                 onClearMessage = exportViewModel::clearMessage,
             )
         }
-        composable(
-            route = ReplicaScanDestinations.Ocr,
-            arguments = listOf(
-                navArgument("scanId") { type = NavType.StringType },
-                navArgument("pageId") { type = NavType.StringType },
-            ),
-        ) { entry ->
-            val scanId = entry.arguments?.getString("scanId").orEmpty()
-            val pageId = entry.arguments?.getString("pageId").orEmpty()
+        composable(ReplicaScanDestinations.Ocr, arguments = scanPageArguments) { entry ->
+            val (scanId, pageId) = entry.scanAndPage()
             val ocrViewModel: OcrViewModel = featureViewModel(key = "ocr-$scanId-$pageId") {
                 OcrViewModel(
                     scanId = scanId,
@@ -351,114 +248,107 @@ fun ReplicaScanNavHost(
             val state = ocrViewModel.uiState.collectAsStateWithLifecycle()
             OcrScreen(
                 state = state.value,
-                onRecognizeAgain = ocrViewModel::recognize,
+                onRetry = ocrViewModel::retry,
                 onScriptSelected = ocrViewModel::selectScript,
                 onBack = { navController.popBackStack() },
                 onClearMessage = ocrViewModel::clearMessage,
             )
         }
         composable(ReplicaScanDestinations.Settings) {
-            val settingsViewModel: SettingsViewModel = featureViewModel {
-                SettingsViewModel(container.userPreferencesRepository)
-            }
+            val settingsViewModel: SettingsViewModel = featureViewModel { SettingsViewModel(container.userPreferencesRepository) }
             val state = settingsViewModel.uiState.collectAsStateWithLifecycle()
             SettingsScreen(
                 state = state.value,
+                currentLanguageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags(),
                 onThemeSelected = settingsViewModel::setTheme,
+                onLanguageSelected = { tag -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag)) },
                 onPdfQualitySelected = settingsViewModel::setPdfQuality,
-                onResetOnboarding = settingsViewModel::resetOnboarding,
+                onOpenIntroduction = { navController.navigate(ReplicaScanDestinations.Onboarding) },
+                onOpenPrivacyPolicy = { openPrivacyPolicy(context) },
                 onOpenAbout = { navController.navigate(ReplicaScanDestinations.About) },
-                currentLanguageTag = AppCompatDelegate.getApplicationLocales().toLanguageTags(),
-                onLanguageSelected = { tag ->
-                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag))
-                },
+                onBack = { navController.popBackStack() },
             )
         }
         composable(ReplicaScanDestinations.About) {
             AboutScreen(
-                onOpenPrivacyPolicy = {
-                    val intent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://github.com/Soturine/replicascan/blob/main/PRIVACY_POLICY.md"),
-                    )
-                    context.startActivity(intent)
-                },
+                versionName = BuildConfig.VERSION_NAME,
+                onOpenPrivacyPolicy = { openPrivacyPolicy(context) },
+                onBack = { navController.popBackStack() },
             )
         }
     }
 }
 
-private fun DraftCreationResult.handle(
-    context: Context,
-    onSuccess: (DraftCreationResult.Success) -> Unit,
-) {
-    when (this) {
-        is DraftCreationResult.Success -> {
-            if (failureCount > 0) {
-                Toast.makeText(
-                    context,
-                    context.getString(
-                        R.string.import_partial_result,
-                        importedCount,
-                        importedCount + failureCount,
-                        failureCount,
-                    ),
-                    Toast.LENGTH_LONG,
-                ).show()
-            }
-            onSuccess(this)
-        }
+private val scanPageArguments = listOf(stringArgument("scanId"), stringArgument("pageId"))
 
-        is DraftCreationResult.Failure -> {
-            Toast.makeText(context, R.string.import_failed_result, Toast.LENGTH_LONG).show()
-        }
+private fun stringArgument(name: String) = navArgument(name) { type = NavType.StringType }
+
+private fun NavBackStackEntry.stringArgument(name: String): String = arguments?.getString(name).orEmpty()
+
+private fun NavBackStackEntry.scanAndPage(): Pair<String, String> = stringArgument("scanId") to stringArgument("pageId")
+
+/** Review is reached right after scanning; “back” returns to wherever the document came from, or Home. */
+private fun NavHostController.popToHome() {
+    if (!popBackStack(ReplicaScanDestinations.Detail, inclusive = false) &&
+        !popBackStack(ReplicaScanDestinations.Home, inclusive = false)
+    ) {
+        popBackStack()
     }
 }
 
-private fun shareFiles(
-    context: android.content.Context,
-    files: List<ExportedFile>,
-) {
+@Composable
+private fun editorViewModel(container: AppContainer, key: String, scanId: String, pageId: String?): EditorViewModel =
+    featureViewModel(key = key) {
+        EditorViewModel(
+            scanId = scanId,
+            initialPageId = pageId,
+            scanRepository = container.scanRepository,
+            processingRepository = container.documentProcessingRepository,
+        )
+    }
+
+private fun Context.toast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+}
+
+private fun openPrivacyPolicy(context: Context) {
+    try {
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)))
+    } catch (_: ActivityNotFoundException) {
+        context.toast(context.getString(R.string.no_app_to_open))
+    }
+}
+
+private fun shareFiles(context: Context, files: List<ExportedFile>) {
     if (files.isEmpty()) return
     val uris = files.map { Uri.parse(it.uri) }
-    val sharedClipData = android.content.ClipData.newUri(
-        context.contentResolver,
-        "ReplicaScan export",
-        uris.first(),
-    ).apply {
-        uris.drop(1).forEach { uri -> addItem(android.content.ClipData.Item(uri)) }
+    val clip = ClipData.newUri(context.contentResolver, files.first().displayName, uris.first()).apply {
+        uris.drop(1).forEach { uri -> addItem(ClipData.Item(uri)) }
     }
     val intent = if (uris.size == 1) {
-        Intent(Intent.ACTION_SEND).apply {
-            type = files.first().mimeType
-            putExtra(Intent.EXTRA_STREAM, uris.first())
-            clipData = sharedClipData
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
+        Intent(Intent.ACTION_SEND).putExtra(Intent.EXTRA_STREAM, uris.first())
     } else {
-        Intent(Intent.ACTION_SEND_MULTIPLE).apply {
-            type = files.first().mimeType
-            putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
-            clipData = sharedClipData
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-    }
-    context.startActivity(Intent.createChooser(intent, context.getString(R.string.export_chooser_title)))
-}
-
-private fun openExportedFile(
-    context: android.content.Context,
-    file: ExportedFile,
-) {
-    val uri = Uri.parse(file.uri)
-    val intent = Intent(Intent.ACTION_VIEW).apply {
-        setDataAndType(uri, file.mimeType)
+        Intent(Intent.ACTION_SEND_MULTIPLE).putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
+    }.apply {
+        type = files.first().mimeType
+        clipData = clip
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
-    val packageManager = context.packageManager
-    if (intent.resolveActivity(packageManager) != null) {
+    try {
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.export_chooser_title)))
+    } catch (_: ActivityNotFoundException) {
+        context.toast(context.getString(R.string.no_app_to_open))
+    }
+}
+
+private fun openExportedFile(context: Context, file: ExportedFile) {
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        setDataAndType(Uri.parse(file.uri), file.mimeType)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    try {
         context.startActivity(intent)
-    } else {
+    } catch (_: ActivityNotFoundException) {
         shareFiles(context, listOf(file))
     }
 }
@@ -474,9 +364,5 @@ private inline fun <reified T : ViewModel> featureViewModel(
             override fun <VM : ViewModel> create(modelClass: Class<VM>): VM = create() as VM
         }
     }
-    return if (key == null) {
-        viewModel(factory = factory)
-    } else {
-        viewModel(key = key, factory = factory)
-    }
+    return if (key == null) viewModel(factory = factory) else viewModel(key = key, factory = factory)
 }
