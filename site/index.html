@@ -6,7 +6,7 @@
   <title>ReplicaScan</title>
   <meta
     name="description"
-    content="ReplicaScan é um scanner de documentos para Android com scanner rápido, OCR local, exportação em PDF/JPG/PNG e foco em privacidade."
+    content="ReplicaScan é um scanner de documentos para Android com digitalização inteligente no dispositivo, OCR local, PDF pesquisável, JPG e PNG, sem conta e sem nuvem obrigatória."
   />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,7 +37,7 @@
           <p class="eyebrow">Scanner Android com foco local</p>
           <h1>
             Um scanner Android com
-            <span>Home direta, OCR organizado e pós-scan claro.</span>
+            <span>um toque para escanear, texto reconhecido no aparelho e exportação clara.</span>
           </h1>
           <p class="lead">
             ReplicaScan abre o scanner assistido do Google sem pedir tipo antes da captura,
@@ -67,7 +67,7 @@
               <div class="preview-hero">
                 <p class="preview-overline">Fluxo principal</p>
                 <h2>Escanear rápido e ajustar só quando realmente precisar.</h2>
-                <p>Scanner guiado como caminho padrão, com fallback manual quando o documento pede ajuste fino.</p>
+                <p>Digitalização inteligente no dispositivo com bordas, perspectiva e limpeza automáticas; o recorte manual continua disponível.</p>
               </div>
               <div class="preview-surface preview-surface-large">
                 <div class="preview-page">
@@ -107,23 +107,23 @@
           <p class="eyebrow">Produto</p>
           <h2>Uma base séria para um scanner Android moderno.</h2>
           <p>
-            A versão atual cobre scanner rápido, fallback manual editável, OCR por trechos,
-            exportação progressiva e histórico local sem depender de backend nem empilhar
-            telas pesadas demais no fluxo principal.
+            A versão atual cobre digitalização no dispositivo, revisão com o documento em destaque,
+            OCR estruturado, busca local e exportação progressiva, sem backend e sem escolher
+            tipo de documento antes de escanear.
           </p>
         </div>
         <div class="feature-grid">
           <article class="card">
-            <h3>Entrada mais direta</h3>
-            <p>O scanner rápido segue como CTA principal na Home; câmera e importação direta ficam em Ajuste manual.</p>
+            <h3>Um botão para escanear</h3>
+            <p>Escanear abre o scanner de documentos do Google Play services; importar imagens é a segunda opção. Sem ele, uma foto com recorte manual resolve.</p>
           </article>
           <article class="card">
             <h3>Tratamento de documento</h3>
-            <p>Crop inicial mais útil, correção geométrica, filtros recalibrados e OCR consolidado em trechos copiáveis.</p>
+            <p>Cortar, girar, quatro visuais simples e texto reconhecido no aparelho, pronto para copiar e buscar.</p>
           </article>
           <article class="card">
-            <h3>Pós-export mais claro</h3>
-            <p>O app agora deixa mais evidente o nome do arquivo, o tipo, o tamanho, o local salvo e a ação para abrir ou compartilhar.</p>
+            <h3>Exportação sem surpresas</h3>
+            <p>PDF pesquisável, JPG ou PNG gerados a partir da página original, sem arquivo parcial se algo falhar.</p>
           </article>
         </div>
       </section>
@@ -142,17 +142,17 @@
           <article class="card card-soft">
             <span class="step-tag">01</span>
             <h3>Escanear</h3>
-            <p>Scanner rápido na Home com galeria pelo fluxo do Google quando disponível, e manual como fallback editável.</p>
+            <p>Aponte a câmera: bordas, perspectiva e limpeza são automáticas, com várias páginas por vez.</p>
           </article>
           <article class="card card-soft">
             <span class="step-tag">02</span>
             <h3>Revisar</h3>
-            <p>Revisão mais direta, OCR por trechos e ações principais mais evidentes.</p>
+            <p>O documento fica em destaque, com cortar, girar, ajustar e texto a um toque.</p>
           </article>
           <article class="card card-soft">
             <span class="step-tag">03</span>
             <h3>Exportar</h3>
-            <p>Saída local em PDF, JPG ou PNG com compartilhamento nativo e local salvo mais compreensível.</p>
+            <p>PDF, JPG ou PNG salvos no aparelho e compartilhados pelo Android.</p>
           </article>
         </div>
       </section>
@@ -172,8 +172,8 @@
             <ul>
               <li>OCR local com ML Kit</li>
               <li>Exportação de PDF, JPG e PNG no dispositivo</li>
-              <li>Permissão de câmera apenas para captura manual</li>
-              <li>Fontes privadas removidas junto da página ou lote</li>
+              <li>Sem permissão de câmera no app: a captura usa o Google Play services ou o app de câmera</li>
+              <li>Arquivos privados removidos junto da página ou do documento</li>
               <li>Compartilhamento restrito aos diretórios de export</li>
               <li>Sem upload automático de documentos</li>
               <li>ML Kit pode baixar componentes e enviar métricas técnicas conforme os termos do Google</li>
@@ -248,7 +248,7 @@ cd replicascan
         <div class="feature-grid">
           <article class="card card-soft">
             <h3>Funciona offline?</h3>
-            <p>Sim. O MVP prioriza processamento local. O scanner guiado pode depender do Google Play services no aparelho.</p>
+            <p>Sim. Scanner e OCR processam no aparelho, com componentes baixados pelo Google Play services. Sem ele, use foto com recorte manual.</p>
           </article>
           <article class="card card-soft">
             <h3>Onde o arquivo exportado fica?</h3>
