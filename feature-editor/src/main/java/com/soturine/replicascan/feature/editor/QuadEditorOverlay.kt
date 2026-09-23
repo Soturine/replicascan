@@ -4,11 +4,11 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
@@ -26,11 +27,11 @@ import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.soturine.replicascan.core.common.model.DocumentQuad
@@ -49,8 +50,8 @@ fun QuadEditorOverlay(
     val handleStroke = MaterialTheme.colorScheme.primary
     val moveUp = stringResource(R.string.editor_corner_move_up)
     val moveDown = stringResource(R.string.editor_corner_move_down)
-    val moveStart = stringResource(R.string.editor_corner_move_start)
-    val moveEnd = stringResource(R.string.editor_corner_move_end)
+    val moveLeft = stringResource(R.string.editor_corner_move_left)
+    val moveRight = stringResource(R.string.editor_corner_move_right)
     var activeHandle by remember { mutableStateOf<HandleAnchor?>(null) }
 
     val topLeft = imageBounds.toOffset(quad.topLeft)
@@ -138,8 +139,8 @@ fun QuadEditorOverlay(
     }
 
     Handle(
-        label = stringResource(R.string.editor_corner_top_start),
-        actionLabels = listOf(moveUp, moveDown, moveStart, moveEnd),
+        label = stringResource(R.string.editor_corner_top_left),
+        actionLabels = listOf(moveUp, moveDown, moveLeft, moveRight),
         point = quad.topLeft,
         imageBounds = imageBounds,
         fillColor = handleFill,
@@ -151,8 +152,8 @@ fun QuadEditorOverlay(
         onMoved = { point -> onQuadChange(quad.copy(topLeft = point)) },
     )
     Handle(
-        label = stringResource(R.string.editor_corner_top_end),
-        actionLabels = listOf(moveUp, moveDown, moveStart, moveEnd),
+        label = stringResource(R.string.editor_corner_top_right),
+        actionLabels = listOf(moveUp, moveDown, moveLeft, moveRight),
         point = quad.topRight,
         imageBounds = imageBounds,
         fillColor = handleFill,
@@ -164,8 +165,8 @@ fun QuadEditorOverlay(
         onMoved = { point -> onQuadChange(quad.copy(topRight = point)) },
     )
     Handle(
-        label = stringResource(R.string.editor_corner_bottom_end),
-        actionLabels = listOf(moveUp, moveDown, moveStart, moveEnd),
+        label = stringResource(R.string.editor_corner_bottom_right),
+        actionLabels = listOf(moveUp, moveDown, moveLeft, moveRight),
         point = quad.bottomRight,
         imageBounds = imageBounds,
         fillColor = handleFill,
@@ -177,8 +178,8 @@ fun QuadEditorOverlay(
         onMoved = { point -> onQuadChange(quad.copy(bottomRight = point)) },
     )
     Handle(
-        label = stringResource(R.string.editor_corner_bottom_start),
-        actionLabels = listOf(moveUp, moveDown, moveStart, moveEnd),
+        label = stringResource(R.string.editor_corner_bottom_left),
+        actionLabels = listOf(moveUp, moveDown, moveLeft, moveRight),
         point = quad.bottomLeft,
         imageBounds = imageBounds,
         fillColor = handleFill,
@@ -204,13 +205,14 @@ private fun Handle(
     onMoved: (PointValue) -> Unit,
 ) {
     val touchTarget = 64.dp
-    val visualSize = if (active) 26.dp else 22.dp
+    val visualSize = if (active) 34.dp else 28.dp
     val latestPoint by rememberUpdatedState(point)
     fun move(point: PointValue) = onMoved(point.snapToEdge())
 
     Box(
         modifier = Modifier
-            .offset {
+            // The page image is never mirrored, so handles use absolute (not RTL-aware) positions.
+            .absoluteOffset {
                 IntOffset(
                     x = (imageBounds.left + point.x * imageBounds.width).roundToInt() - touchTarget.roundToPx() / 2,
                     y = (imageBounds.top + point.y * imageBounds.height).roundToInt() - touchTarget.roundToPx() / 2,
@@ -261,16 +263,11 @@ private fun Handle(
                     move(moved)
                 }
             },
+        contentAlignment = Alignment.Center,
     ) {
         Box(
             modifier = Modifier
                 .size(visualSize)
-                .offset {
-                    IntOffset(
-                        x = (touchTarget.roundToPx() - visualSize.roundToPx()) / 2,
-                        y = (touchTarget.roundToPx() - visualSize.roundToPx()) / 2,
-                    )
-                }
                 .background(fillColor, CircleShape)
                 .border(
                     width = 3.dp,
