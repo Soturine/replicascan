@@ -1,30 +1,11 @@
 package com.soturine.replicascan.core.common.repository
 
+import android.graphics.Bitmap
 import com.soturine.replicascan.core.common.model.DocumentFilterType
-import com.soturine.replicascan.core.common.model.DocumentDetectionResult
-import com.soturine.replicascan.core.common.model.DocumentProfile
 import com.soturine.replicascan.core.common.model.DocumentQuad
 
+/** Derives page images from the canonical private source. Every result is regenerable cache. */
 interface DocumentProcessingRepository {
-    suspend fun detectDocumentAutomatically(imageUri: String): DocumentDetectionResult =
-        detectDocument(imageUri, DocumentProfile.GENERAL)
-
-    suspend fun detectDocument(
-        imageUri: String,
-        profile: DocumentProfile = DocumentProfile.GENERAL,
-    ): DocumentDetectionResult = DocumentDetectionResult.noDocument()
-
-    suspend fun estimateDocumentQuad(imageUri: String): DocumentQuad =
-        detectDocument(imageUri).quadOrFullPage()
-
-    /** Lightweight camera-analysis entry point. The luma plane must be tightly packed. */
-    suspend fun detectPreviewLuma(
-        luma: IntArray,
-        width: Int,
-        height: Int,
-        profile: DocumentProfile = DocumentProfile.GENERAL,
-    ): DocumentDetectionResult = DocumentDetectionResult.noDocument()
-
     suspend fun renderPreview(
         sourceUri: String,
         filterType: DocumentFilterType,
@@ -40,10 +21,19 @@ interface DocumentProcessingRepository {
         rotationDegrees: Int,
     ): String
 
+    /** Full-quality render kept in memory so exports never pass through a lossy intermediate file. */
+    suspend fun renderBitmap(
+        sourceUri: String,
+        filterType: DocumentFilterType,
+        quad: DocumentQuad?,
+        rotationDegrees: Int,
+        maxDimension: Int,
+    ): Bitmap
+
+    /** Geometry-only render (crop and rotation) handed to text recognition. */
     suspend fun processForOcr(
         sourceUri: String,
         quad: DocumentQuad?,
         rotationDegrees: Int,
-        preferReceiptMode: Boolean,
     ): String
 }

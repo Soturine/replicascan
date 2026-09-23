@@ -36,7 +36,7 @@ class ImagePipelineSpecTest {
         val key = ImagePipelineSpec.buildKey(
             page = page,
             purpose = PageRenderPurpose.PREVIEW,
-            filterType = DocumentFilterType.DOCUMENT_GRAY,
+            filterType = DocumentFilterType.GRAYSCALE,
             maxDimension = 1600,
         ).toString()
 
@@ -84,8 +84,19 @@ class ImagePipelineSpecTest {
         assertThat(page().requiresDerivedImage()).isFalse()
         assertThat(page(processedUri = "file:///tmp/processed.jpg").requiresDerivedImage()).isTrue()
         assertThat(page(rotationDegrees = 90).requiresDerivedImage()).isTrue()
-        assertThat(page(filterType = DocumentFilterType.COLOR_ENHANCED).requiresDerivedImage()).isTrue()
-        assertThat(page(quad = fullQuad()).requiresDerivedImage()).isTrue()
+        assertThat(page(filterType = DocumentFilterType.ENHANCED).requiresDerivedImage()).isTrue()
+        // A full-page quad is the same as no crop: ML Kit pages stay byte-identical to the source.
+        assertThat(page(quad = fullQuad()).requiresDerivedImage()).isFalse()
+        assertThat(page(quad = DocumentQuad(PointValue(0.1f, 0f), PointValue(1f, 0f), PointValue(1f, 1f), PointValue(0f, 1f))).requiresDerivedImage()).isTrue()
+    }
+
+    @Test
+    fun `chaves de filtro aposentadas continuam legiveis`() {
+        assertThat(DocumentFilterType.fromStorageKey("auto")).isEqualTo(DocumentFilterType.ORIGINAL)
+        assertThat(DocumentFilterType.fromStorageKey("receipt_high_contrast")).isEqualTo(DocumentFilterType.BLACK_WHITE)
+        assertThat(DocumentFilterType.fromStorageKey("document_gray")).isEqualTo(DocumentFilterType.GRAYSCALE)
+        assertThat(DocumentFilterType.entries.map { it.storageKey })
+            .containsExactly("original_corrected", "color_enhanced", "document_gray", "document_bw")
     }
 
     @Test
@@ -101,7 +112,7 @@ class ImagePipelineSpecTest {
 
     private fun page(
         processedUri: String? = null,
-        filterType: DocumentFilterType = DocumentFilterType.ORIGINAL_CORRECTED,
+        filterType: DocumentFilterType = DocumentFilterType.ORIGINAL,
         rotationDegrees: Int = 0,
         quad: DocumentQuad? = null,
         ocrText: String? = null,

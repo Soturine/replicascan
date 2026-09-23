@@ -1,17 +1,21 @@
 package com.soturine.replicascan.core.common.repository
 
+import com.soturine.replicascan.core.common.model.OcrFailureReason
 import com.soturine.replicascan.core.common.model.OcrModelReadiness
 import com.soturine.replicascan.core.common.model.OcrScript
 import com.soturine.replicascan.core.common.model.OcrTextResult
-import com.soturine.replicascan.core.common.model.OcrFailureReason
 
 data class OcrRequest(
     val imageUri: String,
-    val script: OcrScript = OcrScript.AUTOMATIC,
-    val fallbackHint: OcrScript? = null,
+    val script: OcrScript,
     val sourceFingerprint: String = imageUri,
-    val pipelineVersion: String = "ocr-v3",
-)
+    val pipelineVersion: String = PIPELINE_VERSION,
+) {
+    companion object {
+        /** v4: one recognizer per run on the geometry-only page render (no binarization). */
+        const val PIPELINE_VERSION = "ocr-v4"
+    }
+}
 
 class OcrRecognitionException(
     val reason: OcrFailureReason,
@@ -21,8 +25,6 @@ class OcrRecognitionException(
 interface OcrRepository {
     suspend fun recognize(request: OcrRequest): OcrTextResult
 
+    /** Asks Google Play services whether the script's model is installed, requesting it if not. */
     suspend fun modelReadiness(script: OcrScript): OcrModelReadiness
-
-    suspend fun recognizeText(imageUri: String): OcrTextResult = recognize(OcrRequest(imageUri))
 }
-

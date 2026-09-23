@@ -37,9 +37,10 @@ data class OcrTextElement(
     val confidence: Float? = null,
 )
 
-enum class OcrScript { AUTOMATIC, LATIN, DEVANAGARI, JAPANESE, KOREAN }
+/** Scripts backed by an on-device ML Kit Text Recognition v2 model bundled with this app. */
+enum class OcrScript { LATIN, DEVANAGARI, JAPANESE, KOREAN }
 
-enum class OcrModelReadiness { READY, DOWNLOAD_PENDING, UNAVAILABLE }
+enum class OcrModelReadiness { READY, DOWNLOAD_PENDING, UNAVAILABLE, ERROR }
 
 enum class OcrFailureReason { IMAGE_UNREADABLE, MODEL_NOT_READY, RECOGNITION_FAILED }
 

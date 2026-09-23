@@ -5,7 +5,7 @@ data class ExportedFile(
     val uri: String,
     val mimeType: String,
     val sizeBytes: Long,
-    val locationLabel: String,
+    /** Absolute path only for app-storage exports (API < 29); MediaStore exports use [uri]. */
     val pathHint: String? = null,
     val searchableTextIncluded: Boolean = false,
 )

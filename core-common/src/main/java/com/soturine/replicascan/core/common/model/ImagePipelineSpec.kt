@@ -37,7 +37,7 @@ data class PagePipelineKey(
 }
 
 object ImagePipelineSpec {
-    const val VERSION = 3
+    const val VERSION = 4
 
     fun normalizeRotation(rotationDegrees: Int): Int =
         ((rotationDegrees % 360) + 360) % 360
@@ -59,11 +59,13 @@ object ImagePipelineSpec {
         )
 }
 
-fun ScanPage.requiresDerivedImage(): Boolean =
-    processedUri != null ||
-        quad != null ||
-        ImagePipelineSpec.normalizeRotation(rotationDegrees) != 0 ||
-        filterType != DocumentFilterType.ORIGINAL_CORRECTED
+/** True when the approved page is exactly the canonical source: no crop, rotation or look. */
+fun ScanPage.isUnmodified(): Boolean =
+    (quad == null || quad.coerceNormalized() == DocumentQuad.FULL_PAGE) &&
+        ImagePipelineSpec.normalizeRotation(rotationDegrees) == 0 &&
+        filterType == DocumentFilterType.ORIGINAL
+
+fun ScanPage.requiresDerivedImage(): Boolean = processedUri != null || !isUnmodified()
 
 fun ScanPage.withInvalidatedDerivedImage(clearOcr: Boolean = true): ScanPage =
     copy(

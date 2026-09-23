@@ -4,7 +4,6 @@ import com.soturine.replicascan.core.common.model.ScanDocument
 import com.soturine.replicascan.core.common.model.CreatedScan
 import com.soturine.replicascan.core.common.model.DeletionOutcome
 import com.soturine.replicascan.core.common.model.ScanPage
-import com.soturine.replicascan.core.common.model.ScanMode
 import kotlinx.coroutines.flow.Flow
 import com.soturine.replicascan.core.common.model.OcrTextResult
 
@@ -19,7 +18,6 @@ interface ScanRepository {
 
     suspend fun createScan(
         title: String,
-        mode: ScanMode,
         sourceUris: List<String>,
         tags: List<String> = emptyList(),
         isDraft: Boolean = true,
@@ -39,11 +37,8 @@ interface ScanRepository {
 
     suspend fun toggleFavorite(scanId: String)
 
-    suspend fun updatePageOcr(scanId: String, pageId: String, text: String)
-
-    suspend fun updatePageOcrArtifact(scanId: String, pageId: String, result: OcrTextResult) {
-        updatePageOcr(scanId, pageId, result.fullText)
-    }
+    /** Stores the structured OCR artifact, the page text and the FTS row in one transaction. */
+    suspend fun updatePageOcrArtifact(scanId: String, pageId: String, result: OcrTextResult)
 
     suspend fun markScanSaved(scanId: String)
 

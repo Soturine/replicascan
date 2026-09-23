@@ -3,7 +3,6 @@ package com.soturine.replicascan.core.common.model
 data class ScanDocument(
     val id: String,
     val title: String,
-    val mode: ScanMode,
     val tags: List<String>,
     val isFavorite: Boolean,
     val createdAt: Long,

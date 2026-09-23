@@ -1,7 +1,9 @@
 package com.soturine.replicascan.core.common.usecase
 
+import com.soturine.replicascan.core.common.result.NameValidationError
 import com.soturine.replicascan.core.common.result.ValidationResult
 
+/** Keeps document names safe for export file names; the UI maps errors to localized copy. */
 class ValidateDocumentNameUseCase {
     operator fun invoke(rawValue: String): ValidationResult {
         val sanitized = rawValue
@@ -10,28 +12,13 @@ class ValidateDocumentNameUseCase {
             .replace(Regex("\\s+"), " ")
 
         return when {
-            sanitized.isBlank() -> ValidationResult(
-                isValid = false,
-                sanitizedValue = sanitized,
-                errorMessage = "Informe um nome para o documento.",
-            )
-
-            sanitized.length < 3 -> ValidationResult(
-                isValid = false,
-                sanitizedValue = sanitized,
-                errorMessage = "Use pelo menos 3 caracteres.",
-            )
-
-            sanitized.length > 80 -> ValidationResult(
-                isValid = false,
-                sanitizedValue = sanitized.take(80),
-                errorMessage = "Use no máximo 80 caracteres.",
-            )
-
-            else -> ValidationResult(
-                isValid = true,
-                sanitizedValue = sanitized,
-            )
+            sanitized.isBlank() -> ValidationResult(false, sanitized, NameValidationError.BLANK)
+            sanitized.length > MAX_LENGTH -> ValidationResult(false, sanitized.take(MAX_LENGTH), NameValidationError.TOO_LONG)
+            else -> ValidationResult(true, sanitized)
         }
+    }
+
+    companion object {
+        const val MAX_LENGTH = 80
     }
 }
