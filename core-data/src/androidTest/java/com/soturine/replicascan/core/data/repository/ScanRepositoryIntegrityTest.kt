@@ -4,7 +4,6 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
-import com.soturine.replicascan.core.common.model.ScanMode
 import com.soturine.replicascan.core.common.model.OcrTextResult
 import com.soturine.replicascan.core.data.files.ManagedFilePolicy
 import com.soturine.replicascan.core.data.files.ScanFileStore
@@ -42,7 +41,7 @@ class ScanRepositoryIntegrityTest {
     fun deletingPageRemovesPrivateFileAndReindexesRemainingPage() = runBlocking {
         val first = managedSource("delete-page-first.jpg")
         val second = managedSource("delete-page-second.jpg")
-        val created = repository.createScan("Scan", ScanMode.DOCUMENT, listOf(first.path, second.path))
+        val created = repository.createScan("Scan", listOf(first.path, second.path))
 
         val outcome = repository.deletePage(created.scanId, created.pageIds.first())
 
@@ -56,7 +55,7 @@ class ScanRepositoryIntegrityTest {
     fun deletingScanDoesNotDeleteExternalFile() = runBlocking {
         val managed = managedSource("delete-scan-managed.jpg")
         val external = File(context.cacheDir, "external-user-file.jpg").apply { writeText("external") }
-        val created = repository.createScan("Scan", ScanMode.DOCUMENT, listOf(managed.path, external.path))
+        val created = repository.createScan("Scan", listOf(managed.path, external.path))
 
         val outcome = repository.deleteScan(created.scanId)
 
@@ -71,7 +70,7 @@ class ScanRepositoryIntegrityTest {
     @Test
     fun metadataUpdatesAndSavePreserveAllPagesAndTheirState() = runBlocking {
         val sources = List(3) { index -> managedSource("metadata-$index.jpg") }
-        val created = repository.createScan("Original", ScanMode.DOCUMENT, sources.map(File::getPath))
+        val created = repository.createScan("Original", sources.map(File::getPath))
         val before = repository.getScan(created.scanId)!!
 
         repository.renameScan(created.scanId, "Renamed")
@@ -91,7 +90,7 @@ class ScanRepositoryIntegrityTest {
     @Test
     fun updatePageOrderRejectsPartialDuplicateOrForeignIds() = runBlocking {
         val sources = List(3) { index -> managedSource("order-$index.jpg") }
-        val created = repository.createScan("Scan", ScanMode.DOCUMENT, sources.map(File::getPath))
+        val created = repository.createScan("Scan", sources.map(File::getPath))
 
         assertFails { repository.updatePageOrder(created.scanId, created.pageIds.take(2)) }
         assertFails { repository.updatePageOrder(created.scanId, listOf(created.pageIds[0], created.pageIds[0], created.pageIds[2])) }
@@ -105,7 +104,7 @@ class ScanRepositoryIntegrityTest {
     @Test
     fun reordersWithUniqueIndicesWithoutReplacingPages() = runBlocking {
         val sources = List(3) { index -> managedSource("reorder-$index.jpg") }
-        val created = repository.createScan("Scan", ScanMode.DOCUMENT, sources.map(File::getPath))
+        val created = repository.createScan("Scan", sources.map(File::getPath))
         val reversed = created.pageIds.reversed()
 
         repository.updatePageOrder(created.scanId, reversed)
@@ -119,7 +118,6 @@ class ScanRepositoryIntegrityTest {
     fun fullTextSearchFindsTitleTagAndPersistedOcr() = runBlocking {
         val created = repository.createScan(
             title = "Travel receipt",
-            mode = ScanMode.RECEIPT,
             sourceUris = listOf(managedSource("search.jpg").path),
             tags = listOf("tax|2026"),
         )
