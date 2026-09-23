@@ -3,13 +3,16 @@ package com.soturine.replicascan.feature.export
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soturine.replicascan.core.common.model.ExportFormat
-import com.soturine.replicascan.core.common.model.PdfQuality
+import com.soturine.replicascan.core.common.model.ExportedFile
 import com.soturine.replicascan.core.common.model.PdfPageSize
+import com.soturine.replicascan.core.common.model.PdfQuality
+import com.soturine.replicascan.core.common.repository.ExportException
+import com.soturine.replicascan.core.common.repository.ExportFailureReason
 import com.soturine.replicascan.core.common.repository.ExportRepository
 import com.soturine.replicascan.core.common.repository.ScanRepository
 import com.soturine.replicascan.core.common.repository.UserPreferencesRepository
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.coroutines.cancellation.CancellationException
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -26,8 +29,9 @@ class ExportViewModel(
     private val selectedQuality = MutableStateFlow<PdfQuality?>(null)
     private val selectedPageSize = MutableStateFlow(PdfPageSize.AUTO)
     private val isExporting = MutableStateFlow(false)
-    private val exportedFiles = MutableStateFlow(emptyList<com.soturine.replicascan.core.common.model.ExportedFile>())
-    private val errorMessage = MutableStateFlow<String?>(null)
+    private val exportedFiles = MutableStateFlow(emptyList<ExportedFile>())
+    private val failedPage = MutableStateFlow<Int?>(null)
+    private val errorMessage = MutableStateFlow<ExportMessage?>(null)
 
     private val exportSelection = combine(
         selectedFormat,
@@ -59,7 +63,8 @@ class ExportViewModel(
             selectedQuality = qualityOverride ?: preferences.defaultPdfQuality,
             isExporting = exporting,
             exportedFiles = files,
-            errorMessage = message,
+            message = message,
+            failedPageNumber = failedPage.value,
             selectedPageSize = pageSize,
         )
     }.stateIn(
@@ -85,9 +90,11 @@ class ExportViewModel(
 
     fun export() {
         val scan = uiState.value.scan ?: return
+        if (isExporting.value) return
+        isExporting.value = true
         viewModelScope.launch {
-            isExporting.value = true
             errorMessage.value = null
+            failedPage.value = null
             exportedFiles.value = emptyList()
             try {
                 try {
@@ -106,8 +113,16 @@ class ExportViewModel(
                     exportedFiles.value = files
                 } catch (exception: CancellationException) {
                     throw exception
-                } catch (throwable: Exception) {
-                    errorMessage.value = throwable.message ?: "Não foi possível exportar o lote."
+                } catch (exception: ExportException) {
+                    // Set before the message so the combined state never pairs a message with a stale page.
+                    failedPage.value = exception.pageNumber
+                    errorMessage.value = when (exception.reason) {
+                        ExportFailureReason.EMPTY_DOCUMENT -> ExportMessage.EMPTY_DOCUMENT
+                        ExportFailureReason.PAGE_UNREADABLE -> ExportMessage.PAGE_UNREADABLE
+                        ExportFailureReason.WRITE_FAILED -> ExportMessage.WRITE_FAILED
+                    }
+                } catch (_: Exception) {
+                    errorMessage.value = ExportMessage.WRITE_FAILED
                 }
             } finally {
                 isExporting.value = false
