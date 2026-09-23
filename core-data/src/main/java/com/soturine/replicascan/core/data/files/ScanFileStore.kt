@@ -55,7 +55,6 @@ class ScanFileStore private constructor(
     private val resolveMimeType: (String) -> String?,
 ) : SourceFileStore {
     private val policy = ManagedFilePolicy(filesDir, cacheDir)
-    private val cacheRoot = cacheDir
 
     constructor(context: Context) : this(
         filesDir = context.filesDir,
@@ -157,9 +156,7 @@ class ScanFileStore private constructor(
             )
             addAll(policy.derivedDirectory.oldFiles(threshold))
             addAll(policy.sharedExportDirectory.oldFiles(threshold))
-            addAll(cacheRoot.listFiles().orEmpty().filter { file ->
-                file.isFile && file.name.startsWith("capture-") && file.lastModified() < threshold
-            })
+            addAll(policy.captureDirectory.oldFiles(threshold))
         }.distinctBy { it.canonicalPath }
 
         var deleted = 0
@@ -168,6 +165,14 @@ class ScanFileStore private constructor(
             if (file.delete() || !file.exists()) deleted++ else failed++
         }
         OrphanCleanupResult(deletedFileCount = deleted, failedFileCount = failed)
+    }
+
+    /** Target for the system-camera fallback; ownership is released by [importSources] or [discardCapture]. */
+    fun newCaptureFile(): File =
+        File(policy.captureDirectory.apply { mkdirs() }, "capture-${UUID.randomUUID()}.jpg")
+
+    fun discardCapture(path: String) {
+        deleteOwnedCaptureInput(path)
     }
 
     fun managedFileExists(uriValue: String?): Boolean? =
@@ -211,8 +216,8 @@ class ScanFileStore private constructor(
             else -> null
         } ?: return
         val canonical = runCatching { candidate.canonicalFile }.getOrNull() ?: return
-        val canonicalCache = runCatching { cacheRoot.canonicalFile }.getOrNull() ?: return
-        if (canonical.parentFile == canonicalCache && canonical.name.startsWith("capture-")) {
+        val captureDirectory = runCatching { policy.captureDirectory.canonicalFile }.getOrNull() ?: return
+        if (canonical.parentFile == captureDirectory && canonical.name.startsWith("capture-")) {
             canonical.delete()
         }
     }

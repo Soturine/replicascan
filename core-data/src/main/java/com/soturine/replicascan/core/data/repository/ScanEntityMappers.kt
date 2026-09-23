@@ -4,7 +4,6 @@ import com.soturine.replicascan.core.common.model.DocumentFilterType
 import com.soturine.replicascan.core.common.model.DocumentQuad
 import com.soturine.replicascan.core.common.model.PointValue
 import com.soturine.replicascan.core.common.model.ScanDocument
-import com.soturine.replicascan.core.common.model.ScanMode
 import com.soturine.replicascan.core.common.model.ScanPage
 import com.soturine.replicascan.core.data.local.ScanWithPages
 import com.soturine.replicascan.core.data.local.entity.PageEntity
@@ -14,7 +13,6 @@ internal fun ScanWithPages.asExternalModel(): ScanDocument =
     ScanDocument(
         id = scan.id,
         title = scan.title,
-        mode = ScanMode.fromStorageKey(scan.mode),
         tags = TagCodec.decode(scan.tags),
         isFavorite = scan.isFavorite,
         createdAt = scan.createdAt,
@@ -84,12 +82,7 @@ private fun String.toDocumentQuad(): DocumentQuad {
             bottomLeft = points[3],
         )
     } else {
-        DocumentQuad(
-            topLeft = PointValue(0f, 0f),
-            topRight = PointValue(1f, 0f),
-            bottomRight = PointValue(1f, 1f),
-            bottomLeft = PointValue(0f, 1f),
-        )
+        DocumentQuad.FULL_PAGE
     }
 }
 

@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.soturine.replicascan.core.common.model.AppThemePreference
 import com.soturine.replicascan.core.common.model.PdfQuality
-import com.soturine.replicascan.core.common.model.ScanMode
 import com.soturine.replicascan.core.common.model.UserPreferences
 import com.soturine.replicascan.core.common.repository.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
@@ -24,9 +23,6 @@ class DefaultUserPreferencesRepository(
                 onboardingCompleted = prefs[Keys.OnboardingCompleted] ?: false,
                 themePreference = AppThemePreference.fromStorageKey(
                     prefs[Keys.ThemePreference] ?: AppThemePreference.SYSTEM.storageKey,
-                ),
-                defaultScanMode = ScanMode.fromStorageKey(
-                    prefs[Keys.DefaultScanMode] ?: ScanMode.DOCUMENT.storageKey,
                 ),
                 defaultPdfQuality = PdfQuality.fromStorageKey(
                     prefs[Keys.DefaultPdfQuality] ?: PdfQuality.BALANCED.storageKey,
@@ -46,12 +42,6 @@ class DefaultUserPreferencesRepository(
         }
     }
 
-    override suspend fun setDefaultScanMode(mode: ScanMode) {
-        context.replicascanPreferencesDataStore.edit { prefs ->
-            prefs[Keys.DefaultScanMode] = mode.storageKey
-        }
-    }
-
     override suspend fun setDefaultPdfQuality(quality: PdfQuality) {
         context.replicascanPreferencesDataStore.edit { prefs ->
             prefs[Keys.DefaultPdfQuality] = quality.storageKey
@@ -61,7 +51,6 @@ class DefaultUserPreferencesRepository(
     private object Keys {
         val OnboardingCompleted = booleanPreferencesKey("onboarding_completed")
         val ThemePreference = stringPreferencesKey("theme_preference")
-        val DefaultScanMode = stringPreferencesKey("default_scan_mode")
         val DefaultPdfQuality = stringPreferencesKey("default_pdf_quality")
     }
 }

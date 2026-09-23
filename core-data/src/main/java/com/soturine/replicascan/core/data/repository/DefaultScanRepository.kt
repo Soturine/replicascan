@@ -2,16 +2,16 @@ package com.soturine.replicascan.core.data.repository
 
 import com.soturine.replicascan.core.common.model.CreatedScan
 import com.soturine.replicascan.core.common.model.DeletionOutcome
-import com.soturine.replicascan.core.common.model.ScanDocument
-import com.soturine.replicascan.core.common.model.ScanMode
-import com.soturine.replicascan.core.common.model.ScanPage
+import com.soturine.replicascan.core.common.model.DocumentFilterType
 import com.soturine.replicascan.core.common.model.OcrTextResult
+import com.soturine.replicascan.core.common.model.ScanDocument
+import com.soturine.replicascan.core.common.model.ScanPage
 import com.soturine.replicascan.core.common.repository.ScanRepository
 import com.soturine.replicascan.core.data.files.ScanFileStore
 import com.soturine.replicascan.core.data.local.dao.ScanDao
 import com.soturine.replicascan.core.data.local.entity.PageEntity
-import com.soturine.replicascan.core.data.local.entity.ScanEntity
 import com.soturine.replicascan.core.data.local.entity.PageOcrArtifactEntity
+import com.soturine.replicascan.core.data.local.entity.ScanEntity
 import com.soturine.replicascan.core.data.local.entity.ScanSearchFtsEntity
 import java.util.UUID
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +43,6 @@ class DefaultScanRepository(
 
     override suspend fun createScan(
         title: String,
-        mode: ScanMode,
         sourceUris: List<String>,
         tags: List<String>,
         isDraft: Boolean,
@@ -53,7 +52,7 @@ class DefaultScanRepository(
         val scan = ScanEntity(
             id = scanId,
             title = title,
-            mode = mode.storageKey,
+            mode = LEGACY_SCAN_MODE,
             tags = TagCodec.encode(tags),
             isFavorite = false,
             createdAt = now,
@@ -68,7 +67,7 @@ class DefaultScanRepository(
                 pageIndex = index,
                 sourceUri = uri,
                 processedUri = null,
-                filterType = com.soturine.replicascan.core.common.model.DocumentFilterType.AUTO.storageKey,
+                filterType = DocumentFilterType.ORIGINAL.storageKey,
                 rotationDegrees = 0,
                 quad = null,
                 ocrText = null,
@@ -92,7 +91,7 @@ class DefaultScanRepository(
                     pageIndex = existingPages.size,
                     sourceUri = sourceUri,
                     processedUri = null,
-                    filterType = com.soturine.replicascan.core.common.model.DocumentFilterType.AUTO.storageKey,
+                    filterType = DocumentFilterType.ORIGINAL.storageKey,
                     rotationDegrees = 0,
                     quad = null,
                     ocrText = null,
@@ -175,14 +174,6 @@ class DefaultScanRepository(
                 isFavorite = !entity.isFavorite,
                 updatedAt = System.currentTimeMillis(),
             )
-        }
-    }
-
-    override suspend fun updatePageOcr(scanId: String, pageId: String, text: String) {
-        withContext(Dispatchers.IO) {
-            val page = scanDao.getPages(scanId).firstOrNull { it.id == pageId } ?: return@withContext
-            scanDao.updatePage(page.copy(ocrText = text))
-            scanDao.touchScan(scanId, System.currentTimeMillis())
         }
     }
 
@@ -280,5 +271,9 @@ class DefaultScanRepository(
             }
         })
     }.toString()
-}
 
+    private companion object {
+        /** `scans.mode` is a retired Room column kept to avoid a schema migration; it no longer drives behavior. */
+        const val LEGACY_SCAN_MODE = "document"
+    }
+}

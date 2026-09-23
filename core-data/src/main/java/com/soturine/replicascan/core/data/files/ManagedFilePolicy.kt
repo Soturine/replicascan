@@ -22,6 +22,9 @@ class ManagedFilePolicy(
     val derivedDirectory = File(cacheDir, DERIVED_DIRECTORY_NAME)
     val sharedExportDirectory = File(cacheDir, SHARED_EXPORT_DIRECTORY_NAME)
 
+    /** Short-lived photos from the system-camera fallback; deleted once copied to [sourceDirectory]. */
+    val captureDirectory = File(cacheDir, CAPTURE_DIRECTORY_NAME)
+
     fun resolve(uriValue: String?): ManagedFile? {
         val candidate = uriValue?.takeIf(String::isNotBlank)?.toLocalFile() ?: return null
         val canonical = runCatching { candidate.canonicalFile }.getOrNull() ?: return null
@@ -53,5 +56,6 @@ class ManagedFilePolicy(
         const val SOURCE_DIRECTORY_NAME = "scan-sources"
         const val DERIVED_DIRECTORY_NAME = "processed"
         const val SHARED_EXPORT_DIRECTORY_NAME = "shared-exports"
+        const val CAPTURE_DIRECTORY_NAME = "captures"
     }
 }

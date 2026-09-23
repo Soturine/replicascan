@@ -12,6 +12,13 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         consumerProguardFiles("consumer-rules.pro")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // OCR artifacts record the engine that produced them; the catalog stays the single source.
+        buildConfigField("String", "OCR_LATIN_ENGINE_VERSION", "\"${libs.versions.mlkitTextRecognition.get()}\"")
+        buildConfigField("String", "OCR_SCRIPT_ENGINE_VERSION", "\"${libs.versions.mlkitTextRecognitionScript.get()}\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     compileOptions {

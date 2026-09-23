@@ -2,8 +2,12 @@ package com.soturine.replicascan.core.data.ocr
 
 import android.content.Context
 import android.graphics.Rect
-import com.google.mlkit.vision.common.InputImage
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.common.moduleinstall.ModuleInstall
+import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.mlkit.common.MlKitException
+import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
@@ -14,7 +18,6 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.soturine.replicascan.core.common.image.CanonicalImageDecoder
 import com.soturine.replicascan.core.common.image.ImagePurpose
 import com.soturine.replicascan.core.common.model.OcrArtifactMetadata
-import com.soturine.replicascan.core.common.model.AutomaticOcrScriptPlanner
 import com.soturine.replicascan.core.common.model.OcrFailureReason
 import com.soturine.replicascan.core.common.model.OcrModelReadiness
 import com.soturine.replicascan.core.common.model.OcrScript
@@ -22,64 +25,81 @@ import com.soturine.replicascan.core.common.model.OcrTextBlock
 import com.soturine.replicascan.core.common.model.OcrTextBounds
 import com.soturine.replicascan.core.common.model.OcrTextElement
 import com.soturine.replicascan.core.common.model.OcrTextLine
-import com.soturine.replicascan.core.common.model.OcrTextQuality
 import com.soturine.replicascan.core.common.model.OcrTextResult
+import com.soturine.replicascan.core.common.repository.OcrRecognitionException
 import com.soturine.replicascan.core.common.repository.OcrRepository
 import com.soturine.replicascan.core.common.repository.OcrRequest
-import com.soturine.replicascan.core.common.repository.OcrRecognitionException
+import com.soturine.replicascan.core.data.BuildConfig
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/** ML Kit Text Recognition v2 through Google Play services. One recognizer runs per request. */
 class DefaultOcrRepository(context: Context) : OcrRepository, AutoCloseable {
-    private val imageDecoder = CanonicalImageDecoder(context.applicationContext)
-    private val readiness = ConcurrentHashMap<OcrScript, OcrModelReadiness>().apply {
-        OcrScript.entries.forEach { put(it, OcrModelReadiness.DOWNLOAD_PENDING) }
-    }
-    private val recognizerClients: Map<OcrScript, TextRecognizer> by lazy {
-        mapOf(
-            OcrScript.LATIN to TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS),
-            OcrScript.DEVANAGARI to TextRecognition.getClient(DevanagariTextRecognizerOptions.Builder().build()),
-            OcrScript.JAPANESE to TextRecognition.getClient(JapaneseTextRecognizerOptions.Builder().build()),
-            OcrScript.KOREAN to TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build()),
-        )
-    }
+    private val appContext = context.applicationContext
+    private val imageDecoder = CanonicalImageDecoder(appContext)
+    private val recognizers = ConcurrentHashMap<OcrScript, TextRecognizer>()
 
     override suspend fun recognize(request: OcrRequest): OcrTextResult = withContext(Dispatchers.IO) {
         val decoded = imageDecoder.decode(request.imageUri, ImagePurpose.OCR)
             ?: throw OcrRecognitionException(OcrFailureReason.IMAGE_UNREADABLE)
-        val candidates = AutomaticOcrScriptPlanner.candidates(request.script, request.fallbackHint)
-        var best: OcrTextResult? = null
-        var lastFailure: OcrRecognitionException? = null
-        candidates.forEach { script ->
-            runCatching {
-                recognizeWithScript(
-                    image = InputImage.fromBitmap(decoded.bitmap, 0),
-                    request = request.copy(script = script),
-                )
-            }.onSuccess { result ->
-                if (best == null || result.isBetterThan(best!!)) best = result
-                if (result.quality == OcrTextQuality.GOOD) return@withContext result
-            }.onFailure { failure ->
-                lastFailure = failure as? OcrRecognitionException
-                    ?: OcrRecognitionException(OcrFailureReason.RECOGNITION_FAILED, failure)
+        try {
+            val recognized = recognizer(request.script)
+                .process(InputImage.fromBitmap(decoded.bitmap, 0))
+                .awaitResult()
+            toResult(recognized, request)
+        } catch (exception: CancellationException) {
+            throw exception
+        } catch (exception: MlKitException) {
+            val reason = if (exception.errorCode == MlKitException.UNAVAILABLE) {
+                OcrFailureReason.MODEL_NOT_READY
+            } else {
+                OcrFailureReason.RECOGNITION_FAILED
             }
+            throw OcrRecognitionException(reason, exception)
+        } catch (exception: Exception) {
+            throw OcrRecognitionException(OcrFailureReason.RECOGNITION_FAILED, exception)
+        } finally {
+            decoded.bitmap.recycle()
         }
-        best ?: throw lastFailure ?: OcrRecognitionException(OcrFailureReason.RECOGNITION_FAILED)
     }
 
-    override suspend fun modelReadiness(script: OcrScript): OcrModelReadiness =
-        if (script == OcrScript.AUTOMATIC) {
-            readiness[OcrScript.LATIN] ?: OcrModelReadiness.DOWNLOAD_PENDING
-        } else {
-            readiness[script] ?: OcrModelReadiness.UNAVAILABLE
+    override suspend fun modelReadiness(script: OcrScript): OcrModelReadiness = withContext(Dispatchers.IO) {
+        val installer = ModuleInstall.getClient(appContext)
+        val api = recognizer(script)
+        try {
+            if (installer.areModulesAvailable(api).awaitResult().areModulesAvailable()) {
+                OcrModelReadiness.READY
+            } else {
+                // Fire-and-forget: Play services downloads in the background; a later run becomes READY.
+                installer.installModules(ModuleInstallRequest.newBuilder().addApi(api).build())
+                OcrModelReadiness.DOWNLOAD_PENDING
+            }
+        } catch (exception: CancellationException) {
+            throw exception
+        } catch (exception: ApiException) {
+            if (exception.statusCode == CommonStatusCodes.API_NOT_CONNECTED) OcrModelReadiness.UNAVAILABLE else OcrModelReadiness.ERROR
+        } catch (_: Exception) {
+            OcrModelReadiness.ERROR
         }
+    }
 
     override fun close() {
-        recognizerClients.values.forEach(TextRecognizer::close)
+        recognizers.values.forEach(TextRecognizer::close)
+        recognizers.clear()
     }
 
-    private fun formatRecognizedText(result: Text, request: OcrRequest): OcrTextResult {
+    private fun recognizer(script: OcrScript): TextRecognizer = recognizers.getOrPut(script) {
+        when (script) {
+            OcrScript.LATIN -> TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+            OcrScript.DEVANAGARI -> TextRecognition.getClient(DevanagariTextRecognizerOptions.Builder().build())
+            OcrScript.JAPANESE -> TextRecognition.getClient(JapaneseTextRecognizerOptions.Builder().build())
+            OcrScript.KOREAN -> TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build())
+        }
+    }
+
+    private fun toResult(result: Text, request: OcrRequest): OcrTextResult {
         val blocks = result.textBlocks.mapNotNull { block ->
             val lines = block.lines.mapNotNull { line ->
                 line.text.trim().takeIf(String::isNotBlank)?.let { text ->
@@ -96,17 +116,19 @@ class DefaultOcrRepository(context: Context) : OcrRepository, AutoCloseable {
                     )
                 }
             }
-            lines.takeIf(List<OcrTextLine>::isNotEmpty)?.let {
-                OcrTextBlock(it, block.boundingBox?.toOcrTextBounds())
-            }
+            lines.takeIf(List<OcrTextLine>::isNotEmpty)?.let { OcrTextBlock(it, block.boundingBox?.toOcrTextBounds()) }
         }
         return OcrTextResult(
             blocks = blocks,
             fallbackText = result.text.trim(),
             metadata = OcrArtifactMetadata(
                 script = request.script,
-                engine = "ml-kit-text-recognition-v2",
-                engineVersion = if (request.script == OcrScript.LATIN) "19.0.1" else "16.0.1",
+                engine = ENGINE,
+                engineVersion = if (request.script == OcrScript.LATIN) {
+                    BuildConfig.OCR_LATIN_ENGINE_VERSION
+                } else {
+                    BuildConfig.OCR_SCRIPT_ENGINE_VERSION
+                },
                 pipelineVersion = request.pipelineVersion,
                 sourceFingerprint = request.sourceFingerprint,
                 createdAtEpochMillis = System.currentTimeMillis(),
@@ -114,40 +136,11 @@ class DefaultOcrRepository(context: Context) : OcrRepository, AutoCloseable {
         )
     }
 
-    private suspend fun recognizeWithScript(
-        image: InputImage,
-        request: OcrRequest,
-    ): OcrTextResult {
-        val script = request.script
-        require(script != OcrScript.AUTOMATIC)
-        return try {
-            val recognized = recognizerClients.getValue(script).process(image).awaitResult()
-            readiness[script] = OcrModelReadiness.READY
-            formatRecognizedText(recognized, request)
-        } catch (exception: MlKitException) {
-            val reason = if (exception.errorCode == 14) {
-                readiness[script] = OcrModelReadiness.DOWNLOAD_PENDING
-                OcrFailureReason.MODEL_NOT_READY
-            } else {
-                OcrFailureReason.RECOGNITION_FAILED
-            }
-            throw OcrRecognitionException(reason, exception)
-        }
-    }
-
-    private fun OcrTextResult.isBetterThan(other: OcrTextResult): Boolean {
-        val rank = mapOf(
-            OcrTextQuality.EMPTY to 0,
-            OcrTextQuality.WEAK to 1,
-            OcrTextQuality.PARTIAL to 2,
-            OcrTextQuality.GOOD to 3,
-        )
-        return rank.getValue(quality) > rank.getValue(other.quality) ||
-            (quality == other.quality && fullText.length > other.fullText.length)
-    }
-
     private fun Rect.toOcrTextBounds() = OcrTextBounds(left, top, right, bottom)
 
-    private fun List<Float>.averageOrNull(): Float? =
-        if (isEmpty()) null else average().toFloat()
+    private fun List<Float>.averageOrNull(): Float? = if (isEmpty()) null else average().toFloat()
+
+    private companion object {
+        const val ENGINE = "ml-kit-text-recognition-v2"
+    }
 }
