@@ -3,6 +3,9 @@
     <cache-path
         name="shared_exports"
         path="shared-exports/" />
+    <cache-path
+        name="camera_captures"
+        path="captures/" />
     <files-path
         name="internal_exports"
         path="replicascan-exports/" />

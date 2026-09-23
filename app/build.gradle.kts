@@ -33,6 +33,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     androidResources {
@@ -51,7 +52,6 @@ dependencies {
     implementation(project(":core-data"))
     implementation(project(":core-ui"))
     implementation(project(":feature-home"))
-    implementation(project(":feature-camera"))
     implementation(project(":feature-editor"))
     implementation(project(":feature-export"))
     implementation(project(":feature-history"))

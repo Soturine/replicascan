@@ -22,7 +22,6 @@ include(
     ":core-data",
     ":core-ui",
     ":feature-home",
-    ":feature-camera",
     ":feature-editor",
     ":feature-export",
     ":feature-history",
