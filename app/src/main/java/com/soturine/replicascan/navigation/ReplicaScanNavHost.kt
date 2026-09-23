@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.core.content.FileProvider
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
@@ -62,6 +63,7 @@ fun ReplicaScanNavHost(
     rootViewModel: RootViewModel,
 ) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
     val rootState = rootViewModel.uiState.collectAsStateWithLifecycle()
@@ -78,17 +80,17 @@ fun ReplicaScanNavHost(
         creatingDocument = true
         coroutineScope.launch {
             try {
-                when (val result = container.scanDraftCoordinator.createDraft(uris, context.getString(titleRes))) {
+                when (val result = container.scanDraftCoordinator.createDraft(uris, resources.getString(titleRes))) {
                     is DraftCreationResult.Success -> {
                         if (result.failureCount > 0) {
                             val total = result.importedCount + result.failureCount
-                            context.toast(context.getString(R.string.import_partial_result, result.importedCount, total, result.failureCount))
+                            context.toast(resources.getString(R.string.import_partial_result, result.importedCount, total, result.failureCount))
                         }
                         navController.navigate(ReplicaScanDestinations.review(result.scanId))
                         if (openCrop) navController.navigate(ReplicaScanDestinations.crop(result.scanId, result.firstPageId))
                     }
                     is DraftCreationResult.Failure -> if (result.requestedCount > 0) {
-                        context.toast(context.getString(R.string.import_failed_result))
+                        context.toast(resources.getString(R.string.import_failed_result))
                     }
                 }
             } finally {
@@ -200,7 +202,7 @@ fun ReplicaScanNavHost(
                 onDeleteScan = {
                     detailViewModel.deleteScan { outcome ->
                         if (outcome.hasCleanupFailures) {
-                            context.toast(context.getString(R.string.delete_partial_result, outcome.failedFileCount))
+                            context.toast(resources.getString(R.string.delete_partial_result, outcome.failedFileCount))
                         }
                         navController.popBackStack()
                     }
