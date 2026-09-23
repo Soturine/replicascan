@@ -33,5 +33,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.kotlinx.coroutines.android)
 
+    testImplementation(libs.junit4)
+    testImplementation(libs.truth)
+
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

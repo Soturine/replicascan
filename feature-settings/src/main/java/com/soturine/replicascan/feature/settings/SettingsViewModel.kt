@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soturine.replicascan.core.common.model.AppThemePreference
 import com.soturine.replicascan.core.common.model.PdfQuality
-import com.soturine.replicascan.core.common.model.ScanMode
 import com.soturine.replicascan.core.common.repository.UserPreferencesRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -29,22 +28,9 @@ class SettingsViewModel(
         }
     }
 
-    fun setDefaultMode(mode: ScanMode) {
-        viewModelScope.launch {
-            preferencesRepository.setDefaultScanMode(mode)
-        }
-    }
-
     fun setPdfQuality(quality: PdfQuality) {
         viewModelScope.launch {
             preferencesRepository.setDefaultPdfQuality(quality)
         }
     }
-
-    fun resetOnboarding() {
-        viewModelScope.launch {
-            preferencesRepository.setOnboardingCompleted(false)
-        }
-    }
 }
-
