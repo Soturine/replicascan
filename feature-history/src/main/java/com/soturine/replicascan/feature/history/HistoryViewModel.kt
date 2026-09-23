@@ -18,7 +18,7 @@ class HistoryViewModel(
 
     val uiState: StateFlow<HistoryUiState> = query.flatMapLatest { currentQuery ->
         scanRepository.observeScans(currentQuery).map { scans ->
-            HistoryUiState(query = currentQuery, scans = scans)
+            HistoryUiState(isLoaded = true, query = currentQuery, scans = scans)
         }
     }.stateIn(
         scope = viewModelScope,
