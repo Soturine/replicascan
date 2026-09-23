@@ -2,30 +2,23 @@
 
 ReplicaScan é o nome corrente a partir da v0.4.0. O produto usou outro nome até a v0.3.1; esse histórico permanece intacto no Git, nas tags, releases e no changelog.
 
-## v0.4.0 — Identity & Engineering Foundation
+## v0.4.0 — Identity, Simplification & Release Foundation
 
-**Status:** implementação preparada; publicação depende dos gates assíncronos do GitHub.
+**Status:** publicada como release de avaliação no GitHub (APK debug); QA físico pendente.
 
-- rebrand completo de produto, pacote Android, repositório, recursos e artefatos;
-- licença corrente proprietária com fronteira histórica e avisos de terceiros;
-- gates negativos de branding, localização e consistência de release;
-- API 36 como gate instrumental principal e API 35 como compatibilidade agendada;
-- release fail-closed com APK construído uma vez, checksum, attestation e tag anotada após sucesso;
-- constituição de engenharia, ADRs e runbook de recuperação.
+- identidade ReplicaScan, pacote `com.soturine.replicascan`, licença corrente proprietária;
+- ML Kit Document Scanner como motor principal; detector heurístico próprio, CameraX e modos de documento removidos;
+- OCR com um reconhecedor por idioma de escrita, artefato estruturado e prontidão real do modelo;
+- exportação sem intermediário com perdas; interface revisada e 12 catálogos reescritos;
+- gate de API 36 em dispositivo gerenciado; release publicada pelo proprietário e verificada pelo CI (ADR 0003).
 
 ## v0.4.1 — Physical QA & Play Hardening
 
-- validar câmera, crop, TalkBack, fonte 200%, RTL e upgrade em aparelhos físicos;
-- medir cold start, jank, latência, pico de RAM e tamanho do artefato;
-- preparar AAB e assinatura de produção sem armazenar segredo no repositório;
-- concluir Data Safety e store listing com evidências reais.
-
-## v0.4.2 — Measured Document Quality
-
-- ampliar corpus legal/sintético de folha, recibo, caderno, sombra e fundos poluídos;
-- comparar IoU, erro de cantos, falsos positivos, legibilidade, latência e memória;
-- melhorar heurística/filtros apenas quando métricas superarem a base atual;
-- preservar crop manual e fallback conservador.
+- validar scanner, fallback, crop, TalkBack, fonte 200%, RTL e upgrade em aparelhos físicos;
+- revisão linguística nativa dos 12 idiomas;
+- posicionar o texto do PDF pesquisável pelas caixas do OCR e validar em leitores externos;
+- medir cold start, jank, latência de OCR/exportação, RAM e tamanho do artefato;
+- AAB assinado com Play signing, R8 com regras justificadas, Data safety e store listing com evidências reais.
 
 ## v0.5.0+ — Optional Intelligence
 
@@ -35,4 +28,4 @@ ReplicaScan é o nome corrente a partir da v0.4.0. O produto usou outro nome at�
 
 ## Fora do caminho crítico
 
-Backend, login, cloud sync, AdMob, assinatura/Play Console, OpenCV/LiteRT, novo OCR, detector ML, domínio e redesign amplo não fazem parte da v0.4.0.
+Backend, login, cloud sync, anúncios, analytics, OpenCV/LiteRT, OCR remoto e detector próprio não fazem parte do caminho atual.

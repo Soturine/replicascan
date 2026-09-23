@@ -6,7 +6,7 @@
 [![Android CI](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml)
 [![Deploy Pages](https://github.com/Soturine/replicascan/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/pages.yml)
 
-ReplicaScan é um scanner Android local-first: captura ou importa documentos, corrige perspectiva, revisa, executa OCR no aparelho e exporta em PDF, JPG ou PNG.
+ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Scanner, guarda as páginas só no aparelho, reconhece texto no próprio dispositivo e exporta PDF pesquisável, JPG ou PNG. Versão atual: v0.4.0.
 
 - Repositório: <https://github.com/Soturine/replicascan>
 - Releases: <https://github.com/Soturine/replicascan/releases>
@@ -14,11 +14,10 @@ ReplicaScan é um scanner Android local-first: captura ou importa documentos, co
 
 ## Produto
 
-- câmera própria com CameraX, detecção ao vivo, foco, flash e lote multipágina;
-- ML Kit Document Scanner como alternativa assistida;
-- crop perspectivo com fallback conservador e ajuste manual dos quatro cantos;
-- cinco filtros com intenção clara e pipeline coerente entre preview e exportação;
-- OCR local com qualidade explícita, trechos legíveis e cópia rápida;
+- **Escanear** abre o ML Kit Document Scanner (bordas, perspectiva, filtros e limpeza no aparelho, multipágina);
+- importação pela galeria e, se o scanner não estiver disponível, foto pela câmera do sistema com crop manual;
+- revisão com o documento em destaque: cortar, girar, ajustar visual (Original, Realçado, Cinza, Preto e branco) e texto;
+- OCR no aparelho com um reconhecedor por idioma de escrita, artefato estruturado e cópia rápida;
 - PDF pesquisável quando há OCR, JPG e PNG, com opções progressivas por formato;
 - histórico local com título, tags, favoritos e busca Room FTS;
 - 12 idiomas, incluindo árabe com RTL;
@@ -44,13 +43,13 @@ O projeto é um monólito modular em Kotlin, Jetpack Compose e Material 3:
 - `core-common`: modelos e contratos centrais;
 - `core-data`: Room, DataStore, OCR, imagem e exportação;
 - `core-ui`: tema e componentes reutilizáveis;
-- `feature-*`: câmera, home, editor, exportação, histórico, OCR e configurações.
+- `feature-*`: home (scanner), editor, exportação, histórico, OCR e configurações.
 
 Referências: [arquitetura](docs/architecture.md), [estado atual](docs/current-state.md), [lifecycle dos dados](docs/data-lifecycle.md), [threat model](docs/threat-model.md), [setup](docs/setup.md), [testes](docs/testing.md) e [constituição de engenharia](docs/engineering/ENGINEERING_CONSTITUTION.md).
 
 ## Desenvolvimento
 
-Requisitos: JDK 17, Android SDK Platform 36 e Build Tools 36.0.0.
+Requisitos: JDK 17+, Android SDK Platform 36 e Build Tools 36.x. O scanner e o OCR usam Google Play services no aparelho.
 
 ```powershell
 .\gradlew.bat assembleDebug
@@ -61,7 +60,7 @@ python tools/check_branding.py
 python tools/check_consistency.py
 ```
 
-O pipeline de `main` valida, produz uma única vez o APK de avaliação, testa em API 36 e só então cria a tag anotada e a GitHub Release. API 35 permanece como verificação de compatibilidade agendada. Consulte [docs/release.md](docs/release.md).
+Cada push em `main` é qualificado pelo GitHub Actions (build, lint, testes, API 36 em dispositivo gerenciado, site e CodeQL). A release de avaliação é publicada pelo proprietário com `tools/release_artifact.py` e verificada pelo workflow ao receber a tag; o CI nunca cria tags. Consulte [docs/release.md](docs/release.md) e o [ADR 0003](docs/adr/0003-owner-published-evaluation-releases.md).
 
 ## Licença
 

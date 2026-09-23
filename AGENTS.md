@@ -10,7 +10,7 @@ ReplicaScan é um scanner Android local-first. Antes de alterar, valide código,
 - `core-common`: modelos, contratos e regras centrais;
 - `core-data`: Room, DataStore, OCR, imagem, exportação e lifecycle;
 - `core-ui`: tema e componentes;
-- `feature-*`: home, câmera, editor, exportação, histórico, OCR e configurações;
+- `feature-*`: home (ML Kit Document Scanner), editor, exportação, histórico, OCR e configurações;
 - `docs`, `site`, `tools`: documentação pública, Pages e gates.
 
 ## Não negociáveis
@@ -23,7 +23,7 @@ ReplicaScan é um scanner Android local-first. Antes de alterar, valide código,
 - backup/device transfer documental desativado;
 - FileProvider somente nos subdiretórios necessários, com leitura mínima;
 - preview intermediário; processamento/exportação full-res fora da UI;
-- baixa confiança de crop usa fallback conservador e o ajuste manual permanece funcional;
+- a captura usa o ML Kit Document Scanner; o crop manual (página inteira por padrão) permanece funcional;
 - UI limpa, acessível, localizada e com progressive disclosure.
 
 ## Comandos
@@ -35,10 +35,11 @@ Durante a implementação, prefira tasks focadas. Antes do push final:
 python tools/check_localization.py
 python tools/check_branding.py
 python tools/check_consistency.py
+python tools/check_site.py
 python -m unittest discover -s tools/tests -p "test_*.py"
 ```
 
-API 36 no GitHub é o gate instrumental de release. API 35 é compatibilidade agendada. Testes automatizados não substituem câmera, TalkBack, fonte 200%, RTL e corpus físico.
+API 36 (`api36DebugAndroidTest`, Gradle Managed Device) no GitHub é o gate instrumental; API 35 é compatibilidade agendada. Testes automatizados não substituem câmera, TalkBack, fonte 200%, RTL e corpus físico.
 
 ## Git, licença e release
 
@@ -46,7 +47,7 @@ API 36 no GitHub é o gate instrumental de release. API 35 é compatibilidade ag
 - código corrente é proprietário conforme `LICENSE`/`LICENSING.md`; terceiros mantêm suas licenças;
 - o branding gate permite o nome histórico apenas em caminhos explicitamente autorizados;
 - `release/manifest.json` expressa intenção de publicar;
-- GitHub Actions constrói o artefato uma vez, valida, testa API 36, cria tag anotada e publica o mesmo APK;
+- o proprietário publica tag anotada e release de avaliação com `tools/release_artifact.py`; o GitHub Actions qualifica `main` e verifica a release publicada, nunca cria tag ou release (ADR 0003);
 - não faça polling de CI: após o push, consulte uma vez e deixe o GitHub concluir;
 - recuperação e idempotência: [docs/release.md](docs/release.md).
 
