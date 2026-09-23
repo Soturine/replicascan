@@ -36,12 +36,13 @@ def validate_manifest(manifest: dict, version: str, version_code: int) -> list[s
 
 def validate(root: Path) -> list[str]:
     errors: list[str] = []
+    manifest = json.loads((root / "release/manifest.json").read_text(encoding="utf-8"))
+    version = str(manifest.get("version", ""))
     catalog = (root / "gradle/libs.versions.toml").read_text(encoding="utf-8")
-    version = catalog_value(catalog, "versionName")
+    catalog_version = catalog_value(catalog, "versionName") or ""
     code_raw = catalog_value(catalog, "versionCode")
-    require(version == "0.4.0", "versionName must be 0.4.0", errors)
-    require(code_raw == "19", "versionCode must be 19", errors)
     code = int(code_raw) if code_raw and code_raw.isdigit() else -1
+    errors.extend(validate_manifest(manifest, catalog_version, code))
 
     app_build = (root / "app/build.gradle.kts").read_text(encoding="utf-8")
     require(f'namespace = "{PACKAGE}"' in app_build, "app namespace mismatch", errors)
@@ -51,22 +52,26 @@ def validate(root: Path) -> list[str]:
 
     strings = (root / "app/src/main/res/values/strings.xml").read_text(encoding="utf-8")
     require(re.search(r'<string name="app_name"[^>]*>ReplicaScan</string>', strings) is not None, "app_name mismatch", errors)
-    manifest = json.loads((root / "release/manifest.json").read_text(encoding="utf-8"))
-    errors.extend(validate_manifest(manifest, version or "", code))
 
     license_text = (root / "LICENSE").read_text(encoding="utf-8")
     require("Proprietary License" in license_text, "current LICENSE is not proprietary", errors)
     require("all rights reserved" in license_text.lower(), "LICENSE lacks All Rights Reserved", errors)
-    for path in ("LICENSING.md", "THIRD_PARTY_NOTICES.md", "docs/releases/v0.4.0.md"):
+    for path in ("LICENSING.md", "THIRD_PARTY_NOTICES.md", f"docs/releases/v{version}.md"):
         require((root / path).is_file(), f"missing {path}", errors)
 
     readme = (root / "README.md").read_text(encoding="utf-8")
     require(REPOSITORY in readme, "README repository URL mismatch", errors)
     require("código corrente" in readme.lower() and "proprietário" in readme.lower(), "README license disclosure missing", errors)
+    require(f"v{version}" in readme, "README does not mention the release version", errors)
+    changelog = (root / "CHANGELOG.md").read_text(encoding="utf-8")
+    require(f"[{version}]" in changelog, "CHANGELOG has no entry for the release version", errors)
+
     workflow = (root / ".github/workflows/release.yml").read_text(encoding="utf-8")
-    require("replicascan-v0.4.0-debug.apk" in workflow, "release artifact filename mismatch", errors)
-    require("api-level: 36" in workflow, "API 36 release gate missing", errors)
-    require("sha256sum --check" in workflow, "release checksum verification missing", errors)
+    require(re.search(r"(?<![@\w.-])v?\d+\.\d+\.\d+(?![\w.])", workflow) is None, "release workflow hardcodes a version", errors)
+    require("tools/release_artifact.py" in workflow, "release workflow must use tools/release_artifact.py", errors)
+    require("api36DebugAndroidTest" in workflow, "API 36 managed-device gate missing", errors)
+    require("gh release create" not in workflow and "git tag" not in workflow,
+            "release workflow must not create tags or releases (owner publishes; CI verifies)", errors)
     return errors
 
 
@@ -77,7 +82,8 @@ def main() -> int:
         print("Consistency gate failed:")
         print("\n".join(f"- {error}" for error in errors))
         return 1
-    print("Consistency gate passed for ReplicaScan 0.4.0 (19).")
+    manifest = json.loads((root / "release/manifest.json").read_text(encoding="utf-8"))
+    print(f"Consistency gate passed for ReplicaScan {manifest['version']} ({manifest['versionCode']}).")
     return 0
 
 
