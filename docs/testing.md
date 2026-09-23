@@ -1,77 +1,52 @@
 # Testes
 
-## O que já está coberto
+## Unitários (JVM)
 
-- validação de nomes de documentos;
-- formatação de datas em pt-BR;
-- busca por título e tags;
-- busca FTS por título, tags e OCR após migration 1→2;
-- construção de nomes de arquivo para exportação;
-- pós-processamento de OCR: ordenação visual, agrupamento em parágrafos, descarte de ruído e texto consolidado;
-- planejamento automático de OCR limitado a dois reconhecedores e classificação EMPTY/WEAK/PARTIAL/GOOD;
-- detector perspectivo em 18 casos determinísticos, com limiares de IoU e erro médio de cantos;
-- roteamento interno automático entre perfis geral e recibo;
-- regras puras do pipeline de imagem: normalização de rotação/crop, chaves de preview/OCR/exportação, seleção de fonte derivada e invalidação de cache visual;
-- ownership/path traversal, importação parcial, rollback, orphan cleanup e captura não concorrente;
-- testes instrumentados de Room para CRUD/cascade/ordem, migration, FTS, deleção física, export fail-fast e PDF pesquisável em API 35;
-- regressão de metadata/save que preserva três páginas e valida reordenação estrita;
-- teste instrumentado mínimo de inicialização da UI;
-- schemas Room versionados em `core-data/schemas`.
+- validação de nomes (typed errors, nomes curtos reais como “RG”);
+- formatação de datas por locale e fuso;
+- pipeline de imagem: rotação, chaves de cache, página inalterada, invalidação de derivados e leitura de chaves de visual aposentadas;
+- `OcrScriptPolicy`: ja/ko/hi, latino como padrão e interface árabe sem reconhecedor inexistente;
+- pós-processamento de OCR (ordem, parágrafos, ruído, qualidade EMPTY/WEAK/PARTIAL/GOOD);
+- `ScanDraftCoordinator`: ordem, importação parcial, rollback, resultado vazio do scanner e entrada ilegível;
+- `ScanFileStore`/`ManagedFilePolicy`: ownership, path traversal, rollback e limpeza de órfãos;
+- nomes de exportação e tags;
+- `AppLanguages`: 12 opções sem rótulo vazio, “Sistema” único e resolução de tags regionais.
 
-## O que ainda falta
+## Instrumentados (`androidTest`)
 
-- cobertura mais forte do pipeline de imagem;
-- testes de navegação e fluxos completos com Compose;
-- execução física da matriz completa de scripts OCR e leitores externos de PDF;
-- QA visual em aparelho real com publicação das capturas oficiais.
+- Room: CRUD, cascade, ordem, migration 1→2, FTS com OCR persistido e integridade de exclusão;
+- exportação: PDF pesquisável (API 35+), falha identificando a página, PNG sem JPEG intermediário, JPG inalterado copiado byte a byte e remoção dos arquivos já gravados quando uma página falha;
+- app: onboarding independente do idioma do aparelho, identidade do pacote e FileProvider restrito.
 
-## Cenários de OCR para QA manual
+Rodam em Gradle Managed Devices:
 
-- folha impressa com parágrafos longos;
-- caderno manuscrito com linhas próximas;
-- recibo com valores curtos e símbolos;
-- foto torta ou importada da galeria;
-- página com pouco texto;
-- imagem sem texto detectável.
-
-## Cenários de pipeline de imagem para QA manual
-
-- scan rápido de folha A4;
-- importação de galeria;
-- caderno com espiral;
-- manuscrito;
-- tela de notebook fotografada;
-- recibo;
-- imagem girada;
-- fundo poluído;
-- crop manual alterado antes dos filtros;
-- filtro alterado depois do crop;
-- OCR depois de ajustar crop/filtro;
-- exportação e compartilhamento depois de OCR.
-
-Verificações principais:
-
-- revisão e filtros mostram o mesmo enquadramento;
-- OCR lê a página aprovada, não uma thumbnail;
-- PDF/JPG/PNG exportado bate com a revisão;
-- não há zoom inesperado por `ContentScale.Crop`;
-- rotação é aplicada uma vez só;
-- alteração de crop, rotação ou filtro invalida o derivado visual anterior.
-
-## Como rodar
-
-```bash
-./gradlew assembleDebug
-./gradlew testDebugUnitTest
-./gradlew lint
-./gradlew check
-./gradlew assembleRelease
-./gradlew assembleDebugAndroidTest
-./gradlew connectedDebugAndroidTest
+```powershell
+.\gradlew.bat api36DebugAndroidTest --no-parallel "-Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect"
 ```
 
-## Estratégia sugerida para evoluir
+`api36` é o gate de release no GitHub (com KVM habilitado); `api35` roda de forma agendada. Com um aparelho conectado, `connectedDebugAndroidTest --no-parallel` também funciona.
 
-- manter lógica pura em use cases e helpers testáveis em JVM;
-- isolar regras de exportação, mapeamento, preparação e pós-processamento de OCR;
-- introduzir testes de UI por fluxo principal à medida que o produto estabilizar.
+## Ferramentas do repositório
+
+`python -m unittest discover -s tools/tests -p "test_*.py"` cobre os gates de branding e consistência e o `release_artifact.py` (versão, versionCode e pacote divergentes, checksum, SHA da tag, assets inesperados e verificação idempotente).
+
+## Não coberto por automação
+
+Os internals do ML Kit (detecção, limpeza, reconhecimento) não são testados pelo ReplicaScan. Continuam dependendo de QA físico:
+
+- scanner em folha A4, recibo, caderno com espiral, perspectiva forte, fundo texturizado e baixa luz;
+- fallback pela câmera do sistema em aparelho sem Google Play services;
+- OCR em latino, devanágari, japonês e coreano, e PDF pesquisável em leitores externos;
+- TalkBack, fonte 200%, RTL (árabe), paisagem, tablet e tema escuro;
+- exportação de documentos grandes com pouco espaço livre.
+
+## Qualificação local completa
+
+```powershell
+.\gradlew.bat testDebugUnitTest lint check assembleDebug assembleRelease assembleDebugAndroidTest
+python tools/check_localization.py
+python tools/check_branding.py
+python tools/check_consistency.py
+python tools/check_site.py
+python -m unittest discover -s tools/tests -p "test_*.py"
+```
