@@ -9,6 +9,11 @@ on:
     branches: [main]
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      source_sha:
+        description: "Full commit SHA to qualify with this workflow (default: the dispatched ref)"
+        required: false
+        type: string
 
 concurrency:
   group: replicascan-release-${{ github.ref }}
@@ -16,6 +21,10 @@ concurrency:
 
 permissions:
   contents: read
+
+env:
+  # Lets the current workflow qualify an exact older commit (e.g. a published tag) without moving it.
+  SOURCE_SHA: ${{ inputs.source_sha || github.sha }}
 
 jobs:
   intent:
@@ -26,9 +35,12 @@ jobs:
     steps:
       - name: Checkout exact source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ env.SOURCE_SHA }}
       - name: Derive release names from manifest
         id: names
         run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "source_sha must be a full 40-character SHA"; exit 1; }
           python tools/release_artifact.py names | tee -a "$GITHUB_OUTPUT"
           python tools/check_consistency.py
 
@@ -40,6 +52,8 @@ jobs:
     steps:
       - name: Checkout exact source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ env.SOURCE_SHA }}
       - name: Setup Java 17
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
         with:
@@ -58,7 +72,7 @@ jobs:
       - name: Test and build once
         run: ./gradlew testDebugUnitTest lint check assembleDebug assembleRelease assembleDebugAndroidTest
       - name: Verify APK identity and record candidate metadata
-        run: python tools/release_artifact.py prepare --source-sha "$GITHUB_SHA" --out dist
+        run: python tools/release_artifact.py prepare --source-sha "$SOURCE_SHA" --out dist
       - name: Upload candidate for inspection
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
@@ -75,6 +89,8 @@ jobs:
     steps:
       - name: Checkout exact source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ env.SOURCE_SHA }}
       - name: Setup Java 17
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
         with:
@@ -113,6 +129,8 @@ jobs:
     steps:
       - name: Checkout exact source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ env.SOURCE_SHA }}
       - name: Validate static site
         run: python tools/check_site.py
 
@@ -126,6 +144,8 @@ jobs:
     steps:
       - name: Checkout exact source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ env.SOURCE_SHA }}
       - name: Setup Java 17
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
         with:

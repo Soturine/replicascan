@@ -93,6 +93,11 @@ class ConsistencyGateTests(unittest.TestCase):
     def test_repository_is_consistent(self) -> None:
         self.assertEqual(self.gate.validate(TOOLS.parent), [])
 
+    def test_workflow_version_literals_are_detected_but_action_pins_are_not(self) -> None:
+        pinned = "      uses: actions/checkout@" + "f" * 40 + " # v5.1.0\n"
+        self.assertEqual(self.gate.hardcoded_versions(pinned), [])
+        self.assertEqual(self.gate.hardcoded_versions(pinned + "  TAG: v0.4.0\n"), ["v0.4.0"])
+
     def test_version_code_drift_fails(self) -> None:
         errors = self.gate.validate_manifest({**MANIFEST, "product": self.gate.PRODUCT, "repository": self.gate.REPOSITORY}, "9.8.7", 43)
         self.assertIn("release versionCode mismatch", errors)

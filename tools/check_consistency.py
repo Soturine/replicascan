@@ -34,6 +34,12 @@ def validate_manifest(manifest: dict, version: str, version_code: int) -> list[s
     return errors
 
 
+def hardcoded_versions(workflow: str) -> list[str]:
+    """Versions written into the workflow, ignoring `# vX.Y.Z` comments on SHA-pinned actions."""
+    lines = [line for line in workflow.splitlines() if not re.search(r"uses: \S+@[0-9a-f]{40}", line)]
+    return re.findall(r"(?<![@\w.-])v?\d+\.\d+\.\d+(?![\w.])", "\n".join(lines))
+
+
 def validate(root: Path) -> list[str]:
     errors: list[str] = []
     manifest = json.loads((root / "release/manifest.json").read_text(encoding="utf-8"))
@@ -67,7 +73,7 @@ def validate(root: Path) -> list[str]:
     require(f"[{version}]" in changelog, "CHANGELOG has no entry for the release version", errors)
 
     workflow = (root / ".github/workflows/release.yml").read_text(encoding="utf-8")
-    require(re.search(r"(?<![@\w.-])v?\d+\.\d+\.\d+(?![\w.])", workflow) is None, "release workflow hardcodes a version", errors)
+    require(not hardcoded_versions(workflow), "release workflow hardcodes a version", errors)
     require("tools/release_artifact.py" in workflow, "release workflow must use tools/release_artifact.py", errors)
     require("api36DebugAndroidTest" in workflow, "API 36 managed-device gate missing", errors)
     require("gh release create" not in workflow and "git tag" not in workflow,
