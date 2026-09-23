@@ -4,27 +4,44 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
-## [0.4.0] - 2026-08-31
+## [0.4.0] - 2026-09-23
 
 ### Added
 
-- Gates automatizados de branding, localização, consistência, identidade do pacote e segurança do FileProvider.
-- Pipeline assíncrono e fail-closed: API 36, CodeQL, artefato único, SHA-256, provenance e tag anotada após sucesso.
-- Constituição de engenharia, ADRs de identidade/release e runbook idempotente.
+- Identidade ReplicaScan: repositório `Soturine/replicascan`, pacote `com.soturine.replicascan`, versão 0.4.0 (`versionCode 19`) e licença corrente proprietária com fronteira histórica Apache 2.0 até v0.3.1.
+- Alternativa quando o scanner não está disponível: foto pela câmera do sistema ou importação, seguidas de crop manual.
+- Prontidão real dos modelos de OCR via Google Play services e opção “Tentar outro idioma”.
+- Painel lateral na Revisão em janelas largas; confirmação antes de excluir página ou documento.
+- `tools/release_artifact.py`, gates de branding, localização, consistência e site, e ADR 0003.
 
 ### Changed
 
-- O produto corrente passa a ser ReplicaScan, com repositório `Soturine/replicascan`, pacote `com.soturine.replicascan` e versão 0.4.0 (`versionCode 19`).
-- Room, DataStore, WorkManager, recursos e diretório de exportação corrente usam a nova identidade, sem apagar dados ou exports históricos.
-- O código corrente passa a ser proprietário e All Rights Reserved a partir do commit de transição; releases até v0.3.1 preservam a licença Apache 2.0 recebida na época.
+- **Escanear** abre o ML Kit Document Scanner como motor principal; importação de imagens é a ação secundária.
+- Revisão com o documento em destaque e ferramentas rotuladas (Cortar, Girar, Ajustar, Texto); Cortar começa na página inteira.
+- Visuais reduzidos a Original, Realçado, Cinza e Preto e branco; chaves antigas continuam legíveis.
+- OCR usa um reconhecedor escolhido pelo idioma do app, lê só a geometria da página e reaproveita o texto salvo.
+- Exportação renderiza em memória, sem JPEG intermediário antes do PNG; página inalterada em JPG é copiada byte a byte.
+- Catálogos dos 12 idiomas reescritos com glossário único; seletor de idioma e resumo usam autônimos.
+- Instrumentação de API 36 roda em Gradle Managed Device com KVM; o CI qualifica e verifica, e a release é publicada pelo proprietário.
 
-### Security
+### Removed
 
-- Workflows passam a usar permissões mínimas e actions fixadas por commit; o release reutiliza o APK verificado e falha em divergência de versão, checksum, tag ou SHA.
+- Detector heurístico próprio, analisador ao vivo, perfis de documento, CameraX, módulo `feature-camera`, permissão `CAMERA` e escolha de modo/tipo de documento.
+- Código morto (≈1.300 linhas de detecção inalcançável), componentes de UI sem uso, use cases duplicados e geradores de tradução automática.
+
+### Fixed
+
+- `removeBlackBorders` cortava conteúdo real de páginas com faixas escuras.
+- Alças do crop ficavam espelhadas em RTL.
+- Documento era excluído sem confirmação no detalhe.
+- Mensagens em português fixo e textos de exceção apareciam em qualquer idioma.
+- Seletor de idioma sem opção marcada para tags regionais.
+- Teste de UI dependia do idioma do emulador; gate de API 36 falhava por falta de KVM e instalações concorrentes.
+- APIs obsoletas (`LocalClipboardManager`, ícones não espelháveis, `setTargetResolution`) e aviso de alvo de anotação: 0 avisos de Kotlin.
 
 ### Validation
 
-- Câmera, crop em corpus físico, TalkBack, fonte 200%, RTL e aparelhos representativos continuam pendentes de validação humana.
+- Câmera/scanner em aparelhos reais, corpus de documentos e OCR, TalkBack, fonte 200%, RTL e revisão nativa das traduções continuam pendentes de validação humana.
 
 ## [0.3.1] - 2026-08-15
 
