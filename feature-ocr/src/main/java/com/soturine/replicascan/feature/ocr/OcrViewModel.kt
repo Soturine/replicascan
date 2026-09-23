@@ -2,17 +2,23 @@ package com.soturine.replicascan.feature.ocr
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.soturine.replicascan.core.common.model.DocumentFilterType
+import com.soturine.replicascan.core.common.model.OcrFailureReason
+import com.soturine.replicascan.core.common.model.OcrModelReadiness
+import com.soturine.replicascan.core.common.model.OcrScript
+import com.soturine.replicascan.core.common.model.OcrScriptPolicy
+import com.soturine.replicascan.core.common.model.OcrTextParagraph
+import com.soturine.replicascan.core.common.model.OcrTextQuality
 import com.soturine.replicascan.core.common.model.OcrTextResult
 import com.soturine.replicascan.core.common.model.ScanPage
-import com.soturine.replicascan.core.common.model.OcrScript
-import com.soturine.replicascan.core.common.model.OcrModelReadiness
 import com.soturine.replicascan.core.common.repository.DocumentProcessingRepository
+import com.soturine.replicascan.core.common.repository.OcrRecognitionException
 import com.soturine.replicascan.core.common.repository.OcrRepository
 import com.soturine.replicascan.core.common.repository.OcrRequest
+import com.soturine.replicascan.core.common.repository.ScanRepository
 import java.security.MessageDigest
 import java.util.Locale
-import com.soturine.replicascan.core.common.repository.ScanRepository
+import kotlin.coroutines.cancellation.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,47 +29,56 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+enum class OcrMessage {
+    IMAGE_UNREADABLE,
+    MODEL_PREPARING,
+    FAILED,
+}
+
+data class OcrUiState(
+    val isLoaded: Boolean = false,
+    val page: ScanPage? = null,
+    val text: String = "",
+    val paragraphs: List<OcrTextParagraph> = emptyList(),
+    val quality: OcrTextQuality = OcrTextQuality.EMPTY,
+    val isRecognizing: Boolean = false,
+    val script: OcrScript = OcrScript.LATIN,
+    val readiness: OcrModelReadiness = OcrModelReadiness.READY,
+    val message: OcrMessage? = null,
+)
+
 class OcrViewModel(
     private val scanId: String,
     private val pageId: String,
     private val scanRepository: ScanRepository,
     private val processingRepository: DocumentProcessingRepository,
     private val ocrRepository: OcrRepository,
+    locale: Locale = Locale.getDefault(),
 ) : ViewModel() {
-    private val recognizedResult = MutableStateFlow(OcrTextResult.Empty)
-    private val previewImageUri = MutableStateFlow<String?>(null)
-    private val isLoading = MutableStateFlow(false)
-    private val errorMessage = MutableStateFlow<String?>(null)
-    private val selectedScript = MutableStateFlow(OcrScript.AUTOMATIC)
-    private val modelReadiness = MutableStateFlow(OcrModelReadiness.DOWNLOAD_PENDING)
+    private val freshResult = MutableStateFlow<OcrTextResult?>(null)
+    private val status = MutableStateFlow(
+        RecognitionStatus(script = OcrScriptPolicy.defaultFor(locale)),
+    )
+    private var recognitionJob: Job? = null
+    private var generation = 0
 
-    private val baseUiState = combine(
-        scanRepository.observeScan(scanId),
-        previewImageUri,
-        recognizedResult,
-        isLoading,
-        errorMessage,
-    ) { scan, previewUri, result, loading, message ->
-        val page = scan?.pages?.firstOrNull { it.id == pageId }
-        val resolvedResult = if (result.fullText.isBlank()) {
-            OcrTextResult.fromPlainText(page?.ocrText.orEmpty())
-        } else {
-            result
-        }
+    private val pageFlow = scanRepository.observeScan(scanId)
+        .map { scan -> scan?.pages?.firstOrNull { it.id == pageId } }
+
+    val uiState: StateFlow<OcrUiState> = combine(pageFlow, freshResult, status) { page, fresh, current ->
+        // A fresh run wins; otherwise the text persisted for this page is shown without re-running OCR.
+        val result = fresh ?: OcrTextResult.fromPlainText(page?.ocrText.orEmpty())
         OcrUiState(
+            isLoaded = true,
             page = page,
-            previewImageUri = previewUri ?: page?.displayUri,
-            text = resolvedResult.fullText,
-            paragraphs = resolvedResult.paragraphs,
-            quality = resolvedResult.quality,
-            discardedNoiseCount = resolvedResult.processedText.discardedNoiseCount,
-            isLoading = loading,
-            errorMessage = message,
+            text = result.fullText.trim(),
+            paragraphs = result.paragraphs,
+            quality = result.quality,
+            isRecognizing = current.running,
+            script = current.script,
+            readiness = current.readiness,
+            message = current.message,
         )
-    }
-
-    val uiState: StateFlow<OcrUiState> = combine(baseUiState, selectedScript, modelReadiness) { state, script, readiness ->
-        state.copy(script = script, modelReadiness = readiness)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -72,79 +87,73 @@ class OcrViewModel(
 
     init {
         viewModelScope.launch {
-            val page = scanRepository.observeScan(scanId)
-                .map { scan -> scan?.pages?.firstOrNull { it.id == pageId } }
-                .filterNotNull()
-                .first()
-            runRecognition(page)
+            val page = pageFlow.filterNotNull().first()
+            if (page.ocrText.isNullOrBlank()) recognize(page, status.value.script)
         }
     }
 
-    fun recognize() {
+    fun retry() {
         val page = uiState.value.page ?: return
-        viewModelScope.launch {
-            runRecognition(page)
-        }
+        recognize(page, status.value.script)
     }
 
     fun selectScript(script: OcrScript) {
-        if (script == selectedScript.value) return
-        selectedScript.value = script
-        recognizedResult.value = OcrTextResult.Empty
         val page = uiState.value.page ?: return
-        viewModelScope.launch { runRecognition(page) }
+        recognize(page, script)
     }
 
     fun clearMessage() {
-        errorMessage.value = null
+        status.value = status.value.copy(message = null)
     }
 
-    private suspend fun runRecognition(page: ScanPage) {
-        isLoading.value = true
-        errorMessage.value = null
-        runCatching {
-            modelReadiness.value = ocrRepository.modelReadiness(selectedScript.value)
-            val preparedUri = processingRepository.processForOcr(
-                sourceUri = page.sourceUri,
-                quad = page.quad,
-                rotationDegrees = page.rotationDegrees,
-                preferReceiptMode = page.filterType == DocumentFilterType.RECEIPT_HIGH_CONTRAST,
-            )
-            previewImageUri.value = preparedUri
-            val fingerprint = MessageDigest.getInstance("SHA-256")
-                .digest(
-                    listOf(
-                        page.sourceUri,
-                        page.quad.toString(),
-                        page.rotationDegrees.toString(),
-                        page.filterType.name,
-                        selectedScript.value.name,
-                        localeScriptHint()?.name.orEmpty(),
-                        "ocr-v3",
-                    ).joinToString("|").toByteArray(),
+    private fun recognize(page: ScanPage, script: OcrScript) {
+        if (recognitionJob?.isActive == true && status.value.script == script) return
+        recognitionJob?.cancel()
+        val runId = ++generation
+        status.value = status.value.copy(script = script, running = true, message = null)
+        recognitionJob = viewModelScope.launch {
+            try {
+                val readiness = ocrRepository.modelReadiness(script)
+                status.value = status.value.copy(readiness = readiness)
+                val preparedUri = processingRepository.processForOcr(page.sourceUri, page.quad, page.rotationDegrees)
+                val result = ocrRepository.recognize(
+                    OcrRequest(imageUri = preparedUri, script = script, sourceFingerprint = fingerprint(page, script)),
                 )
-                .joinToString("") { byte -> "%02x".format(byte) }
-            val result = ocrRepository.recognize(
-                OcrRequest(
-                    imageUri = preparedUri,
-                    script = selectedScript.value,
-                    fallbackHint = localeScriptHint(),
-                    sourceFingerprint = fingerprint,
-                ),
-            )
-            modelReadiness.value = ocrRepository.modelReadiness(selectedScript.value)
-            recognizedResult.value = result
-            scanRepository.updatePageOcrArtifact(scanId, pageId, result)
-        }.onFailure { throwable ->
-            errorMessage.value = throwable.message ?: "Não foi possível reconhecer o texto."
+                freshResult.value = result
+                status.value = status.value.copy(readiness = OcrModelReadiness.READY)
+                scanRepository.updatePageOcrArtifact(scanId, pageId, result)
+            } catch (exception: CancellationException) {
+                throw exception
+            } catch (exception: OcrRecognitionException) {
+                status.value = status.value.copy(
+                    message = when (exception.reason) {
+                        OcrFailureReason.IMAGE_UNREADABLE -> OcrMessage.IMAGE_UNREADABLE
+                        OcrFailureReason.MODEL_NOT_READY -> OcrMessage.MODEL_PREPARING
+                        OcrFailureReason.RECOGNITION_FAILED -> OcrMessage.FAILED
+                    },
+                )
+            } catch (_: Exception) {
+                status.value = status.value.copy(message = OcrMessage.FAILED)
+            } finally {
+                // A cancelled older run must not clear the progress of the run that replaced it.
+                if (runId == generation) status.value = status.value.copy(running = false)
+            }
         }
-        isLoading.value = false
     }
 
-    private fun localeScriptHint(): OcrScript? = when (Locale.getDefault().language) {
-        "hi", "mr", "ne" -> OcrScript.DEVANAGARI
-        "ja" -> OcrScript.JAPANESE
-        "ko" -> OcrScript.KOREAN
-        else -> null
-    }
+    private fun fingerprint(page: ScanPage, script: OcrScript): String =
+        MessageDigest.getInstance("SHA-256")
+            .digest(
+                listOf(page.sourceUri, page.quad.toString(), page.rotationDegrees.toString(), script.name, OcrRequest.PIPELINE_VERSION)
+                    .joinToString("|")
+                    .toByteArray(),
+            )
+            .joinToString("") { byte -> "%02x".format(byte) }
+
+    private data class RecognitionStatus(
+        val script: OcrScript,
+        val running: Boolean = false,
+        val readiness: OcrModelReadiness = OcrModelReadiness.READY,
+        val message: OcrMessage? = null,
+    )
 }
