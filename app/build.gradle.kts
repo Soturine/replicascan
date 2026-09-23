@@ -28,6 +28,25 @@ android {
         }
     }
 
+    testOptions {
+        // Instrumented gates run on Gradle Managed Devices so each module gets its own
+        // emulator lifecycle instead of sharing one flaky externally-booted device.
+        managedDevices {
+            localDevices {
+                create("api36") {
+                    device = "Pixel 6"
+                    apiLevel = 36
+                    systemImageSource = "google"
+                }
+                create("api35") {
+                    device = "Pixel 6"
+                    apiLevel = 35
+                    systemImageSource = "google"
+                }
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
