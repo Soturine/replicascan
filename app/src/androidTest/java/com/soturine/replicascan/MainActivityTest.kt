@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.test.swipeRight
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import org.junit.Assert.assertEquals
@@ -19,21 +20,25 @@ class MainActivityTest {
     val composeRule = createAndroidComposeRule<MainActivity>()
 
     @Test
-    fun exibeOnboardingOuHomeNaInicializacao() {
+    fun showsOnboardingOnFirstLaunch() {
         composeRule.waitForIdle()
-        composeRule.onNodeWithText("Escaneie em poucos passos").assertExists()
+        composeRule.onNodeWithText(composeRule.activity.getString(R.string.onboarding_page_one_title)).assertExists()
     }
 
     @Test
-    fun onboardingPermiteNavegarComGestoHorizontal() {
+    fun onboardingAdvancesWithHorizontalSwipe() {
+        // Assertions read the app's own resources so the test passes on any device locale.
         composeRule.waitForIdle()
-        composeRule.onNodeWithText("Escaneie em poucos passos").assertExists()
+        composeRule.onNodeWithText(composeRule.activity.getString(R.string.onboarding_page_one_title)).assertExists()
 
-        composeRule.onRoot().performTouchInput { swipeLeft() }
+        composeRule.onRoot().performTouchInput { if (composeRule.activity.isRtl()) swipeRight() else swipeLeft() }
         composeRule.waitForIdle()
 
-        composeRule.onNodeWithText("Revise antes de salvar").assertExists()
+        composeRule.onNodeWithText(composeRule.activity.getString(R.string.onboarding_page_two_title)).assertExists()
     }
+
+    private fun android.app.Activity.isRtl(): Boolean =
+        resources.configuration.layoutDirection == android.view.View.LAYOUT_DIRECTION_RTL
 
     @Test
     fun packageAndProviderUseReplicaScanIdentity() {
