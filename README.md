@@ -21,15 +21,15 @@ ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Sc
 - PDF pesquisável quando há OCR, JPG e PNG, com opções progressivas por formato;
 - histórico local com título, tags, favoritos e busca Room FTS;
 - 12 idiomas, incluindo árabe com RTL;
-- raposa animada por partes, respeitando redução de movimento; símbolo vetorial no launcher.
+- raposa animada por poses completas, respeitando redução de movimento; símbolo vetorial no launcher.
 
 Não há conta, backend, sincronização ou upload obrigatório de documentos. Componentes do Google Play services/ML Kit podem contatar o Google para atualizações e métricas técnicas conforme os termos do fornecedor; veja [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
 
 ## Redesign e evidência
 
-A base da v0.4.1 traz papel marfim, tinta petróleo e terracota, revisão de telas, crop com cantos independentes e exportação com nome de arquivo, progresso e recuperação persistente. O visual do ciclo anterior foi rejeitado pelo proprietário. Um novo master e sete poses baseados na raposa da v0.4.0 receberam aceite como arte estática; a animação e as telas ainda estão em revisão.
+A base da v0.4.1 traz papel marfim, tinta petróleo e terracota, revisão de telas, crop com cantos independentes e exportação com nome de arquivo, progresso e recuperação persistente. O visual do ciclo anterior foi rejeitado pelo proprietário. Um novo master e sete poses baseados na raposa da v0.4.0 receberam aceite como arte estática. A Home e as opções de exportação foram recapturadas após uma revisão de composição; a animação e o conjunto das telas ainda estão em avaliação.
 
-Veja a [auditoria de recuperação visual](docs/design/visual-recovery/AUDIT.md), a [prancha das poses](docs/design/visual-recovery/candidates/review.html), o [clipe e as capturas Android atuais](docs/design/visual-recovery/evidence/README.md) e a [matriz de telas e limites de validação](docs/design/visual-recovery/VALIDATION_MATRIX.md). O material novo usa estados injetados e documento sintético; não substitui QA físico, TalkBack humano, revisão linguística nativa ou aceite final.
+Veja a [auditoria de recuperação visual](docs/design/visual-recovery/AUDIT.md), a [prancha das poses](docs/design/visual-recovery/candidates/review.html), o [clipe e as capturas Android atuais](docs/design/visual-recovery/evidence/README.md), a [revisão por tela](docs/design/visual-recovery/SCREEN_REVIEW.md) e a [matriz de validação](docs/design/visual-recovery/VALIDATION_MATRIX.md). O material novo usa estados injetados e documento sintético; não substitui QA físico, TalkBack humano, revisão linguística nativa ou aceite final.
 
 ## Identidade Android
 

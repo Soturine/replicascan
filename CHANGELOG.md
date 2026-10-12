@@ -6,6 +6,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 - Recuperação visual em andamento após rejeição do redesign anterior: master e poses baseados na raposa da v0.4.0 aprovados como arte estática; movimento e telas ainda pendentes de aceite.
 - Atlas deformado substituído por poses completas em Compose, com movimento discreto, respeito ao lifecycle/redução de movimento e clipe de frames Android. Exportação em andamento voltou a mostrar prévia e identificação da página.
+- Home com mascote mais legível e texto em largura completa; em fonte 200% a arte cede espaço ao conteúdo. Opções de exportação reúnem prévia, páginas e formato atual na mesma superfície.
 - Site móvel corrigido para não expandir além de 390 px por causa do bloco de instalação.
 - Teste de swipe no onboarding agora inicia o gesto no pager e aguarda a página seguinte; regressão detectada no gate API 36 anterior.
 
@@ -15,7 +16,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 - Tema claro/escuro de papel marfim, tinta petróleo e terracota; tipografia, superfícies, largura de leitura e botões compartilhados.
 - Onboarding com cenas animadas e voltar/pular; Home, revisão, filtros, OCR, histórico, detalhe, configurações e diálogos alinhados ao tema.
-- Atlas experimental com cabeça, expressões, cauda, patas e objetos animados em Compose; pausa por lifecycle e redução de movimento. A qualidade visual foi rejeitada e sua substituição está em andamento.
+- Atlas experimental com cabeça, expressões, cauda, patas e objetos animados em Compose foi rejeitado e substituído no ciclo de recuperação; a nova animação por poses inteiras pausa por lifecycle e respeita redução de movimento.
 - Ícone vetorial com raposa e folha, fundo adaptativo separado e variante monochrome; 12 PNGs antigos de runtime removidos.
 - Exportação com nome validado, formatos visíveis, progresso indeterminado, erro persistente e nomes dos arquivos salvos.
 - Comparação do filtro ao segurar, com retorno ao soltar e alternativa semântica; feedback de pressão no botão principal.
