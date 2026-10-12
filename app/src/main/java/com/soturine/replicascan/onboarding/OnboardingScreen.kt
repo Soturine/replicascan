@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.soturine.replicascan.R
@@ -37,7 +38,7 @@ fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
             Text(stringResource(R.string.app_name), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             TextButton(onClick = onFinish) { Text(stringResource(R.string.onboarding_skip)) }
         }
-        HorizontalPager(pager, modifier = Modifier.weight(1f).fillMaxWidth()) { index ->
+        HorizontalPager(pager, modifier = Modifier.weight(1f).fillMaxWidth().testTag("onboarding-pager")) { index ->
             Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(vertical = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically)) {
                 Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surfaceContainer) {

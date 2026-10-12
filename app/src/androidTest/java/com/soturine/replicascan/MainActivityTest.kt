@@ -2,8 +2,9 @@ package com.soturine.replicascan
 
 import androidx.core.content.FileProvider
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
@@ -31,8 +32,13 @@ class MainActivityTest {
         composeRule.waitForIdle()
         composeRule.onNodeWithText(composeRule.activity.getString(R.string.onboarding_page_one_title)).assertExists()
 
-        composeRule.onRoot().performTouchInput { if (composeRule.activity.isRtl()) swipeRight() else swipeLeft() }
-        composeRule.waitForIdle()
+        composeRule.onNodeWithTag("onboarding-pager").performTouchInput {
+            if (composeRule.activity.isRtl()) swipeRight() else swipeLeft()
+        }
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            composeRule.onAllNodesWithText(composeRule.activity.getString(R.string.onboarding_page_two_title))
+                .fetchSemanticsNodes().isNotEmpty()
+        }
 
         composeRule.onNodeWithText(composeRule.activity.getString(R.string.onboarding_page_two_title)).assertExists()
     }
