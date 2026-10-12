@@ -99,7 +99,7 @@ fun HistoryScreen(
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(innerPadding),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item(key = "search") {
                 ReplicaScanContent {
@@ -108,7 +108,7 @@ fun HistoryScreen(
                         value = state.query,
                         onValueChange = onQueryChange,
                         leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) },
-                        placeholder = { Text(stringResource(R.string.history_search_placeholder)) },
+                        label = { Text(stringResource(R.string.history_search_placeholder)) },
                         singleLine = true,
                         shape = MaterialTheme.shapes.extraLarge,
                     )
@@ -262,7 +262,7 @@ fun ScanDetailScreen(
                 val label = stringResource(R.string.history_page_label, page.index + 1)
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.medium)
                         .clickable { onOpenOcr(page.id) }

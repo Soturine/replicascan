@@ -1,5 +1,6 @@
 package com.soturine.replicascan.core.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,10 +40,11 @@ fun DocumentListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.large)
+            .clip(MaterialTheme.shapes.medium)
+            .background(MaterialTheme.colorScheme.surface)
             .clickable(onClick = onClick)
             .heightIn(min = 80.dp)
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+            .padding(horizontal = 12.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -99,7 +101,6 @@ fun ReplicaScanToolButton(
             style = MaterialTheme.typography.labelLarge,
             color = contentColor,
             textAlign = TextAlign.Center,
-            maxLines = 2,
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.soturine.replicascan.feature.settings
 
+import androidx.compose.material3.Surface
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -85,7 +86,7 @@ fun SettingsScreen(
             )
         },
     ) { inset ->
-        Column(Modifier.fillMaxSize().padding(inset).verticalScroll(rememberScrollState()).padding(vertical = 8.dp)) {
+        Column(Modifier.fillMaxSize().padding(inset).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp)) {
             ReplicaScanContent {
                 Group(stringResource(R.string.settings_appearance_section)) {
                     PreferenceRow(Icons.Outlined.Palette, stringResource(R.string.settings_theme), state.preferences.themePreference.label()) {
@@ -155,7 +156,9 @@ private fun Group(title: String, content: @Composable () -> Unit) {
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp).semantics { heading() },
         )
-        content()
+        Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surface) {
+            Column { content() }
+        }
     }
 }
 

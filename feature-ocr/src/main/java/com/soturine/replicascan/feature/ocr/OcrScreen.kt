@@ -155,7 +155,7 @@ fun OcrScreen(
                         EmptyStateCard(
                             title = stringResource(R.string.ocr_empty_title),
                             message = stringResource(R.string.ocr_empty_message),
-                            mascotState = ReplicaScanMascotState.Ocr,
+                            mascotState = ReplicaScanMascotState.Empty,
                         )
                     }
                 }
@@ -173,8 +173,10 @@ fun OcrScreen(
                     }
                     items(state.paragraphs.ifEmpty { null }?.map { it.text } ?: listOf(state.text)) { paragraph ->
                         ReplicaScanContent {
-                            SelectionContainer {
-                                Text(paragraph, style = MaterialTheme.typography.bodyLarge)
+                            Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surface) {
+                                SelectionContainer {
+                                    Text(paragraph, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.fillMaxWidth().padding(20.dp))
+                                }
                             }
                         }
                     }
@@ -201,7 +203,7 @@ private fun RecognizingState(readiness: OcrModelReadiness) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        ReplicaScanMascot(ReplicaScanMascotState.Ocr, size = 120.dp)
+        ReplicaScanMascot(ReplicaScanMascotState.Ocr, size = 180.dp)
         Text(
             text = stringResource(
                 if (readiness == OcrModelReadiness.DOWNLOAD_PENDING) R.string.ocr_preparing else R.string.ocr_reading,
