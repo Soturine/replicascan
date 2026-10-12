@@ -313,6 +313,10 @@ h2 {
   margin-top: 16px;
 }
 
+.code-note code {
+  overflow-wrap: anywhere;
+}
+
 .link-card {
   display: block;
   font-weight: 800;
@@ -336,7 +340,7 @@ h2 {
   .feature-grid,
   .timeline-grid,
   .link-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .nav {

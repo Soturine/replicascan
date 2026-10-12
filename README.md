@@ -2,11 +2,11 @@
 
 ![Android](https://img.shields.io/badge/platform-Android-2E7D8C)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-23414B)
-![Version](https://img.shields.io/badge/version-0.4.1-AD471D)
+![Version](https://img.shields.io/badge/development-0.4.1-AD471D)
 [![Android CI](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml)
 [![Deploy Pages](https://github.com/Soturine/replicascan/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/pages.yml)
 
-ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Scanner, guarda as páginas só no aparelho, reconhece texto no próprio dispositivo e exporta PDF pesquisável, JPG ou PNG. Versão de avaliação: v0.4.1.
+ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Scanner, guarda as páginas só no aparelho, reconhece texto no próprio dispositivo e exporta PDF pesquisável, JPG ou PNG. A v0.4.1 está em desenvolvimento; a última release de avaliação publicada é a v0.4.0.
 
 - Repositório: <https://github.com/Soturine/replicascan>
 - Releases: <https://github.com/Soturine/replicascan/releases>
@@ -27,9 +27,9 @@ Não há conta, backend, sincronização ou upload obrigatório de documentos. C
 
 ## Redesign e evidência
 
-A v0.4.1 traz papel marfim, tinta petróleo e terracota, revisão de telas, crop com cantos independentes e exportação com nome de arquivo, progresso e recuperação persistente. A mascote foi ajustada após feedback: olhos menores, sem cílios destacados e patas fora do rosto.
+A base da v0.4.1 traz papel marfim, tinta petróleo e terracota, revisão de telas, crop com cantos independentes e exportação com nome de arquivo, progresso e recuperação persistente. O visual do ciclo anterior foi rejeitado pelo proprietário. Um novo master baseado na raposa da v0.4.0 recebeu aceite como estilo; as poses, animação e telas ainda estão em revisão.
 
-Veja a [matriz de telas e limites de validação](docs/design/validation.md), o [rig da mascote](docs/design/mascot.md) e o [ícone](docs/design/icon.md). As capturas vêm do APK no emulador, com documentos sintéticos; não substituem QA físico, TalkBack humano ou revisão linguística nativa. A avaliação estética final pelo proprietário continua pendente.
+Veja a [auditoria de recuperação visual](docs/design/visual-recovery/AUDIT.md), a [prancha das poses candidatas](docs/design/visual-recovery/candidates/review.html) e a [matriz de telas e limites de validação](docs/design/validation.md). As capturas antigas vêm do APK no emulador, com documentos sintéticos; são baseline rejeitado, não aceite estético nem substituto de QA físico, TalkBack humano ou revisão linguística nativa.
 
 ## Identidade Android
 

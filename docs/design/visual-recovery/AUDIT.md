@@ -31,7 +31,7 @@ de produto. Nenhum HTML, asset conceitual ou ZIP foi incorporado ao app.
 | A6 | Média | `evidence/ocr*.png`, `history.png`, `settings.png`: repetição de cards ou áreas vazias | Ritmo próprio para leitura, biblioteca e preferências. Medir densidade a 200% e RTL. |
 | A7 | Média | `Type.kt`: Serif/SansSerif de sistema sem família de marca definida | Avaliar fonte distribuível ou combinação nativa mais coerente em scripts variados, sem sacrificar 12 idiomas. |
 | A8 | Média | `launcher.png`: ícone é seguro no círculo; visual simplificado pode ler só “raposa com folha” | Revisar gesto de escaneamento e themed monochrome em máscaras reais antes de mudar. |
-| A9 | Alta | `site-mobile.png` local: página lateralmente rolável em 390px | Site também é superfície perceptível. Corrigir largura, testar 390 e desktop depois da direção aprovada. |
+| A9 | Alta, corrigida parcialmente | `site-mobile.png` local: página lateralmente rolável em 390px; após correção, Chromium mede `clientWidth=scrollWidth=390` | O `pre` da instalação impunha largura mínima à coluna CSS Grid. `minmax(0, 1fr)` limita a grade e preserva rolagem apenas dentro do código. Ainda revisar arte e desktop com o visual final. |
 
 ## Correções funcionais preservadas
 

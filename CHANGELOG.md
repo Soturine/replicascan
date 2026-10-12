@@ -4,13 +4,17 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
-## [0.4.1] - 2026-10-12
+- Recuperação visual em andamento após rejeição do redesign anterior: master da raposa original aprovado como estilo, poses e telas ainda pendentes de aceite.
+- Site móvel corrigido para não expandir além de 390 px por causa do bloco de instalação.
+- Teste de swipe no onboarding agora inicia o gesto no pager e aguarda a página seguinte; regressão detectada no gate API 36 anterior.
+
+## [0.4.1] - Em desenvolvimento
 
 ### Changed
 
 - Tema claro/escuro de papel marfim, tinta petróleo e terracota; tipografia, superfícies, largura de leitura e botões compartilhados.
 - Onboarding com cenas animadas e voltar/pular; Home, revisão, filtros, OCR, histórico, detalhe, configurações e diálogos alinhados ao tema.
-- Raposa original com cabeça, expressões, cauda, patas e objetos animados em Compose; pausa por lifecycle e redução de movimento. Arte ajustada após feedback sobre olhos e patas.
+- Atlas experimental com cabeça, expressões, cauda, patas e objetos animados em Compose; pausa por lifecycle e redução de movimento. A qualidade visual foi rejeitada e sua substituição está em andamento.
 - Ícone vetorial com raposa e folha, fundo adaptativo separado e variante monochrome; 12 PNGs antigos de runtime removidos.
 - Exportação com nome validado, formatos visíveis, progresso indeterminado, erro persistente e nomes dos arquivos salvos.
 - Comparação do filtro ao segurar, com retorno ao soltar e alternativa semântica; feedback de pressão no botão principal.

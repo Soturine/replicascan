@@ -14,9 +14,9 @@ ReplicaScan é o nome corrente a partir da v0.4.0. O produto usou outro nome at�
 
 ## v0.4.1 — Redesign e recuperação
 
-**Status:** implementação e evidência em emulador; publicação de avaliação condicionada à qualificação do HEAD final.
+**Status:** recuperação visual em andamento. A arte mestre da raposa foi aprovada como estilo; poses, animações, telas e aceite final permanecem pendentes. Sem tag/release v0.4.1 antes do aceite visual expresso e da qualificação do HEAD final.
 
-- tema papel/tinta, telas revisadas, raposa com rig Compose e ícone vetorial;
+- tema papel/tinta e telas do ciclo anterior estão sob revisão; o atlas Compose rejeitado será substituído após aprovação das poses e validação Android;
 - crop sequencial corrigido e PNG real verificado; exportação com estados persistentes;
 - capturas Android, fonte 200%, direção RTL e layout largo; limites em [validation.md](docs/design/validation.md).
 
