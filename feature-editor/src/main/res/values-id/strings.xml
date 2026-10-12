@@ -24,7 +24,7 @@
     <string name="editor_corner_move_right">Geser ke kanan</string>
     <string name="editor_filter_title">Sesuaikan</string>
     <string name="editor_apply">Terapkan</string>
-    <string name="editor_filter_compare">Lihat asli</string>
+    <string name="editor_filter_compare">Tahan untuk melihat asli</string>
     <string name="editor_page_counter">Halaman %1$d dari %2$d</string>
     <string name="editor_more_options">Opsi lainnya</string>
     <string name="editor_details">Nama dan tag</string>

@@ -1,7 +1,7 @@
 # Raposa — arte e runtime
 
 Arte original gerada em 2026-10-12 pela ferramenta integrada imagegen, a pedido
-do proprietário; nenhuma imagem Pipa/Lume foi copiada. Primeira explora??o (rejeitada pelo propriet?rio como feminina; mantida apenas como registro):
+do proprietário; nenhuma imagem Pipa/Lume foi copiada. Primeira exploração (rejeitada pelo proprietário; mantida apenas como registro):
 `assets/fox-concept.png`. Fonte de produção editável como atlas RGBA:
 `core-ui/src/main/res/drawable-nodpi/replicascan_fox_atlas.png` (1254×1254).
 Não há arquivo Rive, Lottie, SVG ou rig de editor externo oculto. O código/arte
@@ -56,13 +56,13 @@ runtime/atlas antigo apenas após migração dos callers. Não usar timer de art
 para emitir sucesso de domínio. Evidência visual ainda deve ser registrada na
 matriz do redesign; compilação isolada não aprova arte.
 
-## Corre??o do checkpoint
+## Correção do checkpoint
 
-Ap?s feedback do propriet?rio, o atlas foi regenerado com olhos menores sem
-c?lios destacados, sobrancelhas simples e focinho mais largo. Prompt de corre??o:
-?Edit the exact 3x3 atlas; friendly gender-neutral sturdy fox; remove eyelashes
+Após feedback do proprietário, o atlas foi regenerado com olhos menores sem
+cílios destacados, sobrancelhas simples e focinho mais largo. Prompt de correção:
+“Edit the exact 3x3 atlas; friendly gender-neutral sturdy fox; remove eyelashes
 and eyeliner, smaller warm brown eyes, broader muzzle, no makeup; preserve cell
-registration; thicker rounded paws; tail/paper/folder unchanged; transparent.?
-Patas s?o desenhadas atr?s da cabe?a/corpo, com piv?s ajustados; aceno reduzido
-para n?o atravessar o rosto. A aceita??o est?tica da nova vers?o continua em
-revis?o. N?o apresentar o primeiro conceito como mascote final aprovada.
+registration; thicker rounded paws; tail/paper/folder unchanged; transparent.”
+Patas são desenhadas atrás da cabeça/corpo, com pivôs ajustados; aceno reduzido
+para não atravessar o rosto. A revisão estética pelo proprietário permanece
+pendente. Não apresentar o primeiro conceito como mascote final aprovada.

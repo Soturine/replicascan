@@ -24,7 +24,7 @@
     <string name="editor_corner_move_right">Mover a la derecha</string>
     <string name="editor_filter_title">Ajustar</string>
     <string name="editor_apply">Aplicar</string>
-    <string name="editor_filter_compare">Ver original</string>
+    <string name="editor_filter_compare">Mantén pulsado para ver el original</string>
     <string name="editor_page_counter">Página %1$d de %2$d</string>
     <string name="editor_more_options">Más opciones</string>
     <string name="editor_details">Nombre y etiquetas</string>

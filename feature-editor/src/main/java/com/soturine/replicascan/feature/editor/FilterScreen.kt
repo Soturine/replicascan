@@ -1,6 +1,22 @@
 package com.soturine.replicascan.feature.editor
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.focusable
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.semantics.selected
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Surface
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +34,6 @@ import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Compare
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -138,14 +153,27 @@ fun FilterScreen(
                     }
                 }
                 if (selected != DocumentFilterType.ORIGINAL) {
-                    FilterChip(
-                        selected = comparing,
-                        onClick = { comparing = !comparing },
-                        label = { Text(stringResource(R.string.editor_filter_compare)) },
-                        leadingIcon = { Icon(Icons.Outlined.Compare, contentDescription = null, modifier = Modifier.padding(0.dp)) },
-                        colors = FilterChipDefaults.filterChipColors(),
-                        modifier = Modifier.heightIn(min = 48.dp),
-                    )
+                    Surface(shape = MaterialTheme.shapes.medium,
+                        color = if (comparing) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainer) {
+                        Row(Modifier.heightIn(min = 52.dp).testTag("filter-compare")
+                            .semantics { role = Role.Button; this.selected = comparing; onClick { comparing = !comparing; true } }
+                            .onKeyEvent { event ->
+                                if (event.key == Key.Enter || event.key == Key.Spacebar) {
+                                    comparing = event.type == KeyEventType.KeyDown
+                                    true
+                                } else false
+                            }.focusable()
+                            .pointerInput(selected) {
+                                detectTapGestures(onPress = {
+                                    comparing = true
+                                    try { tryAwaitRelease() } finally { comparing = false }
+                                })
+                            }.padding(horizontal = 20.dp, vertical = 12.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Outlined.Compare, contentDescription = null)
+                            Text(stringResource(R.string.editor_filter_compare))
+                        }
+                    }
                 }
             }
         }

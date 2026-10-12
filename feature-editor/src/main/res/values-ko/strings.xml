@@ -24,7 +24,7 @@
     <string name="editor_corner_move_right">오른쪽으로 이동</string>
     <string name="editor_filter_title">조정</string>
     <string name="editor_apply">적용</string>
-    <string name="editor_filter_compare">원본 보기</string>
+    <string name="editor_filter_compare">길게 눌러 원본 보기</string>
     <string name="editor_page_counter">%2$d페이지 중 %1$d페이지</string>
     <string name="editor_more_options">옵션 더보기</string>
     <string name="editor_details">이름 및 태그</string>

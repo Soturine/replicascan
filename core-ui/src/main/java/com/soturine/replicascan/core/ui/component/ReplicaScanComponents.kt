@@ -14,6 +14,13 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,8 +53,12 @@ fun ReplicaScanPrimaryButton(
     enabled: Boolean = true,
     icon: (@Composable () -> Unit)? = null,
 ) {
+    val interactions = remember { MutableInteractionSource() }
+    val pressed by interactions.collectIsPressedAsState()
+    val scale by animateFloatAsState(if (pressed) .985f else 1f, tween(120), label = "actionPress")
     Button(
-        modifier = modifier
+        interactionSource = interactions,
+        modifier = modifier.graphicsLayer { scaleX = scale; scaleY = scale }
             .fillMaxWidth()
             .heightIn(min = ReplicaScanSizes.primaryActionHeight),
         enabled = enabled,

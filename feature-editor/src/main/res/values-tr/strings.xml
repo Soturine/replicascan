@@ -24,7 +24,7 @@
     <string name="editor_corner_move_right">Sağa taşı</string>
     <string name="editor_filter_title">Ayarla</string>
     <string name="editor_apply">Uygula</string>
-    <string name="editor_filter_compare">Orijinali göster</string>
+    <string name="editor_filter_compare">Orijinali görmek için basılı tutun</string>
     <string name="editor_page_counter">Sayfa %1$d / %2$d</string>
     <string name="editor_more_options">Diğer seçenekler</string>
     <string name="editor_details">Ad ve etiketler</string>

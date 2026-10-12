@@ -24,7 +24,7 @@
     <string name="editor_corner_move_right">右へ移動</string>
     <string name="editor_filter_title">調整</string>
     <string name="editor_apply">適用</string>
-    <string name="editor_filter_compare">元の画像を表示</string>
+    <string name="editor_filter_compare">長押しで元の画像を表示</string>
     <string name="editor_page_counter">%2$d ページ中 %1$d ページ</string>
     <string name="editor_more_options">その他のオプション</string>
     <string name="editor_details">名前とタグ</string>
