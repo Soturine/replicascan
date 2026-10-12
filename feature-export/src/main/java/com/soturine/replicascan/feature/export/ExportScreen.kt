@@ -362,7 +362,7 @@ private fun ExportProgress(scan: ScanDocument) {
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 24.dp)
             .testTag("export-progress"),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
     ) {
         Surface(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large,
             color = MaterialTheme.colorScheme.surfaceContainer) {
