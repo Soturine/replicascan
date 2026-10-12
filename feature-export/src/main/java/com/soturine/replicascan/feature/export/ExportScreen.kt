@@ -60,6 +60,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.soturine.replicascan.core.common.model.ExportFormat
 import com.soturine.replicascan.core.common.model.ExportedFile
+import com.soturine.replicascan.core.common.model.ScanDocument
 import com.soturine.replicascan.core.common.model.PdfPageSize
 import com.soturine.replicascan.core.common.model.PdfQuality
 import com.soturine.replicascan.core.ui.component.EmptyStateCard
@@ -150,7 +151,7 @@ fun ExportScreen(
             if (done == 2) {
                 ExportDone(state.exportedFiles, warning = messageText, onOpenFile = onOpenFile, onShare = onShare)
             } else if (done == 1) {
-                ExportProgress(scan.title)
+                ExportProgress(scan)
             } else {
                 ExportOptions(
                     state = state,
@@ -353,13 +354,29 @@ private fun ExportDone(
 }
 
 @Composable
-private fun ExportProgress(title: String) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp).testTag("export-progress"),
-        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)) {
-        ReplicaScanMascot(ReplicaScanMascotState.Working, size = 220.dp)
+private fun ExportProgress(scan: ScanDocument) {
+    Column(
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 24.dp)
+            .testTag("export-progress"),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+    ) {
+        Surface(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large,
+            color = MaterialTheme.colorScheme.surfaceContainer) {
+            Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                AsyncUriImage(scan.coverPage?.displayUri, fallbackImageUri = scan.coverPage?.sourceUri,
+                    modifier = Modifier.size(64.dp, 84.dp), contentScale = ContentScale.Fit, maxDimension = 240)
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(scan.title, style = MaterialTheme.typography.titleMedium)
+                    Text(pluralStringResource(R.plurals.export_summary, scan.pageCount, scan.pageCount),
+                        style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
+        ReplicaScanMascot(ReplicaScanMascotState.Working, size = 208.dp)
         Text(stringResource(R.string.export_progress), style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center, modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
-        Text(title, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
         LinearProgressIndicator(Modifier.fillMaxWidth())
         Text(stringResource(R.string.export_keep_open), style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
