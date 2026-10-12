@@ -30,8 +30,8 @@ fun ReplicaScanContent(
     Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .widthIn(max = if (expanded) ReplicaScanSizes.expandedContentMaxWidth else ReplicaScanSizes.compactContentMaxWidth),
+                .widthIn(max = if (expanded) ReplicaScanSizes.expandedContentMaxWidth else ReplicaScanSizes.compactContentMaxWidth)
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(ReplicaScanSpacing.lg),
             content = content,
         )
@@ -52,6 +52,7 @@ fun ReplicaScanPrimaryButton(
             .heightIn(min = ReplicaScanSizes.primaryActionHeight),
         enabled = enabled,
         onClick = onClick,
+        shape = MaterialTheme.shapes.medium,
         contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp),
     ) {
         icon?.invoke()

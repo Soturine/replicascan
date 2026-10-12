@@ -14,9 +14,9 @@ private fun replicascanTextStyle(weight: FontWeight, size: Int, lineHeight: Int)
 )
 
 val ReplicaScanTypography = Typography(
-    headlineLarge = replicascanTextStyle(FontWeight.Bold, 30, 36),
-    headlineMedium = replicascanTextStyle(FontWeight.Bold, 25, 31),
-    headlineSmall = replicascanTextStyle(FontWeight.SemiBold, 22, 28),
+    headlineLarge = replicascanTextStyle(FontWeight.Medium, 32, 40).copy(fontFamily = FontFamily.Serif),
+    headlineMedium = replicascanTextStyle(FontWeight.Medium, 28, 36).copy(fontFamily = FontFamily.Serif),
+    headlineSmall = replicascanTextStyle(FontWeight.Medium, 24, 32).copy(fontFamily = FontFamily.Serif),
     titleLarge = replicascanTextStyle(FontWeight.SemiBold, 21, 27),
     titleMedium = replicascanTextStyle(FontWeight.SemiBold, 18, 24),
     titleSmall = replicascanTextStyle(FontWeight.SemiBold, 16, 22),
