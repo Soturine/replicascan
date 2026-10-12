@@ -8,6 +8,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 - Atlas deformado substituído por poses completas em Compose, com movimento discreto, respeito ao lifecycle/redução de movimento e clipe de frames Android. Exportação em andamento voltou a mostrar prévia e identificação da página.
 - Home com mascote mais legível e texto em largura completa; em fonte 200% a arte cede espaço ao conteúdo. Opções de exportação reúnem prévia, páginas e formato atual na mesma superfície.
 - Introdução usa saudação, leitura e sucesso nas três páginas, eliminando a repetição da pose de trabalho.
+- Progresso de exportação centralizado na área disponível, mantendo prévia, trabalho e estado legíveis em telas altas.
 - Site móvel corrigido para não expandir além de 390 px por causa do bloco de instalação.
 - Teste de swipe no onboarding agora inicia o gesto no pager e aguarda a página seguinte; regressão detectada no gate API 36 anterior.
 

@@ -28,7 +28,7 @@ composição das telas e release ainda precisam de aceite expresso. O antigo
 
 Pontos abertos para esta revisão: a Home ainda deixa espaço inferior vazio
 quando a biblioteca é curta; as opções de exportação conservam controles de
-formulário e o progresso ainda tem espaço inferior pouco usado;
+formulário e o progresso ainda usa movimento de pose inteira;
 o ícone vetorial usa linguagem mais plana que a mascote; o movimento atual é
 discreto e não articula membros. A inspeção manual de transições, recorte com
 câmera real, tema escuro, fonte 200%, RTL e TalkBack também permanece pendente.
