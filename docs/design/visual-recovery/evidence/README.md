@@ -6,8 +6,9 @@ medem 1080×2201 px, usam a localização inglesa do emulador, documento
 sintético e estados injetados; não demonstram captura física, OCR real ou
 escrita de exportação. `export-progress.png` foi recapturada após incluir a
 prévia da página real na composição. Home e opções de exportação foram
-recapturadas após a revisão de composição; as demais capturas vêm da fatia
-anterior do mesmo runtime com as poses aprovadas.
+recapturadas após a revisão de composição; as três páginas de introdução
+foram recapturadas após receber poses distintas. As demais capturas vêm da
+fatia anterior do mesmo runtime com as poses aprovadas.
 
 O [clipe](mascot-motion-v1.mp4) reúne 64 frames renderizados no Android com o
 clock de teste em passos de 125 ms e codificados em MP4 a 8 fps. Sequência:
