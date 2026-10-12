@@ -101,8 +101,8 @@ fun CropScreen(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surfaceContainerLowest)
-                    .padding(20.dp),
+                    .background(androidx.compose.ui.graphics.Color(0xFF202D2B))
+                    .padding(32.dp),
             )
             Column(
                 modifier = Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = 16.dp, vertical = 8.dp),

@@ -268,7 +268,7 @@ private fun PagePreview(
 ) {
     Box(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.surfaceContainerLowest)
+            .background(MaterialTheme.colorScheme.surfaceContainer)
             .padding(16.dp),
         contentAlignment = Alignment.Center,
     ) {

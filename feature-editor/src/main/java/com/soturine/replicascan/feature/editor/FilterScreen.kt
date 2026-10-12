@@ -97,7 +97,7 @@ fun FilterScreen(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surfaceContainerLowest)
+                    .background(MaterialTheme.colorScheme.surfaceContainer)
                     .padding(16.dp)
                     .onSizeChanged { size -> previewLongSide = max(size.width, size.height) },
             ) {

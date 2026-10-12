@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
@@ -45,7 +46,7 @@ fun QuadEditorOverlay(
     onQuadChange: (DocumentQuad) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val strokeColor = MaterialTheme.colorScheme.tertiary
+    val strokeColor = Color(0xFF9DE6DB)
     val handleFill = MaterialTheme.colorScheme.surface
     val handleStroke = MaterialTheme.colorScheme.primary
     val moveUp = stringResource(R.string.editor_corner_move_up)
@@ -88,24 +89,29 @@ fun QuadEditorOverlay(
         }
         drawPath(
             path = dimmedPath,
-            color = Color.Black.copy(alpha = 0.18f),
+            color = Color.Black.copy(alpha = 0.46f),
         )
-        drawLine(strokeColor, topLeft, topRight, strokeWidth = 6f)
-        drawLine(strokeColor, topRight, bottomRight, strokeWidth = 6f)
-        drawLine(strokeColor, bottomRight, bottomLeft, strokeWidth = 6f)
-        drawLine(strokeColor, bottomLeft, topLeft, strokeWidth = 6f)
+        val edge = Path().apply {
+            moveTo(topLeft.x, topLeft.y); lineTo(topRight.x, topRight.y)
+            lineTo(bottomRight.x, bottomRight.y); lineTo(bottomLeft.x, bottomLeft.y); close()
+        }
+        drawPath(edge, Color(0xFF153B38), style = Stroke(4.dp.toPx()))
+        drawLine(strokeColor, topLeft, topRight, strokeWidth = 2.dp.toPx())
+        drawLine(strokeColor, topRight, bottomRight, strokeWidth = 2.dp.toPx())
+        drawLine(strokeColor, bottomRight, bottomLeft, strokeWidth = 2.dp.toPx())
+        drawLine(strokeColor, bottomLeft, topLeft, strokeWidth = 2.dp.toPx())
         activeOffset?.let { offset ->
             drawLine(
                 color = strokeColor.copy(alpha = 0.4f),
                 start = Offset(imageBounds.left, offset.y),
                 end = Offset(imageBounds.right, offset.y),
-                strokeWidth = 2.5f,
+                strokeWidth = 1.dp.toPx(),
             )
             drawLine(
                 color = strokeColor.copy(alpha = 0.4f),
                 start = Offset(offset.x, imageBounds.top),
                 end = Offset(offset.x, imageBounds.bottom),
-                strokeWidth = 2.5f,
+                strokeWidth = 1.dp.toPx(),
             )
         }
         drawCircle(
@@ -207,7 +213,8 @@ private fun Handle(
     val touchTarget = 64.dp
     val visualSize = if (active) 34.dp else 28.dp
     val latestPoint by rememberUpdatedState(point)
-    fun move(point: PointValue) = onMoved(point.snapToEdge())
+    val latestOnMoved by rememberUpdatedState(onMoved)
+    fun move(point: PointValue) = latestOnMoved(point.snapToEdge())
 
     Box(
         modifier = Modifier
@@ -219,6 +226,7 @@ private fun Handle(
                 )
             }
             .size(touchTarget)
+            .testTag("crop-handle-$label")
             .semantics {
                 contentDescription = label
                 customActions = listOf(
