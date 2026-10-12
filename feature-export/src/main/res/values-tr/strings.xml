@@ -32,4 +32,9 @@
         <item quantity="one">%1$d dosya açılmaya veya paylaşılmaya hazır.</item>
         <item quantity="other">%1$d dosya açılmaya veya paylaşılmaya hazır.</item>
     </plurals>
+    <string name="export_progress">Dosyalarınız hazırlanıyor</string>
+    <string name="export_keep_open">Kaydetme bitene kadar bu ekranı açık tutun.</string>
+    <string name="export_filename">Dosya adı</string>
+    <string name="export_filename_invalid">1 ile 80 karakter arasında bir ad girin.</string>
+    <string name="export_recovery">Dışa aktarmayı yeniden deneyin</string>
 </resources>

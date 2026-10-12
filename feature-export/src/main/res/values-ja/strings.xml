@@ -30,4 +30,9 @@
     <plurals name="export_done_message">
         <item quantity="other">%1$d 件のファイルを開くか共有できます。</item>
     </plurals>
+    <string name="export_progress">ファイルを準備しています</string>
+    <string name="export_keep_open">保存が完了するまでこの画面を開いたままにしてください。</string>
+    <string name="export_filename">ファイル名</string>
+    <string name="export_filename_invalid">1～80文字の名前を入力してください。</string>
+    <string name="export_recovery">もう一度書き出す</string>
 </resources>

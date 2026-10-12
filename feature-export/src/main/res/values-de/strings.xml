@@ -32,4 +32,9 @@
         <item quantity="one">%1$d Datei bereit zum Öffnen oder Teilen.</item>
         <item quantity="other">%1$d Dateien bereit zum Öffnen oder Teilen.</item>
     </plurals>
+    <string name="export_progress">Dateien werden vorbereitet</string>
+    <string name="export_keep_open">Lasse diese Ansicht bis zum Ende des Speicherns geöffnet.</string>
+    <string name="export_filename">Dateiname</string>
+    <string name="export_filename_invalid">Gib einen Namen mit 1 bis 80 Zeichen ein.</string>
+    <string name="export_recovery">Export erneut versuchen</string>
 </resources>

@@ -34,4 +34,9 @@
         <item quantity="many">%1$d fichiers prêts à ouvrir ou partager.</item>
         <item quantity="other">%1$d fichiers prêts à ouvrir ou partager.</item>
     </plurals>
+    <string name="export_progress">Préparation des fichiers</string>
+    <string name="export_keep_open">Gardez cet écran ouvert pendant la sauvegarde.</string>
+    <string name="export_filename">Nom du fichier</string>
+    <string name="export_filename_invalid">Saisissez un nom de 1 à 80 caractères.</string>
+    <string name="export_recovery">Réessayez l’exportation</string>
 </resources>

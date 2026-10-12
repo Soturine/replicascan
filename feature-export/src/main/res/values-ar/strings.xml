@@ -40,4 +40,9 @@
         <item quantity="many">%1$d ملفًا جاهزًا للفتح أو المشاركة.</item>
         <item quantity="other">%1$d ملف جاهز للفتح أو المشاركة.</item>
     </plurals>
+    <string name="export_progress">جارٍ تجهيز ملفاتك</string>
+    <string name="export_keep_open">أبقِ هذه الشاشة مفتوحة حتى يكتمل الحفظ.</string>
+    <string name="export_filename">اسم الملف</string>
+    <string name="export_filename_invalid">أدخل اسمًا من 1 إلى 80 حرفًا.</string>
+    <string name="export_recovery">حاول التصدير مرة أخرى</string>
 </resources>

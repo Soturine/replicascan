@@ -32,4 +32,9 @@
         <item quantity="one">%1$d फ़ाइल खोलने या शेयर करने के लिए तैयार है।</item>
         <item quantity="other">%1$d फ़ाइलें खोलने या शेयर करने के लिए तैयार हैं।</item>
     </plurals>
+    <string name="export_progress">आपकी फ़ाइलें तैयार हो रही हैं</string>
+    <string name="export_keep_open">सहेजना पूरा होने तक यह स्क्रीन खुली रखें।</string>
+    <string name="export_filename">फ़ाइल का नाम</string>
+    <string name="export_filename_invalid">1 से 80 अक्षरों का नाम दर्ज करें।</string>
+    <string name="export_recovery">फिर से निर्यात करें</string>
 </resources>

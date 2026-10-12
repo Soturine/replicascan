@@ -74,22 +74,28 @@ class ExportViewModel(
     )
 
     fun selectFormat(format: ExportFormat) {
+        if (isExporting.value) return
         selectedFormat.value = format
         exportedFiles.value = emptyList()
     }
 
     fun selectQuality(quality: PdfQuality) {
+        if (isExporting.value) return
         selectedQuality.value = quality
         exportedFiles.value = emptyList()
     }
 
     fun selectPageSize(pageSize: PdfPageSize) {
+        if (isExporting.value) return
         selectedPageSize.value = pageSize
         exportedFiles.value = emptyList()
     }
 
-    fun export() {
-        val scan = uiState.value.scan ?: return
+    fun export(fileName: String) {
+        val validation = com.soturine.replicascan.core.common.usecase.ValidateDocumentNameUseCase()(fileName)
+        if (!validation.isValid) return
+        val selection = uiState.value
+        val scan = selection.scan?.copy(title = validation.sanitizedValue) ?: return
         if (isExporting.value) return
         isExporting.value = true
         viewModelScope.launch {
@@ -98,16 +104,16 @@ class ExportViewModel(
             exportedFiles.value = emptyList()
             try {
                 try {
-                    val files = if (uiState.value.selectedFormat == ExportFormat.PDF) {
+                    val files = if (selection.selectedFormat == ExportFormat.PDF) {
                         listOf(
                             exportRepository.exportPdf(
                                 scan = scan,
-                                quality = uiState.value.selectedQuality,
-                                pageSize = uiState.value.selectedPageSize,
+                                quality = selection.selectedQuality,
+                                pageSize = selection.selectedPageSize,
                             ),
                         )
                     } else {
-                        exportRepository.exportImages(scan, uiState.value.selectedFormat)
+                        exportRepository.exportImages(scan, selection.selectedFormat)
                     }
                     scanRepository.markScanSaved(scanId)
                     exportedFiles.value = files

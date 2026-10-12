@@ -30,4 +30,9 @@
     <plurals name="export_done_message">
         <item quantity="other">%1$d file siap dibuka atau dibagikan.</item>
     </plurals>
+    <string name="export_progress">Menyiapkan berkas</string>
+    <string name="export_keep_open">Biarkan layar ini terbuka hingga penyimpanan selesai.</string>
+    <string name="export_filename">Nama berkas</string>
+    <string name="export_filename_invalid">Masukkan nama 1 hingga 80 karakter.</string>
+    <string name="export_recovery">Coba ekspor lagi</string>
 </resources>
