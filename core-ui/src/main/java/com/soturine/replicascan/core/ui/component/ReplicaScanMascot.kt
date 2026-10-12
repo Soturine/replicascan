@@ -4,11 +4,16 @@ import android.database.ContentObserver
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -16,19 +21,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -39,15 +42,27 @@ import kotlinx.coroutines.isActive
 import kotlin.math.PI
 import kotlin.math.sin
 
-/** Domain scenes; no animation can complete an OCR/export operation. */
+/** Domain scenes; mascot motion never completes an OCR/export operation. */
 enum class ReplicaScanMascotState {
     Welcome, Idle, Scanning, Processing, Working, Ocr, Empty, Attention, Success;
 
     internal val isBusy: Boolean
         get() = this == Processing || this == Working || this == Ocr || this == Scanning
+
+    @get:DrawableRes
+    internal val artwork: Int
+        get() = when (this) {
+            Welcome -> R.drawable.replicascan_fox_greeting
+            Idle -> R.drawable.replicascan_fox_idle
+            Scanning, Processing, Working -> R.drawable.replicascan_fox_working
+            Ocr -> R.drawable.replicascan_fox_reading
+            Empty -> R.drawable.replicascan_fox_empty
+            Attention -> R.drawable.replicascan_fox_attention
+            Success -> R.drawable.replicascan_fox_success
+        }
 }
 
-/** Registered original art. Decorative; the owning screen conveys its state in text. */
+/** Original-fox pose study. Decorative; the owning screen conveys its state in text. */
 @Composable
 fun ReplicaScanMascot(
     state: ReplicaScanMascotState,
@@ -55,77 +70,61 @@ fun ReplicaScanMascot(
     size: Dp = 168.dp,
     reducedMotion: Boolean = false,
 ) {
-    val atlas = ImageBitmap.imageResource(R.drawable.replicascan_fox_atlas)
     val lifecycle by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
     val durationScale = systemAnimatorScale()
+    val density = LocalDensity.current.density
     val phase = remember { Animatable(0f) }
     val running = lifecycle.isAtLeast(Lifecycle.State.RESUMED) && !reducedMotion && durationScale > 0f
+
     LaunchedEffect(state, running, durationScale) {
         phase.snapTo(0f)
         if (!running) return@LaunchedEffect
         do {
-            phase.animateTo(1f, tween(if (state.isBusy) 3200 else 2400, easing = LinearEasing))
-            if (!state.isBusy) break
-            delay(320)
+            phase.animateTo(1f, tween(if (state.isBusy) 2700 else 3200, easing = LinearEasing))
+            if (state == ReplicaScanMascotState.Success) break
+            delay(if (state.isBusy) 420 else 1200)
             phase.snapTo(0f)
         } while (isActive)
     }
-    Canvas(modifier.size(size).testTag("mascot-${state.name}")) {
-        val t = if (running) phase.value else 0f
-        val wave = sin(t * PI * 2).toFloat()
-        val breath = sin(t * PI).toFloat()
-        // Physical artwork, like documents, is intentionally not mirrored in RTL.
-        scale(this.size.minDimension / 240f, pivot = Offset.Zero) {
-            drawOval(Color(0x14253B3A), Offset(44f, 221f), androidx.compose.ui.geometry.Size(150f, 9f))
-            part(atlas, 4, 123f, 122f, 104f, 104f, wave * 5f, Offset(140f, 213f))
-            val greeting = state == ReplicaScanMascotState.Welcome || state == ReplicaScanMascotState.Success
-            part(atlas, 5, 28f, 132f, 64f, 78f,
-                if (greeting) 85f + wave * 8f else if (state.isBusy) -20f + wave * 4f else wave * 3f,
-                Offset(72f, 148f))
-            part(atlas, 6, 116f, 134f, 64f, 78f,
-                if (state.isBusy) 18f - wave * 5f else -wave * 3f, Offset(137f, 148f))
-            part(atlas, 3, 45f, 118f - breath, 112f, 112f)
-            val head = when {
-                state == ReplicaScanMascotState.Attention -> 2
-                t in 0.30f..0.35f || (state == ReplicaScanMascotState.Success && t > .55f) -> 1
-                else -> 0
-            }
-            val tilt = when (state) {
-                ReplicaScanMascotState.Ocr -> -5f + wave * 3f
-                ReplicaScanMascotState.Attention -> -6f
-                else -> wave * 2f
-            }
-            part(atlas, head, 23f, 8f - breath, 156f, 156f, tilt, Offset(105f, 137f))
-            val hasPaper = state.isBusy || state == ReplicaScanMascotState.Success
-            if (hasPaper) {
-                val filing = if (state == ReplicaScanMascotState.Working) 10f * (1f - wave) else 0f
-                part(atlas, 7, 83f, 132f + filing, 66f, 66f, -5f)
-                if (state == ReplicaScanMascotState.Working || state == ReplicaScanMascotState.Success) {
-                    part(atlas, 8, 72f, 165f, 91f, 67f)
+
+    val t = if (running) phase.value else 0f
+    val wave = sin(t * 2 * PI).toFloat()
+    val breath = ((1 - kotlin.math.cos(t * 2 * PI)) / 2).toFloat()
+    val shadowColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f)
+    Box(modifier.requiredSize(size).testTag("mascot-${state.name}"), contentAlignment = Alignment.Center) {
+        Canvas(Modifier.matchParentSize()) {
+            drawOval(
+                shadowColor,
+                topLeft = Offset(this.size.width * .19f, this.size.height * .90f),
+                size = Size(this.size.width * .62f, this.size.height * .045f),
+            )
+        }
+        Image(
+            painter = painterResource(state.artwork),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize().graphicsLayer {
+                // Motion stays within the illustration's transparent margins.
+                translationY = -wave * (if (state.isBusy) 1.6f else 1.1f) * density
+                rotationZ = wave * when (state) {
+                    ReplicaScanMascotState.Welcome, ReplicaScanMascotState.Empty -> 1.1f
+                    ReplicaScanMascotState.Attention -> .35f
+                    else -> .65f
                 }
-            }
-            if (state == ReplicaScanMascotState.Scanning || state == ReplicaScanMascotState.Processing || state == ReplicaScanMascotState.Ocr) {
-                drawLine(Color(0xFF326A65), Offset(97f, 149f + 26f * t), Offset(135f, 149f + 26f * t), 2f)
-            }
-            if (state == ReplicaScanMascotState.Success) {
-                val ink = Color(0xFF326A65)
-                drawCircle(Color(0xFFD8EDE5), 17f, Offset(192f, 93f))
-                drawLine(ink, Offset(184f, 93f), Offset(190f, 99f), 3f)
-                drawLine(ink, Offset(190f, 99f), Offset(200f, 86f), 3f)
+                scaleX = 1f + breath * .005f
+                scaleY = 1f + breath * .008f
+            },
+        )
+        if (running && (state == ReplicaScanMascotState.Scanning ||
+                    state == ReplicaScanMascotState.Processing ||
+                    state == ReplicaScanMascotState.Working)) {
+            Canvas(Modifier.matchParentSize()) {
+                val y = this.size.height * (.65f + .13f * t)
+                val start = Offset(this.size.width * .55f, y)
+                val end = Offset(this.size.width * .73f, y)
+                drawLine(Color(0xFF57B8B1).copy(alpha = .18f), start, end, strokeWidth = 5.dp.toPx())
+                drawLine(Color(0xFF327B76).copy(alpha = .56f), start, end, strokeWidth = 1.5.dp.toPx())
             }
         }
-    }
-}
-
-/** Source cells and pivots in a 240-unit stage; see docs/design/mascot.md. */
-private fun DrawScope.part(
-    atlas: ImageBitmap, cell: Int, x: Float, y: Float, width: Float, height: Float,
-    angle: Float = 0f, pivot: Offset = Offset(x + width / 2, y + height / 2),
-) {
-    val edge = atlas.width / 3
-    rotate(angle, pivot) {
-        drawImage(atlas, IntOffset(cell % 3 * edge, cell / 3 * edge), IntSize(edge, edge),
-            IntOffset(x.toInt(), y.toInt()), IntSize(width.toInt(), height.toInt()))
     }
 }
 

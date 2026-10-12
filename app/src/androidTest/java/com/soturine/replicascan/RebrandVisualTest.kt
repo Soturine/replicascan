@@ -210,7 +210,7 @@ class RebrandVisualTest {
         val first = rule.onNodeWithTag("mascot-Working").captureToImage().asAndroidBitmap()
         rule.mainClock.advanceTimeBy(750)
         val second = rule.onNodeWithTag("mascot-Working").captureToImage().asAndroidBitmap()
-        assertFalse("Independent pieces must move", first.sameAs(second))
+        assertFalse("Working pose must move", first.sameAs(second))
         val dir = File(context.getExternalFilesDir(null), "rebrand-evidence").apply { mkdirs() }
         listOf(first, second).forEachIndexed { index, bitmap ->
             File(dir, "motion-frame-$index.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
@@ -225,5 +225,17 @@ class RebrandVisualTest {
         capture("mascot-error-static")
         rule.runOnIdle { scene = ReplicaScanMascotState.Success }
         capture("mascot-success-static")
+        rule.runOnIdle { reduced = false }
+        var frame = 0
+        listOf(ReplicaScanMascotState.Idle, ReplicaScanMascotState.Working,
+            ReplicaScanMascotState.Success, ReplicaScanMascotState.Attention).forEach { pose ->
+            rule.runOnIdle { scene = pose }
+            repeat(16) {
+                rule.mainClock.advanceTimeBy(125)
+                val bitmap = rule.onNodeWithTag("mascot-${pose.name}").captureToImage().asAndroidBitmap()
+                File(dir, "motion-sequence-${frame++.toString().padStart(2, '0')}.png")
+                    .outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+            }
+        }
     }
 }
