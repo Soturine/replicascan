@@ -48,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -236,22 +237,20 @@ private fun ScanHero(
             verticalArrangement = Arrangement.spacedBy(ReplicaScanSpacing.lg),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(ReplicaScanSpacing.xs)) {
-                    Text(
-                        text = stringResource(R.string.home_hero_title),
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                    Text(
-                        text = stringResource(R.string.home_hero_body),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                if (LocalConfiguration.current.fontScale < 1.5f) {
-                    ReplicaScanMascot(ReplicaScanMascotState.Welcome, size = 108.dp)
+                Text(
+                    text = stringResource(R.string.home_hero_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.weight(1f).semantics { heading() },
+                )
+                if (LocalDensity.current.fontScale < 1.5f) {
+                    ReplicaScanMascot(ReplicaScanMascotState.Welcome, size = 136.dp)
                 }
             }
+            Text(
+                text = stringResource(R.string.home_hero_body),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
             ReplicaScanPrimaryButton(
                 text = stringResource(R.string.home_scan_action),
                 onClick = onScan,
