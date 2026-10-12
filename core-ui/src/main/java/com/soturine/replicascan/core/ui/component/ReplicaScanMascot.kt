@@ -1,4 +1,4 @@
-﻿package com.soturine.replicascan.core.ui.component
+package com.soturine.replicascan.core.ui.component
 
 import android.database.ContentObserver
 import android.os.Handler
@@ -78,6 +78,12 @@ fun ReplicaScanMascot(
         scale(this.size.minDimension / 240f, pivot = Offset.Zero) {
             drawOval(Color(0x14253B3A), Offset(44f, 221f), androidx.compose.ui.geometry.Size(150f, 9f))
             part(atlas, 4, 123f, 122f, 104f, 104f, wave * 5f, Offset(140f, 213f))
+            val greeting = state == ReplicaScanMascotState.Welcome || state == ReplicaScanMascotState.Success
+            part(atlas, 5, 28f, 132f, 64f, 78f,
+                if (greeting) 85f + wave * 8f else if (state.isBusy) -20f + wave * 4f else wave * 3f,
+                Offset(72f, 148f))
+            part(atlas, 6, 116f, 134f, 64f, 78f,
+                if (state.isBusy) 18f - wave * 5f else -wave * 3f, Offset(137f, 148f))
             part(atlas, 3, 45f, 118f - breath, 112f, 112f)
             val head = when {
                 state == ReplicaScanMascotState.Attention -> 2
@@ -98,12 +104,6 @@ fun ReplicaScanMascot(
                     part(atlas, 8, 72f, 165f, 91f, 67f)
                 }
             }
-            val greeting = state == ReplicaScanMascotState.Welcome || state == ReplicaScanMascotState.Success
-            part(atlas, 5, 24f, 128f, 58f, 72f,
-                if (greeting) 145f + wave * 14f else if (hasPaper) -20f + wave * 4f else wave * 3f,
-                Offset(68f, 143f))
-            part(atlas, 6, 121f, 130f, 58f, 72f,
-                if (hasPaper) 18f - wave * 5f else -wave * 3f, Offset(137f, 142f))
             if (state == ReplicaScanMascotState.Scanning || state == ReplicaScanMascotState.Processing || state == ReplicaScanMascotState.Ocr) {
                 drawLine(Color(0xFF326A65), Offset(97f, 149f + 26f * t), Offset(135f, 149f + 26f * t), 2f)
             }
