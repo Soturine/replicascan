@@ -1,9 +1,17 @@
 # Rig da raposa — gate artístico anterior ao código
 
-`STATUS: MASTER NÃO APROVADO`. Atlas atual é baseline rejeitado. Antes de
-substituir runtime, gerar master original e obter aceite visual expresso do
-proprietário em pelo menos idle, greeting, reading, working, success, error e
-empty. O rosto e a silhueta devem continuar reconhecíveis entre poses.
+`STATUS: MASTER APROVADO COMO ESTILO; POSES E RUNTIME PENDENTES`. Atlas atual é
+baseline rejeitado. O proprietário aprovou `candidates/master-v1.png` como
+direção em 2026-10-12. Antes de substituir runtime, obter aceite visual
+expresso das poses idle, greeting, reading, working, success, error e empty.
+O rosto e a silhueta devem continuar reconhecíveis entre poses.
+
+Referência visual indicada, ainda sem master aprovado: a própria raposa
+v0.4.0. Manter rosto sorridente, volume macio, olhos castanhos, patinhas e
+bandana turquesa reconhecíveis. O proprietário rejeitou explorações furry e
+geométricas/chapadas; simplificar pelo e detalhes sem descaracterizar a
+personagem original. A prancha `candidates/review.html` mostra a arte histórica,
+o master aprovado e seis poses derivadas ainda pendentes de aceite.
 
 Camadas exigidas: cauda atrás, corpo/pernas, braço atrás, cabeça base com
 orelhas/olhos/pálpebras/focinho, braço à frente apenas quando a ação pedir,

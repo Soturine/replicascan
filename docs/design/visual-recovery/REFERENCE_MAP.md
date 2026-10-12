@@ -27,5 +27,5 @@ separados e auditorias externas citados pelo pedido não estavam anexados aqui.
 
 Princípios aproveitados: calor do papel e palavras de Pipa; legibilidade noturna
 e luz dirigida ao documento de Lume; simplicidade do fluxo real do ReplicaScan.
-Novidade necessária: uma raposa de autoria própria e cenas ligadas à tarefa real,
+Novidade necessária: evolução cuidadosa da raposa histórica e cenas ligadas à tarefa real,
 com cor/luz coerentes entre temas e sem prop decorativo repetido.

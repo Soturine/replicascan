@@ -7,6 +7,8 @@
 mas a release pública mais recente é `v0.4.0`; não há tag `v0.4.1`.
 Identidade Git/autenticação: Soturine. Worktree limpa no início desta auditoria.
 O proprietário rejeitou explicitamente a qualidade visual do ciclo anterior.
+O feedback posterior rejeitou explorações realistas/furry e chapadas; a
+referência solicitada agora é a própria raposa fofinha da v0.4.0.
 Portanto, as capturas e os testes anteriores são baseline de regressão e
 correção funcional, não aceite estético.
 

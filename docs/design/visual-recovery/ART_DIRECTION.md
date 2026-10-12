@@ -8,11 +8,16 @@ ferramentas precisas, luz quente e uma raposa que orienta sem infantilizar. Uma
 mantém a mesma materialidade e a mesma cor de ação. O papel é uma superfície
 funcional, não textura repetida sob texto ou desenho de fita em cada cartão.
 
-A raposa tem silhueta distinta, proporções estáveis, rosto acolhedor com olhos
-contidos, focinho amplo, orelhas e cauda identificáveis. Pintura com volumes
-suaves e borda controlada; nenhuma maquiagem, cílio destacado ou expressão
-exagerada. Quando a tarefa aparece, a raposa olha para o documento; a folha
-tem presença própria, não surge presa ao focinho. Não criar nome para ela.
+A referência afetiva explicitada pelo proprietário é a **raposa original da
+v0.4.0**, especialmente `replicascan_mascot_welcome.png`: corpo sentado e
+compacto, cabeça e bochechas redondas, laranja quente, olhos castanhos vivos,
+focinho e peito claros, patinhas escuras, cauda grande e bandana turquesa.
+Preservar o volume macio de ilustração dessa personagem, simplificando apenas
+o necessário para continuidade entre poses e animação. Evitar tanto pelo
+realista/anatomia furry quanto ícone geométrico chapado. Nenhuma maquiagem ou
+cílio destacado. Quando a tarefa aparece, a raposa olha
+para o documento; a folha tem presença própria, não surge presa ao focinho.
+Não criar nome para ela.
 
 Home: manchete curta, um CTA de escanear e coleção recente visível; ilustração
 participa de um pequeno cenário com mesa/papel, sem virar sticker. Review/Crop:
