@@ -191,8 +191,16 @@ private fun ExportOptions(
             Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surfaceContainer) {
                 Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     AsyncUriImage(state.scan?.coverPage?.displayUri, fallbackImageUri = state.scan?.coverPage?.sourceUri,
-                        modifier = Modifier.size(54.dp, 72.dp), contentScale = ContentScale.Fit, maxDimension = 240)
-                    Text(state.scan?.title.orEmpty(), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                        modifier = Modifier.size(82.dp, 108.dp), contentScale = ContentScale.Fit, maxDimension = 240)
+                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(state.scan?.title.orEmpty(), style = MaterialTheme.typography.titleLarge)
+                        Text(pluralStringResource(R.plurals.export_summary, pageCount, pageCount),
+                            style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.secondaryContainer) {
+                            Text(state.selectedFormat.title, modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                                style = MaterialTheme.typography.labelMedium)
+                        }
+                    }
                 }
             }
             if (errorText != null) {
@@ -201,11 +209,6 @@ private fun ExportOptions(
             OutlinedTextField(value = fileName, onValueChange = onNameChange, modifier = Modifier.fillMaxWidth(),
                 label = { Text(stringResource(R.string.export_filename)) }, singleLine = true, isError = !nameValid,
                 supportingText = if (!nameValid) ({ Text(stringResource(R.string.export_filename_invalid)) }) else null)
-            Text(
-                text = pluralStringResource(R.plurals.export_summary, pageCount, pageCount),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
             Section(stringResource(R.string.export_format_section)) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     ExportFormat.entries.forEach { format ->
