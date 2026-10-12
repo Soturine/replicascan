@@ -32,7 +32,7 @@ fun SplashScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Image(
-                painter = painterResource(id = R.drawable.replicascan_icon_source),
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = null,
                 modifier = Modifier.size(112.dp),
             )

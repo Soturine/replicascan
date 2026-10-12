@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="fill"
-    android:src="@drawable/ic_launcher_fox" />
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <!-- All identifying content fits the central 66dp circle. Original fox + page mark. -->
+    <path android:fillColor="#AD471D" android:pathData="M32,49 Q29,38 34,30 Q43,32 47,40 Q54,37 61,40 Q69,32 75,31 Q79,40 75,51 Q76,64 63,69 L45,69 Q31,63 32,49Z" />
+    <path android:fillColor="#F6B687" android:pathData="M35,37 L39,48 L45,43Z M72,37 L64,44 L72,48Z" />
+    <path android:fillColor="#FFEDDA" android:pathData="M32,52 Q43,48 54,58 Q65,48 76,52 Q72,68 54,71 Q36,66 32,52Z" />
+    <path android:fillColor="#253B3A" android:pathData="M43,49 A2,2 0,1 0,43,53 A2,2 0,1 0,43,49 M65,49 A2,2 0,1 0,65,53 A2,2 0,1 0,65,49 M50,58 Q54,56 58,58 Q58,62 54,64 Q50,62 50,58Z" />
+    <path android:fillColor="#FFFCF5" android:strokeColor="#326A65" android:strokeWidth="2.5" android:strokeLineJoin="round" android:pathData="M43,67 L60,67 L67,74 L67,82 Q54,87 41,81 L41,69 Q41,67 43,67Z" />
+    <path android:fillColor="#00000000" android:strokeColor="#326A65" android:strokeWidth="2" android:strokeLineCap="round" android:pathData="M60,68 L60,74 L66,74 M47,74 L54,74 M47,78 L59,78" />
+</vector>
