@@ -1,11 +1,11 @@
 :root {
-  --bg: #f6f2ea;
+  --bg: #faf6ef;
   --bg-strong: #efe7d9;
   --paper: rgba(255, 253, 248, 0.9);
   --paper-strong: #fffdf8;
-  --ink: #10242b;
-  --ink-soft: #53676e;
-  --teal: #1f6b79;
+  --ink: #253b3a;
+  --ink-soft: #536460;
+  --teal: #326a65;
   --teal-soft: #d9ecef;
   --amber: #c7853c;
   --line: rgba(16, 36, 43, 0.12);
@@ -28,7 +28,7 @@ html {
 body {
   margin: 0;
   color: var(--ink);
-  font-family: "Manrope", "Segoe UI", sans-serif;
+  font-family: system-ui, "Segoe UI", sans-serif;
   background:
     radial-gradient(circle at top right, rgba(31, 107, 121, 0.12), transparent 22rem),
     radial-gradient(circle at bottom left, rgba(199, 133, 60, 0.08), transparent 18rem),
@@ -127,7 +127,7 @@ pre {
 h1,
 h2 {
   margin: 0;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: Georgia, serif;
   line-height: 1.04;
 }
 
@@ -191,7 +191,7 @@ h2 {
 }
 
 .button.primary {
-  background: linear-gradient(135deg, var(--ink) 0%, #21444d 100%);
+  background: #ad471d;
   color: #fff;
 }
 
@@ -200,12 +200,6 @@ h2 {
   border: 1px solid var(--line);
 }
 
-.preview-shell {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.preview-card,
 .card,
 .privacy-card {
   border: 1px solid var(--line);
@@ -214,105 +208,6 @@ h2 {
   box-shadow: var(--shadow);
 }
 
-.preview-card {
-  width: min(100%, 500px);
-  overflow: hidden;
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.7), rgba(255, 251, 245, 0.94)),
-    var(--paper-strong);
-}
-
-.preview-topbar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 18px 20px;
-  border-bottom: 1px solid var(--line);
-  color: var(--ink-soft);
-}
-
-.preview-topbar strong {
-  margin-left: 6px;
-  color: var(--ink);
-}
-
-.preview-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(16, 36, 43, 0.16);
-}
-
-.preview-stage {
-  padding: 22px;
-}
-
-.preview-hero {
-  margin-bottom: 18px;
-}
-
-.preview-overline {
-  margin: 0 0 8px;
-  color: var(--teal);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.preview-hero h2 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.preview-hero p {
-  margin: 0;
-  color: var(--ink-soft);
-  line-height: 1.65;
-}
-
-.preview-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.preview-surface {
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.86);
-}
-
-.preview-surface-large {
-  display: grid;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.preview-page {
-  min-height: 200px;
-  border-radius: 20px;
-  background:
-    linear-gradient(180deg, rgba(31, 107, 121, 0.06), rgba(255, 255, 255, 0)),
-    #fff;
-  border: 1px solid rgba(16, 36, 43, 0.08);
-  padding: 22px;
-}
-
-.preview-page-lines {
-  height: 12px;
-  margin-bottom: 12px;
-  border-radius: 999px;
-  background: rgba(16, 36, 43, 0.13);
-}
-
-.preview-page-lines.short {
-  width: 62%;
-}
-
-.preview-badge,
-.preview-chip,
 .step-tag {
   display: inline-flex;
   align-items: center;
@@ -322,17 +217,6 @@ h2 {
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 800;
-}
-
-.preview-badge {
-  background: var(--teal-soft);
-  color: var(--teal);
-}
-
-.preview-chip {
-  margin-bottom: 10px;
-  background: rgba(199, 133, 60, 0.12);
-  color: #935f22;
 }
 
 .section {
@@ -463,14 +347,6 @@ h2 {
   .hero h1 {
     max-width: none;
   }
-
-  .preview-shell {
-    justify-content: stretch;
-  }
-
-  .preview-card {
-    width: 100%;
-  }
 }
 
 @media (max-width: 720px) {
@@ -491,8 +367,11 @@ h2 {
   .hero-meta {
     width: 100%;
   }
-
-  .preview-grid {
-    grid-template-columns: 1fr;
-  }
 }
+
+
+.native-preview { margin: 0 auto; max-width: 330px; }
+.native-preview img { display: block; width: 100%; height: auto; border-radius: 28px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.native-preview figcaption { margin-top: 12px; color: var(--ink-soft); font-size: .85rem; line-height: 1.5; }
+.screen-capture { display: block; width: 100%; max-width: 280px; height: auto; margin: 16px auto; border-radius: 16px; border: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }

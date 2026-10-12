@@ -8,12 +8,6 @@
     name="description"
     content="ReplicaScan é um scanner de documentos para Android com digitalização inteligente no dispositivo, OCR local, PDF pesquisável, JPG e PNG, sem conta e sem nuvem obrigatória."
   />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -21,7 +15,7 @@
     <header class="hero-shell" id="top">
       <nav class="nav">
         <a class="brand" href="#top">
-          <img class="brand-icon" src="assets/replicascan_icon.png" alt="" />
+          <img class="brand-icon" src="assets/replicascan_icon.svg" alt="" />
           <span>ReplicaScan</span>
         </a>
         <div class="nav-links">
@@ -36,68 +30,28 @@
         <div class="hero-copy">
           <p class="eyebrow">Scanner Android com foco local</p>
           <h1>
-            Um scanner Android com
-            <span>um toque para escanear, texto reconhecido no aparelho e exportação clara.</span>
+            Do papel
+            <span>ao arquivo.</span>
           </h1>
           <p class="lead">
-            ReplicaScan abre o scanner assistido do Google sem pedir tipo antes da captura,
-            leva direto para revisão, organiza OCR em trechos e exporta PDF, JPG ou PNG a
-            partir da mesma página aprovada.
+            Escaneie, ajuste e guarde seus documentos no Android.
+            Reconheça texto no aparelho e exporte PDF, JPG ou PNG.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="https://github.com/Soturine/replicascan">Ver repositório</a>
             <a class="button secondary" href="https://github.com/Soturine/replicascan/releases">Ver releases</a>
           </div>
           <div class="hero-meta">
-            <span>Versão 0.4.0</span>
+            <span>Versão 0.4.1</span>
             <span>CI Android ativo</span>
             <span>com.soturine.replicascan</span>
           </div>
         </div>
 
-        <div class="preview-shell" aria-label="Prévia conceitual do produto">
-          <div class="preview-card">
-            <div class="preview-topbar">
-              <span class="preview-dot"></span>
-              <span class="preview-dot"></span>
-              <span class="preview-dot"></span>
-              <strong>ReplicaScan</strong>
-            </div>
-            <div class="preview-stage">
-              <div class="preview-hero">
-                <p class="preview-overline">Fluxo principal</p>
-                <h2>Escanear rápido e ajustar só quando realmente precisar.</h2>
-                <p>Digitalização inteligente no dispositivo com bordas, perspectiva e limpeza automáticas; o recorte manual continua disponível.</p>
-              </div>
-              <div class="preview-surface preview-surface-large">
-                <div class="preview-page">
-                  <div class="preview-page-lines"></div>
-                  <div class="preview-page-lines short"></div>
-                  <div class="preview-page-lines"></div>
-                </div>
-                <div class="preview-badge">Fluxo universal</div>
-              </div>
-              <div class="preview-grid">
-                <div class="preview-surface">
-                  <span class="preview-chip">Crop</span>
-                  <strong>Crop inicial mais firme</strong>
-                </div>
-                <div class="preview-surface">
-                  <span class="preview-chip">OCR local</span>
-                  <strong>Trechos e texto consolidado</strong>
-                </div>
-                <div class="preview-surface">
-                  <span class="preview-chip">Exportação</span>
-                  <strong>Formato progressivo e local claro</strong>
-                </div>
-                <div class="preview-surface">
-                  <span class="preview-chip">Privacidade</span>
-                  <strong>Sem upload obrigatório</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <figure class="native-preview">
+          <img src="assets/home-recent.png" alt="Tela inicial do ReplicaScan com ações Escanear e Importar imagens, raposa e documento recente." width="1080" height="2201" />
+          <figcaption>Captura do APK no Android 14. Documento sintético de teste.</figcaption>
+        </figure>
       </section>
     </header>
 
@@ -131,28 +85,30 @@
       <section class="section section-alt">
         <div class="section-heading">
           <p class="eyebrow">Material público</p>
-          <h2>O produto evoluiu. As capturas oficiais fecham a próxima rodada de QA.</h2>
+          <h2>Do recorte ao arquivo salvo, com o documento em destaque.</h2>
           <p>
-            O site e a documentação foram alinhados ao fluxo real da versão 0.4.0. As
-            capturas finais em aparelho real seguem como fechamento natural de QA visual,
-            sem substituir essa etapa por mockups artificiais.
+            Capturas reais dos componentes Android da v0.4.1, no emulador e com estados de teste.
+            Não demonstram câmera física ou OCR realizado. Veja a matriz de validação no repositório.
           </p>
         </div>
         <div class="timeline-grid">
           <article class="card card-soft">
             <span class="step-tag">01</span>
-            <h3>Escanear</h3>
-            <p>Aponte a câmera: bordas, perspectiva e limpeza são automáticas, com várias páginas por vez.</p>
+            <h3>Cortar</h3>
+            <img class="screen-capture" src="assets/crop.png" alt="Editor de recorte com quatro alças e fundo escuro." width="1080" height="2201" loading="lazy" />
+            <p>Ajuste os quatro cantos, volte à página inteira ou desfaça ajustes antes de aplicar.</p>
           </article>
           <article class="card card-soft">
             <span class="step-tag">02</span>
-            <h3>Revisar</h3>
-            <p>O documento fica em destaque, com cortar, girar, ajustar e texto a um toque.</p>
+            <h3>Preparar</h3>
+            <img class="screen-capture" src="assets/export.png" alt="Opções de nome, formato e qualidade da exportação." width="1080" height="2201" loading="lazy" />
+            <p>Escolha nome, PDF, JPG ou PNG. As opções dependem do formato.</p>
           </article>
           <article class="card card-soft">
             <span class="step-tag">03</span>
-            <h3>Exportar</h3>
-            <p>PDF, JPG ou PNG salvos no aparelho e compartilhados pelo Android.</p>
+            <h3>Salvar</h3>
+            <img class="screen-capture" src="assets/export-progress.png" alt="Estado de exportação com raposa animada e indicador de trabalho." width="1080" height="2201" loading="lazy" />
+            <p>Acompanhe o trabalho. Ao concluir, abra ou compartilhe os arquivos salvos.</p>
           </article>
         </div>
       </section>
@@ -186,7 +142,7 @@
         <div class="split-layout">
           <div class="section-heading">
             <p class="eyebrow">Instalação</p>
-            <h2>Projeto pronto para abrir e validar.</h2>
+            <h2>Uma versão de avaliação para testar no Android.</h2>
             <p>
               Use Android Studio com JDK 17+ e Android SDK Platform 36. O CI já cobre build, lint e testes unitários.
             </p>
@@ -231,11 +187,11 @@ cd replicascan
           </article>
           <article class="card">
             <h3>Atual</h3>
-            <p>v0.4.0: identidade ReplicaScan, pacote Android independente, licença corrente proprietária e release assíncrona auditável.</p>
+            <p>v0.4.1: interface de papel e tinta, raposa animada por partes, crop sequencial corrigido e recuperação de exportação.</p>
           </article>
           <article class="card">
             <h3>Próxima</h3>
-            <p>v0.4.1: desempenho medido, QA físico, revisão linguística nativa e preparação para loja após o gate em aparelho.</p>
+            <p>Próximo marco: desempenho medido, QA físico, revisão linguística nativa e preparação para loja após o gate em aparelho.</p>
           </article>
         </div>
       </section>
@@ -263,7 +219,7 @@ cd replicascan
     </main>
 
     <footer class="footer">
-      <p>ReplicaScan • 0.4.0 • Código corrente proprietário e publicamente visível. Veja LICENSE e LICENSING.md.</p>
+      <p>ReplicaScan • 0.4.1 • Código corrente proprietário e publicamente visível. Veja LICENSE e LICENSING.md.</p>
     </footer>
   </div>
 

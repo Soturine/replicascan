@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import re
+import json
 import sys
 from pathlib import Path
 
@@ -18,7 +19,8 @@ def main() -> int:
             continue
         if not (site / value).is_file():
             errors.append(f"missing local site asset: {value}")
-    for expected in ("ReplicaScan", "Versão 0.4.0", "Soturine/replicascan", "replicascan_icon.png"):
+    manifest = json.loads((root / "release/manifest.json").read_text(encoding="utf-8"))
+    for expected in ("ReplicaScan", f"Versão {manifest['version']}", "Soturine/replicascan", "replicascan_icon.svg"):
         if expected not in index:
             errors.append(f"missing site metadata: {expected}")
     if errors:
