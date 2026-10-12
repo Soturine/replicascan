@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReplicaScan — comparação visual Android</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.5 system-ui, sans-serif; background: #f9f6ef; color: #263c3b; }
+    body { max-width: 1200px; margin: auto; padding: 24px; }
+    h1 { line-height: 1.15; }
+    p { max-width: 78ch; }
+    nav { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 24px 0; }
+    a { color: #a6431e; }
+    section { border-top: 1px solid #d9cfc0; padding: 20px 0 32px; }
+    .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    figure { margin: 0; min-width: 0; }
+    figcaption { margin-bottom: 8px; font-weight: 600; }
+    img { display: block; width: 100%; max-width: 390px; height: auto; border: 1px solid #d9cfc0; border-radius: 12px; }
+    @media (max-width: 680px) { .pair { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>Comparação visual Android</h1>
+  <p>À esquerda, a captura rejeitada do ciclo anterior. À direita, o estado atual renderizado pelo Compose no emulador Android 14 / API 34, com documento sintético e estados injetados. A prévia de exportação em andamento foi recapturada após a mudança funcional. Esta prancha é evidência para revisão, não aceite estético nem prova de câmera, OCR ou exportação reais.</p>
+  <nav aria-label="Ir para tela">
+    <a href="#home">Home</a><a href="#review">Revisão</a><a href="#crop">Recorte</a>
+    <a href="#export">Exportação</a><a href="#progress">Progresso</a><a href="#success">Sucesso</a>
+    <a href="#onboarding">Introdução</a><a href="#ocr">OCR</a><a href="#history">Histórico</a>
+    <a href="#settings">Configurações</a><a href="#launcher">Ícone</a>
+  </nav>
+  <section id="home"><h2>Home com documento</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/home-recent.png" alt="Home anterior"></figure><figure><figcaption>Atual</figcaption><img src="home-recent.png" alt="Home atual com raposa aprovada"></figure></div></section>
+  <section id="review"><h2>Revisão</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/review.png" alt="Revisão anterior"></figure><figure><figcaption>Atual</figcaption><img src="review.png" alt="Revisão atual"></figure></div></section>
+  <section id="crop"><h2>Recorte</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/crop.png" alt="Recorte anterior"></figure><figure><figcaption>Atual</figcaption><img src="crop.png" alt="Recorte atual"></figure></div></section>
+  <section id="export"><h2>Opções de exportação</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/export.png" alt="Opções anteriores"></figure><figure><figcaption>Atual</figcaption><img src="export.png" alt="Opções atuais"></figure></div></section>
+  <section id="progress"><h2>Exportação em andamento</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/export-progress.png" alt="Progresso anterior"></figure><figure><figcaption>Atual</figcaption><img src="export-progress.png" alt="Progresso atual com prévia e raposa trabalhando"></figure></div></section>
+  <section id="success"><h2>Exportação concluída</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/export-success.png" alt="Sucesso anterior"></figure><figure><figcaption>Atual</figcaption><img src="export-success.png" alt="Sucesso atual"></figure></div></section>
+  <section id="onboarding"><h2>Introdução</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/onboarding.png" alt="Introdução anterior"></figure><figure><figcaption>Atual</figcaption><img src="onboarding.png" alt="Introdução atual com raposa aprovada"></figure></div></section>
+  <section id="ocr"><h2>OCR em andamento</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/ocr-loading.png" alt="OCR anterior"></figure><figure><figcaption>Atual</figcaption><img src="ocr-loading.png" alt="OCR atual"></figure></div></section>
+  <section id="history"><h2>Histórico</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/history.png" alt="Histórico anterior"></figure><figure><figcaption>Atual</figcaption><img src="history.png" alt="Histórico atual"></figure></div></section>
+  <section id="settings"><h2>Configurações</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/settings.png" alt="Configurações anteriores"></figure><figure><figcaption>Atual</figcaption><img src="settings.png" alt="Configurações atuais"></figure></div></section>
+  <section id="launcher"><h2>Ícone em máscaras e tamanhos</h2><div class="pair"><figure><figcaption>Anterior</figcaption><img src="../../evidence/launcher-masks.png" alt="Ícone anterior em máscaras"></figure><figure><figcaption>Atual</figcaption><img src="launcher-masks.png" alt="Ícone atual em máscaras"></figure></div></section>
+  <p>As demais capturas e o <a href="mascot-motion-v1.mp4">clipe da raposa</a> ficam neste diretório. Confira os limites na <a href="../VALIDATION_MATRIX.md">matriz de validação</a>.</p>
+</body>
+</html>
