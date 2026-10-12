@@ -38,6 +38,7 @@ fun AsyncUriImage(
     maxDimension: Int = 2048,
     rotationDegrees: Float = 0f,
     onBitmapLoaded: ((IntSize) -> Unit)? = null,
+    backgroundColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.surfaceVariant,
 ) {
     val context = LocalContext.current
     val loadState by produceState<ImageLoadState>(
@@ -67,7 +68,7 @@ fun AsyncUriImage(
     }
 
     Box(
-        modifier = modifier.background(MaterialTheme.colorScheme.surfaceVariant),
+        modifier = modifier.background(backgroundColor),
         contentAlignment = Alignment.Center,
     ) {
         when (val state = loadState) {

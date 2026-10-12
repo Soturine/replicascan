@@ -180,6 +180,7 @@ private fun DocumentCropPreview(
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Fit,
             maxDimension = 1600,
+            backgroundColor = androidx.compose.ui.graphics.Color.Transparent,
             onBitmapLoaded = { imageSize = it },
         )
         imageBounds?.let { bounds ->
