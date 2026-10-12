@@ -11,5 +11,7 @@ Fundo marfim separado. Monochrome usa silhueta vazada, sem bitmap colorido.
 Fallback vetorial em mipmap-anydpi para API 24/25. Splash usa o mesmo foreground.
 Não há tipografia pequena. Os XMLs são a fonte editável dos assets.
 
-Máscaras e launcher devem ser registrados por captura Android na matriz visual;
-os limites geométricos por si só não comprovam legibilidade de todas as máscaras.
+Capturas Android em [evidence/launcher.png](evidence/launcher.png) e
+[evidence/launcher-masks.png](evidence/launcher-masks.png): launcher instalado,
+círculo e quadrado arredondado em 48/72/108dp. Inspeção sem corte do símbolo.
+Outros launchers OEM e a aparência de ícones temáticos permanecem pendentes.

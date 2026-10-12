@@ -82,3 +82,18 @@ Fontes oficiais consultadas em 2026-10-12:
 
 Matriz final e resultados serão atualizados com fatos executados. QA físico,
 TalkBack humano e revisão linguística nativa permanecem pendentes até execução.
+
+## Fechamento da implementação
+
+V01–V05 e V07–V09 implementados, compilados e renderizados no Android. V06
+preservado, com correção adicional do callback de arraste: um canto não restaura
+mais os demais. Pipeline real de crop/rotação/PNG verificado por pixels.
+Exportação também recebeu correção para falha do histórico após a escrita: o
+arquivo salvo continua disponível e a mensagem distingue os resultados.
+
+[Matriz de evidências e limites](validation.md): todos os destinos receberam
+mudança ou decisão explícita de preservar. UI do scanner Google é externa ao
+app e não foi simulada. Derivanta forneceu critérios de auditoria, não uma
+certificação independente. QA física, TalkBack, revisão linguística e aceitação
+estética pelo proprietário continuam parciais/pendentes. Nenhuma dessas lacunas
+foi convertida em sucesso de CI ou aprovação de produção.

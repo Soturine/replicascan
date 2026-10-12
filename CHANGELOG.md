@@ -4,6 +4,31 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-10-12
+
+### Changed
+
+- Tema claro/escuro de papel marfim, tinta petróleo e terracota; tipografia, superfícies, largura de leitura e botões compartilhados.
+- Onboarding com cenas animadas e voltar/pular; Home, revisão, filtros, OCR, histórico, detalhe, configurações e diálogos alinhados ao tema.
+- Raposa original com cabeça, expressões, cauda, patas e objetos animados em Compose; pausa por lifecycle e redução de movimento. Arte ajustada após feedback sobre olhos e patas.
+- Ícone vetorial com raposa e folha, fundo adaptativo separado e variante monochrome; 12 PNGs antigos de runtime removidos.
+- Exportação com nome validado, formatos visíveis, progresso indeterminado, erro persistente e nomes dos arquivos salvos.
+- Comparação do filtro ao segurar, com retorno ao soltar e alternativa semântica; feedback de pressão no botão principal.
+
+### Fixed
+
+- Mover um canto do crop podia restaurar os outros por callback desatualizado; regressão coberta por teste de dois gestos.
+- Fundo da área de crop podia parecer parte da imagem; letterbox agora usa o fundo escuro do editor.
+- Mudanças de formato e exportações repetidas bloqueadas durante a gravação; seleção congelada para a operação.
+- Falha ao atualizar o histórico depois de exportar não oculta mais os arquivos já salvos nem alega rollback inexistente.
+
+### Validation
+
+- Capturas do APK em API 34 com documentos sintéticos, claro/escuro, fonte 200%, direção RTL e layout largo; cinco testes instrumentais de UI e 14 de dados no checkpoint.
+- Testes unitários de exportação cobrem escrita falha, seleção congelada e atualização de histórico falha após sucesso; crop/export real verifica geometria, rotação e pixels.
+- QA físico, TalkBack humano, corpus real, API 35+ para extração de texto do PDF e revisão nativa de idiomas continuam pendentes. Gate API 36 remoto é assíncrono; não presumir sucesso.
+- [Evidências e limites](docs/design/validation.md). Não é uma versão de produção para Play Store.
+
 ## [0.4.0] - 2026-09-23
 
 ### Added

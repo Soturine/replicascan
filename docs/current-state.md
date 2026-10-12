@@ -1,6 +1,6 @@
 # Estado atual do ReplicaScan
 
-O ReplicaScan `0.4.0` (`versionCode 19`, `com.soturine.replicascan`) é um scanner Android local-first. **Escanear** abre o ML Kit Document Scanner; **Importar** usa o seletor de fotos do sistema; se o scanner não estiver disponível, a câmera do sistema e o crop manual servem de alternativa. Não há conta, backend, sincronização ou envio de documentos pelo app.
+O ReplicaScan `0.4.1` (`versionCode 20`, `com.soturine.replicascan`) é um scanner Android local-first. **Escanear** abre o ML Kit Document Scanner; **Importar** usa o seletor de fotos do sistema; se o scanner não estiver disponível, a câmera do sistema e o crop manual servem de alternativa. Não há conta, backend, sincronização ou envio de documentos pelo app.
 
 ## Fluxo do produto
 
@@ -13,11 +13,13 @@ O ReplicaScan `0.4.0` (`versionCode 19`, `com.soturine.replicascan`) é um scann
 
 ## Experiência e idiomas
 
-- tema claro/escuro em creme, navy, laranja e teal; raposa apenas em boas-vindas, vazio, processamento e sucesso;
+- tema claro/escuro em papel marfim, tinta petróleo e terracota; raposa animada por partes em boas-vindas, vazio, processamento, atenção e sucesso;
 - ferramentas com ícone e rótulo visível; ações destrutivas pedem confirmação;
 - Revisão com painel lateral em janelas largas/paisagem;
 - 12 idiomas com o mesmo glossário; árabe com RTL (o crop usa coordenadas físicas porque a imagem não é espelhada);
-- as traduções foram reescritas nesta versão e ainda **não** passaram por revisão de falantes nativos.
+- as traduções e os novos textos e ainda **não** passaram por revisão de falantes nativos.
+
+Evidência e limites do redesign: [matriz de telas](design/validation.md). O crop preserva cantos sequenciais; a exportação mantém acesso aos arquivos já salvos mesmo se a atualização do histórico falhar.
 
 ## Limitações atuais
 

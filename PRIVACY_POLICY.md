@@ -1,10 +1,12 @@
 # Política de Privacidade do ReplicaScan
 
-Última atualização: 2026-09-23 — versão 0.4.0
+Última atualização: 2026-10-12 — versão 0.4.1
 
 ## Resumo
 
 ReplicaScan funciona localmente e não exige conta, login, sincronização ou backend. O app não tem analytics próprio, rastreamento, anúncios nem OCR remoto, e o código do ReplicaScan não envia o conteúdo dos seus documentos para servidores.
+
+O redesign da v0.4.1 usa arte e animações empacotadas no APK. Não adiciona coleta de dados, serviços remotos ou permissões.
 
 ## Dados processados
 

@@ -2,11 +2,11 @@
 
 ![Android](https://img.shields.io/badge/platform-Android-2E7D8C)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-23414B)
-![Version](https://img.shields.io/badge/version-0.4.0-E95F0C)
+![Version](https://img.shields.io/badge/version-0.4.1-AD471D)
 [![Android CI](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml)
 [![Deploy Pages](https://github.com/Soturine/replicascan/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/pages.yml)
 
-ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Scanner, guarda as páginas só no aparelho, reconhece texto no próprio dispositivo e exporta PDF pesquisável, JPG ou PNG. Versão atual: v0.4.0.
+ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Scanner, guarda as páginas só no aparelho, reconhece texto no próprio dispositivo e exporta PDF pesquisável, JPG ou PNG. Versão de avaliação: v0.4.1.
 
 - Repositório: <https://github.com/Soturine/replicascan>
 - Releases: <https://github.com/Soturine/replicascan/releases>
@@ -21,14 +21,20 @@ ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Sc
 - PDF pesquisável quando há OCR, JPG e PNG, com opções progressivas por formato;
 - histórico local com título, tags, favoritos e busca Room FTS;
 - 12 idiomas, incluindo árabe com RTL;
-- raposa oficial consistente no launcher, onboarding e estados de processamento.
+- raposa animada por partes, respeitando redução de movimento; símbolo vetorial no launcher.
 
 Não há conta, backend, sincronização ou upload obrigatório de documentos. Componentes do Google Play services/ML Kit podem contatar o Google para atualizações e métricas técnicas conforme os termos do fornecedor; veja [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
+
+## Redesign e evidência
+
+A v0.4.1 traz papel marfim, tinta petróleo e terracota, revisão de telas, crop com cantos independentes e exportação com nome de arquivo, progresso e recuperação persistente. A mascote foi ajustada após feedback: olhos menores, sem cílios destacados e patas fora do rosto.
+
+Veja a [matriz de telas e limites de validação](docs/design/validation.md), o [rig da mascote](docs/design/mascot.md) e o [ícone](docs/design/icon.md). As capturas vêm do APK no emulador, com documentos sintéticos; não substituem QA físico, TalkBack humano ou revisão linguística nativa. A avaliação estética final pelo proprietário continua pendente.
 
 ## Identidade Android
 
 - produto: `ReplicaScan`
-- versão: `0.4.0` (`versionCode 19`)
+- versão: `0.4.1` (`versionCode 20`)
 - `applicationId`: `com.soturine.replicascan`
 - namespace base: `com.soturine.replicascan`
 - exportações em Android 10+: `Downloads/ReplicaScan`

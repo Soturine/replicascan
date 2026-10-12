@@ -12,7 +12,15 @@ ReplicaScan é o nome corrente a partir da v0.4.0. O produto usou outro nome at�
 - exportação sem intermediário com perdas; interface revisada e 12 catálogos reescritos;
 - gate de API 36 em dispositivo gerenciado; release publicada pelo proprietário e verificada pelo CI (ADR 0003).
 
-## v0.4.1 — Physical QA & Play Hardening
+## v0.4.1 — Redesign e recuperação
+
+**Status:** implementação e evidência em emulador; publicação de avaliação condicionada à qualificação do HEAD final.
+
+- tema papel/tinta, telas revisadas, raposa com rig Compose e ícone vetorial;
+- crop sequencial corrigido e PNG real verificado; exportação com estados persistentes;
+- capturas Android, fonte 200%, direção RTL e layout largo; limites em [validation.md](docs/design/validation.md).
+
+## Próximo marco — Physical QA & Play Hardening
 
 - validar scanner, fallback, crop, TalkBack, fonte 200%, RTL e upgrade em aparelhos físicos;
 - revisão linguística nativa dos 12 idiomas;

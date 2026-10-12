@@ -28,6 +28,7 @@ o gate de API 36 no GitHub nem QA físico. Nenhum documento pessoal foi publicad
 | Export PDF/JPG/PNG | formatos visíveis, nome validado, opções dependentes | `export.png`, `export-jpg.png`, `export-png.png`; opções de PDF continuam progressivas |
 | Export em progresso | opções antes continuavam visíveis → cena de trabalho e indicador indeterminado | `export-progress.png`; sem percentual inventado; seleção e voltar bloqueados durante gravação |
 | Export erro/sucesso | snackbar efêmero → erro persistente; resultado com nomes de arquivo | `export-error.png`, `export-success.png`; sucesso vem do domínio, não do relógio da animação |
+| Export salvo / histórico indisponível | antes podia alegar rollback → arquivos continuam acessíveis e aviso específico | `export-library-warning.png`; regressão unitária com falha após escrita |
 | Histórico/busca | linhas em papel, espaçamento e rótulo de busca | `history.png`, `search-empty.png`; FTS e contratos preservados |
 | Detalhe | componentes/cores compartilhados e confirmações existentes | `detail.png`; operações destrutivas continuam confirmadas |
 | Configurações | grupos de aparência/exportação/ajuda com superfícies próprias | `settings.png`; preferências e autônimos mantidos |
@@ -49,6 +50,9 @@ o gate de API 36 no GitHub nem QA físico. Nenhum documento pessoal foi publicad
   6,15:1; texto do botão escuro 9,38:1. Não é certificação de todas as combinações.
 - Export em tema escuro com fonte 200%: `export-dark-200.png`; revisão também usa
   direção RTL injetada. Isso não substitui teste em árabe nem TalkBack humano.
+- Layout largo renderizado a 1920×1080, densidade 240 (1280dp de largura):
+  `review-wide.png`, `home-recent-wide.png`, `export-dark-200-wide.png`.
+  O painel lateral da revisão está visível; a matriz passou nessa configuração.
 - Alças do crop têm ações semânticas e área de toque de 64dp; coordenadas físicas
   não espelham a imagem. Conteúdo decorativo da raposa não repete anúncios de estado.
 - Pressão do botão principal escala para 98,5% por 120ms. Não governa persistência.
@@ -64,6 +68,9 @@ o gate de API 36 no GitHub nem QA físico. Nenhum documento pessoal foi publicad
   dimensões/pixels do PNG exportado e preservação da fonte; reset para página inteira.
 - Gates de localização e branding passaram durante os checkpoints. Resultado
   consolidado, SHA final e artefato pertencem ao relatório de release, não a este snapshot.
+- Três regressões unitárias de ExportViewModel passaram: falha de escrita não gera
+  sucesso, falha posterior do histórico preserva acesso aos arquivos e operação ativa
+  congela opções/rejeita clique duplicado. Nenhuma fonte privada é renomeada.
 
 ## Limites e trabalho posterior
 
