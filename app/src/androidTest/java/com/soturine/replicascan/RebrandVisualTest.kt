@@ -124,6 +124,8 @@ class RebrandVisualTest {
         rule.onNodeWithText(context.getString(android.R.string.cancel)).performClick()
         rule.runOnIdle { screen = "home-recent"; dark = true }
         capture("home-dark")
+        rule.runOnIdle { large = true }
+        capture("home-dark-200")
         rule.runOnIdle { screen = "export"; large = true }
         capture("export-dark-200")
         rule.runOnIdle { screen = "review"; rtl = true }
