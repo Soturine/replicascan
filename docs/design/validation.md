@@ -1,5 +1,9 @@
 # Redesign: implementação e evidência
 
+> **Baseline visual rejeitado.** As capturas abaixo documentam o ciclo anterior,
+> não aprovação estética. Veja a [recuperação visual atual](visual-recovery/evidence/README.md)
+> para capturas Android com a raposa baseada na v0.4.0.
+
 ## Como ler esta evidência
 
 Capturas em [evidence/](evidence/) feitas por `RebrandVisualTest` no Android 14

@@ -27,9 +27,9 @@ Não há conta, backend, sincronização ou upload obrigatório de documentos. C
 
 ## Redesign e evidência
 
-A base da v0.4.1 traz papel marfim, tinta petróleo e terracota, revisão de telas, crop com cantos independentes e exportação com nome de arquivo, progresso e recuperação persistente. O visual do ciclo anterior foi rejeitado pelo proprietário. Um novo master baseado na raposa da v0.4.0 recebeu aceite como estilo; as poses, animação e telas ainda estão em revisão.
+A base da v0.4.1 traz papel marfim, tinta petróleo e terracota, revisão de telas, crop com cantos independentes e exportação com nome de arquivo, progresso e recuperação persistente. O visual do ciclo anterior foi rejeitado pelo proprietário. Um novo master e sete poses baseados na raposa da v0.4.0 receberam aceite como arte estática; a animação e as telas ainda estão em revisão.
 
-Veja a [auditoria de recuperação visual](docs/design/visual-recovery/AUDIT.md), a [prancha das poses candidatas](docs/design/visual-recovery/candidates/review.html) e a [matriz de telas e limites de validação](docs/design/validation.md). As capturas antigas vêm do APK no emulador, com documentos sintéticos; são baseline rejeitado, não aceite estético nem substituto de QA físico, TalkBack humano ou revisão linguística nativa.
+Veja a [auditoria de recuperação visual](docs/design/visual-recovery/AUDIT.md), a [prancha das poses](docs/design/visual-recovery/candidates/review.html), o [clipe e as capturas Android atuais](docs/design/visual-recovery/evidence/README.md) e a [matriz de telas e limites de validação](docs/design/visual-recovery/VALIDATION_MATRIX.md). O material novo usa estados injetados e documento sintético; não substitui QA físico, TalkBack humano, revisão linguística nativa ou aceite final.
 
 ## Identidade Android
 

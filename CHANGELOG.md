@@ -4,7 +4,8 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
-- Recuperação visual em andamento após rejeição do redesign anterior: master da raposa original aprovado como estilo, poses e telas ainda pendentes de aceite.
+- Recuperação visual em andamento após rejeição do redesign anterior: master e poses baseados na raposa da v0.4.0 aprovados como arte estática; movimento e telas ainda pendentes de aceite.
+- Atlas deformado substituído por poses completas em Compose, com movimento discreto, respeito ao lifecycle/redução de movimento e clipe de frames Android. Exportação em andamento voltou a mostrar prévia e identificação da página.
 - Site móvel corrigido para não expandir além de 390 px por causa do bloco de instalação.
 - Teste de swipe no onboarding agora inicia o gesto no pager e aguarda a página seguinte; regressão detectada no gate API 36 anterior.
 

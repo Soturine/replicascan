@@ -2,8 +2,10 @@
 
 Os quatro ZIPs estão em `Downloads`; SHA-256 e cobertura abaixo. Cada arquivo
 contém HTML, `support.js`, React local e README. CSS/JS/SVG foram lidos; primeira
-tela do artboard e do protótipo foi renderizada em Chromium. As interações ainda
-precisam de navegação sistemática; as telas dos POCs não provam serviço real.
+tela do artboard e dos protótipos foi renderizada em Chromium. Nos protótipos,
+percorremos splash → três telas de onboarding → Home → escolha de captura.
+Essas telas demonstram apenas estados simulados; fluxos de revisão, OCR e
+exportação ainda precisam de comparação detalhada e não provam serviço real.
 
 | Arquivo | SHA-256 | Papel / observação |
 |---|---|---|
@@ -23,7 +25,10 @@ Outras referências: screenshot Android anterior em `docs/design/evidence/`
 (captura real com fixture; visual rejeitado), `docs/design/assets/fox-concept.png`
 (primeira exploração rejeitada), e histórico `v0.4.0` em Git. Screenshots antigos
 separados e auditorias externas citados pelo pedido não estavam anexados aqui.
-`docs/design.zip` é um pacote versionado do ciclo anterior, não um POC do Claude.
+`docs/design.zip` era um pacote versionado do ciclo anterior, não um POC do Claude.
+Seus 42 arquivos já estavam em `docs/design/`; 40 eram byte a byte idênticos e
+os outros dois eram cópias antigas de `mascot.md` e `validation.md`. O ZIP foi
+removido em commit de limpeza separado, preservando as fontes e evidências.
 
 Princípios aproveitados: calor do papel e palavras de Pipa; legibilidade noturna
 e luz dirigida ao documento de Lume; simplicidade do fluxo real do ReplicaScan.
