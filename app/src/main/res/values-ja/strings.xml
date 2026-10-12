@@ -20,4 +20,6 @@
     <string name="delete_partial_result">ドキュメントを削除しました。一時ファイル %1$d 件は後で削除されます。</string>
     <string name="export_chooser_title">共有</string>
     <string name="no_app_to_open">開けるアプリがありません。</string>
+    <string name="onboarding_skip">スキップ</string>
+    <string name="onboarding_back">戻る</string>
 </resources>

@@ -20,4 +20,6 @@
     <string name="delete_partial_result">दस्तावेज़ हटाया गया। %1$d अस्थायी फ़ाइलें बाद में साफ़ की जाएँगी।</string>
     <string name="export_chooser_title">शेयर करें</string>
     <string name="no_app_to_open">इसे खोलने के लिए कोई ऐप उपलब्ध नहीं है।</string>
+    <string name="onboarding_skip">छोड़ें</string>
+    <string name="onboarding_back">वापस</string>
 </resources>

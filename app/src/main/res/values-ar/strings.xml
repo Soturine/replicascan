@@ -20,4 +20,6 @@
     <string name="delete_partial_result">تم حذف المستند. سيتم تنظيف %1$d من الملفات المؤقتة لاحقًا.</string>
     <string name="export_chooser_title">مشاركة</string>
     <string name="no_app_to_open">لا يوجد تطبيق لفتح هذا.</string>
+    <string name="onboarding_skip">تخطي</string>
+    <string name="onboarding_back">رجوع</string>
 </resources>

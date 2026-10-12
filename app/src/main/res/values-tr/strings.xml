@@ -20,4 +20,6 @@
     <string name="delete_partial_result">Belge silindi. %1$d geçici dosya daha sonra temizlenecek.</string>
     <string name="export_chooser_title">Paylaş</string>
     <string name="no_app_to_open">Bunu açacak uygulama yok.</string>
+    <string name="onboarding_skip">Atla</string>
+    <string name="onboarding_back">Geri</string>
 </resources>

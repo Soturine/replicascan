@@ -20,4 +20,6 @@
     <string name="delete_partial_result">Documento excluído. %1$d arquivos temporários serão limpos depois.</string>
     <string name="export_chooser_title">Compartilhar</string>
     <string name="no_app_to_open">Nenhum app disponível para abrir isto.</string>
+    <string name="onboarding_skip">Pular</string>
+    <string name="onboarding_back">Voltar</string>
 </resources>

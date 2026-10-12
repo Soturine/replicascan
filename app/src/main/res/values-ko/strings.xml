@@ -20,4 +20,6 @@
     <string name="delete_partial_result">문서를 삭제했어요. 임시 파일 %1$d개는 나중에 정리됩니다.</string>
     <string name="export_chooser_title">공유</string>
     <string name="no_app_to_open">열 수 있는 앱이 없어요.</string>
+    <string name="onboarding_skip">건너뛰기</string>
+    <string name="onboarding_back">뒤로</string>
 </resources>

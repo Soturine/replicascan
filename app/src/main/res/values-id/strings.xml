@@ -20,4 +20,6 @@
     <string name="delete_partial_result">Dokumen dihapus. %1$d file sementara akan dibersihkan nanti.</string>
     <string name="export_chooser_title">Bagikan</string>
     <string name="no_app_to_open">Tidak ada aplikasi untuk membuka ini.</string>
+    <string name="onboarding_skip">Lewati</string>
+    <string name="onboarding_back">Kembali</string>
 </resources>

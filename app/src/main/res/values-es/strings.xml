@@ -20,4 +20,6 @@
     <string name="delete_partial_result">Documento eliminado. %1$d archivos temporales se limpiarán más tarde.</string>
     <string name="export_chooser_title">Compartir</string>
     <string name="no_app_to_open">No hay ninguna app para abrir esto.</string>
+    <string name="onboarding_skip">Omitir</string>
+    <string name="onboarding_back">Atrás</string>
 </resources>

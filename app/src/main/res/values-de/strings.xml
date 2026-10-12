@@ -20,4 +20,6 @@
     <string name="delete_partial_result">Dokument gelöscht. %1$d temporäre Dateien werden später bereinigt.</string>
     <string name="export_chooser_title">Teilen</string>
     <string name="no_app_to_open">Keine App zum Öffnen verfügbar.</string>
+    <string name="onboarding_skip">Überspringen</string>
+    <string name="onboarding_back">Zurück</string>
 </resources>

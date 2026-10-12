@@ -6,7 +6,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -49,7 +48,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -62,6 +60,7 @@ import com.soturine.replicascan.core.common.util.DateFormatter
 import com.soturine.replicascan.core.ui.component.DocumentListItem
 import com.soturine.replicascan.core.ui.component.EmptyStateCard
 import com.soturine.replicascan.core.ui.component.ReplicaScanContent
+import com.soturine.replicascan.core.ui.component.ReplicaScanMascot
 import com.soturine.replicascan.core.ui.component.ReplicaScanMascotState
 import com.soturine.replicascan.core.ui.component.ReplicaScanPrimaryButton
 import com.soturine.replicascan.core.ui.component.ReplicaScanSecondaryButton
@@ -161,6 +160,7 @@ fun HomeScreen(
                             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                             verticalArrangement = Arrangement.spacedBy(ReplicaScanSpacing.sm),
                         ) {
+                            ReplicaScanMascot(ReplicaScanMascotState.Processing, size = 112.dp)
                             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                             Text(
                                 text = stringResource(R.string.home_preparing_pages),
@@ -194,7 +194,6 @@ fun HomeScreen(
                         EmptyStateCard(
                             title = stringResource(R.string.home_empty_title),
                             message = stringResource(R.string.home_empty_message),
-                            mascotState = ReplicaScanMascotState.Empty,
                         )
                     }
                 }
@@ -229,7 +228,7 @@ private fun ScanHero(
     onImport: () -> Unit,
 ) {
     Surface(
-        color = MaterialTheme.colorScheme.surfaceContainer,
+        color = MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.extraLarge,
     ) {
         Column(
@@ -249,11 +248,9 @@ private fun ScanHero(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
-                Image(
-                    painter = painterResource(com.soturine.replicascan.core.ui.R.drawable.replicascan_mascot_welcome),
-                    contentDescription = null,
-                    modifier = Modifier.size(96.dp),
-                )
+                if (LocalConfiguration.current.fontScale < 1.5f) {
+                    ReplicaScanMascot(ReplicaScanMascotState.Welcome, size = 108.dp)
+                }
             }
             ReplicaScanPrimaryButton(
                 text = stringResource(R.string.home_scan_action),

@@ -22,4 +22,6 @@
     <string name="delete_partial_result">Document deleted. %1$d temporary files will be cleaned up later.</string>
     <string name="export_chooser_title">Share</string>
     <string name="no_app_to_open">No app available to open this.</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_back">Back</string>
 </resources>
