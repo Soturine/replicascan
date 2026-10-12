@@ -39,4 +39,5 @@
     <string name="export_filename">Nome del file</string>
     <string name="export_filename_invalid">Inserisci un nome da 1 a 80 caratteri.</string>
     <string name="export_recovery">Riprova a esportare</string>
+    <string name="export_library_update_failed">I file sono stati salvati, ma non è stato possibile aggiornare lo stato nella raccolta. Puoi comunque aprirli o condividerli.</string>
 </resources>

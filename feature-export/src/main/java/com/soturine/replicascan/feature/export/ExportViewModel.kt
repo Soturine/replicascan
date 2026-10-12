@@ -115,8 +115,16 @@ class ExportViewModel(
                     } else {
                         exportRepository.exportImages(scan, selection.selectedFormat)
                     }
-                    scanRepository.markScanSaved(scanId)
                     exportedFiles.value = files
+                    // Output files are already committed. A library failure must not hide them
+                    // or claim that the export rolled back.
+                    try {
+                        scanRepository.markScanSaved(scanId)
+                    } catch (exception: CancellationException) {
+                        throw exception
+                    } catch (_: Exception) {
+                        errorMessage.value = ExportMessage.LIBRARY_UPDATE_FAILED
+                    }
                 } catch (exception: CancellationException) {
                     throw exception
                 } catch (exception: ExportException) {

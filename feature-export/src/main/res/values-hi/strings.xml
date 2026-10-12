@@ -37,4 +37,5 @@
     <string name="export_filename">फ़ाइल का नाम</string>
     <string name="export_filename_invalid">1 से 80 अक्षरों का नाम दर्ज करें।</string>
     <string name="export_recovery">फिर से निर्यात करें</string>
+    <string name="export_library_update_failed">आपकी फ़ाइलें सेव हो गई हैं, लेकिन लाइब्रेरी में स्थिति अपडेट नहीं हो सकी। आप अब भी फ़ाइलें खोल या शेयर कर सकते हैं।</string>
 </resources>

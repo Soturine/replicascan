@@ -39,4 +39,5 @@
     <string name="export_filename">Nome do arquivo</string>
     <string name="export_filename_invalid">Use um nome de 1 a 80 caracteres.</string>
     <string name="export_recovery">Vamos tentar novamente</string>
+    <string name="export_library_update_failed">Seus arquivos foram salvos, mas não foi possível atualizar o status no histórico. Você ainda pode abrir ou compartilhar os arquivos.</string>
 </resources>

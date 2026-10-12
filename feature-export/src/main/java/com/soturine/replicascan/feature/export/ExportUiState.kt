@@ -10,6 +10,7 @@ enum class ExportMessage {
     EMPTY_DOCUMENT,
     PAGE_UNREADABLE,
     WRITE_FAILED,
+    LIBRARY_UPDATE_FAILED,
 }
 
 data class ExportUiState(

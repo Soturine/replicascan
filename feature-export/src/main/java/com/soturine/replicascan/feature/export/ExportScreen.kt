@@ -36,9 +36,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
@@ -46,7 +43,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -100,6 +96,7 @@ fun ExportScreen(
                 ?.let { stringResource(R.string.export_message_page_unreadable, it) }
                 ?: stringResource(R.string.export_message_failed)
             ExportMessage.WRITE_FAILED -> stringResource(R.string.export_message_failed)
+            ExportMessage.LIBRARY_UPDATE_FAILED -> stringResource(R.string.export_library_update_failed)
         }
     }
 
@@ -120,7 +117,6 @@ fun ExportScreen(
             if (scan != null && state.exportedFiles.isEmpty() && !state.isExporting) {
                 Surface {
                     Column(Modifier.navigationBarsPadding().padding(16.dp)) {
-                        if (state.isExporting) LinearProgressIndicator(Modifier.fillMaxWidth().padding(bottom = 12.dp))
                         ReplicaScanPrimaryButton(
                             text = stringResource(R.string.export_action),
                             onClick = { onExport(nameValidation.sanitizedValue) },
@@ -152,7 +148,7 @@ fun ExportScreen(
             modifier = Modifier.fillMaxSize().padding(innerPadding),
         ) { done ->
             if (done == 2) {
-                ExportDone(state.exportedFiles, onOpenFile = onOpenFile, onShare = onShare)
+                ExportDone(state.exportedFiles, warning = messageText, onOpenFile = onOpenFile, onShare = onShare)
             } else if (done == 1) {
                 ExportProgress(scan.title)
             } else {
@@ -289,6 +285,7 @@ private fun Section(title: String, content: @Composable () -> Unit) {
 @Composable
 private fun ExportDone(
     files: List<ExportedFile>,
+    warning: String?,
     onOpenFile: (ExportedFile) -> Unit,
     onShare: (List<ExportedFile>) -> Unit,
 ) {
@@ -314,6 +311,10 @@ private fun ExportDone(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
         )
+        if (warning != null) {
+            Text(warning, color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center, modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
+        }
         if (files.firstOrNull()?.searchableTextIncluded == true) {
             Text(
                 text = stringResource(R.string.export_searchable_pdf_ready),

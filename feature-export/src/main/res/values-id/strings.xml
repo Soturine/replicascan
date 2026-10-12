@@ -35,4 +35,5 @@
     <string name="export_filename">Nama berkas</string>
     <string name="export_filename_invalid">Masukkan nama 1 hingga 80 karakter.</string>
     <string name="export_recovery">Coba ekspor lagi</string>
+    <string name="export_library_update_failed">File Anda telah disimpan, tetapi status di koleksi tidak dapat diperbarui. Anda tetap dapat membuka atau membagikan file.</string>
 </resources>

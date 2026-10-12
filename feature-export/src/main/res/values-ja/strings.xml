@@ -35,4 +35,5 @@
     <string name="export_filename">ファイル名</string>
     <string name="export_filename_invalid">1～80文字の名前を入力してください。</string>
     <string name="export_recovery">もう一度書き出す</string>
+    <string name="export_library_update_failed">ファイルは保存されましたが、ライブラリの状態を更新できませんでした。ファイルを開いたり共有したりすることはできます。</string>
 </resources>

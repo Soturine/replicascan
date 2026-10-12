@@ -37,4 +37,5 @@
     <string name="export_filename">Dosya adı</string>
     <string name="export_filename_invalid">1 ile 80 karakter arasında bir ad girin.</string>
     <string name="export_recovery">Dışa aktarmayı yeniden deneyin</string>
+    <string name="export_library_update_failed">Dosyalarınız kaydedildi ancak kitaplık durumu güncellenemedi. Dosyaları yine de açabilir veya paylaşabilirsiniz.</string>
 </resources>

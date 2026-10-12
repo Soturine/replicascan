@@ -45,4 +45,5 @@
     <string name="export_filename">اسم الملف</string>
     <string name="export_filename_invalid">أدخل اسمًا من 1 إلى 80 حرفًا.</string>
     <string name="export_recovery">حاول التصدير مرة أخرى</string>
+    <string name="export_library_update_failed">تم حفظ ملفاتك، لكن تعذر تحديث حالتها في المكتبة. لا يزال بإمكانك فتح الملفات أو مشاركتها.</string>
 </resources>

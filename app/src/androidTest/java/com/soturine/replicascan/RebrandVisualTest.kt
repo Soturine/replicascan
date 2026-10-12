@@ -87,9 +87,9 @@ class RebrandVisualTest {
                             "filters" -> FilterScreen(editor, { _, _ -> }, {}, {}, {})
                             "ocr-loading", "ocr-ready", "ocr-empty" -> OcrScreen(OcrUiState(isLoaded = true, page = scan.pages.first(),
                                 isRecognizing = screen == "ocr-loading", text = if (screen == "ocr-ready") "Documento de teste.\n\nTexto legível para selecionar e copiar." else ""), {}, {}, {}, {})
-                            "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success" -> ExportScreen(ExportUiState(scan = scan, selectedFormat = when(screen) { "export-jpg" -> ExportFormat.JPG; "export-png" -> ExportFormat.PNG; else -> ExportFormat.PDF },
-                                isExporting = screen == "export-progress", message = if (screen == "export-error") ExportMessage.WRITE_FAILED else null,
-                                exportedFiles = if (screen == "export-success") listOf(ExportedFile("Caderno de ideias.pdf", "content://fixture", "application/pdf", 1024)) else emptyList()),
+                            "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "export-library-warning" -> ExportScreen(ExportUiState(scan = scan, selectedFormat = when(screen) { "export-jpg" -> ExportFormat.JPG; "export-png" -> ExportFormat.PNG; else -> ExportFormat.PDF },
+                                isExporting = screen == "export-progress", message = when(screen) { "export-error" -> ExportMessage.WRITE_FAILED; "export-library-warning" -> ExportMessage.LIBRARY_UPDATE_FAILED; else -> null },
+                                exportedFiles = if (screen == "export-success" || screen == "export-library-warning") listOf(ExportedFile("Caderno de ideias.pdf", "content://fixture", "application/pdf", 1024)) else emptyList()),
                                 {}, {}, {}, {}, {}, {}, {}, {})
                             "history", "search-empty" -> HistoryScreen(HistoryUiState(true, if (screen == "search-empty") "xyz" else "", if (screen == "history") listOf(scan) else emptyList()), {}, {}, {})
                             "detail" -> ScanDetailScreen(scan, true, {}, {}, {}, {}, {}, {})
@@ -101,7 +101,7 @@ class RebrandVisualTest {
             }
         }
         val screens = listOf("onboarding", "home-empty", "home-recent", "review", "crop", "filters", "ocr-loading", "ocr-ready", "ocr-empty",
-            "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "history", "search-empty", "detail", "settings", "about")
+            "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "export-library-warning", "history", "search-empty", "detail", "settings", "about")
         for (name in screens) {
             rule.runOnIdle { screen = name }
             // URI decoding runs on IO; allow it to complete before the capture.
