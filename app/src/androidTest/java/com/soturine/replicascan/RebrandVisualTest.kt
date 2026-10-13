@@ -3,6 +3,7 @@ package com.soturine.replicascan
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
@@ -273,6 +274,26 @@ class RebrandVisualTest {
                 File(dir, "motion-sequence-${frame++.toString().padStart(2, '0')}.png")
                     .outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
             }
+        }
+    }
+
+    @Test fun mascotRespectsSystemAnimatorScaleZero() {
+        val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
+        automation.adoptShellPermissionIdentity(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+        val resolver = context.contentResolver
+        val prior = Settings.Global.getFloat(resolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f)
+        try {
+            Settings.Global.putFloat(resolver, Settings.Global.ANIMATOR_DURATION_SCALE, 0f)
+            rule.mainClock.autoAdvance = false
+            rule.setContent { ReplicaScanTheme { ReplicaScanMascot(ReplicaScanMascotState.Welcome, size = 240.dp) } }
+            rule.mainClock.advanceTimeBy(100)
+            val first = rule.onNodeWithTag("mascot-Welcome").captureToImage().asAndroidBitmap()
+            rule.mainClock.advanceTimeBy(1200)
+            val later = rule.onNodeWithTag("mascot-Welcome").captureToImage().asAndroidBitmap()
+            assertTrue("System animator scale zero must freeze the mascot", first.sameAs(later))
+        } finally {
+            Settings.Global.putFloat(resolver, Settings.Global.ANIMATOR_DURATION_SCALE, prior)
+            automation.dropShellPermissionIdentity()
         }
     }
 }

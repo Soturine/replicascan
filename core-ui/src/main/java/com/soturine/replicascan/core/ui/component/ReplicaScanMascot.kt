@@ -1,6 +1,7 @@
 package com.soturine.replicascan.core.ui.component
 
 import android.database.ContentObserver
+import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
@@ -26,9 +27,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -83,8 +84,12 @@ fun ReplicaScanMascot(
     val lifecycle by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
     val durationScale = systemAnimatorScale()
     val phase = remember { Animatable(0f) }
-    val artwork = ImageBitmap.imageResource(state.artwork)
-    val blinkArtwork = ImageBitmap.imageResource(state.blinkArtwork)
+    val context = LocalContext.current
+    // Poses are 1254 px square while the largest in-app mascot is 240 dp.
+    // Decode at half size once per state; the rig still uses registered masks
+    // and the original source files remain available for later art edits.
+    val artwork = remember(context, state) { decodeMascotPose(context, state.artwork) }
+    val blinkArtwork = remember(context, state) { decodeMascotPose(context, state.blinkArtwork) }
     val running = lifecycle.isAtLeast(Lifecycle.State.RESUMED) && !reducedMotion && durationScale > 0f
 
     LaunchedEffect(state, running, durationScale) {
@@ -135,6 +140,16 @@ fun ReplicaScanMascot(
             }
         }
     }
+}
+
+private fun decodeMascotPose(context: android.content.Context, @DrawableRes resource: Int): ImageBitmap {
+    val options = BitmapFactory.Options().apply {
+        inSampleSize = 2
+        inScaled = false
+    }
+    return requireNotNull(BitmapFactory.decodeResource(context.resources, resource, options)) {
+        "Mascot artwork missing: $resource"
+    }.asImageBitmap()
 }
 
 @Composable

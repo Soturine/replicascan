@@ -48,6 +48,19 @@ O [clipe v2](mascot-motion-v2.mp4) reúne 64 frames renderizados no Android com 
 clock de teste em passos de 125 ms e codificados em MP4 a 8 fps. Sequência:
 repouso → trabalho → sucesso → atenção. Não é `adb screenrecord` em tempo real,
 nem prova de transição da navegação; permite inspeção de continuidade visual.
+O [clipe contínuo Android](mascot-motion-live-android.mp4) é uma gravação real
+via `adb screenrecord` no emulador API 34 (720×1600, 25,72 s, 255 quadros úteis,
+taxa variável média de 9,86 quadros/s). Mostra Home → opções de exportação →
+gravação → sucesso → erro, sem quadros interpolados. O vídeo foi cortado apenas
+para remover o launcher e a inicialização branca do teste instrumental.
+`MascotJourneyCaptureTest` injeta esses estados e um documento sintético: o
+arquivo de sucesso não foi gravado, e a transição não é a navegação de produção.
+A cadência baixa deste emulador impede declarar a fluidez final aprovada; o
+clipe serve para verificar as composições, a continuidade e as costuras da arte.
+As poses de 1254 px agora são decodificadas a metade da largura no runtime;
+o teste instrumental de movimento/redução passou após essa mudança. Isso
+reduz a carga de desenho sem alterar os PNGs-fonte ou prometer ganho de fps em
+dispositivos físicos.
 Os [frames 21](mascot-working-frame-21.png) e
 [22](mascot-working-frame-22.png) mostram estados consecutivos da pose de
 trabalho. A [captura de atenção corrigida](mascot-attention-corrected-android.png)

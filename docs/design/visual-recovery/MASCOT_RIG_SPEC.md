@@ -47,3 +47,16 @@ o candidato articulado no emulador API 34. Inspeção humana de transições,
 contextos claro/escuro, fonte 200%, dispositivo físico, `Animator scale=0`,
 desempenho e fonte em camadas permanecem pendentes antes de chamar o rig de
 definitivo.
+
+Em 2026-10-13, `ReplicaScanMascot` passou a decodificar cada pose de 1254 px
+em 627 px para a exibição nativa (até 240 dp nos usos auditados). As fontes
+PNG continuam em resolução integral. `MascotJourneyCaptureTest` mantém uma
+Activity real visível e percorre Home, preparo, gravação, sucesso e erro com
+documento/estados sintéticos. O [vídeo contínuo](evidence/mascot-motion-live-android.mp4)
+foi gravado por `adb screenrecord`, preservando seus 255 quadros variáveis em
+25,72 s. A média de 9,86 fps no emulador ainda é insuficiente para aceite de
+fluidez. `motionFramesAndReducedMotionAreDifferentContracts` passou após a
+otimização. `mascotRespectsSystemAnimatorScaleZero` também confirmou dois frames
+idênticos com a escala global do Android em zero, restaurando a configuração
+depois do teste. Pause/resume, dispositivo físico e fonte de membros editável
+continuam pendentes.
