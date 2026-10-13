@@ -6,6 +6,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 - Recuperação visual em andamento após rejeição do redesign anterior: master e poses baseados na raposa da v0.4.0 aprovados como arte estática; movimento e telas ainda pendentes de aceite.
 - Rig Compose candidato articula cabeça, cauda, patas, folha e piscadas em camadas de renderização; a pose de atenção teve patas extras removidas. Clipe Android v2 e frames consecutivos publicados para revisão, ainda sem aceite final do movimento.
+- Home recomposta com a raposa diante de uma folha iluminada, botão Escanear mais evidente e estado vazio sem cartão pesado; em fonte 200% a ilustração cede espaço às ações. Capturas nativas claras e escuras atualizadas.
 - Atlas deformado substituído por poses completas em Compose, com movimento discreto, respeito ao lifecycle/redução de movimento e clipe de frames Android. Exportação em andamento voltou a mostrar prévia e identificação da página.
 - Home com mascote mais legível e texto em largura completa; em fonte 200% a arte cede espaço ao conteúdo. Opções de exportação reúnem prévia, páginas e formato atual na mesma superfície.
 - Introdução usa saudação, leitura e sucesso nas três páginas, eliminando a repetição da pose de trabalho.

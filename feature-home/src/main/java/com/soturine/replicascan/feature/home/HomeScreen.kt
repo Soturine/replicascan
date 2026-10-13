@@ -6,13 +6,20 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -34,7 +41,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -47,6 +53,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.pluralStringResource
@@ -56,10 +68,10 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.shape.RoundedCornerShape
 import com.soturine.replicascan.core.common.model.ScanDocument
 import com.soturine.replicascan.core.common.util.DateFormatter
 import com.soturine.replicascan.core.ui.component.DocumentListItem
-import com.soturine.replicascan.core.ui.component.EmptyStateCard
 import com.soturine.replicascan.core.ui.component.ReplicaScanContent
 import com.soturine.replicascan.core.ui.component.ReplicaScanMascot
 import com.soturine.replicascan.core.ui.component.ReplicaScanMascotState
@@ -192,10 +204,7 @@ fun HomeScreen(
             if (!state.isLoading && state.recentScans.isEmpty()) {
                 item(key = "empty") {
                     ReplicaScanContent {
-                        EmptyStateCard(
-                            title = stringResource(R.string.home_empty_title),
-                            message = stringResource(R.string.home_empty_message),
-                        )
+                        HomeEmptyLibrary()
                     }
                 }
             }
@@ -228,50 +237,115 @@ private fun ScanHero(
     onScan: () -> Unit,
     onImport: () -> Unit,
 ) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shape = MaterialTheme.shapes.extraLarge,
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(ReplicaScanSpacing.md),
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(ReplicaScanSpacing.xl),
-            verticalArrangement = Arrangement.spacedBy(ReplicaScanSpacing.lg),
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = stringResource(R.string.home_hero_title),
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.weight(1f).semantics { heading() },
-                )
-                if (LocalDensity.current.fontScale < 1.5f) {
-                    ReplicaScanMascot(ReplicaScanMascotState.Welcome, size = 136.dp)
-                }
-            }
-            Text(
-                text = stringResource(R.string.home_hero_body),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            ReplicaScanPrimaryButton(
-                text = stringResource(R.string.home_scan_action),
-                onClick = onScan,
-                enabled = enabled,
-                icon = {
-                    Icon(Icons.Outlined.DocumentScanner, null)
-                    Spacer(Modifier.width(10.dp))
-                },
-            )
-            ReplicaScanSecondaryButton(
-                text = stringResource(R.string.home_import_action),
-                onClick = onImport,
-                enabled = enabled,
-                outlined = true,
-                modifier = Modifier.fillMaxWidth(),
-                icon = {
-                    Icon(Icons.Outlined.PhotoLibrary, null)
-                    Spacer(Modifier.width(8.dp))
-                },
-            )
+        Text(
+            text = stringResource(R.string.home_hero_title),
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.fillMaxWidth().semantics { heading() },
+        )
+        if (LocalDensity.current.fontScale < 1.5f) {
+            HomePaperScene()
         }
+        Text(
+            text = stringResource(R.string.home_hero_body),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        ReplicaScanPrimaryButton(
+            text = stringResource(R.string.home_scan_action),
+            onClick = onScan,
+            enabled = enabled,
+            modifier = Modifier.heightIn(min = 68.dp),
+            icon = {
+                Icon(Icons.Outlined.DocumentScanner, null)
+                Spacer(Modifier.width(10.dp))
+            },
+        )
+        ReplicaScanSecondaryButton(
+            text = stringResource(R.string.home_import_action),
+            onClick = onImport,
+            enabled = enabled,
+            outlined = true,
+            modifier = Modifier.fillMaxWidth(),
+            icon = {
+                Icon(Icons.Outlined.PhotoLibrary, null)
+                Spacer(Modifier.width(8.dp))
+            },
+        )
+    }
+}
+
+@Composable
+private fun HomePaperScene() {
+    val colors = MaterialTheme.colorScheme
+    val isDark = colors.background.luminance() < .5f
+    val paperColor = if (isDark) colors.inverseSurface else colors.surface
+    val paperInk = if (isDark) colors.inverseOnSurface else colors.onSurface
+    val shape = RoundedCornerShape(28.dp)
+    Box(
+        modifier = Modifier.fillMaxWidth().height(194.dp)
+            .clip(shape).background(colors.surfaceContainerHigh),
+    ) {
+        val glow = colors.primaryContainer.copy(alpha = .60f)
+        Canvas(Modifier.matchParentSize()) {
+            drawCircle(glow, radius = size.width * .47f, center = Offset(size.width * .78f, size.height * .17f))
+            drawLine(colors.outlineVariant, Offset(0f, size.height * .89f),
+                Offset(size.width, size.height * .89f), strokeWidth = 2.dp.toPx())
+        }
+        val pageShape = RoundedCornerShape(8.dp)
+        Box(
+            modifier = Modifier.align(Alignment.CenterStart).padding(start = 34.dp)
+                .size(width = 154.dp, height = 148.dp)
+                .graphicsLayer { rotationZ = -8f }
+                .shadow(10.dp, pageShape)
+                .background(paperColor, pageShape)
+                .border(1.dp, paperInk.copy(alpha = .15f), pageShape)
+                .padding(18.dp),
+        ) {
+            Canvas(Modifier.matchParentSize()) {
+                val ink = colors.secondary.copy(alpha = .55f)
+                val rule = paperInk.copy(alpha = .25f)
+                drawRoundRect(ink, topLeft = Offset(0f, size.height * .04f),
+                    size = androidx.compose.ui.geometry.Size(size.width * .43f, 5.dp.toPx()),
+                    cornerRadius = androidx.compose.ui.geometry.CornerRadius(3.dp.toPx()))
+                listOf(.28f, .43f, .58f, .73f).forEachIndexed { index, y ->
+                    drawLine(rule, Offset(0f, size.height * y),
+                        Offset(size.width * if (index == 3) .62f else 1f, size.height * y),
+                        strokeWidth = 2.dp.toPx())
+                }
+                drawRoundRect(colors.secondary.copy(alpha = .60f),
+                    topLeft = Offset(size.width * .68f, size.height * .80f),
+                    size = androidx.compose.ui.geometry.Size(size.width * .32f, size.height * .18f),
+                    cornerRadius = androidx.compose.ui.geometry.CornerRadius(3.dp.toPx()),
+                    style = Stroke(width = 2.dp.toPx()))
+            }
+        }
+        ReplicaScanMascot(
+            state = ReplicaScanMascotState.Welcome,
+            size = 178.dp,
+            modifier = Modifier.align(Alignment.BottomEnd).offset(x = (-10).dp),
+        )
+    }
+}
+
+@Composable
+private fun HomeEmptyLibrary() {
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(vertical = ReplicaScanSpacing.md),
+        verticalArrangement = Arrangement.spacedBy(ReplicaScanSpacing.xs),
+    ) {
+        Text(
+            text = stringResource(R.string.home_empty_title),
+            style = MaterialTheme.typography.titleMedium,
+        )
+        Text(
+            text = stringResource(R.string.home_empty_message),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 

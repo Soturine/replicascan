@@ -7,7 +7,10 @@ sintético e estados injetados; não demonstram captura física, OCR real ou
 escrita de exportação. `export-progress.png` foi recapturada após incluir a
 prévia da página real na composição. Home e opções de exportação foram
 recapturadas após a revisão de composição; as três páginas de introdução
-foram recapturadas após receber poses distintas. As demais capturas vêm da
+foram recapturadas após receber poses distintas. A Home foi recapturada em
+2026-10-13 com cena de papel e raposa, botão principal ampliado, estado vazio
+sem cartão e folha iluminada no tema escuro; `home-dark-200.png` documenta a
+composição sem ilustração em fonte 200%. As demais capturas vêm da
 fatia anterior do mesmo runtime com as poses aprovadas.
 
 O [clipe v2](mascot-motion-v2.mp4) reúne 64 frames renderizados no Android com o
