@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -171,11 +170,23 @@ fun OcrScreen(
                             }
                         }
                     }
-                    items(state.paragraphs.ifEmpty { null }?.map { it.text } ?: listOf(state.text)) { paragraph ->
+                    item(key = "text") {
                         ReplicaScanContent {
-                            Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surface) {
+                            Surface(
+                                shape = MaterialTheme.shapes.extraSmall,
+                                color = MaterialTheme.colorScheme.surface,
+                                shadowElevation = 6.dp,
+                            ) {
                                 SelectionContainer {
-                                    Text(paragraph, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.fillMaxWidth().padding(20.dp))
+                                    Column(
+                                        Modifier.fillMaxWidth().padding(20.dp),
+                                        verticalArrangement = Arrangement.spacedBy(20.dp),
+                                    ) {
+                                        (state.paragraphs.ifEmpty { null }?.map { it.text } ?: listOf(state.text))
+                                            .forEach { paragraph ->
+                                                Text(paragraph, style = MaterialTheme.typography.bodyLarge)
+                                            }
+                                    }
                                 }
                             }
                         }

@@ -188,7 +188,7 @@ fun ReviewScreen(
         BoxWithConstraints(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
             val wide = maxWidth >= 600.dp && maxWidth > maxHeight
             val document: @Composable (Modifier) -> Unit = { documentModifier ->
-                PagePreview(
+                DocumentPaperStage(
                     imageUri = state.previewImageUri ?: page.displayUri,
                     fallbackUri = page.sourceUri,
                     loading = state.isPreviewLoading || state.isProcessing,
@@ -263,7 +263,7 @@ fun ReviewScreen(
 }
 
 @Composable
-private fun PagePreview(
+internal fun DocumentPaperStage(
     imageUri: String,
     fallbackUri: String,
     loading: Boolean,

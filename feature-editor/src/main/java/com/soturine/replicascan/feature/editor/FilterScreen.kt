@@ -1,6 +1,5 @@
 package com.soturine.replicascan.feature.editor
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.focusable
 import androidx.compose.ui.input.key.Key
@@ -17,9 +16,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -53,12 +50,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.soturine.replicascan.core.common.model.DocumentFilterType
-import com.soturine.replicascan.core.ui.component.AsyncUriImage
 import com.soturine.replicascan.core.ui.localizedTitle
 import kotlin.math.max
 
@@ -108,24 +103,16 @@ fun FilterScreen(
             if (state.isPreviewLoading || state.isProcessing) {
                 LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
             }
-            Box(
+            DocumentPaperStage(
+                imageUri = state.previewImageUri ?: page.sourceUri,
+                fallbackUri = page.sourceUri,
+                loading = false,
+                maxDimension = previewLongSide.coerceIn(1_200, 1_800),
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surfaceContainer)
-                    .padding(16.dp)
                     .onSizeChanged { size -> previewLongSide = max(size.width, size.height) },
-            ) {
-                Crossfade(targetState = state.previewImageUri, label = "lookPreview") { uri ->
-                    AsyncUriImage(
-                        imageUri = uri,
-                        fallbackImageUri = page.sourceUri,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Fit,
-                        maxDimension = previewLongSide.coerceIn(1_200, 1_800),
-                    )
-                }
-            }
+            )
             Column(
                 modifier = Modifier.fillMaxWidth().navigationBarsPadding().padding(vertical = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,

@@ -16,6 +16,8 @@ fatia anterior do mesmo runtime com as poses aprovadas.
 `review.png`, `crop.png` e `review-dark-200-rtl.png` foram recapturados em
 2026-10-13 após a iluminação e a profundidade da página. O teste confirma
 renderização desses estados; o gesto de recorte ainda requer QA físico.
+`filters.png` e `ocr-ready.png` foram recapturados após a folha compartilhada
+dos filtros e o agrupamento selecionável dos parágrafos do OCR.
 
 O [clipe v2](mascot-motion-v2.mp4) reúne 64 frames renderizados no Android com o
 clock de teste em passos de 125 ms e codificados em MP4 a 8 fps. Sequência:
