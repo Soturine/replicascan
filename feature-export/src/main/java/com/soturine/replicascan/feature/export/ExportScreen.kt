@@ -2,7 +2,11 @@ package com.soturine.replicascan.feature.export
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.layout.ContentScale
@@ -16,8 +20,10 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -50,6 +56,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -149,7 +162,7 @@ fun ExportScreen(
             modifier = Modifier.fillMaxSize().padding(innerPadding),
         ) { done ->
             if (done == 2) {
-                ExportDone(state.exportedFiles, warning = messageText, onOpenFile = onOpenFile, onShare = onShare)
+                ExportDone(scan, state.exportedFiles, warning = messageText, onOpenFile = onOpenFile, onShare = onShare)
             } else if (done == 1) {
                 ExportProgress(scan)
             } else {
@@ -188,23 +201,42 @@ private fun ExportOptions(
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 12.dp),
     ) {
         ReplicaScanContent {
-            Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surfaceContainer) {
-                Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    AsyncUriImage(state.scan?.coverPage?.displayUri, fallbackImageUri = state.scan?.coverPage?.sourceUri,
-                        modifier = Modifier.size(82.dp, 108.dp), contentScale = ContentScale.Fit, maxDimension = 240)
-                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text(state.scan?.title.orEmpty(), style = MaterialTheme.typography.titleLarge)
-                        Text(pluralStringResource(R.plurals.export_summary, pageCount, pageCount),
-                            style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.secondaryContainer) {
-                            Text(state.selectedFormat.title, modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
-                                style = MaterialTheme.typography.labelMedium)
-                        }
+            state.scan?.let { scan ->
+                ExportDocumentStage(
+                    scan = scan,
+                    mascotState = if (errorText == null) ReplicaScanMascotState.Ocr else ReplicaScanMascotState.Attention,
+                )
+                Row(
+                    Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Column(Modifier.weight(1f)) {
+                        Text(scan.title, style = MaterialTheme.typography.titleLarge)
+                        Text(
+                            pluralStringResource(R.plurals.export_summary, pageCount, pageCount),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.secondaryContainer) {
+                        Text(state.selectedFormat.title, modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                            style = MaterialTheme.typography.labelMedium)
                     }
                 }
             }
             if (errorText != null) {
-                EmptyStateCard(stringResource(R.string.export_recovery), errorText, mascotState = ReplicaScanMascotState.Attention)
+                Column(
+                    Modifier.fillMaxWidth().background(
+                        MaterialTheme.colorScheme.error.copy(alpha = .08f),
+                        MaterialTheme.shapes.medium,
+                    ).padding(16.dp).semantics { liveRegion = LiveRegionMode.Polite },
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    Text(stringResource(R.string.export_recovery), style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.error)
+                    Text(errorText, style = MaterialTheme.typography.bodyMedium)
+                }
             }
             OutlinedTextField(value = fileName, onValueChange = onNameChange, modifier = Modifier.fillMaxWidth(),
                 label = { Text(stringResource(R.string.export_filename)) }, singleLine = true, isError = !nameValid,
@@ -279,6 +311,71 @@ private fun ExportOptions(
 }
 
 @Composable
+private fun ExportDocumentStage(scan: ScanDocument, mascotState: ReplicaScanMascotState) {
+    val colors = MaterialTheme.colorScheme
+    val largeText = LocalDensity.current.fontScale >= 1.5f
+    val isDark = colors.background.luminance() < .5f
+    val paperColor = if (isDark) colors.inverseSurface else colors.surface
+    val paperInk = if (isDark) colors.inverseOnSurface else colors.onSurface
+    val stageShape = RoundedCornerShape(26.dp)
+    val pageShape = RoundedCornerShape(10.dp)
+    val pageAlignment = if (largeText) Alignment.Center else Alignment.CenterStart
+    val pageInset = if (largeText) Modifier else Modifier.padding(start = 32.dp)
+    val pageWidth = if (largeText) 130.dp else 148.dp
+    val pageHeight = if (largeText) 164.dp else 190.dp
+    Box(
+        Modifier.fillMaxWidth().height(if (largeText) 188.dp else 228.dp)
+            .clip(stageShape).background(colors.surfaceContainerHigh),
+    ) {
+        Canvas(Modifier.matchParentSize()) {
+            drawCircle(
+                colors.primaryContainer.copy(alpha = .6f),
+                radius = size.width * .45f,
+                center = Offset(size.width * .77f, size.height * .23f),
+            )
+            drawLine(colors.outlineVariant.copy(alpha = .55f),
+                Offset(0f, size.height * .9f), Offset(size.width, size.height * .9f),
+                strokeWidth = 2.dp.toPx())
+        }
+        if (scan.pageCount > 1) {
+            Box(
+                Modifier.align(pageAlignment).then(pageInset)
+                    .offset(x = 12.dp, y = (-7).dp)
+                    .size(width = pageWidth, height = pageHeight)
+                    .graphicsLayer { rotationZ = if (largeText) 0f else -2f }
+                    .shadow(8.dp, pageShape)
+                    .background(paperColor, pageShape)
+                    .border(1.dp, paperInk.copy(alpha = .13f), pageShape),
+            )
+        }
+        Box(
+            modifier = Modifier.align(pageAlignment).then(pageInset)
+                .size(width = pageWidth, height = pageHeight)
+                .graphicsLayer { rotationZ = if (largeText) 0f else -6f }
+                .shadow(12.dp, pageShape)
+                .background(paperColor, pageShape)
+                .border(1.dp, paperInk.copy(alpha = .16f), pageShape)
+                .padding(8.dp),
+        ) {
+            AsyncUriImage(
+                scan.coverPage?.displayUri,
+                fallbackImageUri = scan.coverPage?.sourceUri,
+                modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(6.dp)),
+                contentScale = ContentScale.Fit,
+                maxDimension = 400,
+            )
+        }
+        if (!largeText) {
+            ReplicaScanMascot(
+                mascotState,
+                size = 174.dp,
+                modifier = Modifier.align(Alignment.BottomEnd).offset(x = (-8).dp),
+            )
+        }
+    }
+}
+
+@Composable
 private fun Section(title: String, content: @Composable () -> Unit) {
     Column(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
@@ -288,6 +385,7 @@ private fun Section(title: String, content: @Composable () -> Unit) {
 
 @Composable
 private fun ExportDone(
+    scan: ScanDocument,
     files: List<ExportedFile>,
     warning: String?,
     onOpenFile: (ExportedFile) -> Unit,
@@ -302,7 +400,7 @@ private fun ExportDone(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
     ) {
-        ReplicaScanMascot(ReplicaScanMascotState.Success, size = 140.dp)
+        ExportDocumentStage(scan, ReplicaScanMascotState.Success)
         Text(
             text = stringResource(R.string.export_done_title),
             style = MaterialTheme.typography.headlineSmall,
@@ -364,20 +462,12 @@ private fun ExportProgress(scan: ScanDocument) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
     ) {
-        Surface(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large,
-            color = MaterialTheme.colorScheme.surfaceContainer) {
-            Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                AsyncUriImage(scan.coverPage?.displayUri, fallbackImageUri = scan.coverPage?.sourceUri,
-                    modifier = Modifier.size(64.dp, 84.dp), contentScale = ContentScale.Fit, maxDimension = 240)
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(scan.title, style = MaterialTheme.typography.titleMedium)
-                    Text(pluralStringResource(R.plurals.export_summary, scan.pageCount, scan.pageCount),
-                        style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
+        ExportDocumentStage(scan, ReplicaScanMascotState.Working)
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(scan.title, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+            Text(pluralStringResource(R.plurals.export_summary, scan.pageCount, scan.pageCount),
+                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        ReplicaScanMascot(ReplicaScanMascotState.Working, size = 208.dp)
         Text(stringResource(R.string.export_progress), style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center, modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
         LinearProgressIndicator(Modifier.fillMaxWidth())

@@ -4,9 +4,9 @@
 Android 14 / API 34, com APK debug da v0.4.1 em desenvolvimento. As capturas
 medem 1080×2201 px, usam a localização inglesa do emulador, documento
 sintético e estados injetados; não demonstram captura física, OCR real ou
-escrita de exportação. `export-progress.png` foi recapturada após incluir a
-prévia da página real na composição. Home e opções de exportação foram
-recapturadas após a revisão de composição; as três páginas de introdução
+escrita de exportação. Preparo, gravação, sucesso, erro e aviso da biblioteca
+na exportação foram recapturados em 2026-10-13 com a mesma cena nativa da
+folha real e da raposa, variando a pose conforme o estado. As três páginas de introdução
 foram recapturadas após receber poses distintas. A Home foi recapturada em
 2026-10-13 com cena de papel e raposa, botão principal ampliado, estado vazio
 sem cartão e folha iluminada no tema escuro; `home-dark-200.png` documenta a
@@ -34,8 +34,8 @@ composição das telas e release ainda precisam de aceite expresso. O antigo
 `docs/design/evidence/` permanece como baseline rejeitado.
 
 Pontos abertos para esta revisão: a Home ainda deixa espaço inferior vazio
-quando a biblioteca é curta; as opções de exportação conservam controles de
-formulário e o progresso ainda precisa de uma cena melhor ligada ao documento;
+quando a biblioteca é curta; a exportação ainda precisa de validação visual
+em documentos físicos e prova de gravação completa fora do fixture sintético;
 o ícone vetorial usa linguagem mais plana que a mascote; o rig candidato
 articula regiões das poses, mas ainda depende de máscaras sobre imagens
 completas. A inspeção manual de transições, recorte com
