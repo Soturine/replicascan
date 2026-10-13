@@ -18,6 +18,8 @@ fatia anterior do mesmo runtime com as poses aprovadas.
 renderização desses estados; o gesto de recorte ainda requer QA físico.
 `filters.png` e `ocr-ready.png` foram recapturados após a folha compartilhada
 dos filtros e o agrupamento selecionável dos parágrafos do OCR.
+`detail.png` e `settings.png` mostram a página única ampliada e grupos de
+preferências sem cartões repetidos, também recapturados em 2026-10-13.
 
 O [clipe v2](mascot-motion-v2.mp4) reúne 64 frames renderizados no Android com o
 clock de teste em passos de 125 ms e codificados em MP4 a 8 fps. Sequência:

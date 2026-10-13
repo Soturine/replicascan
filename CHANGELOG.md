@@ -10,6 +10,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 - Revisão e recorte passam a iluminar a página e dar profundidade ao papel; prévia, quatro alças, gesto e recorte de página inteira mantêm a mesma geometria.
 - Filtros compartilham o mesmo palco de papel da revisão; OCR apresenta todos os parágrafos em uma folha selecionável, preservando cópia e escolha de idioma.
 - Três novos candidatos de ícone foram renderizados no Android em 24–108 dp, máscaras e rascunho temático para revisão; o ícone instalado permanece provisório até a escolha.
+- Detalhe amplia o documento quando há uma única página; configurações usam grupos com divisórias leves em vez de superfícies arredondadas, mantendo opções e ações.
 - Exportação recomposta em quatro cenas ligadas à prévia real do documento: preparo com opções progressivas, trabalho com progresso, sucesso com arquivo e ações, erro com recuperação. A folha mantém iluminação no tema escuro e forma pilha quando há várias páginas; callbacks e estados de gravação existentes foram preservados.
 - Atlas deformado substituído por poses completas em Compose, com movimento discreto, respeito ao lifecycle/redução de movimento e clipe de frames Android. Exportação em andamento voltou a mostrar prévia e identificação da página.
 - Home com mascote mais legível e texto em largura completa; em fonte 200% a arte cede espaço ao conteúdo. Opções de exportação reúnem prévia, páginas e formato atual na mesma superfície.

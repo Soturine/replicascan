@@ -47,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.pluralStringResource
@@ -245,7 +246,7 @@ fun ScanDetailScreen(
         }
         val pages = remember(scan.pages) { scan.pages.sortedBy { it.index } }
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 128.dp),
+            columns = if (pages.size == 1) GridCells.Fixed(1) else GridCells.Adaptive(minSize = 128.dp),
             modifier = Modifier.fillMaxSize().padding(innerPadding),
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -275,12 +276,14 @@ fun ScanDetailScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(0.75f)
+                            .shadow(if (pages.size == 1) 10.dp else 0.dp, MaterialTheme.shapes.small)
                             .clip(MaterialTheme.shapes.small)
                             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.small),
-                        contentScale = ContentScale.Crop,
-                        maxDimension = 480,
+                        contentScale = ContentScale.Fit,
+                        maxDimension = if (pages.size == 1) 1200 else 480,
+                        backgroundColor = MaterialTheme.colorScheme.surface,
                     )
-                    Text("${page.index + 1}", style = MaterialTheme.typography.labelMedium)
+                    if (pages.size > 1) Text("${page.index + 1}", style = MaterialTheme.typography.labelMedium)
                 }
             }
         }
