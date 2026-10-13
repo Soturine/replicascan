@@ -70,11 +70,13 @@ class RebrandVisualTest {
         val scan = fixture()
         val homeScan = scan.copy(createdAt = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli(),
             updatedAt = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli())
+        val multiScan = homeScan.copy(pages = scan.pages + scan.pages.first().copy(id = "page-two", index = 1))
         var screen by mutableStateOf("onboarding")
         var dark by mutableStateOf(false)
         var large by mutableStateOf(false)
         var rtl by mutableStateOf(false)
         val editor = EditorUiState(true, scan, scan.pages.first(), previewImageUri = scan.pages.first().sourceUri)
+        val multiEditor = EditorUiState(true, multiScan, multiScan.pages.first(), previewImageUri = scan.pages.first().sourceUri)
         rule.mainClock.autoAdvance = false
         rule.setContent {
             val density = LocalDensity.current.density
@@ -93,7 +95,8 @@ class RebrandVisualTest {
                                 },
                             ),
                                 false, {}, {}, {}, {}, { null }, {}, {}, {})
-                            "review" -> ReviewScreen(editor, {}, {}, { _, _ -> }, {}, { true }, {}, {}, {}, {}, {}, {}, {}, {})
+                            "review", "review-multipage" -> ReviewScreen(if (screen == "review") editor else multiEditor,
+                                {}, {}, { _, _ -> }, {}, { true }, {}, {}, {}, {}, {}, {}, {}, {})
                             "crop" -> CropScreen(editor, {}, {}, {})
                             "filters" -> FilterScreen(editor, { _, _ -> }, {}, {}, {})
                             "ocr-loading", "ocr-ready", "ocr-empty", "ocr-error", "ocr-model-unavailable" -> OcrScreen(OcrUiState(isLoaded = true, page = scan.pages.first(),
@@ -104,12 +107,18 @@ class RebrandVisualTest {
                                     "ocr-model-unavailable" -> OcrMessage.MODEL_PREPARING
                                     else -> null
                                 }), {}, {}, {}, {})
-                            "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "export-library-warning" -> ExportScreen(ExportUiState(scan = scan, selectedFormat = when(screen) { "export-jpg" -> ExportFormat.JPG; "export-png" -> ExportFormat.PNG; else -> ExportFormat.PDF },
+                            "export", "export-jpg", "export-png", "export-multipage", "export-progress", "export-error", "export-success", "export-library-warning" -> ExportScreen(ExportUiState(scan = if (screen == "export-multipage") multiScan else scan, selectedFormat = when(screen) { "export-jpg" -> ExportFormat.JPG; "export-png" -> ExportFormat.PNG; else -> ExportFormat.PDF },
                                 isExporting = screen == "export-progress", message = when(screen) { "export-error" -> ExportMessage.WRITE_FAILED; "export-library-warning" -> ExportMessage.LIBRARY_UPDATE_FAILED; else -> null },
                                 exportedFiles = if (screen == "export-success" || screen == "export-library-warning") listOf(ExportedFile("Caderno de ideias.pdf", "content://fixture", "application/pdf", 1024)) else emptyList()),
                                 {}, {}, {}, {}, {}, {}, {}, {})
-                            "history", "history-empty", "search-empty" -> HistoryScreen(HistoryUiState(true, if (screen == "search-empty") "xyz" else "", if (screen == "history") listOf(scan) else emptyList()), {}, {}, {})
-                            "detail" -> ScanDetailScreen(scan, true, {}, {}, {}, {}, {}, {})
+                            "history", "history-many", "history-empty", "search-empty" -> HistoryScreen(HistoryUiState(true,
+                                if (screen == "search-empty") "xyz" else "",
+                                when (screen) {
+                                    "history" -> listOf(homeScan)
+                                    "history-many" -> (1..6).map { index -> homeScan.copy(id = "history-$index", title = "Caderno $index") }
+                                    else -> emptyList()
+                                }), {}, {}, {})
+                            "detail", "detail-multipage" -> ScanDetailScreen(if (screen == "detail") homeScan else multiScan, true, {}, {}, {}, {}, {}, {})
                             "settings" -> SettingsScreen(SettingsUiState(), "", {}, {}, {}, {}, {}, {}, {})
                             "about" -> AboutScreen("candidate", {}, {})
                         }
@@ -117,8 +126,8 @@ class RebrandVisualTest {
                 }
             }
         }
-        val screens = listOf("onboarding", "home-empty", "home-recent", "home-many", "home-loading", "review", "crop", "filters", "ocr-loading", "ocr-ready", "ocr-empty", "ocr-error", "ocr-model-unavailable",
-            "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "export-library-warning", "history", "history-empty", "search-empty", "detail", "settings", "about")
+        val screens = listOf("onboarding", "home-empty", "home-recent", "home-many", "home-loading", "review", "review-multipage", "crop", "filters", "ocr-loading", "ocr-ready", "ocr-empty", "ocr-error", "ocr-model-unavailable",
+            "export", "export-jpg", "export-png", "export-multipage", "export-progress", "export-error", "export-success", "export-library-warning", "history", "history-many", "history-empty", "search-empty", "detail", "detail-multipage", "settings", "about")
         for (name in screens) {
             rule.runOnIdle { screen = name }
             // URI decoding runs on IO; allow it to complete before the capture.
@@ -130,6 +139,7 @@ class RebrandVisualTest {
                     capture("export", advanceMs = 400)
                 }
                 "export-jpg", "export-png" -> capture(name, advanceMs = 1300)
+                "export-multipage" -> capture(name, advanceMs = 400)
                 "ocr-error", "ocr-model-unavailable" -> capture(name, advanceMs = 400)
                 else -> capture(name)
             }
@@ -182,6 +192,17 @@ class RebrandVisualTest {
         capture("home-responsive-200")
     }
 
+    @Test fun reviewRendersDocumentInCurrentViewport() {
+        val scan = fixture()
+        val editor = EditorUiState(true, scan, scan.pages.first(), previewImageUri = scan.pages.first().sourceUri)
+        rule.mainClock.autoAdvance = false
+        rule.setContent { ReplicaScanTheme {
+            ReviewScreen(editor, {}, {}, { _, _ -> }, {}, { true }, {}, {}, {}, {}, {}, {}, {}, {})
+        } }
+        rule.onNodeWithText(scan.title).assertIsDisplayed()
+        capture("review-wide")
+    }
+
     @Test fun ocrFailureRemainsVisibleAndCanRetry() {
         var retries = 0
         var clears = 0
@@ -194,6 +215,17 @@ class RebrandVisualTest {
         rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.ocr.R.string.ocr_retry)).performClick()
         assertEquals(1, retries)
         assertEquals(0, clears)
+    }
+
+    @Test fun historyRowsStillOpenTheSelectedDocument() {
+        val scan = fixture()
+        val scans = (1..3).map { index -> scan.copy(id = "history-$index", title = "Caderno $index") }
+        var opened: String? = null
+        rule.setContent { ReplicaScanTheme {
+            HistoryScreen(HistoryUiState(true, "", scans), {}, { opened = it }, {})
+        } }
+        rule.onNodeWithText("Caderno 2").performClick()
+        assertEquals("history-2", opened)
     }
 
     @Test fun sequentialCornerDragsPreserveTheOtherCorners() {

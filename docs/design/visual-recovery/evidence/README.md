@@ -40,6 +40,10 @@ As demais capturas vêm da fatia anterior do mesmo runtime com as poses aprovada
 `review.png`, `crop.png` e `review-dark-200-rtl.png` foram recapturados em
 2026-10-13 após a iluminação e a profundidade da página. O teste confirma
 renderização desses estados; o gesto de recorte ainda requer QA físico.
+`review-multipage.png` usa duas páginas sintéticas; `review-wide.png` foi
+capturado no mesmo emulador com viewport 1920×1200, densidade 320 dpi, e a
+configuração foi restaurada depois do teste. Essas capturas não substituem
+inspeção de gestos em tablet real.
 `filters.png` e `ocr-ready.png` foram recapturados após a folha compartilhada
 dos filtros e o agrupamento selecionável dos parágrafos do OCR.
 `ocr-error.png` e `ocr-model-unavailable.png` mostram falhas persistentes com
@@ -54,6 +58,9 @@ sem cartões; as capturas usam estados injetados e não validam busca real.
 refino. `history.png` foi recapturado com um item e metadados sintéticos
 datados em 2026-10-13. O teste de toque abre a segunda linha, mas não exerce
 a consulta Room real.
+`detail-multipage.png` documenta a grade de duas páginas e
+`export-multipage.png` o preparo do mesmo documento no Android; ambos usam
+fixtures, sem escrita de arquivo.
 `launcher-masks.png` foi atualizado após instalar o ícone candidato 4 no APK
 debug; a comparação das quatro opções e o launcher real estão em
 [`icon-candidates/`](../icon-candidates/index.html).
@@ -80,12 +87,12 @@ Os [frames 21](mascot-working-frame-21.png) e
 trabalho. A [captura de atenção corrigida](mascot-attention-corrected-android.png)
 mostra quatro patas após a revisão anatômica solicitada em 2026-10-13.
 
-A [comparação lado a lado](review.html) mostra Home, revisão, recorte, opções e
-estados de exportação, introdução, OCR, histórico, configurações e ícone contra
-o baseline rejeitado em `docs/design/evidence/`. Este diretório também contém
-as demais variantes capturadas pelo teste: formato JPG/PNG, erro, biblioteca,
-tema escuro, texto ampliado e RTL. A captura usa o mesmo fixture e viewport de
-1080×2201 px, mas não equivale à inspeção humana em dispositivo físico.
+A [comparação lado a lado](review.html) reúne Home, introdução, revisão, recorte,
+filtros, OCR, exportação, histórico, detalhe, configurações, idioma, sobre,
+ícone e vídeo, com variantes multipágina, tema escuro, texto ampliado e RTL,
+contra o baseline rejeitado em `docs/design/evidence/`. Exceto a captura larga
+1920×1200, os estados usam viewport 1080×2201 px e fixtures. Isso não equivale
+à inspeção humana em dispositivo físico.
 
 Master e poses estáticas receberam aprovação do proprietário. Movimento,
 composição das telas e release ainda precisam de aceite expresso. O antigo
