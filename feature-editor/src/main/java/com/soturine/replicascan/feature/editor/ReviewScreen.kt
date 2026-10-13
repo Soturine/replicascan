@@ -60,6 +60,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.stringResource
@@ -68,6 +71,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.soturine.replicascan.core.common.model.ScanDocument
 import com.soturine.replicascan.core.common.model.ScanPage
@@ -266,12 +270,24 @@ private fun PagePreview(
     maxDimension: Int,
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    var imageSize by remember(imageUri) { mutableStateOf(IntSize.Zero) }
+    val colors = MaterialTheme.colorScheme
+    BoxWithConstraints(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.surfaceContainer)
-            .padding(16.dp),
+            .background(Brush.verticalGradient(listOf(colors.surfaceContainerHigh, colors.surfaceContainerLow)))
+            .padding(20.dp),
         contentAlignment = Alignment.Center,
     ) {
+        if (imageSize.width > 0 && imageSize.height > 0) {
+            val aspect = imageSize.width.toFloat() / imageSize.height
+            val paperWidth = minOf(maxWidth, maxHeight * aspect)
+            val paperHeight = paperWidth / aspect
+            Box(
+                Modifier.size(paperWidth, paperHeight)
+                    .shadow(18.dp, MaterialTheme.shapes.extraSmall)
+                    .background(Color(0xFFFFFBF2)),
+            )
+        }
         Crossfade(targetState = imageUri, label = "pagePreview") { uri ->
             AsyncUriImage(
                 imageUri = uri,
@@ -279,6 +295,8 @@ private fun PagePreview(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Fit,
                 maxDimension = maxDimension,
+                backgroundColor = Color.Transparent,
+                onBitmapLoaded = { imageSize = it },
             )
         }
         if (loading) CircularProgressIndicator(modifier = Modifier.size(36.dp))

@@ -13,6 +13,10 @@ sem cartão e folha iluminada no tema escuro; `home-dark-200.png` documenta a
 composição sem ilustração em fonte 200%. As demais capturas vêm da
 fatia anterior do mesmo runtime com as poses aprovadas.
 
+`review.png`, `crop.png` e `review-dark-200-rtl.png` foram recapturados em
+2026-10-13 após a iluminação e a profundidade da página. O teste confirma
+renderização desses estados; o gesto de recorte ainda requer QA físico.
+
 O [clipe v2](mascot-motion-v2.mp4) reúne 64 frames renderizados no Android com o
 clock de teste em passos de 125 ms e codificados em MP4 a 8 fps. Sequência:
 repouso → trabalho → sucesso → atenção. Não é `adb screenrecord` em tempo real,

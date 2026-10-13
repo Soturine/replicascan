@@ -3,6 +3,7 @@ package com.soturine.replicascan.feature.editor
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Undo
 import androidx.compose.material.icons.outlined.CropFree
@@ -32,8 +34,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
@@ -101,7 +107,7 @@ fun CropScreen(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .background(androidx.compose.ui.graphics.Color(0xFF202D2B))
+                    .background(Brush.radialGradient(listOf(Color(0xFF3E504A), Color(0xFF192A27))))
                     .padding(32.dp),
             )
             Column(
@@ -172,8 +178,18 @@ private fun DocumentCropPreview(
 ) {
     var imageSize by remember(imageUri) { mutableStateOf(IntSize.Zero) }
     BoxWithConstraints(modifier = modifier) {
+        val density = LocalDensity.current
         val imageBounds = remember(constraints.maxWidth, constraints.maxHeight, imageSize) {
             computeFittedBounds(constraints.maxWidth.toFloat(), constraints.maxHeight.toFloat(), imageSize)
+        }
+        imageBounds?.let { bounds ->
+            Box(
+                Modifier
+                    .padding(start = with(density) { bounds.left.toDp() }, top = with(density) { bounds.top.toDp() })
+                    .size(with(density) { bounds.width.toDp() }, with(density) { bounds.height.toDp() })
+                    .shadow(18.dp, MaterialTheme.shapes.extraSmall)
+                    .background(Color(0xFFFFFBF2)),
+            )
         }
         AsyncUriImage(
             imageUri = imageUri,
