@@ -161,6 +161,32 @@ class RebrandVisualTest {
         assertTrue(quad.bottomRight.x < 1f && quad.bottomRight.y < 1f)
     }
 
+    @Test fun exportChoicesKeepFormatSpecificOptions() {
+        var state by mutableStateOf(ExportUiState(scan = fixture()))
+        rule.setContent {
+            ReplicaScanTheme {
+                ExportScreen(
+                    state = state,
+                    onSelectFormat = { state = state.copy(selectedFormat = it) },
+                    onSelectQuality = { state = state.copy(selectedQuality = it) },
+                    onSelectPageSize = { state = state.copy(selectedPageSize = it) },
+                    onExport = {}, onShare = {}, onOpenFile = {}, onBack = {}, onClearMessage = {},
+                )
+            }
+        }
+        rule.onNodeWithTag("format-JPG").performClick()
+        rule.runOnIdle { assertEquals(ExportFormat.JPG, state.selectedFormat) }
+        rule.onNodeWithTag("export-quality-disclosure").assertDoesNotExist()
+        rule.onNodeWithTag("format-PDF").performClick()
+        rule.onNodeWithTag("export-quality-disclosure").performClick()
+        rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.export.R.string.export_page_size_section))
+            .assertExists()
+        rule.onNodeWithTag("export-filename").performTextClearance()
+        rule.onNodeWithTag("export-action").assertIsNotEnabled()
+        rule.onNodeWithTag("export-filename").performTextInput("Novo arquivo")
+        rule.onNodeWithTag("export-action").assertIsEnabled()
+    }
+
     @Test fun launcherMasksAndSizes() {
         rule.setContent {
             ReplicaScanTheme {

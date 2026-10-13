@@ -8,6 +8,15 @@ escrita de exportação. Preparo, gravação, sucesso, erro e aviso da bibliotec
 na exportação foram recapturados em 2026-10-13 com a mesma cena nativa da
 folha real e da raposa, variando a pose conforme o estado.
 
+Em 2026-10-13 o preparo foi recapturado após trocar o campo Material e os chips
+sempre expostos por uma edição de nome integrada, três escolhas de formato e
+qualidade/tamanho de página sob disclosure. `export-setup-before.png` preserva
+o estado Android imediatamente anterior; `export.png`, `export-jpg.png`,
+`export-png.png`, `export-error.png` e `export-dark-200.png` mostram o novo
+estado com fixture sintético. `export-progress.png`, sucesso e warning
+pós-salvamento não mudaram nesta fatia. O teste instrumental também abre o
+disclosure e troca PDF/JPG, mas não grava arquivos reais.
+
 `export-eye-before.png` registra o contorno duplicado que aparecia sobre os olhos
 fechados na pose de leitura. A máscara foi ajustada e `export-blink.png` mostra a
 piscada limpa no Android; `export.png`, `export-jpg.png` e `export-png.png` foram

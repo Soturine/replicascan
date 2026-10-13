@@ -4,6 +4,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+- Preparo da exportação refinado no Android: nome de arquivo integrado à composição, três formatos em escolhas legíveis, qualidade e tamanho de página revelados sob demanda; estados e callbacks de gravação preservados. Capturas antes/depois e variante escura com fonte 200% foram atualizadas.
 - Corrigida a piscada da raposa na preparação da exportação: a máscara agora cobre o contorno dos olhos abertos sem duplicar traços sobre as pálpebras. Capturas Android de olhos abertos e fechados documentam o resultado.
 - Recuperação visual em andamento após rejeição do redesign anterior: master e poses baseados na raposa da v0.4.0 aprovados como arte estática; movimento e telas ainda pendentes de aceite.
 - Rig Compose candidato articula cabeça, cauda, patas, folha e piscadas em camadas de renderização; a pose de atenção teve patas extras removidas. Clipe Android v2 e frames consecutivos publicados para revisão, ainda sem aceite final do movimento.

@@ -3,11 +3,13 @@ package com.soturine.replicascan.feature.export
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.layout.ContentScale
 import com.soturine.replicascan.core.ui.component.AsyncUriImage
@@ -46,7 +48,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -61,6 +62,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.res.pluralStringResource
@@ -68,8 +70,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.soturine.replicascan.core.common.model.ExportFormat
 import com.soturine.replicascan.core.common.model.ExportedFile
@@ -134,6 +139,7 @@ fun ExportScreen(
                         ReplicaScanPrimaryButton(
                             text = stringResource(R.string.export_action),
                             onClick = { onExport(nameValidation.sanitizedValue) },
+                            modifier = Modifier.testTag("export-action"),
                             enabled = nameValidation.isValid && scan.pages.isNotEmpty(),
                             icon = {
                                 Icon(Icons.Outlined.SaveAlt, contentDescription = null)
@@ -206,24 +212,12 @@ private fun ExportOptions(
                     scan = scan,
                     mascotState = if (errorText == null) ReplicaScanMascotState.Ocr else ReplicaScanMascotState.Attention,
                 )
-                Row(
-                    Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Column(Modifier.weight(1f)) {
-                        Text(scan.title, style = MaterialTheme.typography.titleLarge)
-                        Text(
-                            pluralStringResource(R.plurals.export_summary, pageCount, pageCount),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.secondaryContainer) {
-                        Text(state.selectedFormat.title, modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
-                            style = MaterialTheme.typography.labelMedium)
-                    }
-                }
+                Text(
+                    pluralStringResource(R.plurals.export_summary, pageCount, pageCount),
+                    modifier = Modifier.padding(top = 10.dp, bottom = 4.dp),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
             if (errorText != null) {
                 Column(
@@ -238,20 +232,44 @@ private fun ExportOptions(
                     Text(errorText, style = MaterialTheme.typography.bodyMedium)
                 }
             }
-            OutlinedTextField(value = fileName, onValueChange = onNameChange, modifier = Modifier.fillMaxWidth(),
-                label = { Text(stringResource(R.string.export_filename)) }, singleLine = true, isError = !nameValid,
-                supportingText = if (!nameValid) ({ Text(stringResource(R.string.export_filename_invalid)) }) else null)
+            ExportFilenameField(fileName, onNameChange, nameValid)
             Section(stringResource(R.string.export_format_section)) {
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                     ExportFormat.entries.forEach { format ->
-                        FilterChip(selected = state.selectedFormat == format, onClick = { onSelectFormat(format) },
-                            label = { Text(format.title, style = MaterialTheme.typography.titleMedium) },
-                            modifier = Modifier.heightIn(min = 56.dp).testTag("format-${format.name}"))
+                        ExportFormatChoice(
+                            format = format,
+                            selected = state.selectedFormat == format,
+                            onClick = { onSelectFormat(format) },
+                            modifier = Modifier.weight(1f).testTag("format-${format.name}"),
+                        )
                     }
                 }
             }
             if (isPdf) {
-                Section(stringResource(R.string.export_quality_section)) {
+                Surface(
+                    onClick = { moreOptions = !moreOptions },
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp).testTag("export-quality-disclosure"),
+                    shape = RoundedCornerShape(18.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                ) {
+                    Row(
+                        Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                            Text(stringResource(R.string.export_quality_section), style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(state.selectedQuality.localizedTitle(), style = MaterialTheme.typography.titleMedium)
+                            Text(state.selectedQuality.localizedDescription(), style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        Icon(if (moreOptions) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
+                            contentDescription = null)
+                    }
+                }
+                AnimatedVisibility(visible = moreOptions) {
+                    Column(Modifier.fillMaxWidth().padding(top = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         PdfQuality.entries.forEach { quality ->
                             FilterChip(
@@ -262,18 +280,6 @@ private fun ExportOptions(
                             )
                         }
                     }
-                    Text(
-                        text = state.selectedQuality.localizedDescription(),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                TextButton(onClick = { moreOptions = !moreOptions }) {
-                    Text(stringResource(R.string.export_more_options))
-                    Spacer(Modifier.width(4.dp))
-                    Icon(if (moreOptions) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore, contentDescription = null)
-                }
-                AnimatedVisibility(visible = moreOptions) {
                     Section(stringResource(R.string.export_page_size_section)) {
                         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             PdfPageSize.entries.forEach { size ->
@@ -294,18 +300,77 @@ private fun ExportOptions(
                             }
                         }
                     }
+                    }
                 }
             } else {
-                Section(stringResource(R.string.export_image_format_section)) {
-                    Text(
-                        text = stringResource(
-                            if (state.selectedFormat == ExportFormat.PNG) R.string.export_png_description else R.string.export_jpg_description,
-                        ),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+                Text(
+                    text = stringResource(
+                        if (state.selectedFormat == ExportFormat.PNG) R.string.export_png_description else R.string.export_jpg_description,
+                    ),
+                    modifier = Modifier.padding(top = 8.dp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun ExportFilenameField(value: String, onValueChange: (String) -> Unit, isValid: Boolean) {
+    val colors = MaterialTheme.colorScheme
+    val label = stringResource(R.string.export_filename)
+    val shape = RoundedCornerShape(18.dp)
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier.fillMaxWidth().clip(shape)
+                .background(colors.surfaceContainerLow)
+                .border(1.dp, if (isValid) colors.outlineVariant else colors.error, shape)
+                .testTag("export-filename")
+                .semantics { contentDescription = label },
+            textStyle = MaterialTheme.typography.titleMedium.copy(color = colors.onSurface),
+            singleLine = true,
+            cursorBrush = SolidColor(colors.primary),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            decorationBox = { innerTextField ->
+                Column(Modifier.padding(horizontal = 18.dp, vertical = 13.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(label, style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant)
+                    Box(Modifier.fillMaxWidth()) {
+                        if (value.isEmpty()) Text(label, style = MaterialTheme.typography.titleMedium,
+                            color = colors.onSurfaceVariant)
+                        innerTextField()
+                    }
+                }
+            },
+        )
+        if (!isValid) Text(stringResource(R.string.export_filename_invalid),
+            style = MaterialTheme.typography.bodySmall, color = colors.error)
+    }
+}
+
+@Composable
+private fun ExportFormatChoice(format: ExportFormat, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val colors = MaterialTheme.colorScheme
+    Surface(
+        onClick = onClick,
+        modifier = modifier.heightIn(min = 68.dp).semantics { this.selected = selected },
+        shape = RoundedCornerShape(16.dp),
+        color = if (selected) colors.primaryContainer else colors.surfaceContainerLow,
+        border = BorderStroke(1.dp, if (selected) colors.primary.copy(alpha = .55f) else colors.outlineVariant),
+    ) {
+        Column(
+            Modifier.padding(horizontal = 8.dp, vertical = 12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
+        ) {
+            Text(format.title, style = MaterialTheme.typography.titleMedium,
+                color = if (selected) colors.onPrimaryContainer else colors.onSurfaceVariant)
+            Box(Modifier.width(24.dp).height(2.dp).background(
+                if (selected) colors.primary else colors.outlineVariant,
+                RoundedCornerShape(2.dp)))
         }
     }
 }
