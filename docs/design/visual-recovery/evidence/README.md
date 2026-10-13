@@ -22,6 +22,8 @@ renderização desses estados; o gesto de recorte ainda requer QA físico.
 dos filtros e o agrupamento selecionável dos parágrafos do OCR.
 `detail.png` e `settings.png` mostram a página única ampliada e grupos de
 preferências sem cartões repetidos, também recapturados em 2026-10-13.
+`history-empty.png` e `search-empty.png` mostram os dois vazios do Histórico
+sem cartões; as capturas usam estados injetados e não validam busca real.
 `launcher-masks.png` foi atualizado após instalar o ícone candidato 4 no APK
 debug; a comparação das quatro opções e o launcher real estão em
 [`icon-candidates/`](../icon-candidates/index.html).

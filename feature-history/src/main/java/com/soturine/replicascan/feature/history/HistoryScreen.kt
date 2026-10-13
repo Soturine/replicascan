@@ -54,6 +54,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.soturine.replicascan.core.common.model.ScanDocument
@@ -62,6 +63,7 @@ import com.soturine.replicascan.core.ui.component.AsyncUriImage
 import com.soturine.replicascan.core.ui.component.DocumentListItem
 import com.soturine.replicascan.core.ui.component.EmptyStateCard
 import com.soturine.replicascan.core.ui.component.ReplicaScanContent
+import com.soturine.replicascan.core.ui.component.ReplicaScanMascot
 import com.soturine.replicascan.core.ui.component.ReplicaScanMascotState
 import com.soturine.replicascan.core.ui.component.ReplicaScanPrimaryButton
 import com.soturine.replicascan.core.ui.component.ReplicaScanSecondaryButton
@@ -118,18 +120,10 @@ fun HistoryScreen(
             if (state.isLoaded && state.scans.isEmpty()) {
                 item(key = "empty") {
                     ReplicaScanContent(modifier = Modifier.padding(top = 16.dp)) {
-                        if (state.query.isBlank()) {
-                            EmptyStateCard(
-                                title = stringResource(R.string.history_empty_title),
-                                message = stringResource(R.string.history_empty_message),
-                                mascotState = ReplicaScanMascotState.Empty,
-                            )
-                        } else {
-                            EmptyStateCard(
-                                title = stringResource(R.string.history_no_results_title),
-                                message = stringResource(R.string.history_no_results_message),
-                            )
-                        }
+                        HistoryEmptyState(
+                            title = stringResource(if (state.query.isBlank()) R.string.history_empty_title else R.string.history_no_results_title),
+                            message = stringResource(if (state.query.isBlank()) R.string.history_empty_message else R.string.history_no_results_message),
+                        )
                     }
                 }
             }
@@ -156,6 +150,20 @@ fun HistoryScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun HistoryEmptyState(title: String, message: String) {
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(top = 28.dp, bottom = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        ReplicaScanMascot(ReplicaScanMascotState.Empty, size = 136.dp)
+        Text(title, style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center)
+        Text(message, style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
     }
 }
 

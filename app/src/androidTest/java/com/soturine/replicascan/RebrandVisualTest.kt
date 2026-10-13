@@ -91,7 +91,7 @@ class RebrandVisualTest {
                                 isExporting = screen == "export-progress", message = when(screen) { "export-error" -> ExportMessage.WRITE_FAILED; "export-library-warning" -> ExportMessage.LIBRARY_UPDATE_FAILED; else -> null },
                                 exportedFiles = if (screen == "export-success" || screen == "export-library-warning") listOf(ExportedFile("Caderno de ideias.pdf", "content://fixture", "application/pdf", 1024)) else emptyList()),
                                 {}, {}, {}, {}, {}, {}, {}, {})
-                            "history", "search-empty" -> HistoryScreen(HistoryUiState(true, if (screen == "search-empty") "xyz" else "", if (screen == "history") listOf(scan) else emptyList()), {}, {}, {})
+                            "history", "history-empty", "search-empty" -> HistoryScreen(HistoryUiState(true, if (screen == "search-empty") "xyz" else "", if (screen == "history") listOf(scan) else emptyList()), {}, {}, {})
                             "detail" -> ScanDetailScreen(scan, true, {}, {}, {}, {}, {}, {})
                             "settings" -> SettingsScreen(SettingsUiState(), "", {}, {}, {}, {}, {}, {}, {})
                             "about" -> AboutScreen("candidate", {}, {})
@@ -101,7 +101,7 @@ class RebrandVisualTest {
             }
         }
         val screens = listOf("onboarding", "home-empty", "home-recent", "review", "crop", "filters", "ocr-loading", "ocr-ready", "ocr-empty",
-            "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "export-library-warning", "history", "search-empty", "detail", "settings", "about")
+            "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "export-library-warning", "history", "history-empty", "search-empty", "detail", "settings", "about")
         for (name in screens) {
             rule.runOnIdle { screen = name }
             // URI decoding runs on IO; allow it to complete before the capture.
