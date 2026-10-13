@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconToggleButton
@@ -127,26 +129,35 @@ fun HistoryScreen(
                     }
                 }
             }
-            items(state.scans, key = { it.id }) { scan ->
-                ReplicaScanContent(modifier = Modifier.animateItem()) {
-                    DocumentListItem(
-                        title = scan.title,
-                        supportingText = scan.summary(formatter),
-                        imageUri = scan.coverPage?.displayUri,
-                        fallbackImageUri = scan.coverPage?.sourceUri,
-                        onClick = { onOpenScan(scan.id) },
-                        trailing = if (scan.isFavorite) {
-                            {
-                                Icon(
-                                    Icons.Filled.Star,
-                                    contentDescription = stringResource(R.string.history_favorite),
-                                    tint = MaterialTheme.colorScheme.primary,
-                                )
-                            }
-                        } else {
-                            null
-                        },
-                    )
+            itemsIndexed(state.scans, key = { _, scan -> scan.id }) { index, scan ->
+                Column(modifier = Modifier.animateItem()) {
+                    ReplicaScanContent {
+                        DocumentListItem(
+                            title = scan.title,
+                            supportingText = scan.summary(formatter),
+                            imageUri = scan.coverPage?.displayUri,
+                            fallbackImageUri = scan.coverPage?.sourceUri,
+                            onClick = { onOpenScan(scan.id) },
+                            filled = false,
+                            trailing = if (scan.isFavorite) {
+                                {
+                                    Icon(
+                                        Icons.Filled.Star,
+                                        contentDescription = stringResource(R.string.history_favorite),
+                                        tint = MaterialTheme.colorScheme.primary,
+                                    )
+                                }
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                    if (index < state.scans.lastIndex) {
+                        HorizontalDivider(
+                            modifier = Modifier.padding(start = 80.dp),
+                            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = .6f),
+                        )
+                    }
                 }
             }
         }

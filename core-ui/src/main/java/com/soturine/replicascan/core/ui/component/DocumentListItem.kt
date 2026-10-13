@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.soturine.replicascan.core.ui.theme.ReplicaScanSizes
 
-/** Dense, flat document row: thumbnail, title and one supporting line. No nested cards. */
+/** Dense document row: thumbnail, title and one supporting line. */
 @Composable
 fun DocumentListItem(
     title: String,
@@ -36,12 +36,13 @@ fun DocumentListItem(
     modifier: Modifier = Modifier,
     fallbackImageUri: String? = null,
     trailing: (@Composable () -> Unit)? = null,
+    filled: Boolean = true,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
-            .background(MaterialTheme.colorScheme.surface)
+            .then(if (filled) Modifier.background(MaterialTheme.colorScheme.surface) else Modifier)
             .clickable(onClick = onClick)
             .heightIn(min = 80.dp)
             .padding(horizontal = 12.dp, vertical = 12.dp),

@@ -49,6 +49,11 @@ modelo durante estas capturas.
 preferências sem cartões repetidos, também recapturados em 2026-10-13.
 `history-empty.png` e `search-empty.png` mostram os dois vazios do Histórico
 sem cartões; as capturas usam estados injetados e não validam busca real.
+`history-many-before.png` preserva a lista de seis documentos como cartões;
+`history-many.png` mostra as linhas contínuas e divisórias leves após o
+refino. `history.png` foi recapturado com um item e metadados sintéticos
+datados em 2026-10-13. O teste de toque abre a segunda linha, mas não exerce
+a consulta Room real.
 `launcher-masks.png` foi atualizado após instalar o ícone candidato 4 no APK
 debug; a comparação das quatro opções e o launcher real estão em
 [`icon-candidates/`](../icon-candidates/index.html).

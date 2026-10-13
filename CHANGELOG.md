@@ -4,6 +4,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+- Histórico cheio usa linhas contínuas e divisórias leves, preservando miniatura, metadados e toque; a comparação Android com seis documentos substitui a pilha de cartões.
 - Erros do OCR sem texto reconhecido permanecem na tela com ação de repetir; modelo indisponível recebe mensagem própria nos 12 idiomas, em vez de cair no vazio genérico.
 - Home preserva uma raposa compacta com fonte 200% e indica o carregamento de Recentes; capturas Android cobrem seis documentos, 360/390 dp, temas e RTL.
 - Poses da raposa decodificadas a meia resolução durante a exibição, preservando os PNGs-fonte e as articulações. Vídeo contínuo via `adb screenrecord` documenta Home e estados de exportação no emulador; a fluidez e os fluxos reais ainda aguardam validação.
