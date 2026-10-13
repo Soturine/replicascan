@@ -20,4 +20,5 @@
     <string name="ocr_message_failed">Impossible de lire le texte. Réessayez.</string>
     <string name="ocr_missing_title">Page introuvable</string>
     <string name="ocr_missing_message">Elle a peut-être été supprimée.</string>
+    <string name="ocr_model_unavailable">La reconnaissance de texte est indisponible pour le moment. Réessayez plus tard.</string>
 </resources>

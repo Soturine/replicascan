@@ -20,4 +20,5 @@
     <string name="ocr_message_failed">テキストを読み取れませんでした。もう一度お試しください。</string>
     <string name="ocr_missing_title">ページが見つかりません</string>
     <string name="ocr_missing_message">削除された可能性があります。</string>
+    <string name="ocr_model_unavailable">現在、文字認識を利用できません。後でもう一度お試しください。</string>
 </resources>

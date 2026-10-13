@@ -20,4 +20,5 @@
     <string name="ocr_message_failed">تعذّرت قراءة النص. حاول مرة أخرى.</string>
     <string name="ocr_missing_title">الصفحة غير موجودة</string>
     <string name="ocr_missing_message">ربما تم حذفها.</string>
+    <string name="ocr_model_unavailable">التعرّف على النص غير متاح الآن. حاول مرة أخرى لاحقًا.</string>
 </resources>

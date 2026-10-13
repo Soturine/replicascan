@@ -96,8 +96,14 @@ class RebrandVisualTest {
                             "review" -> ReviewScreen(editor, {}, {}, { _, _ -> }, {}, { true }, {}, {}, {}, {}, {}, {}, {}, {})
                             "crop" -> CropScreen(editor, {}, {}, {})
                             "filters" -> FilterScreen(editor, { _, _ -> }, {}, {}, {})
-                            "ocr-loading", "ocr-ready", "ocr-empty" -> OcrScreen(OcrUiState(isLoaded = true, page = scan.pages.first(),
-                                isRecognizing = screen == "ocr-loading", text = if (screen == "ocr-ready") "Documento de teste.\n\nTexto legível para selecionar e copiar." else ""), {}, {}, {}, {})
+                            "ocr-loading", "ocr-ready", "ocr-empty", "ocr-error", "ocr-model-unavailable" -> OcrScreen(OcrUiState(isLoaded = true, page = scan.pages.first(),
+                                isRecognizing = screen == "ocr-loading", text = if (screen == "ocr-ready") "Documento de teste.\n\nTexto legível para selecionar e copiar." else "",
+                                readiness = if (screen == "ocr-model-unavailable") OcrModelReadiness.UNAVAILABLE else OcrModelReadiness.READY,
+                                message = when (screen) {
+                                    "ocr-error" -> OcrMessage.FAILED
+                                    "ocr-model-unavailable" -> OcrMessage.MODEL_PREPARING
+                                    else -> null
+                                }), {}, {}, {}, {})
                             "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "export-library-warning" -> ExportScreen(ExportUiState(scan = scan, selectedFormat = when(screen) { "export-jpg" -> ExportFormat.JPG; "export-png" -> ExportFormat.PNG; else -> ExportFormat.PDF },
                                 isExporting = screen == "export-progress", message = when(screen) { "export-error" -> ExportMessage.WRITE_FAILED; "export-library-warning" -> ExportMessage.LIBRARY_UPDATE_FAILED; else -> null },
                                 exportedFiles = if (screen == "export-success" || screen == "export-library-warning") listOf(ExportedFile("Caderno de ideias.pdf", "content://fixture", "application/pdf", 1024)) else emptyList()),
@@ -111,7 +117,7 @@ class RebrandVisualTest {
                 }
             }
         }
-        val screens = listOf("onboarding", "home-empty", "home-recent", "home-many", "home-loading", "review", "crop", "filters", "ocr-loading", "ocr-ready", "ocr-empty",
+        val screens = listOf("onboarding", "home-empty", "home-recent", "home-many", "home-loading", "review", "crop", "filters", "ocr-loading", "ocr-ready", "ocr-empty", "ocr-error", "ocr-model-unavailable",
             "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "export-library-warning", "history", "history-empty", "search-empty", "detail", "settings", "about")
         for (name in screens) {
             rule.runOnIdle { screen = name }
@@ -124,6 +130,7 @@ class RebrandVisualTest {
                     capture("export", advanceMs = 400)
                 }
                 "export-jpg", "export-png" -> capture(name, advanceMs = 1300)
+                "ocr-error", "ocr-model-unavailable" -> capture(name, advanceMs = 400)
                 else -> capture(name)
             }
             if (name == "onboarding") {
@@ -173,6 +180,20 @@ class RebrandVisualTest {
         rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.home.R.string.home_scan_action)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.home.R.string.home_import_action)).assertIsDisplayed()
         capture("home-responsive-200")
+    }
+
+    @Test fun ocrFailureRemainsVisibleAndCanRetry() {
+        var retries = 0
+        var clears = 0
+        val scan = fixture()
+        rule.setContent { ReplicaScanTheme {
+            OcrScreen(OcrUiState(isLoaded = true, page = scan.pages.first(), message = OcrMessage.FAILED),
+                onRetry = { retries++ }, onScriptSelected = {}, onBack = {}, onClearMessage = { clears++ })
+        } }
+        rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.ocr.R.string.ocr_message_failed)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.ocr.R.string.ocr_retry)).performClick()
+        assertEquals(1, retries)
+        assertEquals(0, clears)
     }
 
     @Test fun sequentialCornerDragsPreserveTheOtherCorners() {

@@ -20,4 +20,5 @@
     <string name="ocr_message_failed">Couldn\'t read the text. Try again.</string>
     <string name="ocr_missing_title">Page not found</string>
     <string name="ocr_missing_message">It may have been deleted.</string>
+    <string name="ocr_model_unavailable">Text recognition is unavailable right now. Try again later.</string>
 </resources>

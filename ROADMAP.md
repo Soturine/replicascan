@@ -18,6 +18,7 @@ ReplicaScan é o nome corrente a partir da v0.4.0. O produto usou outro nome at�
 
 - tema papel/tinta e telas do ciclo anterior estão sob revisão; Home agora tem cena nativa de papel e raposa com ação Escanear dominante, indicador em Recentes e raposa compacta em fonte 200% verificada em 360/390 dp; a introdução integra três cenas de folha e raposa aprovadas como direção; exportação conecta a prévia real à raposa em preparo, gravação, sucesso e erro; Review/Crop/filtros compartilham a iluminação da página sem alterar o recorte, OCR apresenta uma folha de texto selecionável, Histórico vazio usa composição aberta, detalhe amplia uma página única e configurações usam grupos leves; demais telas ainda precisam de refinamento; o atlas Compose rejeitado foi substituído por poses aprovadas e um rig de máscaras em avaliação de movimento;
 - preparo da exportação refinado com arquivo editável, formatos legíveis e opções de PDF progressivas; capturas Android antes/depois existem, mas fluxo real e aceite visual ainda faltam;
+- OCR distingue ausência de texto, falha e modelo indisponível com recuperação visível; capturas Android existem, mas modelo e documento físicos ainda precisam de QA;
 - crop sequencial corrigido e PNG real verificado; exportação com estados persistentes;
 - capturas Android, fonte 200%, direção RTL e layout largo; limites em [validation.md](docs/design/validation.md).
 

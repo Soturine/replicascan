@@ -42,6 +42,9 @@ As demais capturas vêm da fatia anterior do mesmo runtime com as poses aprovada
 renderização desses estados; o gesto de recorte ainda requer QA físico.
 `filters.png` e `ocr-ready.png` foram recapturados após a folha compartilhada
 dos filtros e o agrupamento selecionável dos parágrafos do OCR.
+`ocr-error.png` e `ocr-model-unavailable.png` mostram falhas persistentes com
+ação de repetir, capturadas com estados injetados; não houve falha real do
+modelo durante estas capturas.
 `detail.png` e `settings.png` mostram a página única ampliada e grupos de
 preferências sem cartões repetidos, também recapturados em 2026-10-13.
 `history-empty.png` e `search-empty.png` mostram os dois vazios do Histórico

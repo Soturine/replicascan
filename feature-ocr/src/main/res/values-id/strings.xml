@@ -20,4 +20,5 @@
     <string name="ocr_message_failed">Teks tidak dapat dibaca. Coba lagi.</string>
     <string name="ocr_missing_title">Halaman tidak ditemukan</string>
     <string name="ocr_missing_message">Mungkin sudah dihapus.</string>
+    <string name="ocr_model_unavailable">Pengenalan teks saat ini tidak tersedia. Coba lagi nanti.</string>
 </resources>

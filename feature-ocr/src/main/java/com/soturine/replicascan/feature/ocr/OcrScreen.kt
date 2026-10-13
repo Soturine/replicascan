@@ -86,8 +86,16 @@ fun OcrScreen(
             },
         )
     }
-    LaunchedEffect(state.message) {
-        if (messageText != null) {
+    val inlineFailure = !state.isRecognizing && state.text.isBlank() &&
+        (state.message != null || state.readiness == OcrModelReadiness.UNAVAILABLE ||
+            state.readiness == OcrModelReadiness.ERROR)
+    val inlineFailureText = when (state.readiness) {
+        OcrModelReadiness.UNAVAILABLE -> stringResource(R.string.ocr_model_unavailable)
+        OcrModelReadiness.ERROR -> stringResource(R.string.ocr_message_failed)
+        else -> messageText
+    }
+    LaunchedEffect(state.message, state.text) {
+        if (messageText != null && state.text.isNotBlank()) {
             snackbarHostState.showSnackbar(messageText)
             onClearMessage()
         }
@@ -148,6 +156,28 @@ fun OcrScreen(
             when {
                 state.isRecognizing -> item(key = "working") {
                     ReplicaScanContent { RecognizingState(state.readiness) }
+                }
+                inlineFailure -> item(key = "failure") {
+                    ReplicaScanContent {
+                        Column(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)
+                                .semantics { liveRegion = LiveRegionMode.Polite },
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                        ) {
+                            ReplicaScanMascot(ReplicaScanMascotState.Attention, size = 132.dp)
+                            Text(
+                                text = inlineFailureText ?: stringResource(R.string.ocr_message_failed),
+                                style = MaterialTheme.typography.titleMedium,
+                                textAlign = TextAlign.Center,
+                            )
+                            TextButton(onClick = onRetry) {
+                                Icon(Icons.Outlined.Refresh, contentDescription = null)
+                                Spacer(Modifier.width(8.dp))
+                                Text(stringResource(R.string.ocr_retry))
+                            }
+                        }
+                    }
                 }
                 state.text.isBlank() -> item(key = "empty") {
                     ReplicaScanContent {
