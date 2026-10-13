@@ -127,7 +127,9 @@ private fun eyeMask(state: ReplicaScanMascotState, w: Float, h: Float): Path {
         ReplicaScanMascotState.Welcome -> listOf(.365f, .35f, .49f, .47f, .605f, .31f, .72f, .43f)
         ReplicaScanMascotState.Working, ReplicaScanMascotState.Processing,
         ReplicaScanMascotState.Scanning -> listOf(.395f, .345f, .52f, .47f, .634f, .372f, .746f, .50f)
-        ReplicaScanMascotState.Ocr -> listOf(.405f, .354f, .53f, .474f, .636f, .324f, .74f, .448f)
+        // Reading's open-eye outlines extend above the white of each eye. Include those
+        // outlines in the blink overlay without touching the separate eyebrows.
+        ReplicaScanMascotState.Ocr -> listOf(.405f, .33f, .53f, .485f, .636f, .298f, .74f, .46f)
         ReplicaScanMascotState.Attention -> listOf(.375f, .347f, .50f, .46f, .608f, .307f, .729f, .43f)
         ReplicaScanMascotState.Empty -> listOf(.365f, .31f, .48f, .42f, .575f, .26f, .69f, .37f)
         else -> listOf(.34f, .325f, .475f, .455f, .585f, .315f, .722f, .455f)

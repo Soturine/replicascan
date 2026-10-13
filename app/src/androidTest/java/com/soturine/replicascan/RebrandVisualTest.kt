@@ -54,8 +54,8 @@ class RebrandVisualTest {
             listOf(ScanPage("page", "visual", 0, file.absolutePath)), false)
     }
 
-    private fun capture(name: String) {
-        rule.mainClock.advanceTimeBy(900)
+    private fun capture(name: String, advanceMs: Long = 900) {
+        rule.mainClock.advanceTimeBy(advanceMs)
         rule.waitForIdle()
         val dir = File(context.getExternalFilesDir(null), "rebrand-evidence").apply { mkdirs() }
         val target = if (name == "language") rule.onNode(isDialog()) else rule.onRoot()
@@ -107,7 +107,14 @@ class RebrandVisualTest {
             // URI decoding runs on IO; allow it to complete before the capture.
             rule.mainClock.advanceTimeBy(32)
             Thread.sleep(600)
-            capture(name)
+            when (name) {
+                "export" -> {
+                    capture("export-blink")
+                    capture("export", advanceMs = 400)
+                }
+                "export-jpg", "export-png" -> capture(name, advanceMs = 1300)
+                else -> capture(name)
+            }
             if (name == "onboarding") {
                 rule.onNodeWithText(context.getString(R.string.onboarding_next)).performClick()
                 rule.mainClock.advanceTimeBy(1200)

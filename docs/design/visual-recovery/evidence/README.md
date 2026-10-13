@@ -6,8 +6,15 @@ medem 1080×2201 px, usam a localização inglesa do emulador, documento
 sintético e estados injetados; não demonstram captura física, OCR real ou
 escrita de exportação. Preparo, gravação, sucesso, erro e aviso da biblioteca
 na exportação foram recapturados em 2026-10-13 com a mesma cena nativa da
-folha real e da raposa, variando a pose conforme o estado. As três páginas de introdução
-foram recapturadas após receber poses distintas. Agora a folha e a raposa formam
+folha real e da raposa, variando a pose conforme o estado.
+
+`export-eye-before.png` registra o contorno duplicado que aparecia sobre os olhos
+fechados na pose de leitura. A máscara foi ajustada e `export-blink.png` mostra a
+piscada limpa no Android; `export.png`, `export-jpg.png` e `export-png.png` foram
+recapturados com os olhos abertos. Esta comparação verifica o defeito visual
+relatado, mas a composição final continua sujeita à revisão do proprietário.
+
+As três páginas de introdução foram recapturadas após receber poses distintas. Agora a folha e a raposa formam
 uma cena aberta nas três páginas, sem cartão de fundo; `onboarding-200.png`
 mostra a versão compacta em fonte 200%. A Home foi recapturada em
 2026-10-13 com cena de papel e raposa, botão principal ampliado, estado vazio

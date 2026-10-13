@@ -4,6 +4,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+- Corrigida a piscada da raposa na preparação da exportação: a máscara agora cobre o contorno dos olhos abertos sem duplicar traços sobre as pálpebras. Capturas Android de olhos abertos e fechados documentam o resultado.
 - Recuperação visual em andamento após rejeição do redesign anterior: master e poses baseados na raposa da v0.4.0 aprovados como arte estática; movimento e telas ainda pendentes de aceite.
 - Rig Compose candidato articula cabeça, cauda, patas, folha e piscadas em camadas de renderização; a pose de atenção teve patas extras removidas. Clipe Android v2 e frames consecutivos publicados para revisão, ainda sem aceite final do movimento.
 - Home recomposta com a raposa diante de uma folha iluminada, botão Escanear mais evidente e estado vazio sem cartão pesado; em fonte 200% a ilustração cede espaço às ações. Capturas nativas claras e escuras atualizadas.
