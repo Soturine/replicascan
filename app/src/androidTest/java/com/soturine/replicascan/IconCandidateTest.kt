@@ -58,13 +58,13 @@ class IconCandidateTest {
                         Text("Android system mask · 24 / 48 / 72 / 108 dp")
                         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                             listOf(24, 48, 72, 108).forEach { size ->
-                                CandidateIcon(images[chosen.intValue], Mask.System, size)
+                                CandidateIcon(images[chosen.intValue], Mask.System, size, chosen.intValue == 3)
                             }
                         }
                         Text("Circle · squircle · teardrop (mask previews)")
                         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                             listOf(Mask.Circle, Mask.Squircle, Mask.Teardrop).forEach { mask ->
-                                CandidateIcon(images[chosen.intValue], mask, 72)
+                                CandidateIcon(images[chosen.intValue], mask, 72, chosen.intValue == 3)
                             }
                         }
                         Text("Themed icon draft · 48 / 72 dp")
@@ -75,11 +75,12 @@ class IconCandidateTest {
                                     factory = { ctx -> object : View(ctx) {
                                         override fun onDraw(canvas: Canvas) {
                                             val monoResource = if (chosen.intValue == 3) {
-                                                com.soturine.replicascan.test.R.drawable.ic_candidate_scan_monochrome
+                                                R.drawable.ic_launcher_monochrome
                                             } else {
                                                 com.soturine.replicascan.test.R.drawable.ic_candidate_monochrome
                                             }
-                                            val mono = testContext.getDrawable(monoResource)!!
+                                            val mono = (if (chosen.intValue == 3) targetContext else testContext)
+                                                .getDrawable(monoResource)!!
                                                 .mutate().apply { setTint(android.graphics.Color.rgb(32, 66, 64)) }
                                             AdaptiveIconDrawable(ColorDrawable(0xFFDDEBE4.toInt()), mono).apply {
                                                 setBounds(0, 0, width, height)
@@ -110,17 +111,22 @@ class IconCandidateTest {
     private enum class Mask { System, Circle, Squircle, Teardrop }
 
     @Composable
-    private fun CandidateIcon(bitmap: Bitmap, mask: Mask, size: Int) {
+    private fun CandidateIcon(bitmap: Bitmap, mask: Mask, size: Int, useInstalled: Boolean) {
         AndroidView(
             modifier = Modifier.size(size.dp),
             factory = { ctx -> object : View(ctx) {
                 private val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
                 override fun onDraw(canvas: Canvas) {
                     if (mask == Mask.System) {
-                        AdaptiveIconDrawable(
-                            ColorDrawable(0xFFFAF6EF.toInt()),
-                            InsetDrawable(BitmapDrawable(resources, bitmap), (width * .22f).toInt()),
-                        ).apply { setBounds(0, 0, width, height); draw(canvas) }
+                        val icon = if (useInstalled) {
+                            ctx.getDrawable(R.mipmap.ic_launcher)!!
+                        } else {
+                            AdaptiveIconDrawable(
+                                ColorDrawable(0xFFFAF6EF.toInt()),
+                                InsetDrawable(BitmapDrawable(resources, bitmap), (width * .22f).toInt()),
+                            )
+                        }
+                        icon.apply { setBounds(0, 0, width, height); draw(canvas) }
                         return
                     }
                     val w = width.toFloat()

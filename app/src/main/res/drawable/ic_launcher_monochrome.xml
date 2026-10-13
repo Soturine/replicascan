@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
-    <path android:fillColor="#000000" android:fillType="evenOdd" android:pathData="M32,49 Q29,38 34,30 Q43,32 47,40 Q54,37 61,40 Q69,32 75,31 Q79,40 75,51 Q76,64 63,69 L45,69 Q31,63 32,49Z M41,49 L46,49 L46,54 L41,54Z M62,49 L67,49 L67,54 L62,54Z M50,58 L58,58 L54,64Z" />
-    <path android:fillColor="#00000000" android:strokeColor="#000000" android:strokeWidth="3" android:strokeLineJoin="round" android:pathData="M42,69 L60,69 L67,75 L67,82 Q54,87 41,81Z M47,75 L54,75 M47,79 L59,79" />
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Test-only monochrome companion for the fox, document, and scan marks. -->
+    <path android:fillColor="#000000" android:fillType="evenOdd"
+        android:pathData="M30,51 Q27,42 32,28 Q41,31 46,39 Q54,36 62,39 Q68,31 76,28 Q81,42 78,51 L83,56 L77,57 Q73,64 62,67 L46,67 Q35,64 31,57 L25,56Z M40,51 A3,3 0,1 0,46,51 A3,3 0,1 0,40,51Z M62,51 A3,3 0,1 0,68,51 A3,3 0,1 0,62,51Z M32,55 Q43,50 54,57 Q65,50 76,55 Q68,64 54,66 Q40,64 32,55Z" />
+    <path android:fillColor="#000000"
+        android:pathData="M50,57 Q54,54 58,57 Q57,61 54,62 Q51,61 50,57Z" />
+    <path android:fillColor="#000000" android:fillType="evenOdd"
+        android:pathData="M39,68 L69,68 L73,72 L73,87 Q54,90 35,87 L35,72 Q35,68 39,68Z M39,72 L67,72 L69,74 L69,84 Q54,87 39,84Z" />
+    <path android:fillColor="#000000"
+        android:pathData="M35,65 Q40,63 44,67 Q45,71 41,72 Q35,72 33,69 Q33,66 35,65Z M68,65 Q73,63 75,67 Q76,70 72,72 Q66,72 64,69 Q64,66 68,65Z" />
+    <path android:fillColor="#00000000" android:strokeColor="#000000"
+        android:strokeWidth="1.8" android:strokeLineCap="round" android:strokeLineJoin="round"
+        android:pathData="M44,76 L44,74 L48,74 M60,74 L64,74 L64,76 M44,81 L44,83 L48,83 M60,83 L64,83 L64,81 M48,78.5 L60,78.5" />
 </vector>

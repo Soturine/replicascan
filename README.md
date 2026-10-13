@@ -21,7 +21,7 @@ ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Sc
 - PDF pesquisável quando há OCR, JPG e PNG, com opções progressivas por formato;
 - histórico local com título, tags, favoritos e busca Room FTS;
 - 12 idiomas, incluindo árabe com RTL;
-- raposa em poses aprovadas com rig articulado candidato, respeitando redução de movimento; símbolo vetorial do launcher em revisão.
+- raposa em poses aprovadas com rig articulado candidato, respeitando redução de movimento; ícone adaptativo com raposa e documento escaneando instalado no APK debug para revisão.
 
 Não há conta, backend, sincronização ou upload obrigatório de documentos. Componentes do Google Play services/ML Kit podem contatar o Google para atualizações e métricas técnicas conforme os termos do fornecedor; veja [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
 
