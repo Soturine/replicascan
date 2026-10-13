@@ -45,7 +45,7 @@ class IconCandidateTest {
     @Test fun candidateMasksAndSizes() {
         val testContext = InstrumentationRegistry.getInstrumentation().context
         val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val images = (1..3).map { index ->
+        val images = (1..4).map { index ->
             testContext.assets.open("icon-candidates/candidate-$index.png").use(BitmapFactory::decodeStream)
         }
         images.forEach { assertEquals(it.width, it.height) }
@@ -74,7 +74,12 @@ class IconCandidateTest {
                                     modifier = Modifier.size(size.dp),
                                     factory = { ctx -> object : View(ctx) {
                                         override fun onDraw(canvas: Canvas) {
-                                            val mono = testContext.getDrawable(com.soturine.replicascan.test.R.drawable.ic_candidate_monochrome)!!
+                                            val monoResource = if (chosen.intValue == 3) {
+                                                com.soturine.replicascan.test.R.drawable.ic_candidate_scan_monochrome
+                                            } else {
+                                                com.soturine.replicascan.test.R.drawable.ic_candidate_monochrome
+                                            }
+                                            val mono = testContext.getDrawable(monoResource)!!
                                                 .mutate().apply { setTint(android.graphics.Color.rgb(32, 66, 64)) }
                                             AdaptiveIconDrawable(ColorDrawable(0xFFDDEBE4.toInt()), mono).apply {
                                                 setBounds(0, 0, width, height)
