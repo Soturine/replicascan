@@ -122,6 +122,8 @@ class RebrandVisualTest {
         rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.settings.R.string.settings_language)).performClick()
         capture("language")
         rule.onNodeWithText(context.getString(android.R.string.cancel)).performClick()
+        rule.runOnIdle { screen = "onboarding"; large = true }
+        capture("onboarding-200")
         rule.runOnIdle { screen = "home-recent"; dark = true }
         capture("home-dark")
         rule.runOnIdle { large = true }

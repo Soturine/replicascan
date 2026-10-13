@@ -7,7 +7,9 @@ sintético e estados injetados; não demonstram captura física, OCR real ou
 escrita de exportação. Preparo, gravação, sucesso, erro e aviso da biblioteca
 na exportação foram recapturados em 2026-10-13 com a mesma cena nativa da
 folha real e da raposa, variando a pose conforme o estado. As três páginas de introdução
-foram recapturadas após receber poses distintas. A Home foi recapturada em
+foram recapturadas após receber poses distintas. Agora a folha e a raposa formam
+uma cena aberta nas três páginas, sem cartão de fundo; `onboarding-200.png`
+mostra a versão compacta em fonte 200%. A Home foi recapturada em
 2026-10-13 com cena de papel e raposa, botão principal ampliado, estado vazio
 sem cartão e folha iluminada no tema escuro; `home-dark-200.png` documenta a
 composição sem ilustração em fonte 200%. As demais capturas vêm da
@@ -20,6 +22,9 @@ renderização desses estados; o gesto de recorte ainda requer QA físico.
 dos filtros e o agrupamento selecionável dos parágrafos do OCR.
 `detail.png` e `settings.png` mostram a página única ampliada e grupos de
 preferências sem cartões repetidos, também recapturados em 2026-10-13.
+`launcher-masks.png` foi atualizado após instalar o ícone candidato 4 no APK
+debug; a comparação das quatro opções e o launcher real estão em
+[`icon-candidates/`](../icon-candidates/index.html).
 
 O [clipe v2](mascot-motion-v2.mp4) reúne 64 frames renderizados no Android com o
 clock de teste em passos de 125 ms e codificados em MP4 a 8 fps. Sequência:
@@ -44,7 +49,7 @@ composição das telas e release ainda precisam de aceite expresso. O antigo
 Pontos abertos para esta revisão: a Home ainda deixa espaço inferior vazio
 quando a biblioteca é curta; a exportação ainda precisa de validação visual
 em documentos físicos e prova de gravação completa fora do fixture sintético;
-o ícone vetorial usa linguagem mais plana que a mascote; o rig candidato
+o ícone temático vetorial usa linguagem mais plana que a mascote; o rig candidato
 articula regiões das poses, mas ainda depende de máscaras sobre imagens
 completas. A inspeção manual de transições, recorte com
 câmera real, tema escuro, fonte 200%, RTL e TalkBack também permanece pendente.
