@@ -1,6 +1,14 @@
 # Direção proposta — ateliê de documentos
 
-`STATUS: PROPOSTA, NÃO APROVADA`.
+`STATUS: DIREÇÃO A APROVADA; LAYOUTS, ÍCONE, MOVIMENTO E RELEASE PENDENTES`.
+
+O proprietário escolheu Mesa Editorial como direção e pediu incorporar da
+proposta B a luz e a profundidade do documento. Isso aprova princípios, não
+os layouts finais. No Android, a Home mantém Escanear antes dos documentos;
+com fonte 200% a cena vira uma raposa pequena ao lado do título. A exportação
+usa a mesma folha do preparo até o resultado, com formato e qualidade sob
+divulgação progressiva. Review/Crop iluminam a página sem tomar espaço dos
+controles. O tema escuro muda a luz ambiente, não o modelo de interação.
 
 O app deve parecer uma bancada de trabalho calma: documento como peça central,
 ferramentas precisas, luz quente e uma raposa que orienta sem infantilizar. Uma

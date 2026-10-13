@@ -33,6 +33,7 @@ import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
+import java.time.Instant
 
 /** Real Compose rendering with synthetic documents/injected screen states, not an end-to-end OCR claim. */
 class RebrandVisualTest {
@@ -67,6 +68,8 @@ class RebrandVisualTest {
 
     @Test fun renderScreenMatrix() {
         val scan = fixture()
+        val homeScan = scan.copy(createdAt = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli(),
+            updatedAt = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli())
         var screen by mutableStateOf("onboarding")
         var dark by mutableStateOf(false)
         var large by mutableStateOf(false)
@@ -81,7 +84,14 @@ class RebrandVisualTest {
                     key(screen) {
                         when (screen) {
                             "onboarding" -> OnboardingScreen({})
-                            "home-empty", "home-recent" -> HomeScreen(HomeUiState(false, if (screen == "home-recent") listOf(scan) else emptyList()),
+                            "home-empty", "home-recent", "home-many", "home-loading" -> HomeScreen(HomeUiState(
+                                isLoading = screen == "home-loading",
+                                recentScans = when (screen) {
+                                    "home-recent" -> listOf(homeScan)
+                                    "home-many" -> (1..6).map { index -> homeScan.copy(id = "visual-$index", title = "Caderno $index") }
+                                    else -> emptyList()
+                                },
+                            ),
                                 false, {}, {}, {}, {}, { null }, {}, {}, {})
                             "review" -> ReviewScreen(editor, {}, {}, { _, _ -> }, {}, { true }, {}, {}, {}, {}, {}, {}, {}, {})
                             "crop" -> CropScreen(editor, {}, {}, {})
@@ -101,7 +111,7 @@ class RebrandVisualTest {
                 }
             }
         }
-        val screens = listOf("onboarding", "home-empty", "home-recent", "review", "crop", "filters", "ocr-loading", "ocr-ready", "ocr-empty",
+        val screens = listOf("onboarding", "home-empty", "home-recent", "home-many", "home-loading", "review", "crop", "filters", "ocr-loading", "ocr-ready", "ocr-empty",
             "export", "export-jpg", "export-png", "export-progress", "export-error", "export-success", "export-library-warning", "history", "history-empty", "search-empty", "detail", "settings", "about")
         for (name in screens) {
             rule.runOnIdle { screen = name }
@@ -132,14 +142,37 @@ class RebrandVisualTest {
         rule.onNodeWithText(context.getString(android.R.string.cancel)).performClick()
         rule.runOnIdle { screen = "onboarding"; large = true }
         capture("onboarding-200")
-        rule.runOnIdle { screen = "home-recent"; dark = true }
+        rule.runOnIdle { screen = "home-recent" }
+        capture("home-light-200")
+        rule.runOnIdle { dark = true; large = false }
         capture("home-dark")
         rule.runOnIdle { large = true }
         capture("home-dark-200")
+        rule.runOnIdle { rtl = true }
+        capture("home-dark-200-rtl")
+        rule.runOnIdle { rtl = false }
         rule.runOnIdle { screen = "export"; large = true }
         capture("export-dark-200")
         rule.runOnIdle { screen = "review"; rtl = true }
         capture("review-dark-200-rtl")
+    }
+
+    @Test fun homeLargeFontKeepsBothActionsAtNarrowWidths() {
+        val date = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli()
+        val scan = fixture().copy(createdAt = date, updatedAt = date)
+        rule.mainClock.autoAdvance = false
+        rule.setContent {
+            val density = LocalDensity.current.density
+            CompositionLocalProvider(LocalDensity provides Density(density, 2f)) {
+                ReplicaScanTheme {
+                    HomeScreen(HomeUiState(false, listOf(scan)), false,
+                        {}, {}, {}, {}, { null }, {}, {}, {})
+                }
+            }
+        }
+        rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.home.R.string.home_scan_action)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.home.R.string.home_import_action)).assertIsDisplayed()
+        capture("home-responsive-200")
     }
 
     @Test fun sequentialCornerDragsPreserveTheOtherCorners() {

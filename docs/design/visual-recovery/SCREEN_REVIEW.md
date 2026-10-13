@@ -9,7 +9,7 @@ automaticamente todas as telas, o movimento ou a release.
 
 | Destino/estado | Observação e decisão | Estado |
 |---|---|---|
-| Home com recentes e vazia | Cena nativa de papel e raposa e CTA Escanear de 68 dp. Em fonte 200%, a cena sai para preservar conteúdo e ações. Espaço inferior com poucos itens continua natural ao conteúdo. | Implementado; capturas API 34 claras, escuras e 200%; aceite pendente |
+| Home vazia, recentes, muitos itens e carregando | Cena nativa de papel e raposa, CTA Escanear de 68 dp e indicador em Recentes enquanto carrega. Em fonte 200%, a cena grande cede lugar à raposa compacta junto ao título. Seis itens demonstram a lista rolável; espaço inferior com poucos itens acompanha o conteúdo. | REFINED; capturas API 34 em claro, escuro, RTL e 360/390 dp com fonte 200%; aceite pendente |
 | Onboarding (3 páginas) | Saudação, leitura e sucesso acompanham escanear, revisar e guardar em uma cena de folha e raposa sem cartão isolado; a composição compacta preserva título, corpo e botão com fonte 200%. A sequência ainda precisa de inspeção física de swipe/RTL. | Capturas Android das três páginas e 200%; aceite pendente |
 | Revisão, crop e filtros | Review/Crop/filtros dão luz e profundidade à mesma página nativa. O recorte mantém quatro cantos e página inteira por padrão; controles, gesto e geometria não foram movidos. | Capturados em claro; Review também em escuro/RTL/fonte 200%; QA físico pendente |
 | OCR carregando, pronto e vazio | Parágrafos ficam em uma folha selecionável, com cópia e idioma preservados. Carregamento e vazio mantêm a raposa; estados de modelo e seleção precisam inspeção com OCR real e TalkBack. | Capturado com estado injetado; fluxo real pendente |

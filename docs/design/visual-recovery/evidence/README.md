@@ -28,8 +28,14 @@ uma cena aberta nas três páginas, sem cartão de fundo; `onboarding-200.png`
 mostra a versão compacta em fonte 200%. A Home foi recapturada em
 2026-10-13 com cena de papel e raposa, botão principal ampliado, estado vazio
 sem cartão e folha iluminada no tema escuro; `home-dark-200.png` documenta a
-composição sem ilustração em fonte 200%. As demais capturas vêm da
-fatia anterior do mesmo runtime com as poses aprovadas.
+composição sem ilustração em fonte 200%. A rodada seguinte substituiu essa
+omissão total por uma raposa compacta ao lado do título. As capturas
+`home-360-200.png` e `home-390-200.png` mostram Escanear e Importar visíveis
+em larguras estreitas; `home-light-200.png`, `home-dark-200.png` e
+`home-dark-200-rtl.png` cobrem temas e direção. `home-many.png` traz seis
+documentos sintéticos e `home-loading.png` mostra o indicador de Recentes.
+As fixtures novas da Home usam 2026-10-13, evitando a data 1970 do teste.
+As demais capturas vêm da fatia anterior do mesmo runtime com as poses aprovadas.
 
 `review.png`, `crop.png` e `review-dark-200-rtl.png` foram recapturados em
 2026-10-13 após a iluminação e a profundidade da página. O teste confirma

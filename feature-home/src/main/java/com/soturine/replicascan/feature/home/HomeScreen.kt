@@ -201,6 +201,11 @@ fun HomeScreen(
                     }
                 }
             }
+            if (state.isLoading) {
+                item(key = "recent-loading") {
+                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(vertical = ReplicaScanSpacing.md))
+                }
+            }
             if (!state.isLoading && state.recentScans.isEmpty()) {
                 item(key = "empty") {
                     ReplicaScanContent {
@@ -237,16 +242,26 @@ private fun ScanHero(
     onScan: () -> Unit,
     onImport: () -> Unit,
 ) {
+    val largeText = LocalDensity.current.fontScale >= 1.5f
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(ReplicaScanSpacing.md),
     ) {
-        Text(
-            text = stringResource(R.string.home_hero_title),
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.fillMaxWidth().semantics { heading() },
-        )
-        if (LocalDensity.current.fontScale < 1.5f) {
+        if (largeText) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = stringResource(R.string.home_hero_title),
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.weight(1f).semantics { heading() },
+                )
+                ReplicaScanMascot(ReplicaScanMascotState.Welcome, size = 72.dp)
+            }
+        } else {
+            Text(
+                text = stringResource(R.string.home_hero_title),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.fillMaxWidth().semantics { heading() },
+            )
             HomePaperScene()
         }
         Text(

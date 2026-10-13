@@ -4,6 +4,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+- Home preserva uma raposa compacta com fonte 200% e indica o carregamento de Recentes; capturas Android cobrem seis documentos, 360/390 dp, temas e RTL.
 - Poses da raposa decodificadas a meia resolução durante a exibição, preservando os PNGs-fonte e as articulações. Vídeo contínuo via `adb screenrecord` documenta Home e estados de exportação no emulador; a fluidez e os fluxos reais ainda aguardam validação.
 - Duas composições alternativas do ícone foram comparadas no Android em 24–108 dp e máscaras. A opção 4 continua instalada: nas novas propostas, o sinal de escaneamento enfraquece no menor tamanho; aceitação final e arte temática das alternativas permanecem abertas.
 - Preparo da exportação refinado no Android: nome de arquivo integrado à composição, três formatos em escolhas legíveis, qualidade e tamanho de página revelados sob demanda; estados e callbacks de gravação preservados. Capturas antes/depois e variante escura com fonte 200% foram atualizadas.
