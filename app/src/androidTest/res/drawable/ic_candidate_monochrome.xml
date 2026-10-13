@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Face and paper sit inside the adaptive icon safe area. Eye cutouts survive a themed tint. -->
+    <path android:fillColor="#000000" android:fillType="evenOdd"
+        android:pathData="M30,51 Q27,42 32,28 Q41,31 46,39 Q54,36 62,39 Q68,31 76,28 Q81,42 78,51 L83,56 L77,57 Q73,64 62,67 L46,67 Q35,64 31,57 L25,56Z M40,51 A3,3 0,1 0,46,51 A3,3 0,1 0,40,51Z M62,51 A3,3 0,1 0,68,51 A3,3 0,1 0,62,51Z M32,55 Q43,50 54,57 Q65,50 76,55 Q68,64 54,66 Q40,64 32,55Z" />
+    <path android:fillColor="#000000"
+        android:pathData="M50,57 Q54,54 58,57 Q57,61 54,62 Q51,61 50,57Z" />
+    <path android:fillColor="#000000" android:fillType="evenOdd"
+        android:pathData="M39,72 L65,72 L71,77 L71,84 Q54,89 37,84 L37,75 Q37,72 39,72Z M42,76 L63,76 L67,79 L67,82 Q54,85 41,82 L41,77Z" />
+    <path android:fillColor="#000000"
+        android:pathData="M37,67 Q42,65 45,69 Q46,73 42,74 Q36,74 35,71 Q35,68 37,67Z M66,67 Q71,65 73,69 Q74,73 70,74 Q64,74 63,71 Q63,68 66,67Z" />
+</vector>

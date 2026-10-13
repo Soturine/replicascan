@@ -17,7 +17,7 @@ automaticamente todas as telas, o movimento ou a release.
 | Exportação: progresso, sucesso, erro | A mesma folha real e a raposa acompanham preparo, gravação, sucesso e recuperação, com pose articulada conforme o estado. Sucesso identifica o arquivo e erro preserva opções de nova tentativa. | Capturado com estado injetado; exportação real/aceite pendentes |
 | Histórico, busca, detalhe | Uma biblioteca com só um item deixa espaço livre; não adicionar conteúdo artificial. Busca e ações documentais devem ser exercitadas em aparelho. | Capturado; interação pendente |
 | Configurações, idioma, sobre | Grupos e alvos de toque estão claros, embora a linguagem visual ainda seja próxima do Material padrão. Validar todos os idiomas, RTL e fonte ampliada. | Capturado; revisão linguística/QA pendentes |
-| Ícone adaptativo | Raposa + documento são legíveis nas máscaras capturadas, mas o traço vetorial é mais plano que a mascote aprovada. | Divergência visual aberta; escolha do proprietário pendente |
+| Ícone adaptativo | Três novas artes com duas patas e folha foram capturadas no Android em 24–108 dp, máscara do sistema e prévias de outras máscaras. A opção 1 lê melhor em tamanho mínimo; a opção 3 perde expressão. O temático é rascunho. | Candidatos em `icon-candidates/`; launcher de produção intacto; escolha e teste físico pendentes |
 | Site | Capturas de Home e opções de exportação atualizadas. | Implementado; gate local do site passou, publicação remota pendente |
 
 As POCs Pipa/Lume informam hierarquia e ritmo, sem fornecer código ou assets de
