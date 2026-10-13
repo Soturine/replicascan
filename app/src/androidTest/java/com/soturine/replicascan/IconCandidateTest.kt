@@ -45,7 +45,8 @@ class IconCandidateTest {
     @Test fun candidateMasksAndSizes() {
         val testContext = InstrumentationRegistry.getInstrumentation().context
         val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val images = (1..4).map { index ->
+        val candidateIds = listOf(1, 2, 3, 4, 6, 7)
+        val images = candidateIds.map { index ->
             testContext.assets.open("icon-candidates/candidate-$index.png").use(BitmapFactory::decodeStream)
         }
         images.forEach { assertEquals(it.width, it.height) }
@@ -54,33 +55,28 @@ class IconCandidateTest {
             ReplicaScanTheme {
                 Surface {
                     key(chosen.intValue) { Column(Modifier.fillMaxSize().padding(20.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
-                        Text("Icon candidate ${chosen.intValue + 1}", style = MaterialTheme.typography.headlineMedium)
-                        Text("Android system mask · 24 / 48 / 72 / 108 dp")
-                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                            listOf(24, 48, 72, 108).forEach { size ->
-                                CandidateIcon(images[chosen.intValue], Mask.System, size, chosen.intValue == 3)
+                        Text("Icon candidate ${candidateIds[chosen.intValue]}", style = MaterialTheme.typography.headlineMedium)
+                        Text("Android system mask · 24 / 36 / 48 / 72 / 108 dp")
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            listOf(24, 36, 48, 72, 108).forEach { size ->
+                                CandidateIcon(images[chosen.intValue], Mask.System, size, candidateIds[chosen.intValue] == 4)
                             }
                         }
-                        Text("Circle · squircle · teardrop (mask previews)")
-                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                            listOf(Mask.Circle, Mask.Squircle, Mask.Teardrop).forEach { mask ->
-                                CandidateIcon(images[chosen.intValue], mask, 72, chosen.intValue == 3)
+                        Text("Circle · squircle · rounded · teardrop")
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            listOf(Mask.Circle, Mask.Squircle, Mask.Rounded, Mask.Teardrop).forEach { mask ->
+                                CandidateIcon(images[chosen.intValue], mask, 72, candidateIds[chosen.intValue] == 4)
                             }
                         }
-                        Text("Themed icon draft · 48 / 72 dp")
-                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                        if (candidateIds[chosen.intValue] == 4) {
+                            Text("Installed themed icon · 48 / 72 dp")
+                            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                             listOf(48, 72).forEach { size ->
                                 AndroidView(
                                     modifier = Modifier.size(size.dp),
                                     factory = { ctx -> object : View(ctx) {
                                         override fun onDraw(canvas: Canvas) {
-                                            val monoResource = if (chosen.intValue == 3) {
-                                                R.drawable.ic_launcher_monochrome
-                                            } else {
-                                                com.soturine.replicascan.test.R.drawable.ic_candidate_monochrome
-                                            }
-                                            val mono = (if (chosen.intValue == 3) targetContext else testContext)
-                                                .getDrawable(monoResource)!!
+                                            val mono = targetContext.getDrawable(R.drawable.ic_launcher_monochrome)!!
                                                 .mutate().apply { setTint(android.graphics.Color.rgb(32, 66, 64)) }
                                             AdaptiveIconDrawable(ColorDrawable(0xFFDDEBE4.toInt()), mono).apply {
                                                 setBounds(0, 0, width, height)
@@ -91,6 +87,9 @@ class IconCandidateTest {
                                 )
                             }
                         }
+                        } else {
+                            Text("Monochrome source not installed for this concept")
+                        }
                     } }
                 }
             }
@@ -100,7 +99,7 @@ class IconCandidateTest {
             rule.waitForIdle()
             val directory = File(targetContext.getExternalFilesDir(null), "rebrand-evidence").apply { mkdirs() }
             rule.onRoot().captureToImage().asAndroidBitmap().let { bitmap ->
-                File(directory, "icon-candidate-${index + 1}-android.png").outputStream().use {
+                File(directory, "icon-candidate-${candidateIds[index]}-android.png").outputStream().use {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
                 }
             }
@@ -108,7 +107,7 @@ class IconCandidateTest {
         images.forEach(Bitmap::recycle)
     }
 
-    private enum class Mask { System, Circle, Squircle, Teardrop }
+    private enum class Mask { System, Circle, Squircle, Rounded, Teardrop }
 
     @Composable
     private fun CandidateIcon(bitmap: Bitmap, mask: Mask, size: Int, useInstalled: Boolean) {
@@ -135,6 +134,7 @@ class IconCandidateTest {
                     when (mask) {
                         Mask.Circle -> path.addCircle(w / 2, h / 2, w / 2, Path.Direction.CW)
                         Mask.Squircle -> path.addRoundRect(RectF(0f, 0f, w, h), w * .23f, h * .23f, Path.Direction.CW)
+                        Mask.Rounded -> path.addRoundRect(RectF(0f, 0f, w, h), w * .16f, h * .16f, Path.Direction.CW)
                         Mask.Teardrop -> {
                             path.moveTo(w * .5f, 0f)
                             path.cubicTo(w * .78f, 0f, w, h * .26f, w, h * .53f)
