@@ -10,10 +10,14 @@ recapturadas após a revisão de composição; as três páginas de introdução
 foram recapturadas após receber poses distintas. As demais capturas vêm da
 fatia anterior do mesmo runtime com as poses aprovadas.
 
-O [clipe](mascot-motion-v1.mp4) reúne 64 frames renderizados no Android com o
+O [clipe v2](mascot-motion-v2.mp4) reúne 64 frames renderizados no Android com o
 clock de teste em passos de 125 ms e codificados em MP4 a 8 fps. Sequência:
 repouso → trabalho → sucesso → atenção. Não é `adb screenrecord` em tempo real,
 nem prova de transição da navegação; permite inspeção de continuidade visual.
+Os [frames 21](mascot-working-frame-21.png) e
+[22](mascot-working-frame-22.png) mostram estados consecutivos da pose de
+trabalho. A [captura de atenção corrigida](mascot-attention-corrected-android.png)
+mostra quatro patas após a revisão anatômica solicitada em 2026-10-13.
 
 A [comparação lado a lado](review.html) mostra Home, revisão, recorte, opções e
 estados de exportação, introdução, OCR, histórico, configurações e ícone contra
@@ -28,9 +32,10 @@ composição das telas e release ainda precisam de aceite expresso. O antigo
 
 Pontos abertos para esta revisão: a Home ainda deixa espaço inferior vazio
 quando a biblioteca é curta; as opções de exportação conservam controles de
-formulário e o progresso ainda usa movimento de pose inteira;
-o ícone vetorial usa linguagem mais plana que a mascote; o movimento atual é
-discreto e não articula membros. A inspeção manual de transições, recorte com
+formulário e o progresso ainda precisa de uma cena melhor ligada ao documento;
+o ícone vetorial usa linguagem mais plana que a mascote; o rig candidato
+articula regiões das poses, mas ainda depende de máscaras sobre imagens
+completas. A inspeção manual de transições, recorte com
 câmera real, tema escuro, fonte 200%, RTL e TalkBack também permanece pendente.
 As capturas de tema escuro/fonte 200% são amostras, não QA humano completo.
 As diferenças voluntárias em relação às POCs Pipa/Lume estão registradas no

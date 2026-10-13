@@ -9,7 +9,6 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.requiredSize
@@ -26,11 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -60,9 +58,21 @@ enum class ReplicaScanMascotState {
             Attention -> R.drawable.replicascan_fox_attention
             Success -> R.drawable.replicascan_fox_success
         }
+
+    @get:DrawableRes
+    internal val blinkArtwork: Int
+        get() = when (this) {
+            Welcome -> R.drawable.replicascan_fox_blink_greeting
+            Idle -> R.drawable.replicascan_fox_blink_idle
+            Scanning, Processing, Working -> R.drawable.replicascan_fox_blink_working
+            Ocr -> R.drawable.replicascan_fox_blink_reading
+            Empty -> R.drawable.replicascan_fox_blink_empty
+            Attention -> R.drawable.replicascan_fox_blink_attention
+            Success -> R.drawable.replicascan_fox_success
+        }
 }
 
-/** Original-fox pose study. Decorative; the owning screen conveys its state in text. */
+/** Articulated painted fox. Decorative; the owning screen conveys its state in text. */
 @Composable
 fun ReplicaScanMascot(
     state: ReplicaScanMascotState,
@@ -72,8 +82,9 @@ fun ReplicaScanMascot(
 ) {
     val lifecycle by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
     val durationScale = systemAnimatorScale()
-    val density = LocalDensity.current.density
     val phase = remember { Animatable(0f) }
+    val artwork = ImageBitmap.imageResource(state.artwork)
+    val blinkArtwork = ImageBitmap.imageResource(state.blinkArtwork)
     val running = lifecycle.isAtLeast(Lifecycle.State.RESUMED) && !reducedMotion && durationScale > 0f
 
     LaunchedEffect(state, running, durationScale) {
@@ -89,7 +100,8 @@ fun ReplicaScanMascot(
 
     val t = if (running) phase.value else 0f
     val wave = sin(t * 2 * PI).toFloat()
-    val breath = ((1 - kotlin.math.cos(t * 2 * PI)) / 2).toFloat()
+    val secondaryWave = sin(t * 2 * PI + 1.15).toFloat()
+    val blink = if (running && state != ReplicaScanMascotState.Success && t >= .27f && t <= .34f) 1f else 0f
     val shadowColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f)
     Box(modifier.requiredSize(size).testTag("mascot-${state.name}"), contentAlignment = Alignment.Center) {
         Canvas(Modifier.matchParentSize()) {
@@ -99,21 +111,18 @@ fun ReplicaScanMascot(
                 size = Size(this.size.width * .62f, this.size.height * .045f),
             )
         }
-        Image(
-            painter = painterResource(state.artwork),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize().graphicsLayer {
-                // Motion stays within the illustration's transparent margins.
-                translationY = -wave * (if (state.isBusy) 1.6f else 1.1f) * density
-                rotationZ = wave * when (state) {
-                    ReplicaScanMascotState.Welcome, ReplicaScanMascotState.Empty -> 1.1f
-                    ReplicaScanMascotState.Attention -> .35f
-                    else -> .65f
-                }
-                scaleX = 1f + breath * .005f
-                scaleY = 1f + breath * .008f
-            },
-        )
+        Canvas(Modifier.fillMaxSize()) {
+            drawFoxRig(
+                pose = artwork,
+                blinkPose = blinkArtwork,
+                state = state,
+                tailAngle = if (running) wave * 3.5f else 0f,
+                headAngle = if (running) secondaryWave * (if (state.isBusy) .55f else .8f) else 0f,
+                pawAngle = if (running) wave * (if (state.isBusy) 1.2f else 2f) else 0f,
+                pageAngle = if (running) secondaryWave * (if (state.isBusy) 1.1f else .7f) else 0f,
+                blink = blink,
+            )
+        }
         if (running && (state == ReplicaScanMascotState.Scanning ||
                     state == ReplicaScanMascotState.Processing ||
                     state == ReplicaScanMascotState.Working)) {

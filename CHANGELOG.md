@@ -5,6 +5,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 ## [Unreleased]
 
 - Recuperação visual em andamento após rejeição do redesign anterior: master e poses baseados na raposa da v0.4.0 aprovados como arte estática; movimento e telas ainda pendentes de aceite.
+- Rig Compose candidato articula cabeça, cauda, patas, folha e piscadas em camadas de renderização; a pose de atenção teve patas extras removidas. Clipe Android v2 e frames consecutivos publicados para revisão, ainda sem aceite final do movimento.
 - Atlas deformado substituído por poses completas em Compose, com movimento discreto, respeito ao lifecycle/redução de movimento e clipe de frames Android. Exportação em andamento voltou a mostrar prévia e identificação da página.
 - Home com mascote mais legível e texto em largura completa; em fonte 200% a arte cede espaço ao conteúdo. Opções de exportação reúnem prévia, páginas e formato atual na mesma superfície.
 - Introdução usa saudação, leitura e sucesso nas três páginas, eliminando a repetição da pose de trabalho.
@@ -18,7 +19,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 - Tema claro/escuro de papel marfim, tinta petróleo e terracota; tipografia, superfícies, largura de leitura e botões compartilhados.
 - Onboarding com cenas animadas e voltar/pular; Home, revisão, filtros, OCR, histórico, detalhe, configurações e diálogos alinhados ao tema.
-- Atlas experimental com cabeça, expressões, cauda, patas e objetos animados em Compose foi rejeitado e substituído no ciclo de recuperação; a nova animação por poses inteiras pausa por lifecycle e respeita redução de movimento.
+- Atlas experimental deformado foi rejeitado e substituído no ciclo de recuperação por poses pintadas aprovadas; o rig candidato recorta partes dessas poses em Compose, pausa por lifecycle e respeita redução de movimento.
 - Ícone vetorial com raposa e folha, fundo adaptativo separado e variante monochrome; 12 PNGs antigos de runtime removidos.
 - Exportação com nome validado, formatos visíveis, progresso indeterminado, erro persistente e nomes dos arquivos salvos.
 - Comparação do filtro ao segurar, com retorno ao soltar e alternativa semântica; feedback de pressão no botão principal.
