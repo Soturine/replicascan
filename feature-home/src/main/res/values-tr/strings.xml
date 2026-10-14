@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">Tara. Düzenle. Kolaylaştır.</string>
     <string name="home_hero_title">Belge tarayın</string>
     <string name="home_hero_body">Kenarlar, perspektif ve temizleme otomatik. Sayfalar bu cihazda kalır.</string>
     <string name="home_scan_action">Tara</string>

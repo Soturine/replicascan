@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">امسح ضوئيًا. نظّم. بسّط.</string>
     <string name="home_hero_title">امسح مستندًا ضوئيًا</string>
     <string name="home_hero_body">الحواف والمنظور والتنظيف تلقائية. تبقى الصفحات على هذا الجهاز.</string>
     <string name="home_scan_action">مسح ضوئي</string>

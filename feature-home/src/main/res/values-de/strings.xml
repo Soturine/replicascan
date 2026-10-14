@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">Scannen. Ordnen. Vereinfachen.</string>
     <string name="home_hero_title">Dokument scannen</string>
     <string name="home_hero_body">Kanten, Perspektive und Bereinigung laufen automatisch. Seiten bleiben auf diesem Gerät.</string>
     <string name="home_scan_action">Scannen</string>

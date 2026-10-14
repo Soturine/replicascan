@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">Escaneie. Organize. Simplifique.</string>
     <string name="home_hero_title">Escaneie um documento</string>
     <string name="home_hero_body">Bordas, perspectiva e limpeza são automáticas. As páginas ficam neste aparelho.</string>
     <string name="home_scan_action">Escanear</string>

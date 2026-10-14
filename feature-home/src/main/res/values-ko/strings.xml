@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">스캔하고 정리하고 간편하게.</string>
     <string name="home_hero_title">문서 스캔</string>
     <string name="home_hero_body">가장자리, 원근, 정리가 자동으로 처리돼요. 페이지는 이 기기에 저장됩니다.</string>
     <string name="home_scan_action">스캔</string>

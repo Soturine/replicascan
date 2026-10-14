@@ -56,6 +56,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
@@ -67,6 +69,7 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import com.soturine.replicascan.core.common.model.ScanDocument
@@ -101,6 +104,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val largeText = LocalDensity.current.fontScale >= 1.5f
     val snackbarHostState = remember { SnackbarHostState() }
     val locale = LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     val dateFormatter = remember(locale) { DateFormatter(locale, TimeZone.getDefault()) }
@@ -143,7 +147,19 @@ fun HomeScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.home_app_bar_title)) },
+                title = {
+                    Column {
+                        Text(stringResource(R.string.home_app_bar_title), maxLines = 1,
+                            overflow = TextOverflow.Ellipsis)
+                        if (!largeText) {
+                            Text(stringResource(R.string.home_tagline),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis)
+                        }
+                    }
+                },
                 actions = {
                     IconButton(onClick = onOpenHistory) {
                         Icon(Icons.Outlined.History, stringResource(R.string.home_history))
@@ -161,6 +177,14 @@ fun HomeScreen(
             contentPadding = PaddingValues(horizontal = ReplicaScanSpacing.lg, vertical = ReplicaScanSpacing.md),
             verticalArrangement = Arrangement.spacedBy(ReplicaScanSpacing.sm),
         ) {
+            if (largeText) {
+                item(key = "brand-tagline") {
+                    Text(stringResource(R.string.home_tagline),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.fillMaxWidth())
+                }
+            }
             item(key = "hero") {
                 ReplicaScanContent {
                     ScanHero(
@@ -302,11 +326,21 @@ private fun HomePaperScene() {
     val shape = RoundedCornerShape(28.dp)
     Box(
         modifier = Modifier.fillMaxWidth().height(194.dp)
-            .clip(shape).background(colors.surfaceContainerHigh),
+            .clip(shape)
+            .background(colors.surfaceContainerHigh)
+            .background(Brush.horizontalGradient(listOf(
+                colors.primaryContainer.copy(alpha = if (isDark) .58f else .86f),
+                colors.surfaceContainerHigh.copy(alpha = .70f),
+                colors.secondaryContainer.copy(alpha = if (isDark) .38f else .63f),
+            ))),
     ) {
-        val glow = colors.primaryContainer.copy(alpha = .60f)
+        val glow = colors.primaryContainer.copy(alpha = if (isDark) .32f else .38f)
         Canvas(Modifier.matchParentSize()) {
-            drawCircle(glow, radius = size.width * .47f, center = Offset(size.width * .78f, size.height * .17f))
+            drawRect(Brush.radialGradient(
+                listOf(glow, Color.Transparent),
+                center = Offset(size.width * .78f, size.height * .17f),
+                radius = size.width * .60f,
+            ))
             drawLine(colors.outlineVariant, Offset(0f, size.height * .89f),
                 Offset(size.width, size.height * .89f), strokeWidth = 2.dp.toPx())
         }

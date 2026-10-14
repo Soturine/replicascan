@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">Numérisez. Classez. Simplifiez.</string>
     <string name="home_hero_title">Numériser un document</string>
     <string name="home_hero_body">Bords, perspective et nettoyage sont automatiques. Les pages restent sur cet appareil.</string>
     <string name="home_scan_action">Numériser</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">Scan. Organize. Simplify.</string>
     <string name="home_app_bar_title" translatable="false">ReplicaScan</string>
     <string name="home_hero_title">Scan a document</string>
     <string name="home_hero_body">Edges, perspective and cleanup are automatic. Pages stay on this device.</string>

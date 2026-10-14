@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">スキャン。整理。シンプルに。</string>
     <string name="home_hero_title">ドキュメントをスキャン</string>
     <string name="home_hero_body">輪郭・傾き・汚れの補正は自動です。ページはこの端末に保存されます。</string>
     <string name="home_scan_action">スキャン</string>

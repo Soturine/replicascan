@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">स्कैन करें। व्यवस्थित करें। सरल बनाएं।</string>
     <string name="home_hero_title">दस्तावेज़ स्कैन करें</string>
     <string name="home_hero_body">किनारे, कोण और सफ़ाई अपने-आप होते हैं। पेज इसी डिवाइस पर रहते हैं।</string>
     <string name="home_scan_action">स्कैन करें</string>

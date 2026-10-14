@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_tagline">Pindai. Atur. Sederhanakan.</string>
     <string name="home_hero_title">Pindai dokumen</string>
     <string name="home_hero_body">Tepi, perspektif, dan pembersihan otomatis. Halaman tetap di perangkat ini.</string>
     <string name="home_scan_action">Pindai</string>
