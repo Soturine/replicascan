@@ -4,6 +4,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+- Máscaras geométricas da raposa desativadas após confirmação de vazamento de pixels da bandana/corpo na cauda; as poses pintadas permanecem intactas. Respiração e luz agora usam loops contínuos sem `delay`/`snapTo`; teste instrumental verifica movimento após 31 s e remontagem. Articulação anatômica final ainda pendente.
 - Histórico cheio usa linhas contínuas e divisórias leves, preservando miniatura, metadados e toque; a comparação Android com seis documentos substitui a pilha de cartões.
 - Erros do OCR sem texto reconhecido permanecem na tela com ação de repetir; modelo indisponível recebe mensagem própria nos 12 idiomas, em vez de cair no vazio genérico.
 - Home preserva uma raposa compacta com fonte 200% e indica o carregamento de Recentes; capturas Android cobrem seis documentos, 360/390 dp, temas e RTL.

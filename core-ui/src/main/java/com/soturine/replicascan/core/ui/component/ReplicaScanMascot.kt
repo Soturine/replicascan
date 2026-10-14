@@ -6,8 +6,13 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
@@ -16,7 +21,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +32,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
@@ -36,10 +41,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.currentStateAsState
 import com.soturine.replicascan.core.ui.R
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlin.math.PI
-import kotlin.math.sin
 
 /** Domain scenes; mascot motion never completes an OCR/export operation. */
 enum class ReplicaScanMascotState {
@@ -73,7 +74,7 @@ enum class ReplicaScanMascotState {
         }
 }
 
-/** Articulated painted fox. Decorative; the owning screen conveys its state in text. */
+/** Painted fox. Whole-pose motion preserves the approved artwork until true part layers exist. */
 @Composable
 fun ReplicaScanMascot(
     state: ReplicaScanMascotState,
@@ -83,7 +84,6 @@ fun ReplicaScanMascot(
 ) {
     val lifecycle by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
     val durationScale = systemAnimatorScale()
-    val phase = remember { Animatable(0f) }
     val context = LocalContext.current
     // Poses are 1254 px square while the largest in-app mascot is 240 dp.
     // Decode at half size once per state; the rig still uses registered masks
@@ -91,22 +91,38 @@ fun ReplicaScanMascot(
     val artwork = remember(context, state) { decodeMascotPose(context, state.artwork) }
     val blinkArtwork = remember(context, state) { decodeMascotPose(context, state.blinkArtwork) }
     val running = lifecycle.isAtLeast(Lifecycle.State.RESUMED) && !reducedMotion && durationScale > 0f
-
-    LaunchedEffect(state, running, durationScale) {
-        phase.snapTo(0f)
-        if (!running) return@LaunchedEffect
-        do {
-            phase.animateTo(1f, tween(if (state.isBusy) 2700 else 3200, easing = LinearEasing))
-            if (state == ReplicaScanMascotState.Success) break
-            delay(if (state.isBusy) 420 else 1200)
-            phase.snapTo(0f)
-        } while (isActive)
+    // Compose owns these three independent clocks only while the screen is resumed. Reverse
+    // breathing and scan motion have no snap/delay at the loop boundary. A stopped lifecycle,
+    // explicit reduced motion or system animator scale 0 disposes the clocks entirely.
+    val motion = if (running && state != ReplicaScanMascotState.Success) {
+        val transition = rememberInfiniteTransition(label = "fox-${state.name}")
+        val breath by transition.animateFloat(
+            initialValue = 0f, targetValue = 1f,
+            animationSpec = infiniteRepeatable(tween(3800, easing = FastOutSlowInEasing), RepeatMode.Reverse),
+            label = "breathing",
+        )
+        val scan by transition.animateFloat(
+            initialValue = 0f, targetValue = 1f,
+            animationSpec = infiniteRepeatable(tween(2600, easing = FastOutSlowInEasing), RepeatMode.Reverse),
+            label = "scan-light",
+        )
+        val blink by transition.animateFloat(
+            initialValue = 0f, targetValue = 0f,
+            animationSpec = infiniteRepeatable(keyframes {
+                durationMillis = 6100
+                0f at 0
+                0f at 2700
+                1f at 2780
+                1f at 2870
+                0f at 2960
+                0f at 6100
+            }, RepeatMode.Restart),
+            label = "blink",
+        )
+        MascotMotion(breath, scan, blink > .5f)
+    } else {
+        MascotMotion(0f, 0f, false)
     }
-
-    val t = if (running) phase.value else 0f
-    val wave = sin(t * 2 * PI).toFloat()
-    val secondaryWave = sin(t * 2 * PI + 1.15).toFloat()
-    val blink = if (running && state != ReplicaScanMascotState.Success && t >= .27f && t <= .34f) 1f else 0f
     val shadowColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f)
     Box(modifier.requiredSize(size).testTag("mascot-${state.name}"), contentAlignment = Alignment.Center) {
         Canvas(Modifier.matchParentSize()) {
@@ -116,23 +132,22 @@ fun ReplicaScanMascot(
                 size = Size(this.size.width * .62f, this.size.height * .045f),
             )
         }
-        Canvas(Modifier.fillMaxSize()) {
-            drawFoxRig(
+        Canvas(Modifier.fillMaxSize().graphicsLayer {
+            translationY = motion.breath * (if (state.isBusy) 2.dp.toPx() else 1.4.dp.toPx())
+            scaleY = 1f + motion.breath * .006f
+        }) {
+            drawFoxPose(
                 pose = artwork,
                 blinkPose = blinkArtwork,
                 state = state,
-                tailAngle = if (running) wave * 3.5f else 0f,
-                headAngle = if (running) secondaryWave * (if (state.isBusy) .55f else .8f) else 0f,
-                pawAngle = if (running) wave * (if (state.isBusy) 1.2f else 2f) else 0f,
-                pageAngle = if (running) secondaryWave * (if (state.isBusy) 1.1f else .7f) else 0f,
-                blink = blink,
+                blink = motion.blink,
             )
         }
         if (running && (state == ReplicaScanMascotState.Scanning ||
                     state == ReplicaScanMascotState.Processing ||
                     state == ReplicaScanMascotState.Working)) {
             Canvas(Modifier.matchParentSize()) {
-                val y = this.size.height * (.65f + .13f * t)
+                val y = this.size.height * (.65f + .13f * motion.scan)
                 val start = Offset(this.size.width * .55f, y)
                 val end = Offset(this.size.width * .73f, y)
                 drawLine(Color(0xFF57B8B1).copy(alpha = .18f), start, end, strokeWidth = 5.dp.toPx())
@@ -141,6 +156,8 @@ fun ReplicaScanMascot(
         }
     }
 }
+
+private data class MascotMotion(val breath: Float, val scan: Float, val blink: Boolean)
 
 private fun decodeMascotPose(context: android.content.Context, @DrawableRes resource: Int): ImageBitmap {
     val options = BitmapFactory.Options().apply {

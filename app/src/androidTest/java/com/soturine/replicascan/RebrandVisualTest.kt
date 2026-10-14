@@ -363,6 +363,26 @@ class RebrandVisualTest {
         }
     }
 
+    @Test fun mascotLoopKeepsMovingAfterThirtySecondsAndRemount() {
+        var mounted by mutableStateOf(true)
+        rule.mainClock.autoAdvance = false
+        rule.setContent { ReplicaScanTheme {
+            if (mounted) ReplicaScanMascot(ReplicaScanMascotState.Working, size = 240.dp)
+        } }
+        rule.mainClock.advanceTimeBy(31_000)
+        val late = rule.onNodeWithTag("mascot-Working").captureToImage().asAndroidBitmap()
+        rule.mainClock.advanceTimeBy(800)
+        assertFalse("Working loop stopped after multiple cycles",
+            late.sameAs(rule.onNodeWithTag("mascot-Working").captureToImage().asAndroidBitmap()))
+        rule.runOnIdle { mounted = false }
+        rule.runOnIdle { mounted = true }
+        rule.mainClock.advanceTimeBy(200)
+        val remounted = rule.onNodeWithTag("mascot-Working").captureToImage().asAndroidBitmap()
+        rule.mainClock.advanceTimeBy(800)
+        assertFalse("Working loop did not restart after remount",
+            remounted.sameAs(rule.onNodeWithTag("mascot-Working").captureToImage().asAndroidBitmap()))
+    }
+
     @Test fun mascotRespectsSystemAnimatorScaleZero() {
         val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
         automation.adoptShellPermissionIdentity(android.Manifest.permission.WRITE_SECURE_SETTINGS)

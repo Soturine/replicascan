@@ -1,10 +1,15 @@
 # Rig da raposa — gate artístico anterior ao código
 
-`STATUS: MASTER E POSES APROVADOS; RIG CANDIDATO, MOVIMENTO PENDENTE DE ACEITE`. O atlas
+`STATUS: MASTER E POSES APROVADOS; RECORTES ANATÔMICOS DESATIVADOS EM 2026-10-14; RIG FINAL PENDENTE`. O atlas
 rejeitado saiu do runtime. O proprietário aprovou `candidates/master-v1.png`
 como estilo e a prancha de sete poses como conjunto em 2026-10-12. O rosto e a
 silhueta permanecem reconhecíveis entre poses; isso ainda não aprova o clipe
 Android nem o acabamento das telas.
+
+O [diagnóstico de 2026-10-14](MOTION_RECOVERY_2026-10-14.md) substitui a
+descrição de runtime abaixo: o rig de máscaras recortava partes erradas e foi
+retirado do desenho ativo. As seções seguintes documentam a intenção e o
+histórico do candidato anterior, não a articulação vigente.
 
 Referência visual indicada e aprovada: a própria raposa
 v0.4.0. Manter rosto sorridente, volume macio, olhos castanhos, patinhas e
