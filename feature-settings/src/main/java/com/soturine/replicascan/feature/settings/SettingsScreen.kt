@@ -1,6 +1,8 @@
 package com.soturine.replicascan.feature.settings
 
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,6 +21,7 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Language
@@ -30,11 +34,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -97,6 +100,7 @@ fun SettingsScreen(
                         Icons.Outlined.Language,
                         stringResource(R.string.settings_language),
                         AppLanguages.autonym(languageTag) ?: stringResource(R.string.settings_language_system),
+                        divider = false,
                     ) { picker = Picker.LANGUAGE }
                 }
                 Group(stringResource(R.string.settings_export_section)) {
@@ -104,12 +108,14 @@ fun SettingsScreen(
                         Icons.Outlined.PictureAsPdf,
                         stringResource(R.string.settings_pdf_quality),
                         state.preferences.defaultPdfQuality.localizedTitle(),
+                        divider = false,
                     ) { picker = Picker.PDF }
                 }
                 Group(stringResource(R.string.settings_help_section)) {
                     PreferenceRow(Icons.Outlined.School, stringResource(R.string.settings_introduction), null, onClick = onOpenIntroduction)
                     PreferenceRow(Icons.Outlined.PrivacyTip, stringResource(R.string.settings_privacy), null, external = true, onClick = onOpenPrivacyPolicy)
-                    PreferenceRow(Icons.Outlined.Info, stringResource(R.string.settings_about), null, onClick = onOpenAbout)
+                    PreferenceRow(Icons.Outlined.Info, stringResource(R.string.settings_about), null,
+                        divider = false, onClick = onOpenAbout)
                 }
             }
         }
@@ -150,18 +156,18 @@ private fun BackButton(onBack: () -> Unit) {
 
 @Composable
 private fun Group(title: String, content: @Composable () -> Unit) {
-    Column(Modifier.fillMaxWidth().padding(horizontal = 4.dp)) {
+    Column(Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 4.dp)) {
         Text(
             text = title,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp).semantics { heading() },
+            modifier = Modifier.padding(start = 16.dp, top = 12.dp, bottom = 8.dp).semantics { heading() },
         )
-        Column { content() }
-        HorizontalDivider(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-            color = MaterialTheme.colorScheme.outlineVariant,
-        )
+        Surface(
+            shape = RoundedCornerShape(20.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerLow,
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = .68f)),
+        ) { Column { content() } }
     }
 }
 
@@ -171,20 +177,33 @@ private fun PreferenceRow(
     title: String,
     value: String?,
     external: Boolean = false,
+    divider: Boolean = true,
     onClick: () -> Unit,
 ) {
-    ListItem(
-        modifier = Modifier.selectable(selected = false, role = Role.Button, onClick = onClick),
-        leadingContent = { Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-        headlineContent = { Text(title) },
-        supportingContent = value?.let { { Text(it) } },
-        trailingContent = if (external) {
-            { Icon(Icons.AutoMirrored.Outlined.OpenInNew, contentDescription = null) }
-        } else {
-            null
-        },
-        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.background),
-    )
+    Row(
+        modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp)
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        Surface(shape = RoundedCornerShape(12.dp), color = MaterialTheme.colorScheme.secondaryContainer) {
+            Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                modifier = Modifier.padding(10.dp).size(22.dp))
+        }
+        Column(Modifier.weight(1f)) {
+            Text(title, style = MaterialTheme.typography.titleMedium)
+            value?.let { Text(it, style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        }
+        Icon(if (external) Icons.AutoMirrored.Outlined.OpenInNew
+             else Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+            contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+    if (divider) {
+        HorizontalDivider(modifier = Modifier.padding(start = 72.dp),
+            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = .68f))
+    }
 }
 
 @Composable
