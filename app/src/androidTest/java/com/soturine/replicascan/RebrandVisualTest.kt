@@ -61,7 +61,18 @@ class RebrandVisualTest {
         rule.waitForIdle()
         val dir = File(context.getExternalFilesDir(null), "rebrand-evidence").apply { mkdirs() }
         val target = if (name == "language") rule.onNode(isDialog()) else rule.onRoot()
-        target.captureToImage().asAndroidBitmap().let { bitmap ->
+        var image: android.graphics.Bitmap? = null
+        repeat(3) { attempt ->
+            if (image == null) {
+                try {
+                    image = target.captureToImage().asAndroidBitmap()
+                } catch (error: AssertionError) {
+                    if (attempt == 2) throw error
+                    Thread.sleep(250)
+                }
+            }
+        }
+        image!!.let { bitmap ->
             File(dir, "$name.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
         }
     }
@@ -172,9 +183,21 @@ class RebrandVisualTest {
         capture("export-dark-200")
         rule.runOnIdle { screen = "review"; rtl = true }
         capture("review-dark-200-rtl")
+        rule.runOnIdle { screen = "settings"; rtl = false; large = false }
+        capture("settings-dark")
+        rule.runOnIdle { large = true }
+        capture("settings-dark-200")
+        rule.runOnIdle { dark = false }
+        capture("settings-light-200")
+        rule.runOnIdle { screen = "onboarding"; dark = true; large = false }
+        capture("onboarding-dark")
+        rule.onNodeWithText(context.getString(R.string.onboarding_next)).performClick()
+        capture("onboarding-two-dark")
+        rule.onNodeWithText(context.getString(R.string.onboarding_next)).performClick()
+        capture("onboarding-three-dark")
     }
 
-    @Test fun homeLargeFontKeepsBothActionsAtNarrowWidths() {
+    @Test fun homeLargeFontKeepsBothActionsVisible() {
         val date = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli()
         val scan = fixture().copy(createdAt = date, updatedAt = date)
         rule.mainClock.autoAdvance = false
@@ -189,7 +212,68 @@ class RebrandVisualTest {
         }
         rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.home.R.string.home_scan_action)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.home.R.string.home_import_action)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.home.R.string.home_tagline)).assertIsDisplayed()
         capture("home-responsive-200")
+    }
+
+    @Test fun captureExportLargeFontDocumentAndMascotForReview() {
+        val scan = fixture()
+        rule.mainClock.autoAdvance = false
+        rule.setContent {
+            val density = LocalDensity.current.density
+            CompositionLocalProvider(LocalDensity provides Density(density, 2f)) {
+                ReplicaScanTheme(darkTheme = true) {
+                    ExportScreen(ExportUiState(scan = scan), {}, {}, {}, {}, {}, {}, {}, {})
+                }
+            }
+        }
+        rule.onNodeWithText(scan.title).assertIsDisplayed()
+        capture("export-dark-200", advanceMs = 1200)
+    }
+
+    @Test fun captureExportBlinkPeakForReview() {
+        val scan = fixture()
+        rule.mainClock.autoAdvance = false
+        rule.setContent {
+            ReplicaScanTheme {
+                ExportScreen(ExportUiState(scan = scan), {}, {}, {}, {}, {}, {}, {}, {})
+            }
+        }
+        // Blink reaches its closed-eye hold at 2.78–2.87 s in the current motion cycle.
+        rule.mainClock.advanceTimeBy(2820)
+        capture("export-blink-peak", advanceMs = 0)
+    }
+
+    @Test fun captureHomeDarkSceneForReview() {
+        val date = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli()
+        val scan = fixture().copy(createdAt = date, updatedAt = date)
+        rule.mainClock.autoAdvance = false
+        rule.setContent {
+            ReplicaScanTheme(darkTheme = true) {
+                HomeScreen(HomeUiState(false, listOf(scan)), false,
+                    {}, {}, {}, {}, { null }, {}, {}, {})
+            }
+        }
+        capture("home-dark", advanceMs = 1200)
+    }
+
+    @Test fun homeDarkLargeFontRtlKeepsActionsVisible() {
+        val date = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli()
+        val scan = fixture().copy(createdAt = date, updatedAt = date)
+        rule.mainClock.autoAdvance = false
+        rule.setContent {
+            val density = LocalDensity.current.density
+            CompositionLocalProvider(LocalDensity provides Density(density, 2f),
+                LocalLayoutDirection provides LayoutDirection.Rtl) {
+                ReplicaScanTheme(darkTheme = true) {
+                    HomeScreen(HomeUiState(false, listOf(scan)), false,
+                        {}, {}, {}, {}, { null }, {}, {}, {})
+                }
+            }
+        }
+        rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.home.R.string.home_scan_action)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(com.soturine.replicascan.feature.home.R.string.home_import_action)).assertIsDisplayed()
+        capture("home-dark-200-rtl", advanceMs = 1200)
     }
 
     @Test fun reviewRendersDocumentInCurrentViewport() {

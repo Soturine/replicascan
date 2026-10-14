@@ -86,8 +86,8 @@ fun ReplicaScanMascot(
     val durationScale = systemAnimatorScale()
     val context = LocalContext.current
     // Poses are 1254 px square while the largest in-app mascot is 240 dp.
-    // Decode at half size once per state; the rig still uses registered masks
-    // and the original source files remain available for later art edits.
+    // Decode at half size once per state; only the eyelid overlay uses a mask.
+    // Original source files remain available for later layered art edits.
     val artwork = remember(context, state) { decodeMascotPose(context, state.artwork) }
     val blinkArtwork = remember(context, state) { decodeMascotPose(context, state.blinkArtwork) }
     val running = lifecycle.isAtLeast(Lifecycle.State.RESUMED) && !reducedMotion && durationScale > 0f
