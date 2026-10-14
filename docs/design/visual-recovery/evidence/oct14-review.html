@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReplicaScan · revisão Android de 14/10</title>
+  <style>
+    :root { font: 16px/1.5 system-ui,sans-serif; color: #253b3a; background: #faf6ef; }
+    body { max-width: 1120px; margin: auto; padding: 16px; }
+    h1,h2 { line-height: 1.2; }
+    section { border-top: 1px solid #d5c7b9; margin-top: 32px; padding-top: 16px; }
+    .pair { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 18px; }
+    figure { margin: 0; }
+    figcaption { font-weight: 650; margin-bottom: 8px; }
+    img { display: block; width: 100%; max-width: 390px; height: auto; border: 1px solid #d5c7b9; border-radius: 12px; }
+    video { display: block; width: 100%; max-width: 390px; height: auto; border: 1px solid #d5c7b9; border-radius: 12px; }
+    a { color: #a54100; }
+  </style>
+</head>
+<body>
+  <h1>ReplicaScan · revisão Android de 14/10</h1>
+  <p>Capturas do APK nativo no emulador Pixel 7/API 34 com documento sintético e estados injetados. “Antes” é a captura versionada da rodada anterior; “Agora” vem da recuperação de 14/10. Isto permite comparar composição, não comprova scanner, OCR ou exportação ponta a ponta. As fotos privadas do WhatsApp informaram o diagnóstico e não foram copiadas para o repositório.</p>
+  <p><a href="../icon-candidates/launcher-masks-teal.png">Ícone teal em máscaras e 24–108 dp</a> · <a href="../BRAND_RECOVERY_2026-10-14.md">Cor e critérios</a> · <a href="../MOTION_RECOVERY_2026-10-14.md">Estado da mascote</a></p>
+  <section><h2>Home · ação, slogan e papel</h2><div class="pair">
+    <figure><figcaption>Antes · claro</figcaption><img src="home-recent.png" alt="Home clara anterior"></figure>
+    <figure><figcaption>Agora · claro</figcaption><img src="oct14-home-recent.png" alt="Home clara com slogan e cenário quente"></figure>
+    <figure><figcaption>Antes · escuro</figcaption><img src="home-dark.png" alt="Home escura anterior"></figure>
+    <figure><figcaption>Agora · escuro</figcaption><img src="oct14-home-dark.png" alt="Home escura com ação laranja"></figure>
+    <figure><figcaption>Agora · fonte 200%</figcaption><img src="oct14-home-light-200.png" alt="Home em fonte ampliada com Escanear e Importar"></figure>
+    <figure><figcaption>Agora · RTL escuro 200%</figcaption><img src="oct14-home-dark-200-rtl.png" alt="Home em RTL e fonte ampliada"></figure>
+  </div></section>
+  <section><h2>Configurações · grupos e alvos</h2><div class="pair">
+    <figure><figcaption>Antes · claro</figcaption><img src="settings.png" alt="Configurações anteriores"></figure>
+    <figure><figcaption>Agora · claro</figcaption><img src="oct14-settings.png" alt="Configurações agrupadas"></figure>
+    <figure><figcaption>Agora · escuro</figcaption><img src="oct14-settings-dark.png" alt="Configurações agrupadas no tema escuro"></figure>
+    <figure><figcaption>Agora · fonte 200%</figcaption><img src="oct14-settings-light-200.png" alt="Configurações em fonte ampliada"></figure>
+  </div></section>
+  <section><h2>Exportação · documento e raposa</h2><div class="pair">
+    <figure><figcaption>Antes · preparo</figcaption><img src="export.png" alt="Exportação da rodada anterior"></figure>
+    <figure><figcaption>Agora · preparo</figcaption><img src="oct14-export-blink.png" alt="Exportação com documento e raposa"></figure>
+    <figure><figcaption>Agora · piscada fechada</figcaption><img src="oct14-export-blink-peak.png" alt="Exportação com ambos os olhos da raposa fechados e alinhados"></figure>
+    <figure><figcaption>Antes · escuro 200%</figcaption><img src="export-dark-200.png" alt="Exportação escura anterior em fonte ampliada"></figure>
+    <figure><figcaption>Agora · escuro 200%</figcaption><img src="oct14-export-dark-200.png" alt="Exportação escura em fonte ampliada com raposa visível"></figure>
+  </div></section>
+  <section><h2>Introdução · três cenas em claro e escuro</h2><div class="pair">
+    <figure><figcaption>1 · claro</figcaption><img src="oct14-onboarding.png" alt="Introdução 1 clara"></figure>
+    <figure><figcaption>2 · claro</figcaption><img src="oct14-onboarding-two.png" alt="Introdução 2 clara"></figure>
+    <figure><figcaption>3 · claro</figcaption><img src="oct14-onboarding-three.png" alt="Introdução 3 clara"></figure>
+    <figure><figcaption>1 · escuro</figcaption><img src="oct14-onboarding-dark.png" alt="Introdução 1 escura"></figure>
+    <figure><figcaption>2 · escuro</figcaption><img src="oct14-onboarding-two-dark.png" alt="Introdução 2 escura"></figure>
+    <figure><figcaption>3 · escuro</figcaption><img src="oct14-onboarding-three-dark.png" alt="Introdução 3 escura"></figure>
+  </div></section>
+  <section><h2>Mascote · vídeo Android nativo</h2><div class="pair">
+    <figure><figcaption>Idle · 118,89 s</figcaption><video controls preload="metadata" src="oct14-mascot-idle-native.mp4"></video></figure>
+    <figure><figcaption>Working · 118,67 s</figcaption><video controls preload="metadata" src="oct14-mascot-working-native.mp4"></video></figure>
+  </div><p>Captura contínua do emulador API 34. A cadência gravada foi baixa; estes vídeos não aprovam fluidez nem rig articulado.</p></section>
+  <p>O rig independente, a fluidez em aparelho físico, TalkBack e fluxo real ainda não estão qualificados. Não há tag ou release v0.4.1.</p>
+</body>
+</html>
