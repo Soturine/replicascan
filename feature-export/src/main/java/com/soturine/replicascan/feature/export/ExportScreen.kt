@@ -60,6 +60,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.SolidColor
@@ -384,20 +386,25 @@ private fun ExportDocumentStage(scan: ScanDocument, mascotState: ReplicaScanMasc
     val paperInk = if (isDark) colors.inverseOnSurface else colors.onSurface
     val stageShape = RoundedCornerShape(26.dp)
     val pageShape = RoundedCornerShape(10.dp)
-    val pageAlignment = if (largeText) Alignment.Center else Alignment.CenterStart
-    val pageInset = if (largeText) Modifier else Modifier.padding(start = 32.dp)
+    val pageAlignment = Alignment.CenterStart
+    val pageInset = Modifier.padding(start = if (largeText) 24.dp else 32.dp)
     val pageWidth = if (largeText) 130.dp else 148.dp
     val pageHeight = if (largeText) 164.dp else 190.dp
     Box(
         Modifier.fillMaxWidth().height(if (largeText) 188.dp else 228.dp)
-            .clip(stageShape).background(colors.surfaceContainerHigh),
+            .clip(stageShape).background(colors.surfaceContainerHigh)
+            .background(Brush.horizontalGradient(listOf(
+                colors.primaryContainer.copy(alpha = if (isDark) .58f else .78f),
+                colors.surfaceContainerHigh.copy(alpha = .72f),
+                colors.secondaryContainer.copy(alpha = if (isDark) .36f else .58f),
+            ))),
     ) {
         Canvas(Modifier.matchParentSize()) {
-            drawCircle(
-                colors.primaryContainer.copy(alpha = .6f),
-                radius = size.width * .45f,
+            drawRect(Brush.radialGradient(
+                listOf(colors.primaryContainer.copy(alpha = .28f), Color.Transparent),
                 center = Offset(size.width * .77f, size.height * .23f),
-            )
+                radius = size.width * .60f,
+            ))
             drawLine(colors.outlineVariant.copy(alpha = .55f),
                 Offset(0f, size.height * .9f), Offset(size.width, size.height * .9f),
                 strokeWidth = 2.dp.toPx())
@@ -430,13 +437,11 @@ private fun ExportDocumentStage(scan: ScanDocument, mascotState: ReplicaScanMasc
                 maxDimension = 400,
             )
         }
-        if (!largeText) {
-            ReplicaScanMascot(
-                mascotState,
-                size = 174.dp,
-                modifier = Modifier.align(Alignment.BottomEnd).offset(x = (-8).dp),
-            )
-        }
+        ReplicaScanMascot(
+            mascotState,
+            size = if (largeText) 96.dp else 174.dp,
+            modifier = Modifier.align(Alignment.BottomEnd).offset(x = (-8).dp),
+        )
     }
 }
 
