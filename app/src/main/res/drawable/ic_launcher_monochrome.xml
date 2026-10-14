@@ -2,7 +2,7 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <!-- Test-only monochrome companion for the fox, document, and scan marks. -->
+    <!-- Monochrome fox, document, and scan marks for themed Android launchers. -->
     <path android:fillColor="#000000" android:fillType="evenOdd"
         android:pathData="M30,51 Q27,42 32,28 Q41,31 46,39 Q54,36 62,39 Q68,31 76,28 Q81,42 78,51 L83,56 L77,57 Q73,64 62,67 L46,67 Q35,64 31,57 L25,56Z M40,51 A3,3 0,1 0,46,51 A3,3 0,1 0,40,51Z M62,51 A3,3 0,1 0,68,51 A3,3 0,1 0,62,51Z M32,55 Q43,50 54,57 Q65,50 76,55 Q68,64 54,66 Q40,64 32,55Z" />
     <path android:fillColor="#000000"

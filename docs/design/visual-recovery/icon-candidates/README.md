@@ -1,6 +1,17 @@
 # Ícones candidatos — checkpoint de exploração
 
-`STATUS: OPÇÃO 4 ESCOLHIDA COMO CANDIDATA FINAL, RELEASE PENDENTE` (2026-10-13).
+`STATUS: OPÇÃO 4 COM FUNDO TEAL ESCOLHIDA PELO AGENTE; REVISÃO FÍSICA PENDENTE` (2026-10-14).
+
+Na rodada de 14/10, comparei a opção 4 instalada em creme
+([máscaras anteriores](launcher-masks.png)) com a mesma arte sobre `#214D47`
+([máscaras nativas teal](launcher-masks-teal.png)), além das composições 6 e 7
+abaixo. O teal separa a folha clara do fundo em 24–108 dp e torna o contorno do
+scanner mais legível, mantendo rosto e orelhas. A composição 6 perde expressão
+em 24 dp e a 7 perde leitura de scanner. A escolha desta rodada é técnica e
+visual do agente, **não foi aprovada novamente pelo proprietário**. A máscara
+circular e a squircle foram renderizadas no emulador API 34; temas e OEMs físicos
+continuam pendentes. O foreground e o background são recursos separados e o
+vetor monocromático permanece instalado para o ícone temático.
 
 [Compare as capturas nativas](index.html). Os PNGs originais foram gerados
 tomando o [master aprovado](../candidates/master-v1.png) como identidade da
@@ -32,4 +43,4 @@ Uma terceira geração, quase idêntica à opção 4, foi descartada antes da pr
 Elas oferecem composições distintas para diagnóstico, mas ainda não têm fonte
 editável em camadas nem versão monocromática correspondente; por isso não são
 substitutas prontas para instalação. A opção 4 continua no launcher até um
-novo aceite explícito após comparação.
+teste físico e eventual revisão do proprietário.
