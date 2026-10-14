@@ -20,7 +20,7 @@ def main() -> int:
         if not (site / value).is_file():
             errors.append(f"missing local site asset: {value}")
     manifest = json.loads((root / "release/manifest.json").read_text(encoding="utf-8"))
-    for expected in ("ReplicaScan", f"Versão {manifest['version']}", "Soturine/replicascan", "replicascan_icon.svg"):
+    for expected in ("ReplicaScan", f"Versão {manifest['version']}", "Soturine/replicascan", "replicascan_icon.png"):
         if expected not in index:
             errors.append(f"missing site metadata: {expected}")
     if errors:

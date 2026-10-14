@@ -4,6 +4,9 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+- Recuperação de 14/10: laranja primário claro `#C14B00` (4,91:1 com branco) e escuro `#FF8A3D`; Home com iluminação quente e slogan sem texto fixo nos 12 idiomas; Configurações agrupadas em superfícies leves. Exportação em fonte 200% mantém documento e raposa visíveis.
+- Ícone adaptativo opção 4 com fundo teal `#214D47` separa a folha clara do fundo em máscaras Android e 24–108 dp; escolha técnica desta rodada ainda sem QA físico. A contenção atual da mascote preserva poses inteiras e não deve ser descrita como rig de membros independentes. Tag e release v0.4.1 seguem bloqueadas por esse requisito e pela qualificação final.
+
 - Máscaras geométricas da raposa desativadas após confirmação de vazamento de pixels da bandana/corpo na cauda; as poses pintadas permanecem intactas. Respiração e luz agora usam loops contínuos sem `delay`/`snapTo`; teste instrumental verifica movimento após 31 s e remontagem. Articulação anatômica final ainda pendente.
 - Histórico cheio usa linhas contínuas e divisórias leves, preservando miniatura, metadados e toque; a comparação Android com seis documentos substitui a pilha de cartões.
 - Erros do OCR sem texto reconhecido permanecem na tela com ação de repetir; modelo indisponível recebe mensagem própria nos 12 idiomas, em vez de cair no vazio genérico.
@@ -13,7 +16,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 - Preparo da exportação refinado no Android: nome de arquivo integrado à composição, três formatos em escolhas legíveis, qualidade e tamanho de página revelados sob demanda; estados e callbacks de gravação preservados. Capturas antes/depois e variante escura com fonte 200% foram atualizadas.
 - Corrigida a piscada da raposa na preparação da exportação: a máscara agora cobre o contorno dos olhos abertos sem duplicar traços sobre as pálpebras. Capturas Android de olhos abertos e fechados documentam o resultado.
 - Recuperação visual em andamento após rejeição do redesign anterior: master e poses baseados na raposa da v0.4.0 aprovados como arte estática; movimento e telas ainda pendentes de aceite.
-- Rig Compose candidato articula cabeça, cauda, patas, folha e piscadas em camadas de renderização; a pose de atenção teve patas extras removidas. Clipe Android v2 e frames consecutivos publicados para revisão, ainda sem aceite final do movimento.
+- Um rig Compose candidato tentou articular cabeça, cauda, patas, folha e piscadas recortando pinturas completas; a pose de atenção teve patas extras removidas. O rig foi desativado em 14/10 após confirmar vazamento de pixels e cauda duplicada. Seus clipes são baseline do defeito, não prova da animação corrente.
 - Home recomposta com a raposa diante de uma folha iluminada, botão Escanear mais evidente e estado vazio sem cartão pesado; em fonte 200% a ilustração cede espaço às ações. Capturas nativas claras e escuras atualizadas.
 - Revisão e recorte passam a iluminar a página e dar profundidade ao papel; prévia, quatro alças, gesto e recorte de página inteira mantêm a mesma geometria.
 - Filtros compartilham o mesmo palco de papel da revisão; OCR apresenta todos os parágrafos em uma folha selecionável, preservando cópia e escolha de idioma.
@@ -35,7 +38,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 - Tema claro/escuro de papel marfim, tinta petróleo e terracota; tipografia, superfícies, largura de leitura e botões compartilhados.
 - Onboarding com cenas animadas e voltar/pular; Home, revisão, filtros, OCR, histórico, detalhe, configurações e diálogos alinhados ao tema.
-- Atlas experimental deformado foi rejeitado e substituído no ciclo de recuperação por poses pintadas aprovadas; o rig candidato recorta partes dessas poses em Compose, pausa por lifecycle e respeita redução de movimento.
+- Atlas experimental deformado foi rejeitado e substituído no ciclo de recuperação por poses pintadas aprovadas; o rig de recortes candidato foi desativado. A animação corrente usa poses inteiras, piscada local e pausa pelo lifecycle/redução de movimento.
 - Ícone vetorial com raposa e folha, fundo adaptativo separado e variante monochrome; 12 PNGs antigos de runtime removidos.
 - Exportação com nome validado, formatos visíveis, progresso indeterminado, erro persistente e nomes dos arquivos salvos.
 - Comparação do filtro ao segurar, com retorno ao soltar e alternativa semântica; feedback de pressão no botão principal.

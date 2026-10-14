@@ -2,11 +2,13 @@
 
 ![Android](https://img.shields.io/badge/platform-Android-2E7D8C)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-23414B)
-![Version](https://img.shields.io/badge/development-0.4.1-AD471D)
+![Version](https://img.shields.io/badge/development-0.4.1-C14B00)
 [![Android CI](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/android-ci.yml)
 [![Deploy Pages](https://github.com/Soturine/replicascan/actions/workflows/pages.yml/badge.svg)](https://github.com/Soturine/replicascan/actions/workflows/pages.yml)
 
 ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Scanner, guarda as páginas só no aparelho, reconhece texto no próprio dispositivo e exporta PDF pesquisável, JPG ou PNG. A v0.4.1 está em desenvolvimento; a última release de avaliação publicada é a v0.4.0.
+
+Na recuperação de 14/10, Home ganhou um cenário quente e slogan em 12 idiomas, o laranja da ação principal ficou mais vivo e contrastante, Configurações recuperou grupos leves e o ícone adaptativo passou a destacar a folha sobre teal. A animação removeu recortes anatômicos que duplicavam partes da raposa; a pose pintada inteira e a piscada segura continuam enquanto faltam camadas independentes para o rig final. O trabalho segue em teste no Android, sem tag ou release v0.4.1.
 
 - Repositório: <https://github.com/Soturine/replicascan>
 - Releases: <https://github.com/Soturine/replicascan/releases>

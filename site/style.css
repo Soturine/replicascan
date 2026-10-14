@@ -97,6 +97,7 @@ pre {
   width: 38px;
   height: 38px;
   border-radius: 12px;
+  background: #214D47;
   display: block;
 }
 
@@ -191,7 +192,7 @@ h2 {
 }
 
 .button.primary {
-  background: #ad471d;
+  background: #c14b00;
   color: #fff;
 }
 
