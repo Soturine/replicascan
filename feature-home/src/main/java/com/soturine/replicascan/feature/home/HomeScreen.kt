@@ -334,13 +334,14 @@ private fun HomePaperScene() {
                 colors.secondaryContainer.copy(alpha = if (isDark) .38f else .63f),
             ))),
     ) {
-        val glow = colors.primaryContainer.copy(alpha = if (isDark) .32f else .38f)
         Canvas(Modifier.matchParentSize()) {
-            drawRect(Brush.radialGradient(
-                listOf(glow, Color.Transparent),
-                center = Offset(size.width * .78f, size.height * .17f),
-                radius = size.width * .60f,
-            ))
+            if (!isDark) {
+                drawRect(Brush.radialGradient(
+                    listOf(colors.primaryContainer.copy(alpha = .38f), Color.Transparent),
+                    center = Offset(size.width * .78f, size.height * .17f),
+                    radius = size.width * .60f,
+                ))
+            }
             drawLine(colors.outlineVariant, Offset(0f, size.height * .89f),
                 Offset(size.width, size.height * .89f), strokeWidth = 2.dp.toPx())
         }
