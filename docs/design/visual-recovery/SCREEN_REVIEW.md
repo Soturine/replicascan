@@ -1,5 +1,7 @@
 # Revisão das telas — checkpoint de composição
 
+**Atualização de 14/10:** a Home recebeu slogan localizado e iluminação quente; Configurações passou a agrupar preferências por seção; a exportação em 200% mantém documento e raposa juntos; o ícone adaptativo usa fundo teal. As capturas `evidence/oct14-*` e `icon-candidates/launcher-masks-teal.png` documentam o APK nativo API 34. A raposa agora usa poses inteiras sem recortes defeituosos, portanto as referências abaixo à articulação do rig anterior são históricas. O rig independente, QA físico, TalkBack e fluxo real ainda não estão qualificados. Consulte [o relatório de motion](MOTION_RECOVERY_2026-10-14.md) e [a matriz](VALIDATION_MATRIX.md).
+
 `STATUS: REVISÃO PARCIAL, ACEITE VISUAL PENDENTE` (2026-10-13).
 
 Fonte: [capturas atuais e comparação Android](evidence/review.html), com

@@ -1,5 +1,16 @@
 # Mapa de referências e anexos
 
+## Prints privados de 14/10/2026
+
+Os três ZIPs WhatsApp enviados nesta rodada foram examinados como diagnóstico,
+sem copiar arquivos para o repositório público. O ZIP terminado em `01.42.28`
+contém introdução ReplicaScan escura e comparação de launcher com a marca anterior;
+`01.42.33` mostra Home e Configurações ReplicaScan claras; `01.42.36`
+mostra Home e Configurações da marca anterior v0.3.1 em claro/escuro. Eles sustentam a
+recuperação de calor, laranja, slogan e agrupamento, mas não são layouts a
+reproduzir. Nenhum desses JPEGs prova o estado do HEAD atual nem um defeito
+em movimento; para isso foram usados código e capturas Android novas.
+
 Os quatro ZIPs estão em `Downloads`; SHA-256 e cobertura abaixo. Cada arquivo
 contém HTML, `support.js`, React local e README. CSS/JS/SVG foram lidos; primeira
 tela do artboard e dos protótipos foi renderizada em Chromium. Nos protótipos,
