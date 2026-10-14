@@ -2,8 +2,10 @@ package com.soturine.replicascan.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val BrandOrange = Color(0xFFAD471D)
-val BrandOrangeDark = Color(0xFFFFB58F)
+// Historical #E95F0C supplied the energy. This deeper orange keeps white CTA text
+// above 4.5:1 and primary-colored labels legible on the cream app background.
+val BrandOrange = Color(0xFFC14B00)
+val BrandOrangeDark = Color(0xFFFF8A3D)
 val BrandOrangeContainer = Color(0xFFFFE0CE)
 val BrandOrangeContainerDark = Color(0xFF733004)
 
