@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.soturine.replicascan.core.ui.theme.ReplicaScanSizes
 import com.soturine.replicascan.core.ui.theme.ReplicaScanSpacing
 
@@ -67,7 +68,10 @@ fun ReplicaScanPrimaryButton(
         contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp),
     ) {
         icon?.invoke()
-        Text(text = text, style = MaterialTheme.typography.labelLarge)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge.copy(fontSize = 17.sp, lineHeight = 24.sp),
+        )
     }
 }
 
