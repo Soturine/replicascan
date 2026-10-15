@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
@@ -67,7 +69,10 @@ fun ReplicaScanPrimaryButton(
         shape = MaterialTheme.shapes.medium,
         contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp),
     ) {
-        icon?.invoke()
+        if (icon != null) {
+            icon()
+            Spacer(Modifier.width(8.dp))
+        }
         Text(
             text = text,
             style = MaterialTheme.typography.labelLarge.copy(fontSize = 17.sp, lineHeight = 24.sp),
