@@ -1,59 +1,91 @@
 package com.soturine.replicascan.core.ui.component
 
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.withTransform
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import kotlin.math.min
+import kotlin.math.roundToInt
 
-/**
- * Draw an approved pose intact. The former geometric tail/head/paw/page masks selected pixels
- * from a complete painting, so rotating them dragged scarf and body paint and exposed a second
- * static tail. Independent anatomical source layers do not exist yet. The only local overlay is
- * the matching closed-eye painting, clipped to eye regions that were inspected per pose.
- */
-internal fun DrawScope.drawFoxPose(
-    pose: ImageBitmap,
-    blinkPose: ImageBitmap,
-    state: ReplicaScanMascotState,
-    blink: Boolean,
-) {
-    val fit = min(size.width / pose.width, size.height / pose.height)
-    val left = (size.width - pose.width * fit) / 2f
-    val top = (size.height - pose.height * fit) / 2f
+/** Original transparent paintings. No member is sampled from a flattened pose. */
+internal data class FoxLayers(
+    val tail: ImageBitmap,
+    val body: ImageBitmap,
+    val head: ImageBitmap,
+    val scarf: ImageBitmap,
+    val arm: ImageBitmap,
+    val wave: ImageBitmap,
+    val paper: ImageBitmap,
+)
+
+internal data class FoxMotion(
+    val tail: Float = 0f,
+    val head: Float = 0f,
+    val paws: Float = 0f,
+    val gesture: Float = 0f,
+    val breath: Float = 0f,
+)
+
+private const val STAGE = 1254f
+
+/** All coordinates and anatomical pivots are recorded in rig/manifest.json. */
+internal fun DrawScope.drawFoxRig(layers: FoxLayers, state: ReplicaScanMascotState, motion: FoxMotion) {
+    val fit = min(size.width / STAGE, size.height / STAGE)
+    val left = (size.width - STAGE * fit) / 2f
+    val top = (size.height - STAGE * fit) / 2f
     withTransform({ translate(left, top); scale(fit, fit, pivot = Offset.Zero) }) {
-        drawImage(pose, filterQuality = FilterQuality.Medium)
-        if (blink && state != ReplicaScanMascotState.Success) {
-            clipPath(eyeMask(state, pose.width.toFloat(), pose.height.toFloat())) {
-                drawImage(
-                    blinkPose,
-                    dstSize = IntSize(pose.width, pose.height),
-                    filterQuality = FilterQuality.Medium,
-                )
-            }
+        val active = state.isBusy
+        val waving = state == ReplicaScanMascotState.Welcome ||
+            state == ReplicaScanMascotState.Empty ||
+            state == ReplicaScanMascotState.Attention ||
+            state == ReplicaScanMascotState.Success
+        val paperVisible = active || state == ReplicaScanMascotState.Success
+
+        // Rear tail root stays under a fully painted body, so its rotation never opens a hole.
+        sprite(layers.tail, 80f, 610f, 580f, angle = -9f + motion.tail * 11f,
+            pivotX = .80f, pivotY = .75f)
+        if (waving) {
+            sprite(layers.wave, 700f, 440f, 400f,
+                angle = 8f + motion.gesture * 24f, pivotX = .12f, pivotY = .78f)
         }
+        sprite(layers.body, 280f, 500f + motion.breath * 3f, 690f)
+        if (paperVisible) {
+            sprite(layers.paper, 420f, 670f + motion.paws * 8f, 420f,
+                angle = -2f + motion.paws * 5f, pivotX = .50f, pivotY = .85f)
+        }
+        sprite(layers.arm, 320f, 660f, 439f,
+            angle = 8f + motion.paws * (if (active) 8f else 3f), pivotX = .50f, pivotY = .18f)
+        if (!waving) {
+            sprite(layers.arm, 520f, 660f, 439f,
+                angle = -8f - motion.paws * (if (active) 8f else 3f),
+                pivotX = .50f, pivotY = .18f)
+        }
+        // The scarf is a stationary neck layer. Neither the tail nor the head contains it.
+        sprite(layers.scarf, 400f, 525f + motion.breath * 2f, 455f)
+        sprite(layers.head, 130f, 50f, 998f, angle = 3f + motion.head * 5f,
+            pivotX = .50f, pivotY = .85f)
     }
 }
 
-private fun eyeMask(state: ReplicaScanMascotState, w: Float, h: Float): Path {
-    val bounds = when (state) {
-        ReplicaScanMascotState.Welcome -> listOf(.365f, .35f, .49f, .47f, .605f, .31f, .72f, .43f)
-        ReplicaScanMascotState.Working, ReplicaScanMascotState.Processing,
-        ReplicaScanMascotState.Scanning -> listOf(.395f, .345f, .52f, .47f, .634f, .372f, .746f, .50f)
-        ReplicaScanMascotState.Ocr -> listOf(.405f, .33f, .53f, .485f, .636f, .298f, .74f, .46f)
-        ReplicaScanMascotState.Attention -> listOf(.375f, .347f, .50f, .46f, .608f, .307f, .729f, .43f)
-        ReplicaScanMascotState.Empty -> listOf(.365f, .31f, .48f, .42f, .575f, .26f, .69f, .37f)
-        else -> listOf(.34f, .325f, .475f, .455f, .585f, .315f, .722f, .455f)
-    }
-    return Path().apply {
-        addOval(Rect(w * (bounds[0] - .03f), h * (bounds[1] - .005f),
-            w * (bounds[2] + .03f), h * (bounds[3] + .02f)))
-        addOval(Rect(w * (bounds[4] - .03f), h * (bounds[5] - .005f),
-            w * (bounds[6] + .03f), h * (bounds[7] + .02f)))
+private fun DrawScope.sprite(
+    image: ImageBitmap,
+    x: Float,
+    y: Float,
+    width: Float,
+    angle: Float = 0f,
+    pivotX: Float = .5f,
+    pivotY: Float = .5f,
+) {
+    val height = width * image.height / image.width
+    withTransform({ rotate(angle, Offset(x + width * pivotX, y + height * pivotY)) }) {
+        drawImage(
+            image = image,
+            dstOffset = IntOffset(x.roundToInt(), y.roundToInt()),
+            dstSize = IntSize(width.roundToInt(), height.roundToInt()),
+            filterQuality = FilterQuality.Medium,
+        )
     }
 }
