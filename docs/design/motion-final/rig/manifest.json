@@ -7,9 +7,9 @@
     { "name": "wave_paw", "file": "layers/wave.png", "bounds": [700, 440, 400, 400], "pivot": [748, 752], "parent": "body", "z": 1, "alpha": true, "states": ["Welcome", "Empty", "Attention", "Success"] },
     { "name": "body_legs", "file": "layers/body.png", "bounds": [280, 500, 690, 690], "pivot": [625, 845], "parent": null, "z": 2, "alpha": true, "states": "all" },
     { "name": "paper", "file": "layers/paper.png", "bounds": [420, 670, 420, 420], "pivot": [630, 1027], "parent": "body", "z": 3, "alpha": true, "states": ["Scanning", "Processing", "Working", "Ocr", "Success"] },
-    { "name": "paw_left", "file": "layers/arm.png", "bounds": [320, 660, 439, 439], "pivot": [540, 739], "parent": "body", "z": 4, "alpha": true, "states": "all" },
-    { "name": "paw_right", "file": "layers/arm.png", "bounds": [520, 660, 439, 439], "pivot": [740, 739], "parent": "body", "z": 5, "alpha": true, "states": ["Idle", "Scanning", "Processing", "Working", "Ocr"] },
-    { "name": "neck_scarf", "file": "layers/scarf.png", "bounds": [400, 525, 455, 455], "pivot": [628, 753], "parent": "body", "z": 6, "alpha": true, "states": "all" },
+    { "name": "paw_left", "file": "layers/arm.png", "bounds": [234, 533, 580, 580], "pivot": [524, 637], "parent": "body", "z": 4, "alpha": true, "states": "all" },
+    { "name": "paw_right", "file": "layers/arm.png", "bounds": [444, 533, 580, 580], "pivot": [734, 637], "parent": "body", "z": 5, "alpha": true, "states": ["Idle", "Scanning", "Processing", "Working", "Ocr"] },
+    { "name": "neck_scarf", "file": "layers/scarf.png", "bounds": [417, 480, 420, 420], "pivot": [627, 690], "parent": "body", "z": 6, "alpha": true, "states": "all" },
     { "name": "head_ears", "file": "layers/head.png", "bounds": [130, 50, 998, 665], "pivot": [629, 615], "parent": "body", "z": 7, "alpha": true, "states": "all" }
   ]
 }

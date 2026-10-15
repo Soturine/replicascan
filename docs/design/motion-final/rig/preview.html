@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReplicaScan · camadas e extremos da raposa</title>
+<style>
+body{font:16px system-ui,sans-serif;color:#243a38;background:#e8e4dc;margin:0;padding:24px}
+h1{font-size:24px;margin:0 0 8px}p{max-width:70ch;line-height:1.5}
+.controls{display:flex;flex-wrap:wrap;gap:16px;margin:16px 0}.controls label{display:flex;flex-direction:column;gap:4px}
+.frames{display:flex;flex-wrap:wrap;gap:24px}.frame{width:627px;height:627px;overflow:hidden;border:1px solid #bbb8b2;background:#faf6ef}
+.frame.dark{background:#243a38}.stage{position:relative;width:1254px;height:1254px;transform:scale(.5);transform-origin:0 0}
+.stage img{position:absolute;display:block}.tail{width:580px;left:80px;top:610px;transform-origin:80% 75%;transform:rotate(var(--tail,-9deg))}
+.body{width:690px;left:280px;top:500px}.arm-left{width:580px;left:234px;top:533px;transform-origin:50% 18%;transform:rotate(var(--left,8deg))}
+.arm-right{width:580px;left:444px;top:533px;transform-origin:50% 18%;transform:rotate(var(--right,-8deg))}
+.stage .wave-arm{width:400px;left:700px;top:440px;transform-origin:12% 78%;transform:rotate(var(--wave,8deg));display:none}
+.stage .paper{width:420px;left:420px;top:670px;transform-origin:50% 85%;transform:rotate(var(--paper,-2deg));display:none}
+.scarf{width:420px;left:417px;top:480px}.head{width:998px;left:130px;top:50px;transform-origin:50% 85%;transform:rotate(var(--head,3deg))}
+.working .stage .paper,.success .stage .paper{display:block}.welcome .stage .wave-arm,.success .stage .wave-arm{display:block}
+.welcome .stage .arm-right,.success .stage .arm-right{display:none}
+.layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;max-width:900px}.layers figure{margin:0;background:white;padding:8px;text-align:center}.layers img{width:100%;aspect-ratio:1;object-fit:contain}.layers figcaption{font-size:14px}
+</style>
+<h1>Rig em camadas · fonte de inspeção</h1>
+<p>Esta página mostra as pinturas isoladas e os extremos geométricos. É uma prévia HTML da arte, não evidência de runtime Android. O app usa os mesmos PNGs e os pivôs do manifesto.</p>
+<div class="controls">
+<label>Estado <select id="state"><option value="idle">Idle</option><option value="welcome">Welcome</option><option value="working">Working/OCR</option><option value="success">Success</option></select></label>
+<label>Cauda ±11° <input id="tail" type="range" min="-11" max="11" value="0"></label>
+<label>Cabeça ±5° <input id="head" type="range" min="-5" max="5" value="0"></label>
+<label>Patas/folha ±8° <input id="paws" type="range" min="-8" max="8" value="0"></label>
+</div>
+<div class="frames"><div class="frame"><div class="stage"></div></div><div class="frame dark"><div class="stage"></div></div></div>
+<h2>Fontes isoladas</h2><div class="layers"></div>
+<script>
+const names=['tail','wave','body','paper','arm-left','arm-right','scarf','head'];
+const source={tail:'tail',wave:'wave','wave-arm':'wave',body:'body',paper:'paper','arm-left':'arm','arm-right':'arm',scarf:'scarf',head:'head'};
+for(const stage of document.querySelectorAll('.stage')){
+  for(const name of names){const img=document.createElement('img');img.className=name==='wave'?'wave-arm':name;img.src='layers/'+(source[name]||name)+'.png';stage.append(img)}
+}
+for(const name of ['tail','body','head','scarf','arm','wave','paper']){
+  const figure=document.createElement('figure');figure.innerHTML='<img src="layers/'+name+'.png" alt="Camada '+name+'"><figcaption>'+name+'</figcaption>';document.querySelector('.layers').append(figure)
+}
+function update(){const state=document.querySelector('#state').value,t=+document.querySelector('#tail').value,h=+document.querySelector('#head').value,p=+document.querySelector('#paws').value;
+  document.body.className=state;document.documentElement.style.setProperty('--tail',(-9+t)+'deg');document.documentElement.style.setProperty('--head',(3+h)+'deg');
+  document.documentElement.style.setProperty('--left',(8+p)+'deg');document.documentElement.style.setProperty('--right',(-8-p)+'deg');document.documentElement.style.setProperty('--paper',(-2+p*.625)+'deg');document.documentElement.style.setProperty('--wave',(8+p*3)+'deg')
+}
+for(const control of document.querySelectorAll('input,select'))control.addEventListener('input',update);
+const presets={'tail-left':{tail:-11},'tail-right':{tail:11},'head-left':{head:-5},'head-right':{head:5},'paws-left':{paws:-8,state:'working'},'paws-right':{paws:8,state:'working'},working:{state:'working'},welcome:{state:'welcome'},success:{state:'success'}};
+const preset=presets[location.hash.slice(1)]||{};for(const [key,value] of Object.entries(preset))document.getElementById(key).value=value;update();
+</script></html>

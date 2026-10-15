@@ -56,15 +56,15 @@ internal fun DrawScope.drawFoxRig(layers: FoxLayers, state: ReplicaScanMascotSta
             sprite(layers.paper, 420f, 670f + motion.paws * 8f, 420f,
                 angle = -2f + motion.paws * 5f, pivotX = .50f, pivotY = .85f)
         }
-        sprite(layers.arm, 320f, 660f, 439f,
+        sprite(layers.arm, 234f, 533f, 580f,
             angle = 8f + motion.paws * (if (active) 8f else 3f), pivotX = .50f, pivotY = .18f)
         if (!waving) {
-            sprite(layers.arm, 520f, 660f, 439f,
+            sprite(layers.arm, 444f, 533f, 580f,
                 angle = -8f - motion.paws * (if (active) 8f else 3f),
                 pivotX = .50f, pivotY = .18f)
         }
         // The scarf is a stationary neck layer. Neither the tail nor the head contains it.
-        sprite(layers.scarf, 400f, 525f + motion.breath * 2f, 455f)
+        sprite(layers.scarf, 417f, 480f + motion.breath * 2f, 420f)
         sprite(layers.head, 130f, 50f, 998f, angle = 3f + motion.head * 5f,
             pivotX = .50f, pivotY = .85f)
     }
