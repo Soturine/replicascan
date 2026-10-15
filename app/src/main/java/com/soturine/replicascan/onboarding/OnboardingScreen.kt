@@ -35,7 +35,8 @@ import kotlinx.coroutines.launch
 fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
     val titles = listOf(R.string.onboarding_page_one_title, R.string.onboarding_page_two_title, R.string.onboarding_page_three_title)
     val bodies = listOf(R.string.onboarding_page_one_body, R.string.onboarding_page_two_body, R.string.onboarding_page_three_body)
-    val scenes = listOf(ReplicaScanMascotState.Welcome, ReplicaScanMascotState.Ocr, ReplicaScanMascotState.Success)
+    // The success gesture is reserved for a completed export, not an onboarding illustration.
+    val scenes = listOf(ReplicaScanMascotState.Welcome, ReplicaScanMascotState.Ocr, ReplicaScanMascotState.Idle)
     val pager = rememberPagerState(pageCount = { 3 })
     val scope = rememberCoroutineScope()
     val largeText = LocalDensity.current.fontScale >= 1.6f
