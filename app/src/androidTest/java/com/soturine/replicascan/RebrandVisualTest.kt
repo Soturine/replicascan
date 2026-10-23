@@ -197,6 +197,23 @@ class RebrandVisualTest {
         capture("onboarding-three-dark")
     }
 
+    /** Native visual evidence at the sizes where the rejected rig looked distorted. */
+    @Test fun captureApprovedMascotSizes() {
+        var mascotSize by mutableStateOf(72.dp)
+        rule.mainClock.autoAdvance = false
+        rule.setContent { ReplicaScanTheme { ReplicaScanMascot(ReplicaScanMascotState.Idle, size = mascotSize) } }
+        val dir = File(context.getExternalFilesDir(null), "rebrand-evidence").apply { mkdirs() }
+        for (dp in listOf(72, 112, 168, 240)) {
+            rule.runOnIdle { mascotSize = dp.dp }
+            rule.mainClock.advanceTimeBy(240)
+            val bitmap = rule.onNodeWithTag("mascot-Idle").captureToImage().asAndroidBitmap()
+            assertTrue("Mascot must render at ${dp}dp", bitmap.width > 0 && bitmap.height > 0)
+            File(dir, "approved-size-$dp.png").outputStream().use {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+            }
+        }
+    }
+
     @Test fun homeLargeFontKeepsBothActionsVisible() {
         val date = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli()
         val scan = fixture().copy(createdAt = date, updatedAt = date)
