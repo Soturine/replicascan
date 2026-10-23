@@ -74,7 +74,7 @@ jobs:
       - name: Verify APK identity and record candidate metadata
         run: python tools/release_artifact.py prepare --source-sha "$SOURCE_SHA" --out dist
       - name: Upload candidate for inspection
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ${{ needs.intent.outputs.tag }}-ci-candidate
           path: dist/
@@ -113,7 +113,7 @@ jobs:
           -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect
       - name: Keep instrumentation reports
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: api36-reports
           path: |
