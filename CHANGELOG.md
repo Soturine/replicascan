@@ -4,6 +4,8 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+- Em 23/10, a montagem articulada experimental da raposa foi retirada do APK após reprovação visual: patas dianteiras desproporcionais e cachecol desalinhado. As poses aprovadas voltaram ao runtime; a piscada da cena OCR/exportação foi desativada por não alinhar bem em tamanhos pequenos. O texto da ação principal passou a 17sp. O rig definitivo e a release v0.4.1 continuam pendentes.
+
 - Recuperação de 14/10: laranja primário claro `#C14B00` (4,91:1 com branco) e escuro `#FF8A3D`; Home com iluminação quente e slogan sem texto fixo nos 12 idiomas; Configurações agrupadas em superfícies leves. Exportação em fonte 200% mantém documento e raposa visíveis.
 - Ícone adaptativo opção 4 com fundo teal `#214D47` separa a folha clara do fundo em máscaras Android e 24–108 dp; escolha técnica desta rodada ainda sem QA físico. A contenção atual da mascote preserva poses inteiras e não deve ser descrita como rig de membros independentes. Tag e release v0.4.1 seguem bloqueadas por esse requisito e pela qualificação final.
 

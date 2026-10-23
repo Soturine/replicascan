@@ -14,6 +14,8 @@ ReplicaScan é o nome corrente a partir da v0.4.0. O produto usou outro nome at�
 
 ## v0.4.1 — Redesign e recuperação
 
+**Checkpoint de 23/10:** a tentativa de rig com novas pinturas foi reprovada visualmente pelo proprietário (proporção das patas e encaixe do cachecol) e retirada do runtime. As poses aprovadas voltaram; o texto da ação principal cresceu para 17sp. Um rig articulado de qualidade, QA físico, matriz final e CI do SHA de release ainda são bloqueios. Não criar tag ou release v0.4.1.
+
 **Checkpoint de 14/10:** Home/Configurações receberam calor e hierarquia do produto histórico, com laranja acessível, slogan localizado e cena documental; o ícone opção 4 agora usa fundo teal para separar a folha. A contenção da mascote elimina recortes anatômicos defeituosos, mas **não entrega articulação independente**. A opção de ícone desta rodada foi escolhida pelo agente com evidência nativa, sem novo aceite do proprietário. A publicação permanece bloqueada pelo rig definitivo e pelos gates finais.
 
 **Status:** recuperação visual em andamento. A arte mestre e as poses da raposa foram aprovadas como arte estática; o rig articulado candidato foi desativado em 2026-10-14 por vazamento de pixels; o novo loop seguro e a pose de atenção corrigida seguem qualificação, e um rig de partes reais permanece pendente. A opção 4 do ícone, com símbolo de escaneamento, foi escolhida como candidata final e instalada no APK debug; teste físico e aceite do conjunto visual ainda faltam. Telas e release também permanecem pendentes. O pedido de 2026-10-14 dispensa aceite visual intermediário para uma release de avaliação, mas exige gates técnicos completos; a release permanece bloqueada pelo rig final e sua prova visual.

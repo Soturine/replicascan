@@ -1,7 +1,8 @@
 {
   "version": 1,
+  "status": "rejected-visual-study-not-runtime",
   "coordinateSpace": { "width": 1254, "height": 1254 },
-  "source": "Original transparent raster paintings generated from the approved master-v1.png reference; runtime copies are fox_rig_*.png in core-ui/drawable-nodpi.",
+  "source": "Rejected experimental paintings generated from the approved master-v1.png reference. Runtime copies were removed; this manifest is retained only for diagnosis.",
   "layers": [
     { "name": "tail_back", "file": "layers/tail.png", "bounds": [80, 610, 580, 580], "pivot": [544, 1045], "parent": "body", "z": 0, "alpha": true, "states": "all" },
     { "name": "wave_paw", "file": "layers/wave.png", "bounds": [700, 440, 400, 400], "pivot": [748, 752], "parent": "body", "z": 1, "alpha": true, "states": ["Welcome", "Empty", "Attention", "Success"] },

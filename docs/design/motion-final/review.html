@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ReplicaScan — rollback visual da raposa</title>
+<style>
+body{margin:0;background:#f7f3ed;color:#253b39;font:16px/1.5 system-ui,sans-serif;padding:24px}main{max-width:1120px;margin:auto}
+h1{font-size:clamp(26px,4vw,38px);margin:0 0 12px}h2{font-size:22px;margin-top:36px}p{max-width:78ch}
+.alert{padding:12px 16px;background:#fff4df;border-left:4px solid #b94b12;border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px}
+figure{margin:0;padding:16px;background:#fff;border:1px solid #ded7cc;border-radius:16px}figure img,figure video{display:block;width:100%;height:auto;object-fit:contain}figure.mascot img{max-width:300px;margin:auto}figcaption{margin-top:12px;font-size:14px}
+a{color:#a84311}
+</style>
+<main>
+<h1>Raposa no Android: montagem rejeitada e arte restaurada</h1>
+<p class="alert">O rig articulado mostrado à esquerda foi reprovado e retirado do app. À direita está a pose aprovada restaurada. Esta prancha documenta a correção visual do APK debug, <strong>não</strong> a entrega do movimento definitivo nem uma aprovação de release.</p>
+<h2>Comparação em 112 dp</h2>
+<div class="grid">
+<figure class="mascot"><img src="rejected-size-112-android.png" alt="Rig rejeitado: braços rígidos, patas desproporcionais e cachecol desalinhado"><figcaption>Rejeitado · braços rígidos, patas desproporcionais e cachecol sem encaixe natural.</figcaption></figure>
+<figure class="mascot"><img src="approved-size-112-android.png" alt="Pose aprovada restaurada no Android em 112 dp"><figcaption>Runtime atual · pose aprovada com patas e cachecol integrados.</figcaption></figure>
+</div>
+<h2>Escalas do runtime restaurado</h2>
+<div class="grid">
+<figure class="mascot"><img src="approved-size-72-android.png" alt="Raposa aprovada em 72 dp"><figcaption>72 dp</figcaption></figure>
+<figure class="mascot"><img src="approved-size-168-android.png" alt="Raposa aprovada em 168 dp"><figcaption>168 dp</figcaption></figure>
+<figure class="mascot"><img src="approved-size-240-android.png" alt="Raposa aprovada em 240 dp"><figcaption>240 dp</figcaption></figure>
+</div>
+<h2>Telas nativas após o rollback</h2>
+<div class="grid">
+<figure><img src="export-android.png" alt="Tela de exportação Android com raposa lendo, olhos abertos"><figcaption>Exportação · olhos abertos na pose de leitura, documento real de teste e botão primário 17sp.</figcaption></figure>
+<figure><img src="export-dark-200-android.png" alt="Exportação Android em tema escuro e fonte 200%"><figcaption>Exportação · tema escuro, fonte 200%.</figcaption></figure>
+<figure><img src="home-light-200-android.png" alt="Home Android em fonte 200%"><figcaption>Home · fonte 200%.</figcaption></figure>
+</div>
+<h2>Vídeo do APK debug</h2>
+<div class="grid"><figure><video controls preload="metadata" src="approved-idle-rollback-android.mp4"></video><figcaption>Idle restaurado no emulador API 34. Mostra a contenção visual atual; não demonstra membros articulados.</figcaption></figure></div>
+<p>As capturas foram feitas por teste instrumental Compose com cenas e documento sintéticos; o vídeo foi gravado pelo Android. Veja o <a href="README.md">registro de bloqueios</a>. Teste físico, fluxo real de captura/OCR/exportação e rig definitivo continuam pendentes.</p>
+</main>
+</html>
