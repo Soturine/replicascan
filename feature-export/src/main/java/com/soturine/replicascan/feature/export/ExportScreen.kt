@@ -435,6 +435,7 @@ private fun ExportDocumentStage(scan: ScanDocument, mascotState: ReplicaScanMasc
                 modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(6.dp)),
                 contentScale = ContentScale.Fit,
                 maxDimension = 400,
+                loadedImageTestTag = "export-cover-loaded",
             )
         }
         ReplicaScanMascot(

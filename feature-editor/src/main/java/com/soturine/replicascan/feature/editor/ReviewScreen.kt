@@ -193,6 +193,7 @@ fun ReviewScreen(
                     fallbackUri = page.sourceUri,
                     loading = state.isPreviewLoading || state.isProcessing,
                     maxDimension = previewLongSide,
+                    loadedImageTestTag = "review-page-loaded",
                     modifier = documentModifier.onSizeChanged { previewLongSide = max(it.width, it.height).coerceIn(1_200, 1_800) },
                 )
             }
@@ -268,6 +269,7 @@ internal fun DocumentPaperStage(
     fallbackUri: String,
     loading: Boolean,
     maxDimension: Int,
+    loadedImageTestTag: String? = null,
     modifier: Modifier = Modifier,
 ) {
     var imageSize by remember(imageUri) { mutableStateOf(IntSize.Zero) }
@@ -295,6 +297,7 @@ internal fun DocumentPaperStage(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Fit,
                 maxDimension = maxDimension,
+                loadedImageTestTag = loadedImageTestTag,
                 backgroundColor = Color.Transparent,
                 onBitmapLoaded = { imageSize = it },
             )

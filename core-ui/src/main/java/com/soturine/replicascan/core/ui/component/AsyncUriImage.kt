@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.IntSize
 import com.soturine.replicascan.core.common.image.CanonicalImageDecoder
 import java.io.File
@@ -39,6 +40,7 @@ fun AsyncUriImage(
     rotationDegrees: Float = 0f,
     onBitmapLoaded: ((IntSize) -> Unit)? = null,
     backgroundColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.surfaceVariant,
+    loadedImageTestTag: String? = null,
 ) {
     val context = LocalContext.current
     val loadState by produceState<ImageLoadState>(
@@ -84,6 +86,7 @@ fun AsyncUriImage(
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
+                        .then(if (loadedImageTestTag != null) Modifier.testTag(loadedImageTestTag) else Modifier)
                         .graphicsLayer { rotationZ = rotationDegrees },
                     contentScale = contentScale,
                 )

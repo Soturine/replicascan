@@ -73,11 +73,16 @@ class RebrandVisualTest {
             }
         }
         image!!.let { bitmap ->
-            File(dir, "$name.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+            val file = File(dir, "$name.png")
+            file.outputStream().use {
+                assertTrue("Could not encode capture $name", bitmap.compress(Bitmap.CompressFormat.PNG, 100, it))
+            }
+            assertTrue("Capture $name is empty", file.length() > 0)
         }
     }
 
-    @Test fun renderScreenMatrix() {
+    /** Captures injected UI states for manual review; passing is not artistic approval. */
+    @Test fun captureScreenMatrixForManualReview() {
         val scan = fixture()
         val homeScan = scan.copy(createdAt = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli(),
             updatedAt = Instant.parse("2026-10-13T12:00:00Z").toEpochMilli())
@@ -233,7 +238,7 @@ class RebrandVisualTest {
         capture("home-responsive-200")
     }
 
-    @Test fun captureExportLargeFontDocumentAndMascotForReview() {
+    @Test fun exportLargeFontDisplaysDecodedCoverAndMascot() {
         val scan = fixture()
         rule.mainClock.autoAdvance = false
         rule.setContent {
@@ -245,10 +250,15 @@ class RebrandVisualTest {
             }
         }
         rule.onNodeWithText(scan.title).assertIsDisplayed()
+        rule.mainClock.autoAdvance = true
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("export-cover-loaded").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("export-cover-loaded").assertIsDisplayed()
+        rule.onNodeWithTag("mascot-Ocr").assertIsDisplayed()
+        rule.mainClock.autoAdvance = false
         capture("export-dark-200", advanceMs = 1200)
     }
 
-    @Test fun captureExportBlinkPeakForReview() {
+    @Test fun captureExportEyeRegionForManualReview() {
         val scan = fixture()
         rule.mainClock.autoAdvance = false
         rule.setContent {
@@ -256,7 +266,7 @@ class RebrandVisualTest {
                 ExportScreen(ExportUiState(scan = scan), {}, {}, {}, {}, {}, {}, {}, {})
             }
         }
-        // Blink reaches its closed-eye hold at 2.78–2.87 s in the current motion cycle.
+        // The OCR/export eyelid overlay is disabled until its painting aligns at small sizes.
         rule.mainClock.advanceTimeBy(2820)
         capture("export-blink-peak", advanceMs = 0)
     }
@@ -293,7 +303,7 @@ class RebrandVisualTest {
         capture("home-dark-200-rtl", advanceMs = 1200)
     }
 
-    @Test fun reviewRendersDocumentInCurrentViewport() {
+    @Test fun reviewDisplaysDecodedPageInCurrentViewport() {
         val scan = fixture()
         val editor = EditorUiState(true, scan, scan.pages.first(), previewImageUri = scan.pages.first().sourceUri)
         rule.mainClock.autoAdvance = false
@@ -301,6 +311,10 @@ class RebrandVisualTest {
             ReviewScreen(editor, {}, {}, { _, _ -> }, {}, { true }, {}, {}, {}, {}, {}, {}, {}, {})
         } }
         rule.onNodeWithText(scan.title).assertIsDisplayed()
+        rule.mainClock.autoAdvance = true
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("review-page-loaded").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("review-page-loaded").assertIsDisplayed()
+        rule.mainClock.autoAdvance = false
         capture("review-wide")
     }
 
