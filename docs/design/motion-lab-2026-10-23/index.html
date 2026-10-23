@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ReplicaScan · laboratório de anatomia e motion</title>
+<style>
+:root{font:16px/1.5 system-ui,sans-serif;color:#253b39;background:#f7f3ed}*{box-sizing:border-box}body{margin:0;padding:24px}main{max-width:1260px;margin:auto}h1{font-size:clamp(26px,4vw,38px);margin:0}h2{margin:34px 0 8px}p{max-width:82ch}.warning{padding:15px 18px;background:#fff0e5;border-left:5px solid #b54a18;border-radius:10px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}.card{background:#fff;border:1px solid #ded7cc;border-radius:16px;padding:14px;overflow:hidden}.card img{display:block;max-width:100%;height:auto}.label{font-weight:700}.status{color:#a63911;font-weight:700}.scale-row{display:flex;align-items:end;gap:20px;overflow:auto;padding:12px 4px 20px}.scale{flex:none;text-align:center}.scale img,.scale canvas{display:block;margin:0 auto;object-fit:contain;background:repeating-conic-gradient(#eae3d9 0 25%,#fff 0 50%) 0 0/16px 16px;border:1px solid #d9cec2}.state{margin:24px 0;border-top:1px solid #d9cec2}.state h3{margin:12px 0 0}button{background:#b64c1d;color:white;border:0;border-radius:8px;padding:9px 15px;font:inherit;cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #117c80;outline-offset:3px}input{vertical-align:middle}a{color:#9d3e13}
+</style>
+<main>
+<h1>Laboratório de anatomia e motion</h1>
+<p class="warning"><strong>Gate artístico: REPROVADO em 23/10/2026.</strong> Esta página isola estudos que não estão no aplicativo. Nenhum atlas abaixo contém uma fonte anatômica aprovada; nenhum frame gerado autoriza chamar o motion de definitivo. A arte instalada permanece a pose aprovada.</p>
+<p><a href="README.md">Diagnóstico e critérios</a> · <a href="QA_MATRIX.md">Matriz de validação</a> · <a href="REPORT.md">Relatório do gate</a> · <a href="../motion-final/review.html">Capturas reais do Android atual</a></p>
+
+<h2>Master e poses instaladas, em 72, 112, 168 e 240 dp</h2>
+<p>Esta seção confere a identidade e a legibilidade das pinturas atuais. Ela não demonstra articulação.</p>
+<div id="states"></div>
+
+<h2>Estudo quadro a quadro · saudação</h2>
+<p class="status">REPROVADO: o quadro de pata levantada contém anatomia incompatível e a personagem muda entre quadros.</p>
+<p>Arraste o controle para examinar os quatro quadros e seus extremos. Reproduzir serve apenas para diagnóstico.</p>
+<p><button id="play" type="button">Reproduzir estudo</button> <label for="frame">Quadro <output id="frame-number">1</output> de 4</label> <input id="frame" type="range" min="0" max="3" value="0"></p>
+<div id="cels" class="scale-row"></div>
+
+<h2>Estudos de camadas a partir de um master único</h2>
+<div class="grid">
+  <div class="card"><img src="layer-atlas-v1-rejected.png" alt="Primeiro atlas rejeitado; torso e peças soltas duplicam as patas"><p><span class="label">Atlas 1.</span> Duas patas já pintadas no torso e duas adicionais soltas; fundo colorido sem transparência útil nas áreas internas. <span class="status">REPROVADO</span></p></div>
+  <div class="card"><img src="layer-atlas-v2-rejected.png" alt="Segundo atlas rejeitado; torso ainda contém patas e braços extras"><p><span class="label">Atlas 2.</span> A correção ainda deixou patas no torso além das peças separadas; proporções e encaixes não reproduzem o master. <span class="status">REPROVADO</span></p></div>
+  <div class="card"><img src="cels-v1-rejected.png" alt="Quatro quadros rejeitados; o gesto tem pata adicional"><p><span class="label">Cels 1.</span> Não depende de rig, mas o gesto acrescenta uma pata e altera a personagem. <span class="status">REPROVADO</span></p></div>
+  <div class="card"><img src="user-atlas-reference.png" alt="Atlas recebido do usuário, usado apenas como referência visual"><p><span class="label">Referência recebida 1.</span> Mostra a intenção de separar partes e expressões. Contém outras proporções, várias caudas e resíduos coloridos no alfa; não é a fonte aprovada.</p></div>
+  <div class="card"><img src="user-concept-reference.png" alt="Prancha conceitual recebida do usuário, com raposa, documento e estados"><p><span class="label">Referência recebida 2.</span> Ajuda a comunicar expressão e gestos de scan/leitura/sucesso, mas é uma prancha de conceito, não um arquivo de partes articuláveis.</p></div>
+  <div class="card"><img src="layer-atlas-v3-rejected.png" alt="Atlas derivado do master e da referência recebida, ainda com patas duplicadas"><p><span class="label">Atlas 3.</span> Usa as duas referências em conjunto, mas mantém membros no torso e também em peças avulsas. <span class="status">REPROVADO</span></p></div>
+  <div class="card"><img src="layer-atlas-v4-rejected.png" alt="Atlas editado com torso sem braços, mas peças de braço ainda incompatíveis"><p><span class="label">Atlas 4.</span> A edição removeu os braços do torso, mas as peças soltas têm comprimento e ombros incompatíveis, e o atlas ainda contém resíduos no alfa. <span class="status">REPROVADO</span></p></div>
+</div>
+<script>
+const base='../../../core-ui/src/main/res/drawable-nodpi/replicascan_fox_';
+const states=[['Master aprovado','../visual-recovery/candidates/master-v1.png'],['Welcome','greeting'],['Idle','idle'],['Scanning','working'],['Processing','working'],['Working','working'],['Ocr','reading'],['Empty','empty'],['Attention / erro','attention'],['Success','success']];
+const sizes=[72,112,168,240];
+const host=document.getElementById('states');
+for(const [name,file] of states){const section=document.createElement('section');section.className='state';const title=document.createElement('h3');title.textContent=name+(name==='Master aprovado'?' · referência artística':' · pose instalada');section.append(title);const row=document.createElement('div');row.className='scale-row';for(const size of sizes){const cell=document.createElement('div');cell.className='scale';const img=document.createElement('img');img.src=file.endsWith('.png')?file:base+file+'.png';img.alt=name+' em '+size+' dp';img.width=size;img.height=size;const label=document.createElement('div');label.textContent=size+' dp';cell.append(img,label);row.append(cell)}section.append(row);host.append(section)}
+const sheet=new Image();sheet.src='cels-v1-rejected.png';const canvases=[];const cels=document.getElementById('cels');for(const size of sizes){const cell=document.createElement('div');cell.className='scale';const canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;canvas.setAttribute('aria-label','Estudo rejeitado em '+size+' dp');const label=document.createElement('div');label.textContent=size+' dp';cell.append(canvas,label);cels.append(cell);canvases.push(canvas)}
+const slider=document.getElementById('frame'),number=document.getElementById('frame-number'),play=document.getElementById('play');let timer=null;
+function draw(){if(!sheet.complete||!sheet.naturalWidth)return;const index=Number(slider.value);number.value=String(index+1);for(const canvas of canvases){const c=canvas.getContext('2d'),w=sheet.naturalWidth/4,h=sheet.naturalHeight;c.clearRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/w,canvas.height/h);c.drawImage(sheet,index*w,0,w,h,(canvas.width-w*scale)/2,(canvas.height-h*scale)/2,w*scale,h*scale)}}
+sheet.onload=draw;slider.addEventListener('input',draw);play.addEventListener('click',()=>{if(timer){clearInterval(timer);timer=null;play.textContent='Reproduzir estudo'}else{timer=setInterval(()=>{slider.value=(Number(slider.value)+1)%4;draw()},360);play.textContent='Pausar estudo'}});
+</script>
+</main>
+</html>
