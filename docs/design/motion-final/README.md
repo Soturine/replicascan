@@ -6,6 +6,8 @@ A [comparação nativa em 112 dp, telas de exportação/Home e vídeo do rollbac
 
 O [laboratório isolado de 23/10](../motion-lab-2026-10-23/index.html) registra duas tentativas de atlas coerente e uma sequência quadro a quadro, todas reprovadas por anatomia. O runtime continua usando somente as poses aprovadas; nenhuma fonte editável definitiva foi entregue nessa rodada.
 
+O [piloto cirúrgico da cauda Idle de 23/10](TAIL_IDLE_PILOT_2026-10-23.md) extraiu uma camada fiel da pintura instalada e comprovou o registro neutro, mas falhou nos extremos: sobra um contorno estático e falta pintura oculta na raiz. A fonte editável experimental e a prévia ficaram em laboratório local, marcadas como rejeitadas. Não houve integração no app.
+
 As novas separações automáticas testadas em 23/10 também mudaram a escala e a anatomia dos membros. Não foram integradas. Para retomar a animação articulada, o rig precisa manter exatamente as proporções do master, com torso, cabeça/cachecol, cauda, cada pata e documento em fontes coerentes e pivôs verificáveis. Cada estado e extremo de movimento deve ser inspecionado em 72, 112, 168 e 240 dp, temas claro/escuro e no APK antes de voltar ao runtime.
 
 O texto do botão primário em 17sp foi mantido. A cena de OCR/exportação mantém os olhos abertos enquanto a pintura de pálpebras não alinhar em tamanhos pequenos. Isso é contenção visual, **não** entrega do motion definitivo. A tag e a release v0.4.1 seguem bloqueadas pelo rig, pelos vídeos Android finais, pelo QA físico e pelos demais critérios do prompt.
