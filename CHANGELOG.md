@@ -4,6 +4,7 @@ Este projeto segue Semantic Versioning e recomenda Conventional Commits no fluxo
 
 ## [Unreleased]
 
+- Laboratório isolado compara o master, as poses instaladas e estudos de atlas/quadros em 72–240 dp. Ambos os caminhos artísticos novos foram reprovados antes de entrar no app. Testes instrumentados de Export e Review agora exigem imagem decodificada e exibida; a matriz de screenshots declara explicitamente que não aprova anatomia.
 - Em 23/10, a montagem articulada experimental da raposa foi retirada do APK após reprovação visual: patas dianteiras desproporcionais e cachecol desalinhado. As poses aprovadas voltaram ao runtime; a piscada da cena OCR/exportação foi desativada por não alinhar bem em tamanhos pequenos. O texto da ação principal passou a 17sp. O rig definitivo e a release v0.4.1 continuam pendentes.
 
 - Recuperação de 14/10: laranja primário claro `#C14B00` (4,91:1 com branco) e escuro `#FF8A3D`; Home com iluminação quente e slogan sem texto fixo nos 12 idiomas; Configurações agrupadas em superfícies leves. Exportação em fonte 200% mantém documento e raposa visíveis.

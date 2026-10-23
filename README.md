@@ -8,7 +8,7 @@
 
 ReplicaScan é um scanner Android local-first: escaneia com o ML Kit Document Scanner, guarda as páginas só no aparelho, reconhece texto no próprio dispositivo e exporta PDF pesquisável, JPG ou PNG. A v0.4.1 está em desenvolvimento; a última release de avaliação publicada é a v0.4.0.
 
-Na recuperação de 14/10, Home ganhou um cenário quente e slogan em 12 idiomas, o laranja da ação principal ficou mais vivo e contrastante, Configurações recuperou grupos leves e o ícone adaptativo passou a destacar a folha sobre teal. Em 23/10, uma nova montagem articulada foi reprovada visualmente e retirada do app; voltaram as poses aprovadas. O rig final permanece pendente, sem tag ou release v0.4.1. [Registro da reprovação e do rollback](docs/design/motion-final/README.md).
+Na recuperação de 14/10, Home ganhou um cenário quente e slogan em 12 idiomas, o laranja da ação principal ficou mais vivo e contrastante, Configurações recuperou grupos leves e o ícone adaptativo passou a destacar a folha sobre teal. Em 23/10, uma nova montagem articulada foi reprovada visualmente e retirada do app; voltaram as poses aprovadas. Um [laboratório isolado de anatomia e motion](docs/design/motion-lab-2026-10-23/index.html) documenta por que novos estudos de camadas e quadros ainda não passam no gate artístico. O rig final permanece pendente, sem tag ou release v0.4.1. [Registro da reprovação e do rollback](docs/design/motion-final/README.md).
 
 - Repositório: <https://github.com/Soturine/replicascan>
 - Releases: <https://github.com/Soturine/replicascan/releases>

@@ -14,6 +14,8 @@ ReplicaScan é o nome corrente a partir da v0.4.0. O produto usou outro nome at�
 
 ## v0.4.1 — Redesign e recuperação
 
+**Laboratório de 23/10:** atlas criado a partir do master único ainda duplicou patas e não ofereceu encaixes limpos; uma sequência quadro a quadro também introduziu pata extra. Ambos foram isolados como estudos reprovados em [motion-lab-2026-10-23](docs/design/motion-lab-2026-10-23/README.md), sem substituir os assets instalados. O próximo gate é uma fonte editável desenhada com anatomia coerente, seguida de montagem neutra e extremos em quatro escalas antes de qualquer integração Compose.
+
 **Checkpoint de 23/10:** a tentativa de rig com novas pinturas foi reprovada visualmente pelo proprietário (proporção das patas e encaixe do cachecol) e retirada do runtime. As poses aprovadas voltaram; o texto da ação principal cresceu para 17sp. Um rig articulado de qualidade, QA físico, matriz final e CI do SHA de release ainda são bloqueios. Não criar tag ou release v0.4.1.
 
 **Checkpoint de 14/10:** Home/Configurações receberam calor e hierarquia do produto histórico, com laranja acessível, slogan localizado e cena documental; o ícone opção 4 agora usa fundo teal para separar a folha. A contenção da mascote elimina recortes anatômicos defeituosos, mas **não entrega articulação independente**. A opção de ícone desta rodada foi escolhida pelo agente com evidência nativa, sem novo aceite do proprietário. A publicação permanece bloqueada pelo rig definitivo e pelos gates finais.
