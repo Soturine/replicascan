@@ -3,5 +3,5 @@
   "version": "0.4.1",
   "versionCode": 20,
   "repository": "Soturine/replicascan",
-  "publish": true
+  "publish": false
 }
